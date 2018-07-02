@@ -56,6 +56,8 @@ ROBOTSTXT_OBEY = True
 #    'misinformation.middlewares.MisinformationDownloaderMiddleware': 543,
 #}
 
+DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
+
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -89,4 +91,7 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-DOWNLOADER_HTTPCLIENTFACTORY = 'warcclientfactory.WarcHTTPClientFactory'
+
+# This does not work as scrapy now uses HTTP1.1, which uses a higher-level Agent class from Twisted
+# See https://groups.google.com/forum/#!topic/scrapy-users/pKDXCJlFJaw
+# DOWNLOADER_HTTPCLIENTFACTORY = 'warcclientfactory.WarcHTTPClientFactory'
