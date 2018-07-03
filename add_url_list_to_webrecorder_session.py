@@ -32,6 +32,8 @@ def main():
         line_num = 1
         stop_line = args.start_line + args.num_lines
         for capture_url in f:
+            if line_num >= stop_line:
+                break
             if line_num >= args.start_line:
                 capture_url = capture_url.strip()
                 print("{}: '{}'".format(line_num, capture_url))
@@ -40,8 +42,6 @@ def main():
                 jitter_seconds = random.uniform(-max_jitter_seconds, max_jitter_seconds)
                 delay_seconds = mean_load_interval_seconds + jitter_seconds
                 time.sleep(delay_seconds)
-            if line_num >= stop_line:
-                break
             line_num = line_num + 1
 
 
