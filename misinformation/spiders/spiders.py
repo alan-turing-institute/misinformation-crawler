@@ -96,7 +96,6 @@ class PatriotNewsDaily(CrawlSpider):
 #             print(response.url)
 
 
-
 class YoungCons(CrawlSpider):
     name = 'youngcons.com'
     allowed_domains = ['youngcons.com']
@@ -113,4 +112,41 @@ class YoungCons(CrawlSpider):
             # write out the title and add a newline.
             f.write(response.url + "\n")
             print(response.url)
+
+
+class AddictingInfo(CrawlSpider):
+    name = 'addictinginfo.com'
+    allowed_domains = ['addictinginfo.com']
+    start_urls = ['http://addictinginfo.com/category/news/']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('category/news/page/',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//h2[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
+
+
+class OccupyDemocrats(CrawlSpider):
+    name = 'occupydemocrats.com'
+    allowed_domains = ['occupydemocrats.com']
+    start_urls = ['http://occupydemocrats.com']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('page/',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//h3[contains(concat(" ",normalize-space(@itemprop)," ")," headline ")]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
+
 
