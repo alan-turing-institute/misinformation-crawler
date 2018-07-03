@@ -56,8 +56,6 @@ ROBOTSTXT_OBEY = True
 #    'misinformation.middlewares.MisinformationDownloaderMiddleware': 543,
 #}
 
-DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
-
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -95,3 +93,7 @@ DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
 # This does not work as scrapy now uses HTTP1.1, which uses a higher-level Agent class from Twisted
 # See https://groups.google.com/forum/#!topic/scrapy-users/pKDXCJlFJaw
 # DOWNLOADER_HTTPCLIENTFACTORY = 'warcclientfactory.WarcHTTPClientFactory'
+
+
+# This does not work as all the code is Python 2 and I haven't managed to por tit to Python 3
+# DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
