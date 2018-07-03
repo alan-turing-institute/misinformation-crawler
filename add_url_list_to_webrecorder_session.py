@@ -38,7 +38,7 @@ def main():
                 capture_url = capture_url.strip()
                 print("{}: '{}'".format(line_num, capture_url))
                 url = session_base_url + capture_url
-                subprocess.call(['open', url])
+                subprocess.call(['open', '--background', url])
                 jitter_seconds = random.uniform(-max_jitter_seconds, max_jitter_seconds)
                 delay_seconds = mean_load_interval_seconds + jitter_seconds
                 time.sleep(delay_seconds)
