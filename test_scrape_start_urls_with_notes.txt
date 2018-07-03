@@ -1,11 +1,11 @@
 Website Notes
 conservativehq.com/exclusives   Spider added
-federalistpress.com/category/all-stories
-liveaction.org/news/latest-stories/
+federalistpress.com/category/all-stories   Spider added
+liveaction.org/news/latest-stories/ No spider due to javascript "load more" button.
 palmerreport.com/category/analysis/ Spider added  
-patriotnewsdaily.com/category/all-conservative-news/
-redstatewatcher.com/news.asp
-westernjournal.com/politics/
+patriotnewsdaily.com/category/all-conservative-news/ No crawl due to reCAPTCHA check.
+redstatewatcher.com/news.asp    No spider as I can't get LinkExtractor to work
+westernjournal.com/politics/    No spider due to scroll based article loading
 youngcons.com/category/politics/
 addictinginfo.com/category/news/
 liberalamerica.life/category/news/
