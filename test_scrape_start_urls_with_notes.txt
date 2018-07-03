@@ -11,9 +11,9 @@ addictinginfo.com/category/news/    Spider added
 liberalamerica.life/category/news/  No spider due to javascript "load more" button.
 notallowedto.com/news/  No spider as entry page only shows 9 items with no pagination / load more
 occupydemocrats.com Spider added
-davidwolfe.com/category/news/
-eyeopening.info/category/politics
-globalresearch.ca/latest-news-and-top-stories
+davidwolfe.com/category/news/   No spider. Entry page returns 403 error for Scrapy
+eyeopening.info/category/politics   Spider added
+globalresearch.ca/latest-news-and-top-stories   No spider. Entry page returns 403 error for Scrapy
 henrymakow.com/archives.html
 infowars.com/category/us-news/
 gellerreport.com/category/atlas-articles/

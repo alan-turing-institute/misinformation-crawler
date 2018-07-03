@@ -149,4 +149,75 @@ class OccupyDemocrats(CrawlSpider):
             f.write(response.url + "\n")
             print(response.url)
 
+# Doesn't work (entry page gives 403 error)
+# class DavidWolfe(CrawlSpider):
+#     name = 'davidwolfe.com'
+#     allowed_domains = ['davidwolfe.com']
+#     start_urls = ['https://www.davidwolfe.com/category/news/']
+#     rules = (
+#         # Extract links to other pages and follow links from them (no callback means follow=True by default)
+#         Rule(LinkExtractor(allow=('category/news/page/',), )),
+#         # Extract links to articles
+#         Rule(LinkExtractor(restrict_xpaths=('//h2[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a',)), callback='parse_item'),
+#     )
+#
+#     def parse_item(self, response):
+#         with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+#             # write out the title and add a newline.
+#             f.write(response.url + "\n")
+#             print(response.url)
 
+
+class EyeOpening(CrawlSpider):
+    name = 'eyeopening.info'
+    allowed_domains = ['eyeopening.info']
+    start_urls = ['http://eyeopening.info/category/politics/']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('category/politics/page/',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//h2[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
+
+
+# Doesn't work (entry page gives 403 error)
+# class GlobalResearch(CrawlSpider):
+#     name = 'globalresearch.ca'
+#     allowed_domains = ['globalresearch.ca']
+#     start_urls = ['http://globalresearch.ca/latest-news-and-top-stories']
+#     rules = (
+#         # Extract links to other pages and follow links from them (no callback means follow=True by default)
+#         Rule(LinkExtractor(allow=('latest-news-and-top-stories/page/',), )),
+#         # Extract links to articles
+#         Rule(LinkExtractor(restrict_xpaths=('//strong[contains(concat(" ",normalize-space(@class)," ")," title ")]/a',)), callback='parse_item'),
+#     )
+#
+#     def parse_item(self, response):
+#         with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+#             # write out the title and add a newline.
+#             f.write(response.url + "\n")
+#             print(response.url)
+
+
+class HenryMakow(CrawlSpider):
+    name = 'henrymakow.com'
+    allowed_domains = ['henrymakow.com']
+    start_urls = ['http://henrymakow.com/archives.html']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('category/politics/page/',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//p[not(@class)]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
