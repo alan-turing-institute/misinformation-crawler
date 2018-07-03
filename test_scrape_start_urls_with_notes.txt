@@ -14,12 +14,12 @@ occupydemocrats.com Spider added
 davidwolfe.com/category/news/   No spider. Entry page returns 403 error for Scrapy
 eyeopening.info/category/politics   Spider added
 globalresearch.ca/latest-news-and-top-stories   No spider. Entry page returns 403 error for Scrapy
-henrymakow.com/archives.html
-infowars.com/category/us-news/
-gellerreport.com/category/atlas-articles/
-prisonplanet.com/section/featured-stories
-cap-news.com/section.php?id=politics
-empirenews.net/category/politics/
+henrymakow.com/archives.html    Spider added
+infowars.com/category/us-news/ No spider due to javascript "load more" button.
+gellerreport.com/category/atlas-articles/    No spider as I can't get LinkExtractor to work (rel=bookmark?)
+prisonplanet.com/section/featured-stories    No spider as I can't get LinkExtractor to work (rel=bookmark?)
+cap-news.com/section.php?id=politics    No spider as entry page has limited stories and no pagination / load more
+empirenews.net/category/politics/ Spider added
 ladylibertysnews.com/category/news/
 madworldnews.com/politics/
 newsbreakshere.com/category/politics
