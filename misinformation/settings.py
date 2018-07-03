@@ -61,6 +61,9 @@ ROBOTSTXT_OBEY = True
 #EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
+EXTENSIONS = {
+    'scrapy.extensions.closespider.CloseSpider': 500
+}
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
