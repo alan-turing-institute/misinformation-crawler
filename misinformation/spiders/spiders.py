@@ -418,3 +418,24 @@ class JuficialWatch(CrawlSpider):
             # write out the title and add a newline.
             f.write(response.url + "\n")
             print(response.url)
+
+
+class DailyKos(CrawlSpider):
+    name = 'dailykos.com'
+    allowed_domains = ['dailykos.com']
+    start_urls = ['http://dailykos.com']
+    custom_settings = {
+        'ROBOTSTXT_OBEY': False
+    }
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('/\?page=\d*',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//div[contains(concat(" ",normalize-space(@class)," ")," story-title ")]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
