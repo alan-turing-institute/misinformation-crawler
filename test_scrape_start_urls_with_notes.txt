@@ -44,7 +44,7 @@ satirewire.com/content1/?cat=13    Spider added and sample captured
 scrappleface.com/blog/category/politics/    Spider added and sample captured
 rt.com/usa/  No spider due to javascript "load more" button.
 ifyouonlynews.com/category/politics/ Spider added and sample captured
-madpatriots.com/category/news/  Spider added and sample captured
+madpatriots.com/category/news/  No spider as entry page has limited stories and no pagination / load more
 madworldnews.com/politics/  Duplicate of line 24. Ignored.
 veteransnewsreport.com/category/government-and-politics/    Spider added and sample captured
 washingtonpost.com/politics  No spider due to javascript "load more" button. (also free/paid selection and GDPR agreement UI)
