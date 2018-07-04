@@ -44,12 +44,12 @@ satirewire.com/content1/?cat=13
 scrappleface.com/blog/category/politics/
 rt.com/usa/
 ifyouonlynews.com/category/politics/
-madpatriots.com/category/news/
-madworldnews.com/politics/
+madpatriots.com/category/news/  Spider added
+madworldnews.com/politics/  Duplicate of line 24
 veteransnewsreport.com/category/government-and-politics/
-washingtonpost.com/politics
-nytimes.com/section/politics
-abcnews.go.com/Politics
-nbcnews.com/politics
-vox.com/policy-and-politics
-foxnews.com/politics.html
+washingtonpost.com/politics  No spider due to javascript "load more" button. (also free/paid selection and GDPR agreement UI)
+nytimes.com/section/politics  No spider due to javascript "load more" button.
+abcnews.go.com/Politics    No spider as entry page has limited stories and no pagination / load more
+nbcnews.com/politics    No spider as entry page has limited stories and no pagination / load more
+vox.com/policy-and-politics  No spider due to javascript "load more" button.
+foxnews.com/politics.html  No spider due to javascript "load more" button.
