@@ -35,7 +35,7 @@ breitbart.com
 dailycaller.com/section/politics/
 dailykos.com
 drudgereport.com
-judicialwatch.org/blog/
+judicialwatch.org/blog/   Spider added
 thinkprogress.org   Spider added
 christianpost.com/politics/  No spider due to javascript "load more" button.
 disclose.tv/d/politics  No spider due to javascript "load more" button.
