@@ -20,8 +20,8 @@ gellerreport.com/category/atlas-articles/    No spider as I can't get LinkExtrac
 prisonplanet.com/section/featured-stories    No spider as I can't get LinkExtractor to work (rel=bookmark?)
 cap-news.com/section.php?id=politics    No spider as entry page has limited stories and no pagination / load more
 empirenews.net/category/politics/ Spider added
-ladylibertysnews.com/category/news/
-madworldnews.com/politics/
+ladylibertysnews.com/category/news/ No spider due to javascript "load more" button.
+madworldnews.com/politics/  Spider added
 newsbreakshere.com/category/politics
 realnewsrightnow.com/politics/
 usasupreme.com/category/politics/

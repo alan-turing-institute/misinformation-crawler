@@ -276,3 +276,22 @@ class EmpireNews(CrawlSpider):
             # write out the title and add a newline.
             f.write(response.url + "\n")
             print(response.url)
+
+
+class MadWorldNews(CrawlSpider):
+    name = 'madworldnews.com'
+    allowed_domains = ['madworldnews.com']
+    start_urls = ['http://madworldnews.com/politics/']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('politics/page/',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
+
