@@ -348,3 +348,21 @@ class ScrappleFace(CrawlSpider):
             # write out the title and add a newline.
             f.write(response.url + "\n")
             print(response.url)
+
+
+class SatireWire(CrawlSpider):
+    name = 'satirewire.com'
+    allowed_domains = ['satirewire.com']
+    start_urls = ['http://satirewire.com/content1/?cat=13']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('content1/\?cat=13&paged=\d*',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//div[contains(concat(" ",normalize-space(@class)," ")," excerpt ")]/h2/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
