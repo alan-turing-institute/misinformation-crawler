@@ -31,8 +31,8 @@ centerforsecuritypolicy.org/#articles
 nationalvanguard.org
 themuslimissue.wordpress.com
 alternet.org
-breitbart.com
-dailycaller.com/section/politics/
+breitbart.com   Spider added
+dailycaller.com/section/politics/    No spider as entry page has limited stories and no pagination / load more
 dailykos.com    Spider added
 drudgereport.com    No spider as no clear rule on which links are articles (maybe all?). 
 judicialwatch.org/blog/   Spider added

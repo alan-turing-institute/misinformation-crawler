@@ -439,3 +439,20 @@ class DailyKos(CrawlSpider):
             # write out the title and add a newline.
             f.write(response.url + "\n")
             print(response.url)
+
+
+class Breitbart(CrawlSpider):
+    name = 'breitbart.com'
+    allowed_domains = ['breitbart.com']
+    start_urls = ['http://breitbart.com']
+    rules = (
+        # Extract links to articles
+        Rule(LinkExtractor(
+            restrict_xpaths=('//footer[contains(concat(" ",normalize-space(@class)," ")," byline ")]/h2/a',)),
+             callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
