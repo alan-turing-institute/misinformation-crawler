@@ -43,7 +43,7 @@ islamicanews.com/category/politics/
 satirewire.com/content1/?cat=13
 scrappleface.com/blog/category/politics/
 rt.com/usa/
-ifyouonlynews.com/category/politics/
+.com/category/politics/ Spider added
 madpatriots.com/category/news/  Spider added
 madworldnews.com/politics/  Duplicate of line 24
 veteransnewsreport.com/category/government-and-politics/

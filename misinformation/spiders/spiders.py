@@ -312,3 +312,21 @@ class VeteransNewsReport(CrawlSpider):
             # write out the title and add a newline.
             f.write(response.url + "\n")
             print(response.url)
+
+
+class IfYouOnlyNews(CrawlSpider):
+    name = 'ifyouonlynews.com'
+    allowed_domains = ['ifyouonlynews.com']
+    start_urls = ['http://ifyouonlynews.com/category/politics/']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('category/politics/page/',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//h2[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
