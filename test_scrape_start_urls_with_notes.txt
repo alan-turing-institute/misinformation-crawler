@@ -41,8 +41,8 @@ christianpost.com/politics/
 disclose.tv/d/politics
 islamicanews.com/category/politics/
 satirewire.com/content1/?cat=13
-scrappleface.com/blog/category/politics/
-rt.com/usa/
+scrappleface.com/blog/category/politics/    Spider added
+rt.com/usa/  No spider due to javascript "load more" button.
 ifyouonlynews.com/category/politics/ Spider added
 madpatriots.com/category/news/  Spider added
 madworldnews.com/politics/  Duplicate of line 24
