@@ -30,7 +30,7 @@ barenakedislam.com
 centerforsecuritypolicy.org/#articles
 nationalvanguard.org
 themuslimissue.wordpress.com
-alternet.org
+alternet.org    Spider added but not fully working. Only parses articles on start page as does not follow "/article" link
 breitbart.com   Spider added
 dailycaller.com/section/politics/    No spider as entry page has limited stories and no pagination / load more
 dailykos.com    Spider added

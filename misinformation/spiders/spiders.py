@@ -456,3 +456,22 @@ class Breitbart(CrawlSpider):
         with open('article_urls/{}.txt'.format(self.name), 'a') as f:
             # write out the title and add a newline.
             f.write(response.url + "\n")
+
+
+# TODO: Only parses articles on start page as does not follow "/article" link
+class Alternet(CrawlSpider):
+    name = 'alternet.org'
+    allowed_domains = ['alternet.org']
+    start_urls = ['http://alternet.org']
+    rules = (
+        # Extract links to other pages and follow links from them (no callback means follow=True by default)
+        Rule(LinkExtractor(allow=('archive',), )),
+        # Extract links to articles
+        Rule(LinkExtractor(restrict_xpaths=('//div[contains(concat(" ",normalize-space(@class)," ")," title_overlay ")]/h2/a', '//div[contains(concat(" ",normalize-space(@class)," ")," node-story ")]/div/h2/a',)), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
+            # write out the title and add a newline.
+            f.write(response.url + "\n")
+            print(response.url)
