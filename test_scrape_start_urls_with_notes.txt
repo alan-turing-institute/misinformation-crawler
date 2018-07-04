@@ -39,7 +39,7 @@ judicialwatch.org/blog/
 thinkprogress.org
 christianpost.com/politics/
 disclose.tv/d/politics
-islamicanews.com/category/politics/
+islamicanews.com/category/politics/ Spider added
 satirewire.com/content1/?cat=13    Spider added
 scrappleface.com/blog/category/politics/    Spider added
 rt.com/usa/  No spider due to javascript "load more" button.
