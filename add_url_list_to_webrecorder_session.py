@@ -22,7 +22,7 @@ def main():
         help='Session ID on webrecorder.io.')
 
     args = parser.parse_args()
-    mean_load_interval_seconds = 2
+    mean_load_interval_seconds = 3
     max_jitter_seconds = 1
 
 
