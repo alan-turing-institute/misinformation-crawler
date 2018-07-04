@@ -36,9 +36,9 @@ dailycaller.com/section/politics/
 dailykos.com
 drudgereport.com
 judicialwatch.org/blog/
-thinkprogress.org
-christianpost.com/politics/
-disclose.tv/d/politics
+thinkprogress.org   Spider added
+christianpost.com/politics/  No spider due to javascript "load more" button.
+disclose.tv/d/politics  No spider due to javascript "load more" button.
 islamicanews.com/category/politics/ Spider added
 satirewire.com/content1/?cat=13    Spider added
 scrappleface.com/blog/category/politics/    Spider added
