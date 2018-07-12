@@ -1,5 +1,9 @@
+from datetime import datetime
+from misinformation.items import Article
+from scrapy.loader import ItemLoader
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+
 
 # Crawlers that have page links on the start URL
 class ConservativeHq(CrawlSpider):
@@ -14,10 +18,26 @@ class ConservativeHq(CrawlSpider):
     )
 
     def parse_item(self, response):
-        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
-            # write out the title and add a newline.
-            f.write(response.url + "\n")
-            print(response.url)
+        # Log article metadata
+        article = Article()
+        article['site_name'] = self.name
+        article['article_url'] = response.url
+        article['title'] = response.xpath('//div[@id="content"]/h1[@class="title"]/text()').extract_first()
+        author_date_xpath = '//div[contains(concat(" ",normalize-space(@class)," ")," field-item ")]/text()'
+        author_date = response.xpath(author_date_xpath).extract_first()
+        if author_date:
+            author, publication_date = author_date.strip().split("|")
+            if author:
+                article["authors"] = [author.strip()]
+            if publication_date:
+                pub_month, pub_day, pub_year = [int(d) for d in publication_date.strip().split("/")]
+                publication_date = "{:02d}-{:02d}-{:02d}".format(pub_year, pub_month, pub_day)
+                if pub_year < 100:
+                    article["publication_date"] = datetime.strptime(publication_date, "%y-%m-%d")
+                else:
+                    article["publication_date"] = datetime.strptime(publication_date, "%Y-%m-%d")
+        article['content'] = response.xpath('//div[@class="content"]/p').extract()
+        return article
 
 
 class FederalistPress(CrawlSpider):
