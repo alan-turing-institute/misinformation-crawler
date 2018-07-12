@@ -1,6 +1,6 @@
 from datetime import datetime
+import iso8601
 from misinformation.items import Article
-from scrapy.loader import ItemLoader
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
@@ -18,7 +18,7 @@ class ConservativeHq(CrawlSpider):
     )
 
     def parse_item(self, response):
-        # Log article metadata
+        # Extract article metadata and structured text
         article = Article()
         article['site_name'] = self.name
         article['article_url'] = response.url
@@ -52,10 +52,18 @@ class FederalistPress(CrawlSpider):
     )
 
     def parse_item(self, response):
-        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
-            # write out the title and add a newline.
-            f.write(response.url + "\n")
-            print(response.url)
+        # Extract article metadata and structured text
+        article = Article()
+        article['site_name'] = self.name
+        article['article_url'] = response.url
+        article['title'] = response.css('.post').xpath('./h2[@class="entry-title"]/a/text()').extract_first()
+        author = response.css('.author').xpath('./span[@class="fn"]/a/text()').extract_first()
+        article["authors"] = [author.strip()]
+        publication_date = response.xpath('//span[@class="date published time"]/@title').extract_first()
+        print(publication_date)
+        if publication_date:
+            article["publication_date"] = iso8601.parse_date(publication_date)
+        return article
 
 
 class PalmerReport(CrawlSpider):
