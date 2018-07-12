@@ -1,5 +1,28 @@
+from datetime import datetime
+import json
+from misinformation.items import Article
+import os
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+
+
+def save_article(article):
+    out_dir = "articles"
+    # Ensure output directory exists
+    if not(os.path.isdir(out_dir)):
+        os.makedirs(out_dir)
+
+    # Write article metadata to file
+    with open('{}/{}_metadata.txt'.format(out_dir, article['site_name']), 'a') as f:
+        # write article metadata as JSON
+        f.write(json.dumps(dict(article)))
+
+    # Add URL to article list for archiving full content as WARC later
+    with open('{}/{}_urls.txt'.format(out_dir, article['site_name']), 'a') as f:
+        # write out the title and add a newline.
+        f.write(article['article_url'])
+    return article
+
 
 # Crawlers that have page links on the start URL
 class ConservativeHq(CrawlSpider):
@@ -14,10 +37,18 @@ class ConservativeHq(CrawlSpider):
     )
 
     def parse_item(self, response):
-        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
-            # write out the title and add a newline.
-            f.write(response.url + "\n")
-            print(response.url)
+        # Log article metadata
+        article = Article()
+        article['site_name'] = self.name
+        article['article_url'] = response.url
+        article['title'] = response.xpath('//div[@id="content"]/h1[@class="title"]/text()').extract_first()
+        author_date = response.xpath('//div[contains(concat(" ",normalize-space(@class)," ")," field-item ")]/text()').extract_first()
+        print(author_date)
+        article['authors'], article['publication_date'] = [x.strip() for x in author_date.split("|")]
+        article['publication_date'] = datetime.strptime(article['publication_date'], '%m %d %y')
+        print("a: {}; d: {}".format(article['authors'], article['publication_date']))
+
+        save_article(article)
 
 
 class FederalistPress(CrawlSpider):
