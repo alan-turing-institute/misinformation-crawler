@@ -12,4 +12,6 @@ class Article(scrapy.Item):
     title = scrapy.Field()
     authors = scrapy.Field()
     publication_date = scrapy.Field()
-    last_updated_date = scrapy.Field()
+    content = scrapy.Field()
+
+

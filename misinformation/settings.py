@@ -14,6 +14,8 @@ BOT_NAME = 'misinformation'
 SPIDER_MODULES = ['misinformation.spiders']
 NEWSPIDER_MODULE = 'misinformation.spiders'
 
+FEED_FORMAT = 'jsonlines'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'misinformation (+http://www.yourdomain.com)'
@@ -67,9 +69,9 @@ EXTENSIONS = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'misinformation.pipelines.MisinformationPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'misinformation.pipelines.ArticleJsonExporterPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
