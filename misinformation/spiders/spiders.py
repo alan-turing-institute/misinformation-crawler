@@ -38,7 +38,7 @@ class ConservativeHq(CrawlSpider):
                     article["publication_date"] = datetime.strptime(publication_date, "%y-%m-%d")
                 else:
                     article["publication_date"] = datetime.strptime(publication_date, "%Y-%m-%d")
-        article['content'] = response.xpath('//div[@class="content"]/p').extract()
+        article['content'] = response.xpath('//div[@class="content"]//p').extract()
         return article
 
 
