@@ -112,11 +112,21 @@ class PatriotNewsDaily(CrawlSpider):
     )
 
     def parse_item(self, response):
-        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
-            # write out the title and add a newline.
-            f.write(response.url + "\n")
-            print(response.url)
-
+        # Extract article metadata and structured text
+        article = Article()
+        article['site_name'] = self.name
+        article['article_url'] = response.url
+        title = response.css('.post-title').xpath('./span[@itemprop="name"]/text()').extract_first()
+        if title:
+            article['title'] = title.strip()
+        author = response.xpath('//span[@class="post-meta-author"]/a/text()').extract_first()
+        if author:
+            article["authors"] = [author.strip()]
+        publication_date = response.xpath('//span[@class="tie-date"]/text()').extract_first()
+        if publication_date:
+            article["publication_date"] = datetime.strptime(publication_date, '%B %d, %Y')
+        article['content'] = response.css('.entry').xpath('.//p').extract()
+        return article
 
 # Crawler doesn't extract any links
 # class RedStateWatcher(CrawlSpider):
