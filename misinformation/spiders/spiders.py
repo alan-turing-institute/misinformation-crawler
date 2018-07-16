@@ -58,13 +58,16 @@ class FederalistPress(CrawlSpider):
         article = Article()
         article['site_name'] = self.name
         article['article_url'] = response.url
-        article['title'] = response.css('.post').xpath('./h2[@class="entry-title"]/a/text()').extract_first()
+        title = response.css('.post').xpath('./h2[@class="entry-title"]/a/text()').extract_first()
+        if title:
+            article['title'] = title.strip()
         author = response.css('.author').xpath('./span[@class="fn"]/a/text()').extract_first()
+        if author:
         article["authors"] = [author.strip()]
         publication_date = response.xpath('//span[@class="date published time"]/@title').extract_first()
-        print(publication_date)
         if publication_date:
             article["publication_date"] = iso8601.parse_date(publication_date)
+        article['content'] = response.xpath('//div[@class="entry-content"]//p').extract()
         return article
 
 
