@@ -38,7 +38,7 @@ class ConservativeHq(CrawlSpider):
                     article["publication_date"] = datetime.strptime(publication_date, "%y-%m-%d")
                 else:
                     article["publication_date"] = datetime.strptime(publication_date, "%Y-%m-%d")
-        article['content'] = response.xpath('//div[@class="content"]//p').extract()
+        article['content'] = response.css('.content').xpath('.//p').extract()
         return article
 
 
@@ -67,7 +67,7 @@ class FederalistPress(CrawlSpider):
         publication_date = response.xpath('//span[@class="date published time"]/@title').extract_first()
         if publication_date:
             article["publication_date"] = iso8601.parse_date(publication_date)
-        article['content'] = response.xpath('//div[@class="entry-content"]//p').extract()
+        article['content'] = response.css('.entry-content').xpath('.//p').extract()
         return article
 
 
