@@ -22,7 +22,9 @@ class ConservativeHq(CrawlSpider):
         article = Article()
         article['site_name'] = self.name
         article['article_url'] = response.url
-        article['title'] = response.xpath('//div[@id="content"]/h1[@class="title"]/text()').extract_first()
+        title = response.xpath('//div[@id="content"]/h1[@class="title"]/text()').extract_first()
+        if title:
+            article['title'] = title.strip()
         author_date_xpath = '//div[contains(concat(" ",normalize-space(@class)," ")," field-item ")]/text()'
         author_date = response.xpath(author_date_xpath).extract_first()
         if author_date:
