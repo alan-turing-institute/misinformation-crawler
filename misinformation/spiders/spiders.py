@@ -63,7 +63,7 @@ class FederalistPress(CrawlSpider):
             article['title'] = title.strip()
         author = response.css('.author').xpath('./span[@class="fn"]/a/text()').extract_first()
         if author:
-        article["authors"] = [author.strip()]
+            article["authors"] = [author.strip()]
         publication_date = response.xpath('//span[@class="date published time"]/@title').extract_first()
         if publication_date:
             article["publication_date"] = iso8601.parse_date(publication_date)
@@ -83,10 +83,21 @@ class PalmerReport(CrawlSpider):
     )
 
     def parse_item(self, response):
-        with open('article_urls/{}.txt'.format(self.name), 'a') as f:
-            # write out the title and add a newline.
-            f.write(response.url + "\n")
-            print(response.url)
+        # Extract article metadata and structured text
+        article = Article()
+        article['site_name'] = self.name
+        article['article_url'] = response.url
+        title = response.css('.fl-post-header').xpath('./h1[@class="fl-post-title"]/text()').extract_first()
+        if title:
+            article['title'] = title.strip()
+        author = response.xpath('//span[@class="fl-post-author"]/a/text()').extract_first()
+        if author:
+            article["authors"] = [author.strip()]
+        publication_date = response.xpath('//meta[@itemprop="datePublished"]/@content').extract_first()
+        if publication_date:
+            article["publication_date"] = iso8601.parse_date(publication_date)
+        article['content'] = response.css('.fl-post-content').xpath('.//p').extract()
+        return article
 
 
 class PatriotNewsDaily(CrawlSpider):
