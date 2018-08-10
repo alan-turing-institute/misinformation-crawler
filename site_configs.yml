@@ -1,0 +1,12 @@
+# Spider configurations for each website to be crawled
+
+conservativehq.com:
+  site_name: 'conservativehq.com'
+  start_url: 'http://conservativehq.com/exclusives'
+  follow_url_path: 'exclusives'
+  article_url_path: 'article/'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'content'
+

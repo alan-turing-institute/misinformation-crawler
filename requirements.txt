@@ -1,2 +1,5 @@
+extruct
 iso8601
+pyyaml
 scrapy
+twisted

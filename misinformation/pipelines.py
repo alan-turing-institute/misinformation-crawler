@@ -12,7 +12,7 @@ class ArticleJsonExporterPipeline(object):
     # Initialise pipeline when crawler opened
     def open_spider(self, spider):
         output_dir = "articles"
-        output_file = "{}.txt".format(spider.name)
+        output_file = "{}.txt".format(spider.site_name)
         # Ensure output directory exists
         if not(os.path.isdir(output_dir)):
             os.makedirs(output_dir)
