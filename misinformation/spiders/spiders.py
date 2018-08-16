@@ -6,6 +6,7 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urlparse
 
+
 # Helper function for selecting elements by class name. This is s little complex in xpath as
 # (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
 # (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
