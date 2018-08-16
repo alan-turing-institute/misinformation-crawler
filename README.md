@@ -10,6 +10,8 @@ Can currently crawl the following sites with configurations in `misinformation/s
 
 Usage: `python crawl-all.py -n=<max_articles_per_site>` (limit is optional and all areticles will be crawled if left off)
 
+Crawled articles saved one file per site in `articles/`
+
 Actual number of articles returned may be up to 16 higher due to number of parallel requests scrapy has open at any time
 
 Several other sites have custom crawlers defined in `misinformation/spiders/spiders.py` that have not yet been
