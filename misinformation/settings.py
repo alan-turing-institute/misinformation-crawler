@@ -15,6 +15,7 @@ SPIDER_MODULES = ['misinformation.spiders']
 NEWSPIDER_MODULE = 'misinformation.spiders'
 
 FEED_FORMAT = 'jsonlines'
+LOG_LEVEL = 'INFO'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

@@ -1,0 +1,31 @@
+# Spider configurations for each website to be crawled
+
+conservativehq.com:
+  site_name: 'conservativehq.com'
+  start_url: 'http://conservativehq.com/exclusives'
+  follow_url_path: 'exclusives'
+  article_url_path: 'article/'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'content'
+
+federalistpress.com:
+  site_name: 'federalistpress.com'
+  start_url: 'http://federalistpress.com/category/all-stories'
+  follow_url_path: 'category/all-stories/page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
+
+palmerreport.com:
+  site_name: 'palmerreport.com'
+  start_url: 'https://palmerreport.com/category/analysis/'
+  follow_url_path: 'category/analysis/page/'
+  article_url_xpath: '//h2[@class="fl-post-grid-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'fl-post-content'

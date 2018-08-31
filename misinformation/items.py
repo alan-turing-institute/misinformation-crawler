@@ -13,5 +13,6 @@ class Article(scrapy.Item):
     authors = scrapy.Field()
     publication_date = scrapy.Field()
     content = scrapy.Field()
+    microformat_metadata = scrapy.Field()
 
 

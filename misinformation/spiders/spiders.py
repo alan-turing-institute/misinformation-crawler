@@ -1,8 +1,74 @@
 from datetime import datetime
+import extruct
 import iso8601
 from misinformation.items import Article
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+from urllib.parse import urlparse
+
+
+# Helper function for selecting elements by class name. This is s little complex in xpath as
+# (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
+# (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
+def xpath_class(element, class_name):
+    return "{element}[contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')]".format(
+        class_name=class_name, element=element)
+
+
+# Generic crawl spider for websites that meet the following criteria
+# (i) Lists of articles are paged such that links
+class MisinformationSpider(CrawlSpider):
+    name = 'misinformation'
+
+    def __init__(self, config, *args, **kwargs):
+        self.config = config
+
+        self.site_name = config['site_name']
+        start_url = self.config['start_url']
+        self.start_urls = [start_url]
+        # Parse domain from start URL and use to restrict crawl to follow only internal site links
+        site_domain = urlparse(start_url).netloc
+        self.allowed_domains = [site_domain]
+
+        # Rules for finding article links
+        # 1. Rule for identifying links to follow to pages that might have more articles links
+        if self.config['article_search'] == 'paged':
+            follow_rule = Rule(LinkExtractor(allow=(self.config['follow_url_path'], ),))
+        # 2. Rule for identifying article links
+        # 2a. We can match the link URL itself to a pattern
+        if 'article_url_path' in self.config:
+            article_rule = Rule(LinkExtractor(
+                allow=(self.config['article_url_path'],)), callback='parse_item')
+        # 2b. We need to inspect the element containing the link
+        elif 'article_url_xpath' in self.config:
+            article_rule = Rule(LinkExtractor(
+                restrict_xpaths=(self.config['article_url_xpath'],)), callback='parse_item')
+        self.rules = (follow_rule, article_rule, )
+
+        # We need to call the super constructor AFTER setting the rules as it calls self._compile_rules(), storing them
+        # in self._rules. If we call the super constructor before we define the rules, they will not be compiled and
+        # self._rules will be empty, even though self.rules will have the right rules present.
+        super().__init__(*args, **kwargs)
+
+    # This function will automatically get called as part of the item processing pipeline
+    def parse_item(self, response):
+        if self.config['metadata_source'] == 'microdata':
+            return self.parse_microdata_item(response)
+
+    # Article parser for sites that embed article metadata using the microdata format
+    def parse_microdata_item(self, response):
+        # Extract article metadata and structured text
+        article = Article()
+        article['site_name'] = self.site_name
+        article['article_url'] = response.url
+        # Extract article metadata from embedded microdata format
+        data = extruct.extract(response.body_as_unicode(), response.url)
+        article["microformat_metadata"] = data
+        # Extract simplified article content. We just extract all paragraphs within the article's parent container
+        article_select_xpath = '//{content}'.format(
+            content=xpath_class(self.config['article_element'], self.config['article_class']))
+        article['content'] = response.xpath(article_select_xpath).xpath('.//p').extract()
+        return article
 
 
 # Crawlers that have page links on the start URL
