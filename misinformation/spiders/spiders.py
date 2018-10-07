@@ -7,7 +7,7 @@ from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urlparse
 
 
-# Helper function for selecting elements by class name. This is s little complex in xpath as
+# Helper function for selecting elements by class name. This is a little complex in xpath as
 # (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
 # (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
 def xpath_class(element, class_name):
@@ -16,7 +16,7 @@ def xpath_class(element, class_name):
 
 
 # Generic crawl spider for websites that meet the following criteria
-# (i) Lists of articles are paged such that links
+# (i) Lists of articles are paged and navigable to with HTML links
 class MisinformationSpider(CrawlSpider):
     name = 'misinformation'
 
