@@ -17,6 +17,12 @@ NEWSPIDER_MODULE = 'misinformation.spiders'
 FEED_FORMAT = 'jsonlines'
 LOG_LEVEL = 'INFO'
 
+# Set maximum length of URL to crawl to match the worst case maximum length that
+# can be uniquely indexed by Azure SQL server.
+# The maximum length of a nonclustered index is 1700 bytes and each character in
+# a unicode storing NVCHAR column can require two bytes of storage
+URLLENGTH_LIMIT = 850
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'misinformation (+http://www.yourdomain.com)'
