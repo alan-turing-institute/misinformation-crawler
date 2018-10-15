@@ -17,3 +17,8 @@ Actual number of articles returned may be up to 16 higher due to number of paral
 Several other sites have custom crawlers defined in `misinformation/spiders/spiders.py` that have not yet been
 converted into configurations for the custom crawler. If scrapy is installed, these can be run using
 `scrapy <spider-name>` (spider name is the website domain).
+
+## Using pyodbc on macos
+If you are not using the latest version of macos, you may get an "sql.h not found" error when installing the `pyodbc`
+dependency via pip. This is because there is no compiled wheel for your version of macos. The options are (i) upgrade
+to the latest version of macos or (ii) install the `unixodbc` driver libraries using `brew install unixodbc`.

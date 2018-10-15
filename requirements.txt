@@ -1,5 +1,6 @@
 extruct
 iso8601
+pyodbc
 pyyaml
 scrapy
 twisted
