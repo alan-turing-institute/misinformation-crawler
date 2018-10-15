@@ -1,3 +1,7 @@
+
+# Secrets folder containing sensitive data
+secrets/
+
 # generated data
 article_urls/
 articles/
