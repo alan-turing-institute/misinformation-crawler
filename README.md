@@ -4,8 +4,10 @@ Web crawler to collect snapshots of articles to web archive.
 See [main project](https://github.com/alan-turing-institute/misinformation) for project board and issues.
 
 Can currently crawl the following sites with configurations in `misinformation/site_configs.yml`
+- addictinginfo.com
 - conservativehq.com
-- federallistpress.com
+- federalistpress.com
+- palmerreport.com
 - youngcons.com
 
 Usage: `python crawl_all.py -n=<max_articles_per_site>` (limit is optional and all articles will be crawled if left off)
