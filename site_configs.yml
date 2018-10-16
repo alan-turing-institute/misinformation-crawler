@@ -82,3 +82,13 @@ occupydemocrats.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
+davidwolfe.com:
+  site_name: 'davidwolfe.com'
+  start_url: 'https://www.davidwolfe.com/category/news/'
+  follow_url_path: 'category/news/page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
