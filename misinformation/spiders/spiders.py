@@ -116,6 +116,9 @@ class MisinformationSpider(CrawlSpider):
 
     def save_response(self, response):
         raw_article = dict();
+        raw_article['site_name'] = self.site_name
+        raw_article['crawl_date'] = self.crawl_date
+        raw_article['request_url'] = response.request.url
         raw_article['response_url'] = response.url
         raw_article['status'] = response.status
         raw_article['body'] = response.text
