@@ -24,8 +24,51 @@ palmerreport.com:
   site_name: 'palmerreport.com'
   start_url: 'https://palmerreport.com/category/analysis/'
   follow_url_path: 'category/analysis/page/'
-  article_url_xpath: '//h2[@class="fl-post-grid-title"]/a'
+  article_url_xpath: '//h2[@class="fl-post-title"]/a'
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'
   article_class: 'fl-post-content'
+
+# TODO: Test from US IP address (get 403 from UK and Slovakia)
+patriotnewsdaily.com:
+  site_name: 'patriotnewsdaily.com'
+  start_url: 'http://patriotnewsdaily.com/category/all-conservative-news/'
+  follow_url_path: 'category/all-conservative-news/page/'
+  article_url_xpath: '//h2[@class="post-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry'
+
+# TODO: Enhance spider to follow relative links
+# TODO: Find good configurable value for identifying article body DIV (no class)
+#redstatewatcher.com:
+#  site_name: 'redstatewatcher.com'
+#  start_url: 'http://redstatewatcher.com/news.asp'
+#  follow_url_path: 'news.asp\?page=\d*'
+#  article_url_xpath: '//h1[@class="newsheaderpreview"]/a'
+#  metadata_source: 'microdata'
+#  article_search: 'paged'
+#  article_element: 'div'
+#  article_class: 'FIXME'
+
+youngcons.com:
+  site_name: 'youngcons.com'
+  start_url: 'http://youngcons.com/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'td-post-content'
+
+addictinginfo.com:
+  site_name: 'addictinginfo.com'
+  start_url: 'http://addictinginfo.com/category/news/'
+  follow_url_path: 'page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'

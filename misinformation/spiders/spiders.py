@@ -1,13 +1,15 @@
-from datetime import datetime
 import extruct
 import iso8601
 from misinformation.items import Article
+import datetime
+import os
+from scrapy.exporters import JsonItemExporter
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urlparse
 
 
-# Helper function for selecting elements by class name. This is s little complex in xpath as
+# Helper function for selecting elements by class name. This is a little complex in xpath as
 # (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
 # (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
 def xpath_class(element, class_name):
@@ -16,11 +18,16 @@ def xpath_class(element, class_name):
 
 
 # Generic crawl spider for websites that meet the following criteria
-# (i) Lists of articles are paged such that links
+# (i) Lists of articles are paged and navigable to with HTML links
+# (ii) Has metadata in a microdata format
 class MisinformationSpider(CrawlSpider):
     name = 'misinformation'
+    exporter = None
+    crawl_date = None
 
     def __init__(self, config, *args, **kwargs):
+        self.crawl_date = \
+            datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
         self.config = config
 
         self.site_name = config['site_name']
@@ -45,13 +52,49 @@ class MisinformationSpider(CrawlSpider):
                 restrict_xpaths=(self.config['article_url_xpath'],)), callback='parse_item')
         self.rules = (follow_rule, article_rule, )
 
-        # We need to call the super constructor AFTER setting the rules as it calls self._compile_rules(), storing them
+        # Set up saving of raw responses for articles
+        output_dir = "articles"
+        output_file = "{}_full.txt".format(self.site_name)
+        # Ensure output directory exists
+        if not (os.path.isdir(output_dir)):
+            os.makedirs(output_dir)
+        output_path = os.path.join(output_dir, output_file)
+        f = open(output_path, 'wb')
+        self.exporter = JsonItemExporter(f)
+        self.exporter.start_exporting()
+
+        # We need to call the super constructor AFTER setting any rules as it calls self._compile_rules(), storing them
         # in self._rules. If we call the super constructor before we define the rules, they will not be compiled and
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
 
+    # FIXME
+    # # This function will get called once per page hit. We use a custom paese function rather than just adding rules in
+    # # the constructor because we need to use response.follow() to successfully follow relative URLs
+    # def parse_BROKEN(self, response):
+    #     # 1. Rule for identifying links to follow to pages that might have more articles links
+    #     if self.config['article_search'] == 'paged':
+    #         follow_rule = Rule(LinkExtractor(allow=(self.config['follow_url_path'], ),))
+    #     # Follow link and parse with this method
+    #     for href in follow_rule:
+    #         yield response.follow(href, self.parse)
+    #
+    #     # 2. Rule for identifying article links
+    #     # 2a. We can match the link URL itself to a pattern
+    #     if 'article_url_path' in self.config:
+    #         article_rule = Rule(LinkExtractor(
+    #             allow=(self.config['article_url_path'],)), callback='parse_item')
+    #     # 2b. We need to inspect the element containing the link
+    #     elif 'article_url_xpath' in self.config:
+    #         article_rule = Rule(LinkExtractor(
+    #             restrict_xpaths=(self.config['article_url_xpath'],)), callback='parse_item')
+    #     # Follow link ans parse with article parser
+    #     for href in article_rule:
+    #         yield response.follow(href, self.parse_item)
+
     # This function will automatically get called as part of the item processing pipeline
     def parse_item(self, response):
+        self.save_response(response)
         if self.config['metadata_source'] == 'microdata':
             return self.parse_microdata_item(response)
 
@@ -60,6 +103,7 @@ class MisinformationSpider(CrawlSpider):
         # Extract article metadata and structured text
         article = Article()
         article['site_name'] = self.site_name
+        article['crawl_date'] = self.crawl_date
         article['article_url'] = response.url
         # Extract article metadata from embedded microdata format
         data = extruct.extract(response.body_as_unicode(), response.url)
@@ -69,6 +113,23 @@ class MisinformationSpider(CrawlSpider):
             content=xpath_class(self.config['article_element'], self.config['article_class']))
         article['content'] = response.xpath(article_select_xpath).xpath('.//p').extract()
         return article
+
+    def save_response(self, response):
+        raw_article = dict();
+        raw_article['site_name'] = self.site_name
+        raw_article['crawl_date'] = self.crawl_date
+        raw_article['request_url'] = response.request.url
+        raw_article['response_url'] = response.url
+        raw_article['status'] = response.status
+        raw_article['body'] = response.text
+        self.logger.info('Saving response for: {}'.format(response.url))
+        self.exporter.export_item(raw_article)
+        return
+
+    def closed(self, reason):
+        self.exporter.finish_exporting()
+        self.exporter.file.close()
+        self.logger.info('Spider closed: {} ({})'.format(self.name, reason))
 
 
 # Crawlers that have page links on the start URL

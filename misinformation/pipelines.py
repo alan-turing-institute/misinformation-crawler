@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
-from scrapy.exporters import JsonLinesItemExporter
+from scrapy.exporters import JsonItemExporter
 
 
 class ArticleJsonExporterPipeline(object):
@@ -12,13 +12,14 @@ class ArticleJsonExporterPipeline(object):
     # Initialise pipeline when crawler opened
     def open_spider(self, spider):
         output_dir = "articles"
-        output_file = "{}.txt".format(spider.site_name)
+        output_file = "{}_extracted.txt".format(spider.site_name)
         # Ensure output directory exists
         if not(os.path.isdir(output_dir)):
             os.makedirs(output_dir)
         output_path = os.path.join(output_dir, output_file)
         f = open(output_path, 'wb')
-        self.exporter = JsonLinesItemExporter(f)
+        self.exporter = JsonItemExporter(f)
+        self.exporter.start_exporting()
 
     # Tidy up after crawler closed
     def close_spider(self, spider):
