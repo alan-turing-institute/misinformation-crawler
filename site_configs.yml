@@ -92,3 +92,12 @@ davidwolfe.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+eyeopening.info:
+  site_name: 'eyeopening.info'
+  start_url: 'http://eyeopening.info/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
