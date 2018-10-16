@@ -65,6 +65,30 @@ class MisinformationSpider(CrawlSpider):
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
 
+    # FIXME
+    # # This function will get called once per page hit. We use a custom paese function rather than just adding rules in
+    # # the constructor because we need to use response.follow() to successfully follow relative URLs
+    # def parse_BROKEN(self, response):
+    #     # 1. Rule for identifying links to follow to pages that might have more articles links
+    #     if self.config['article_search'] == 'paged':
+    #         follow_rule = Rule(LinkExtractor(allow=(self.config['follow_url_path'], ),))
+    #     # Follow link and parse with this method
+    #     for href in follow_rule:
+    #         yield response.follow(href, self.parse)
+    #
+    #     # 2. Rule for identifying article links
+    #     # 2a. We can match the link URL itself to a pattern
+    #     if 'article_url_path' in self.config:
+    #         article_rule = Rule(LinkExtractor(
+    #             allow=(self.config['article_url_path'],)), callback='parse_item')
+    #     # 2b. We need to inspect the element containing the link
+    #     elif 'article_url_xpath' in self.config:
+    #         article_rule = Rule(LinkExtractor(
+    #             restrict_xpaths=(self.config['article_url_xpath'],)), callback='parse_item')
+    #     # Follow link ans parse with article parser
+    #     for href in article_rule:
+    #         yield response.follow(href, self.parse_item)
+
     # This function will automatically get called as part of the item processing pipeline
     def parse_item(self, response):
         self.save_response(response)
