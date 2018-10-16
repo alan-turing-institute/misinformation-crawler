@@ -124,3 +124,14 @@ henrymakow.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'text-body'
+
+
+gellerreport.com:
+  site_name: 'gellerreport.com'
+  start_url: 'http://gellerreport.com/category/atlas-articles/'
+  follow_url_path: 'category/atlas-articles/page/'
+  article_url_xpath: '//h2[@class="archive-entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
