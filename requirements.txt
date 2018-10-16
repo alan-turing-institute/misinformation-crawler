@@ -1,5 +1,6 @@
 datetime
 extruct
+fake-useragent
 iso8601
 pyodbc
 pyyaml
