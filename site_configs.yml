@@ -29,3 +29,14 @@ palmerreport.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'fl-post-content'
+
+# TODO: Test from US IP address (get 403 from UK and Slovakia)
+patriotnewsdaily.com:
+  site_name: 'patriotnewsdaily.com'
+  start_url: 'http://patriotnewsdaily.com/category/all-conservative-news/'
+  follow_url_path: 'category/all-conservative-news/page/'
+  article_url_xpath: '//h2[@class="post-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry'
