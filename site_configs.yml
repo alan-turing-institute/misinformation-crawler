@@ -125,7 +125,6 @@ henrymakow.com:
   article_element: 'div'
   article_class: 'text-body'
 
-
 gellerreport.com:
   site_name: 'gellerreport.com'
   start_url: 'http://gellerreport.com/category/atlas-articles/'
@@ -135,3 +134,13 @@ gellerreport.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
+prisonplanet.com:
+  site_name: 'prisonplanet.com'
+  start_url: 'http://prisonplanet.com/section/featured-stories/'
+  follow_url_path: 'section/featured-stories/page/'
+  article_url_xpath: '//div[@class="nArchiveHeader"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'subarticle'
