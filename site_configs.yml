@@ -40,6 +40,7 @@ patriotnewsdaily.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry'
+
 # TODO: Enhance spider to follow relative links
 # TODO: Find good configurable value for identifying article body DIV (no class)
 #redstatewatcher.com:
@@ -51,3 +52,13 @@ patriotnewsdaily.com:
 #  article_search: 'paged'
 #  article_element: 'div'
 #  article_class: 'FIXME'
+
+youngcons.com:
+  site_name: 'youngcons.com'
+  start_url: 'http://youngcons.com/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'td-post-content'
