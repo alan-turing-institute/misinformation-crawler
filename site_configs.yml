@@ -93,8 +93,8 @@ davidwolfe.com:
   article_element: 'div'
   article_class: 'entry-content'
 
-# TODO: Get link extraction working. I suspect this may be caused by the rel="bookmark" attribute of the <a> element
-# containing the article href
+# TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
+# the article href as both prisonplanet.com and empirenews.com crawl fine with the same attribute present
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
@@ -144,3 +144,13 @@ prisonplanet.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'subarticle'
+
+empirenews.net:
+  site_name: 'empirenews.net'
+  start_url: 'http://empirenews.net/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h1[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'

@@ -7,6 +7,7 @@ Can currently crawl the following sites with configurations in `misinformation/s
 - addictinginfo.com
 - conservativehq.com
 - davidwolfe.com
+- empirenews.net
 - federalistpress.com
 - gellerreport.com
 - globalresearch.ca
