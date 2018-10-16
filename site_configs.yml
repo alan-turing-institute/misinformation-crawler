@@ -72,3 +72,13 @@ addictinginfo.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
+occupydemocrats.com:
+  site_name: 'occupydemocrats.com'
+  start_url: 'http://occupydemocrats.com'
+  follow_url_path: 'page/'
+  article_url_xpath: '//h3[@itemprop="headline"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
