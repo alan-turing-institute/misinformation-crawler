@@ -92,6 +92,7 @@ davidwolfe.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
@@ -101,3 +102,13 @@ eyeopening.info:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
+globalresearch.ca:
+  site_name: 'globalresearch.ca'
+  start_url: 'http://globalresearch.ca/latest-news-and-top-stories'
+  follow_url_path: 'latest-news-and-top-stories/page/'
+  article_url_xpath: '//strong[@class="title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'content'
