@@ -154,3 +154,13 @@ empirenews.net:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
+madworldnews.com:
+  site_name: 'madworldnews.com'
+  start_url: 'http://madworldnews.com/politics/'
+  follow_url_path: 'politics/page/'
+  article_url_xpath: '//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'

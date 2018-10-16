@@ -12,6 +12,7 @@ Can currently crawl the following sites with configurations in `misinformation/s
 - gellerreport.com
 - globalresearch.ca
 - henrymakow.com
+- madworldnews.com
 - occupydemocrats.com
 - palmerreport.com
 - prisonplanet.com
