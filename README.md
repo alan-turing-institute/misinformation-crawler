@@ -8,7 +8,7 @@ Can currently crawl the following sites with configurations in `misinformation/s
 - federallistpress.com
 - youngcons.com
 
-Usage: `python crawl-all.py -n=<max_articles_per_site>` (limit is optional and all areticles will be crawled if left off)
+Usage: `python crawl_all.py -n=<max_articles_per_site>` (limit is optional and all articles will be crawled if left off)
 
 Crawled articles saved one file per site in `articles/`
 
