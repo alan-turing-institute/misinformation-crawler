@@ -40,3 +40,14 @@ patriotnewsdaily.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry'
+# TODO: Enhance spider to follow relative links
+# TODO: Find good configurable value for identifying article body DIV (no class)
+#redstatewatcher.com:
+#  site_name: 'redstatewatcher.com'
+#  start_url: 'http://redstatewatcher.com/news.asp'
+#  follow_url_path: 'news.asp\?page=\d*'
+#  article_url_xpath: '//h1[@class="newsheaderpreview"]/a'
+#  metadata_source: 'microdata'
+#  article_search: 'paged'
+#  article_element: 'div'
+#  article_class: 'FIXME'
