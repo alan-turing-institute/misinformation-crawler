@@ -93,11 +93,13 @@ davidwolfe.com:
   article_element: 'div'
   article_class: 'entry-content'
 
+# TODO: Get link extraction working. I suspect this may be caused by the rel="bookmark" attribute of the <a> element
+# containing the article href
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  article_url_xpath: '//h2[@class="entry-title"]/a' #FIXME? - Or fix LinkExtractor / use custom parse() method
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'
