@@ -1,7 +1,7 @@
-from datetime import datetime
 import extruct
 import iso8601
 from misinformation.items import Article
+import datetime
 import os
 from scrapy.exporters import JsonItemExporter
 from scrapy.spiders import CrawlSpider, Rule
@@ -23,8 +23,11 @@ def xpath_class(element, class_name):
 class MisinformationSpider(CrawlSpider):
     name = 'misinformation'
     exporter = None
+    crawl_date = None
 
     def __init__(self, config, *args, **kwargs):
+        self.crawl_date = \
+            datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
         self.config = config
 
         self.site_name = config['site_name']
@@ -100,6 +103,7 @@ class MisinformationSpider(CrawlSpider):
         # Extract article metadata and structured text
         article = Article()
         article['site_name'] = self.site_name
+        article['crawl_date'] = self.crawl_date
         article['article_url'] = response.url
         # Extract article metadata from embedded microdata format
         data = extruct.extract(response.body_as_unicode(), response.url)
