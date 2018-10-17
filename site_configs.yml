@@ -72,3 +72,95 @@ addictinginfo.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+
+occupydemocrats.com:
+  site_name: 'occupydemocrats.com'
+  start_url: 'http://occupydemocrats.com'
+  follow_url_path: 'page/'
+  article_url_xpath: '//h3[@itemprop="headline"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
+
+davidwolfe.com:
+  site_name: 'davidwolfe.com'
+  start_url: 'https://www.davidwolfe.com/category/news/'
+  follow_url_path: 'category/news/page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
+
+# TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
+# the article href as both prisonplanet.com and empirenews.com crawl fine with the same attribute present
+eyeopening.info:
+  site_name: 'eyeopening.info'
+  start_url: 'http://eyeopening.info/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a' #FIXME? - Or fix LinkExtractor / use custom parse() method
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
+
+globalresearch.ca:
+  site_name: 'globalresearch.ca'
+  start_url: 'http://globalresearch.ca/latest-news-and-top-stories'
+  follow_url_path: 'latest-news-and-top-stories/page/'
+  article_url_xpath: '//strong[@class="title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'content'
+
+henrymakow.com:
+  site_name: 'henrymakow.com'
+  start_url: 'http://henrymakow.com/archives.html'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//p[not(@class)]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'text-body'
+
+gellerreport.com:
+  site_name: 'gellerreport.com'
+  start_url: 'http://gellerreport.com/category/atlas-articles/'
+  follow_url_path: 'category/atlas-articles/page/'
+  article_url_xpath: '//h2[@class="archive-entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
+
+prisonplanet.com:
+  site_name: 'prisonplanet.com'
+  start_url: 'http://prisonplanet.com/section/featured-stories/'
+  follow_url_path: 'section/featured-stories/page/'
+  article_url_xpath: '//div[@class="nArchiveHeader"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'subarticle'
+
+empirenews.net:
+  site_name: 'empirenews.net'
+  start_url: 'http://empirenews.net/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h1[@class="entry-title"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'
+
+madworldnews.com:
+  site_name: 'madworldnews.com'
+  start_url: 'http://madworldnews.com/politics/'
+  follow_url_path: 'politics/page/'
+  article_url_xpath: '//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
+  article_class: 'entry-content'

@@ -24,8 +24,13 @@ LOG_LEVEL = 'INFO'
 URLLENGTH_LIMIT = 850
 
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'misinformation (+http://www.yourdomain.com)'
+# The polite thing to do is to crawl responsibly by identifying ourselves in the user-agent string.
+# However, we get 403 forbidden errors with some sites when using the scrapy default user-agent
+# Here we fix our user agent as the latest one for Chrome for reproducibility (rather than generate a random
+# one based on real world usage distribution).
+from fake_useragent import UserAgent
+ua = UserAgent()
+USER_AGENT = ua.chrome
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
