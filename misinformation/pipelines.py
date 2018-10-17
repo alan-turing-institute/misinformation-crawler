@@ -18,7 +18,7 @@ class ArticleJsonExporterPipeline(object):
             os.makedirs(output_dir)
         output_path = os.path.join(output_dir, output_file)
         f = open(output_path, 'wb')
-        self.exporter = JsonItemExporter(f)
+        self.exporter = JsonItemExporter(f, ensure_ascii=False, encoding='utf-8')
         self.exporter.start_exporting()
 
     # Tidy up after crawler closed
