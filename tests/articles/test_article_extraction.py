@@ -50,7 +50,7 @@ def article_infos_for_all_sites(site_names):
     return article_infos
 
 
-@pytest.fixture(params=article_infos_for_all_sites(["addictinginfo.com"]))
+@pytest.fixture(params=article_infos_for_all_sites(SITE_NAMES))
 def article_info(request):
     return request.param
 

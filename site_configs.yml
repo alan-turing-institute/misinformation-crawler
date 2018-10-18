@@ -9,6 +9,10 @@ conservativehq.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="title"]/text()'
 
 federalistpress.com:
   site_name: 'federalistpress.com'
