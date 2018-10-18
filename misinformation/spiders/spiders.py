@@ -1,6 +1,7 @@
 import extruct
 import iso8601
 from misinformation.items import Article
+from misinformation.extractors import extract_article
 import datetime
 import os
 from scrapy.exporters import JsonItemExporter
@@ -101,7 +102,7 @@ class MisinformationSpider(CrawlSpider):
     # Article parser for sites that embed article metadata using the microdata format
     def parse_microdata_item(self, response):
         # Extract article metadata and structured text
-        article = Article()
+        article = extract_article(response, self.config)
         article['site_name'] = self.site_name
         article['crawl_date'] = self.crawl_date
         article['article_url'] = response.url
