@@ -33,5 +33,13 @@ To run tests, run `python -m pytest` from the repository root.
 
 ## Using pyodbc on macos
 If you are not using the latest version of macos, you may get an "sql.h not found" error when installing the `pyodbc`
-dependency via pip. This is because there is no compiled wheel for your version of macos. The options are (i) upgrade
+dependency via pip. This is because there is no compiled wheel for your version of macos.
+
+The options are (i) upgrade
 to the latest version of macos or (ii) install the `unixodbc` driver libraries using `brew install unixodbc`.
+
+## Install drivers for Microsoft SQL Server on macos
+1. Install Homebrew is you have not already: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+2. Add the Microsoft Tap: `brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release`
+3. Update Homebrew: `brew update`
+4. Install the Microsoft SQL ODBC driver: `brew install --no-sandbox msodbcsql17 mssql-tools`
