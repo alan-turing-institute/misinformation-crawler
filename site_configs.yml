@@ -85,7 +85,7 @@ youngcons.com:
   metadata:
     title:
       select-method: 'xpath'
-      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " post-title ")]/span[@itemprop="name"]/text()'
+      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/text()'
       match-rule: 'first'
 
 addictinginfo.com:
