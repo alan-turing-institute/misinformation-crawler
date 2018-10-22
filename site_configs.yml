@@ -124,6 +124,11 @@ occupydemocrats.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
