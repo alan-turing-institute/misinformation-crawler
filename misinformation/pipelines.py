@@ -10,7 +10,7 @@ class ArticleJsonExporterPipeline(object):
         self.encoder = None
         self.conn = None
         self.cursor = None
-        self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) ?
+        self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) = ?
 
 INSERT INTO articles_v2
     SELECT crawl_id, crawl_date, site_name, article_url, title, author, publication_date,
