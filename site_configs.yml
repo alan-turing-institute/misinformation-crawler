@@ -23,6 +23,10 @@ federalistpress.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
 
 palmerreport.com:
   site_name: 'palmerreport.com'

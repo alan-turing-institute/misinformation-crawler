@@ -5,6 +5,7 @@ import glob
 import pkg_resources
 from misinformation.extractors import extract_article, extract_field
 from scrapy.http import Request,  TextResponse
+import warnings
 import yaml
 
 CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_configs.yml")
@@ -56,8 +57,8 @@ def article_info(request):
 
 
 def test_article_data_extraction(article_info):
-    print(article_info)
     site_name = article_info['site_name']
+    print("\nTesting {site}".format(site=site_name))
     config = CONFIGS[site_name]
     article_stem = article_info['article_stem']
     # Get test data from file
@@ -82,7 +83,6 @@ def test_article_data_extraction(article_info):
 
     # Test full article extraction for supported fields
     article = extract_article(response, config)
-    print(article)
     assert article['title'] == expected_article['title']
 
 
