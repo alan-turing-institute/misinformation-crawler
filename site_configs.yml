@@ -37,6 +37,10 @@ palmerreport.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'fl-post-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="fl-post-title"]/text()'
 
 # TODO: Test from US IP address (get 403 from UK and Slovakia)
 patriotnewsdaily.com:

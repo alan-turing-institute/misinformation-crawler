@@ -16,9 +16,9 @@ def extract_field(response, metadata_spec, fieldname):
     method = extract_spec['select-method']
     expression = extract_spec['select-expression']
 
-    # Apply selector to response to extract chosen metadata field
+    # Apply selector to response to extract chosen metadata field (stripping leading and trailing whitespace)
     if method == 'xpath':
-        field = response.xpath(expression).extract_first()
+        field = response.xpath(expression).extract_first().strip()
     else:
         raise ValueError("{method} is not a valid select-expression".format(method=method))
     return field
