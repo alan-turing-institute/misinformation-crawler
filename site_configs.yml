@@ -52,6 +52,10 @@ patriotnewsdaily.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " post-title ")]/span[@itemprop="name"]/text()'
 
 # TODO: Enhance spider to follow relative links
 # TODO: Find good configurable value for identifying article body DIV (no class)
@@ -74,6 +78,10 @@ youngcons.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'td-post-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " post-title ")]/span[@itemprop="name"]/text()'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
