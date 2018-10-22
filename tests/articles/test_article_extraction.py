@@ -3,9 +3,8 @@ import json
 import os
 import glob
 import pkg_resources
-from misinformation.extractors import extract_article, extract_field
+from misinformation.extractors import extract_article, extract_field, paragraphs_to_plain_content
 from scrapy.http import Request,  TextResponse
-import warnings
 import yaml
 
 CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_configs.yml")
@@ -56,7 +55,7 @@ def article_info(request):
     return request.param
 
 
-def test_article_data_extraction(article_info):
+def test_extract_article(article_info):
     site_name = article_info['site_name']
     print("\nTesting {site}".format(site=site_name))
     config = CONFIGS[site_name]
@@ -86,3 +85,40 @@ def test_article_data_extraction(article_info):
     assert article['title'] == expected_article['title']
 
 
+def test_paragraphs_to_plain_content():
+    paragraphs = [
+        "<p>Simple paragraph</p>",
+        "<p>Paragraph with single <br/> self-closing break</p>",
+        "<p>Paragraph with <br> HTML \"opening\" break</p>",
+        "<p>Paragraph with triple <br/><br/><br/> self-closing break</p>",
+        "<p>Paragraph with triple <br><br><br> HTML \"opening\" break</p>",
+        "<p>Paragraph with 4 alternating <br/><br><br/><br> self-closing and HTML \"opening\" breaks (2 of each)</p>",
+        "<br/><br/><br/>",
+        "<br><br><br>",
+        "<br/><br><br/><br>"
+        "  <p>Paragraph with leading whitespace before opening paragraph tag</p>",
+        "<p>  Paragraph with leading whitespace after opening paragraph tag</p>",
+        "<p>Paragraph with leading whitespace before closing paragraph tag  </p>",
+        "<p>Paragraph with leading whitespace after closing paragraph tag</p>  ",
+        "<p>Paragraph <b>with</b> various <span>inline</span> and <div>block</div> element tags</p>"
+    ]
+    expected_output = [
+        "Simple paragraph",
+        "Paragraph with single",
+        "self-closing break",
+        "Paragraph with",
+        "HTML \"opening\" break",
+        "Paragraph with triple",
+        "self-closing break",
+        "Paragraph with triple",
+        "HTML \"opening\" break",
+        "Paragraph with 4 alternating",
+        "self-closing and HTML \"opening\" breaks (2 of each)",
+        "Paragraph with leading whitespace before opening paragraph tag",
+        "Paragraph with leading whitespace after opening paragraph tag",
+        "Paragraph with leading whitespace before closing paragraph tag",
+        "Paragraph with leading whitespace after closing paragraph tag",
+        "Paragraph with various inline and block element tags"
+    ]
+    output = paragraphs_to_plain_content(paragraphs)
+    assert output == expected_output
