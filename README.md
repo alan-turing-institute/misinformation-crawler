@@ -28,6 +28,9 @@ Several other sites have custom crawlers defined in `misinformation/spiders/spid
 converted into configurations for the custom crawler. If scrapy is installed, these can be run using
 `scrapy <spider-name>` (spider name is the website domain).
 
+## Testing
+To run tests, run `python -m pytest` from the repository root.
+
 ## Using pyodbc on macos
 If you are not using the latest version of macos, you may get an "sql.h not found" error when installing the `pyodbc`
 dependency via pip. This is because there is no compiled wheel for your version of macos. The options are (i) upgrade
