@@ -7,7 +7,7 @@ class Article(scrapy.Item):
     site_name = scrapy.Field()
     article_url = scrapy.Field()
     title = scrapy.Field()
-    authors = scrapy.Field()
+    author = scrapy.Field()
     publication_date = scrapy.Field()
     plain_content = scrapy.Field()
     structured_content = scrapy.Field()

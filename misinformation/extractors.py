@@ -25,10 +25,21 @@ def extract_field(response, metadata_spec, fieldname):
     # Extract selector specification
     method = extract_spec['select-method']
     expression = extract_spec['select-expression']
+    match_rule = extract_spec['match-rule']
 
-    # Apply selector to response to extract chosen metadata field (stripping leading and trailing whitespace)
+    # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
-        field = response.xpath(expression).extract_first().strip()
+        # Extract all instances matching xpath expression
+        field = response.xpath(expression).extract()
+        # Strip leading and trailing whitespace
+        field = [item.strip() for item in field]
+        if match_rule == 'first':
+            field = field[0]
+        elif match_rule == 'all':
+            # Nothing to do but need this to pass validity check
+            field = field
+        else:
+            raise ValueError("{match_rule} is not a valid match-rule".format(match_rule=match_rule))
     else:
         raise ValueError("{method} is not a valid select-expression".format(method=method))
     return field
@@ -57,9 +68,10 @@ def extract_article(response, config):
     article = Article()
     article['article_url'] = response.request.url
     if 'metadata' in config:
+        article['metadata'] = dict()
         # Attempt to extract all metadata fields
         for fieldname in config['metadata']:
-            if fieldname in ['title', 'authors', 'publication_date']:
+            if fieldname in ['title', 'author', 'publication_date']:
                 # Store key metata as top-level article fields
                 article[fieldname] = extract_field(response, config['metadata'], fieldname)
             else:
