@@ -129,6 +129,10 @@ occupydemocrats.com:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
+    author:
+      select-method: 'xpath'
+      select-expression: '//span[contains(concat(" ", normalize-space(@class), " "), " author-name ")]/a/text()'
+      match-rule: 'first'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
