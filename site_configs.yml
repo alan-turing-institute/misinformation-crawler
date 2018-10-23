@@ -171,6 +171,11 @@ globalresearch.ca:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h2[@itemprop="headline"]/text()'
+      match-rule: 'first'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
