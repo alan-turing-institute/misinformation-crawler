@@ -19,11 +19,12 @@ class MisinformationSpider(CrawlSpider):
     crawl_date = None
 
     def __init__(self, config, *args, **kwargs):
+        self.config = config = config
+
+        # Set crawl-level metadata
         self.crawl_id = str(uuid.uuid4())
         self.crawl_date = \
             datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
-        self.config = config
-
         self.site_name = config['site_name']
         start_url = self.config['start_url']
         self.start_urls = [start_url]
