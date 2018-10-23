@@ -146,7 +146,7 @@ davidwolfe.com:
       match-rule: 'first'
 
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
-# the article href as both prisonplanet.com and empirenews.com crawl fine with the same attribute present
+# the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
