@@ -63,6 +63,8 @@ def extract_content(response, config):
     # 1. Extract structured article content. We just extract all paragraphs within the article's parent container
     select_xpath = '//{content}'.format(content=xpath_class(config['article_element'], config['article_class']))
     paragraphs = response.xpath(select_xpath).xpath('.//p').extract()
+    divs = response.xpath(select_xpath).xpath('.//div').extract()
+    paragraphs = paragraphs + divs
     return paragraphs, paragraphs_to_plain_content(paragraphs)
 
 
