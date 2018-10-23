@@ -215,6 +215,11 @@ prisonplanet.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'subarticle'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="subheadlinemain"]/a/text()'
+      match-rule: 'first'
 
 empirenews.net:
   site_name: 'empirenews.net'
