@@ -35,12 +35,15 @@ def article_stems_for_site(site_name):
     for html_file_path in html_file_paths:
         path, file = os.path.split(html_file_path)
         article_stems.append(file.split('_')[0])
+    # Fail fixture set up if no test articles found for site
+    assert article_stems != [], "No HTML test files found for site '{site}'".format(site=site_name)
     return article_stems
 
 
 def article_infos_for_site(site_name):
     article_stems = article_stems_for_site(site_name)
-    return [{"site_name": site_name, "article_stem": article_stem} for article_stem in article_stems]
+    article_infos = [{"site_name": site_name, "article_stem": article_stem} for article_stem in article_stems]
+    return article_infos
 
 
 def article_infos_for_all_sites(site_names):
