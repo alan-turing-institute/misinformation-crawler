@@ -60,9 +60,9 @@ def article_info(request):
 
 def test_extract_article(article_info):
     site_name = article_info['site_name']
-    print("\nTesting {site}".format(site=site_name))
     config = CONFIGS[site_name]
     article_stem = article_info['article_stem']
+    print("\nTesting {site}: {article}".format(site=site_name, article=article_stem))
     # Get test data from file
     data_dir = os.path.join(os.path.dirname(__file__), site_name)
     html_filename = article_stem + '_article.html'
