@@ -1,6 +1,7 @@
 import itertools
 from misinformation.items import Article
 import re
+import warnings
 
 
 # Helper function for selecting elements by class name. This is a little complex in xpath as
@@ -33,7 +34,9 @@ def extract_field(response, metadata_spec, fieldname):
         field = response.xpath(expression).extract()
         # Strip leading and trailing whitespace
         field = [item.strip() for item in field]
-        if match_rule == 'first':
+        if not field:
+            warnings.warn("{fieldname} not extracted".format(fieldname=fieldname))
+        elif match_rule == 'first':
             field = field[0]
         elif match_rule == 'all':
             # Nothing to do but need this to pass validity check
@@ -60,7 +63,6 @@ def extract_content(response, config):
     # 1. Extract structured article content. We just extract all paragraphs within the article's parent container
     select_xpath = '//{content}'.format(content=xpath_class(config['article_element'], config['article_class']))
     paragraphs = response.xpath(select_xpath).xpath('.//p').extract()
-    # Ensure paragraphs are encoded as unicose
     return paragraphs, paragraphs_to_plain_content(paragraphs)
 
 
