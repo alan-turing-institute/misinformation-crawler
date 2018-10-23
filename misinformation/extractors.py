@@ -35,7 +35,7 @@ def extract_field(response, metadata_spec, fieldname):
         # Strip leading and trailing whitespace
         field = [item.strip() for item in field]
         if not field:
-            warnings.warn("{fieldname} not extracted".format(fieldname=fieldname))
+            warnings.warn("{fieldname} not extracted from {url}".format(fieldname=fieldname, url=response.url))
         elif match_rule == 'first':
             field = field[0]
         elif match_rule == 'all':
