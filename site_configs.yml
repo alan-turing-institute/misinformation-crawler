@@ -211,6 +211,11 @@ empirenews.net:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
