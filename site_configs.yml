@@ -102,18 +102,6 @@ addictinginfo.com:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/a/text()'
       match-rule: 'first'
-    author:
-      select-method: 'xpath'
-      select-expression: '//div[@class="post-meta"]/span/a/text()'
-      match-rule: 'first'
-    publication_date:
-      select-method: 'xpath'
-      select-expression: '//div[@class="post-meta"]/time/@datetime'
-      match-rule: 'first'
-    categories:
-      select-method: 'xpath'
-      select-expression: '//div[@class="breadcrumbs"]/a/text()'
-      match-rule: 'all'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -128,10 +116,6 @@ occupydemocrats.com:
     title:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
-    author:
-      select-method: 'xpath'
-      select-expression: '//span[contains(concat(" ", normalize-space(@class), " "), " author-name ")]/a/text()'
       match-rule: 'first'
 
 davidwolfe.com:
