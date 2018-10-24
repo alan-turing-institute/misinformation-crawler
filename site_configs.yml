@@ -190,6 +190,11 @@ henrymakow.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'text-body'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'first'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
