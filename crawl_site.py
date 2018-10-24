@@ -14,7 +14,7 @@ def main():
     parser = argparse.ArgumentParser(description=__name__)
     parser.add_argument('--site_name', '-s', required=True,
         help='Name of site configuration.')
-    parser.add_argument('--max_articles', '-n', type=int, default=None,
+    parser.add_argument('--max_articles', '-n', type=int, default=0,
         help='Maximum number of articles to process from each site.')
     parser.add_argument('--exporter', '-e', default='database',
         choices=['file', 'database'], help='Article export method.')
@@ -30,8 +30,11 @@ def main():
     # Update settings here as we can't seem to successfully do this when trying to set a spider's custom_settings
     # attribute in it's initialiser
     settings = get_project_settings()
+    if args.max_articles:
+        settings.update({
+            'CLOSESPIDER_ITEMCOUNT': args.max_articles
+        })
     settings.update({
-        'CLOSESPIDER_ITEMCOUNT': args.max_articles,
         'ARTICLE_EXPORTER': args.exporter
     })
     process = CrawlerProcess(settings)

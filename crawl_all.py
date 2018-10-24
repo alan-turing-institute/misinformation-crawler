@@ -9,7 +9,7 @@ SPIDER_CONFIG = pkg_resources.resource_string(__name__, "site_configs.yml")
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)
-    parser.add_argument('--max_articles', '-n', type=int, default=None,
+    parser.add_argument('--max_articles', '-n', type=int, default=0,
         help='Maximum number of articles to process from each site.')
     parser.add_argument('--exporter', '-e', default='database',
         choices=['file', 'database'], help='Article export method.')
