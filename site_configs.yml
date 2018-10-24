@@ -9,6 +9,11 @@ conservativehq.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="title"]/text()'
+      match-rule: 'first'
 
 federalistpress.com:
   site_name: 'federalistpress.com'
@@ -19,6 +24,11 @@ federalistpress.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 palmerreport.com:
   site_name: 'palmerreport.com'
@@ -29,6 +39,11 @@ palmerreport.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'fl-post-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="fl-post-title"]/text()'
+      match-rule: 'first'
 
 # TODO: Test from US IP address (get 403 from UK and Slovakia)
 patriotnewsdaily.com:
@@ -40,6 +55,11 @@ patriotnewsdaily.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " post-title ")]/span[@itemprop="name"]/text()'
+      match-rule: 'first'
 
 # TODO: Enhance spider to follow relative links
 # TODO: Find good configurable value for identifying article body DIV (no class)
@@ -62,6 +82,11 @@ youngcons.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'td-post-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/text()'
+      match-rule: 'first'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
@@ -72,6 +97,11 @@ addictinginfo.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/a/text()'
+      match-rule: 'first'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -82,6 +112,11 @@ occupydemocrats.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
@@ -92,9 +127,14 @@ davidwolfe.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
-# the article href as both prisonplanet.com and empirenews.com crawl fine with the same attribute present
+# the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
@@ -104,6 +144,11 @@ eyeopening.info:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 globalresearch.ca:
   site_name: 'globalresearch.ca'
@@ -114,6 +159,11 @@ globalresearch.ca:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h2[@itemprop="headline"]/text()'
+      match-rule: 'first'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
@@ -124,6 +174,11 @@ henrymakow.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'text-body'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'first'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
@@ -134,6 +189,11 @@ gellerreport.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
@@ -144,6 +204,11 @@ prisonplanet.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'subarticle'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="subheadlinemain"]/a/text()'
+      match-rule: 'first'
 
 empirenews.net:
   site_name: 'empirenews.net'
@@ -154,6 +219,11 @@ empirenews.net:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
@@ -164,3 +234,8 @@ madworldnews.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
+  metadata:
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'

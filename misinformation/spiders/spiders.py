@@ -1,20 +1,13 @@
-import extruct
 import iso8601
 from misinformation.items import Article
+from misinformation.extractors import extract_article
 import datetime
 import os
 from scrapy.exporters import JsonItemExporter
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urlparse
-
-
-# Helper function for selecting elements by class name. This is a little complex in xpath as
-# (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
-# (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
-def xpath_class(element, class_name):
-    return "{element}[contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')]".format(
-        class_name=class_name, element=element)
+import uuid
 
 
 # Generic crawl spider for websites that meet the following criteria
@@ -26,10 +19,12 @@ class MisinformationSpider(CrawlSpider):
     crawl_date = None
 
     def __init__(self, config, *args, **kwargs):
+        self.config = config = config
+
+        # Set crawl-level metadata
+        self.crawl_id = str(uuid.uuid4())
         self.crawl_date = \
             datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
-        self.config = config
-
         self.site_name = config['site_name']
         start_url = self.config['start_url']
         self.start_urls = [start_url]
@@ -94,28 +89,18 @@ class MisinformationSpider(CrawlSpider):
 
     # This function will automatically get called as part of the item processing pipeline
     def parse_item(self, response):
+        # Save the full response
         self.save_response(response)
-        if self.config['metadata_source'] == 'microdata':
-            return self.parse_microdata_item(response)
-
-    # Article parser for sites that embed article metadata using the microdata format
-    def parse_microdata_item(self, response):
         # Extract article metadata and structured text
-        article = Article()
-        article['site_name'] = self.site_name
+        article = extract_article(response, self.config)
+        # Add crawl-level metadata
+        article['crawl_id'] = self.crawl_id
         article['crawl_date'] = self.crawl_date
-        article['article_url'] = response.url
-        # Extract article metadata from embedded microdata format
-        data = extruct.extract(response.body_as_unicode(), response.url)
-        article["microformat_metadata"] = data
-        # Extract simplified article content. We just extract all paragraphs within the article's parent container
-        article_select_xpath = '//{content}'.format(
-            content=xpath_class(self.config['article_element'], self.config['article_class']))
-        article['content'] = response.xpath(article_select_xpath).xpath('.//p').extract()
+        article['site_name'] = self.site_name
         return article
 
     def save_response(self, response):
-        raw_article = dict();
+        raw_article = dict()
         raw_article['site_name'] = self.site_name
         raw_article['crawl_date'] = self.crawl_date
         raw_article['request_url'] = response.request.url

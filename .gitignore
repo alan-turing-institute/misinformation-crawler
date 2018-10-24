@@ -3,8 +3,8 @@
 secrets/
 
 # generated data
-article_urls/
-articles/
+/article_urls/
+/articles/
 
 # pycharm project files
 .idea/
