@@ -78,14 +78,47 @@ def test_extract_article(article_info):
     request = Request(url=url)
     response = TextResponse(url=url, body=html, encoding='utf-8', request=request)
 
-    # Test title extraction
-    expected_title = expected_article['title']
-    title = extract_field(response, config['metadata'], 'title')
-    assert title == expected_title
-
     # Test full article extraction for supported fields
     article = extract_article(response, config)
+    # Check title extraction
     assert article['title'] == expected_article['title']
+
+
+def test_extract_field():
+    # Set expected article data
+    expected_url = "http://example.com/expected_url.html"
+    expected_title = "Expected article title"
+
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">{expected_title}</h1>
+        </div>
+    </body>
+</html>""".format(
+        expected_title=expected_title
+    )
+    response = TextResponse(url=expected_url, body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article_element: 'div'
+    article_class: 'post-content'
+    metadata:
+      title:            
+        select-method: 'xpath'
+        select-expression: '//h1[@class="post-title"]/text()'
+        match-rule: 'first'
+"""
+    config = yaml.load(config_yaml)
+
+    # Test title field extraction
+    expected_title = expected_title
+    title = extract_field(response, config['metadata'], 'title')
+    assert title == expected_title
 
 
 def test_paragraphs_to_plain_content():
