@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 import os
 from subprocess import check_call
 import tempfile
@@ -19,3 +20,13 @@ def extract_readable_article(html):
     with open(simple_html_path) as f:
         simple_html = f.read()
     return simple_html
+
+
+def extract_paragraphs_as_plain_text(readable_article):
+    # Load article as DOM
+    soup = BeautifulSoup(readable_article, 'html.parser')
+    # Select all paragraphs
+    paragraphs = soup.find_all('p')
+    # Extract text for each paragraph with leading/trailing whitespace trimmed
+    paragraphs = [p.get_text().strip() for p in paragraphs]
+    return paragraphs
