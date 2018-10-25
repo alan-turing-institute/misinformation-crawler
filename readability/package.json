@@ -28,8 +28,10 @@
     "eslint": ">=4.2",
     "htmltidy2": "^0.3.0",
     "js-beautify": "^1.5.5",
-    "jsdom": "^7.0",
     "matcha": "^0.6.0",
     "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "jsdom": ">=10.0.0"
   }
 }

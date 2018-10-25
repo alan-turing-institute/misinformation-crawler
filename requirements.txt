@@ -2,6 +2,7 @@ datetime
 extruct
 fake-useragent
 iso8601
+js2py
 pyodbc
 pyyaml
 scrapy
