@@ -1,5 +1,5 @@
 import os
-from readability import simplify_html
+from readability import readability
 
 
 def check_simplify_html(test_filename, expected_filename):
@@ -10,7 +10,7 @@ def check_simplify_html(test_filename, expected_filename):
         html = h.read()
 
     # Return simplified article HTML
-    simple_html = simplify_html.simplify_html(html)
+    simple_html = readability.simplify_html(html)
 
     # Get expected simplified article HTML
     expected_filepath = os.path.join(os.path.dirname(__file__), test_data_dir, expected_filename)
