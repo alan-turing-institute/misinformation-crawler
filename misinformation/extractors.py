@@ -69,8 +69,10 @@ def extract_content(response, config):
 
 
 def extract_article(response, config):
+    # Create new article and set URL from the response (not the request). The idea here is that this should be the same
+    # for the same article, regardless of how it was requested (e.g. aliases, redirects etc).
     article = Article()
-    article['article_url'] = response.request.url
+    article['article_url'] = response.url
     if 'metadata' in config:
         article['metadata'] = dict()
         # Attempt to extract all metadata fields
