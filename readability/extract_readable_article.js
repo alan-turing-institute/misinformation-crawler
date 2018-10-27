@@ -52,4 +52,4 @@ var html = readFile(inFilePath);
 var doc = new scopeContext.JSDOM(html).window.document;
 var article = new scopeContext.Readability(doc).parse();
 
-writeFile(article.content, outFilePath);
+writeFile(JSON.stringify(article), outFilePath);

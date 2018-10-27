@@ -12,7 +12,7 @@ CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_configs.y
 # Load site-specific spider configurations
 CONFIGS = yaml.load(CONFIG_FILE)
 
-SITE_NAMES = [site_name for site_name in CONFIGS]
+SITE_NAMES = ["addictinginfo.com"];[site_name for site_name in CONFIGS]
 
 
 def config_for_site(site_name):
@@ -35,7 +35,7 @@ def article_stems_for_site(site_name):
     for html_file_path in html_file_paths:
         path, file = os.path.split(html_file_path)
         article_stems.append(file.split('_')[0])
-    # Fail fixture set up if no test articles found for site
+    # Fail fixture set up if no test sites found for site
     assert article_stems != [], "No HTML test files found for site '{site}'".format(site=site_name)
     return article_stems
 
@@ -82,6 +82,8 @@ def test_extract_article(article_info):
     article = extract_article(response, config)
     # Check title extraction
     assert article['title'] == expected_article['title']
+    # Check plain content extraction
+    assert article['plain_content'] == expected_article['plain_content']
 
 
 def test_extract_field():
