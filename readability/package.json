@@ -32,6 +32,6 @@
     "mocha": "^2.5.3"
   },
   "dependencies": {
-    "jsdom": ">=10.0.0"
+    "jsdom": ">=12.2.0"
   }
 }
