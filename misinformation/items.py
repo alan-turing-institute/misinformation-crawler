@@ -9,8 +9,8 @@ class Article(scrapy.Item):
     title = scrapy.Field()
     byline = scrapy.Field()
     publication_date = scrapy.Field()
+    metadata = scrapy.Field()
     plain_content = scrapy.Field()
     structured_content = scrapy.Field()
-    metadata = scrapy.Field()
 
 

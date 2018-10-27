@@ -67,6 +67,15 @@ def extract_article(response, config, crawl_info=None):
     article = Article()
     article['article_url'] = response.url
 
+    # Ensure core fields are exported as nulls even if they are not extracted from article
+    article["title"] = None  # String field (can be NULL)
+    article["byline"] = None  # String field (can be NULL)
+    article["publication_date"] = None  # Datetime field (can be NULL)
+    article['metadata'] = None  # JSON dictionary (can be NULL)
+    article["structured_content"] = None  # String field (can be NULL)
+    article["plain_content"] = None  # JSON array of strings (can be NULL)
+
+
     # Get default article by running readability extract on full page
     page_html = extract_element(response, xpath_extract_spec("/html", "single"))
     default_readability_article = readability.extract_readable_article(page_html)
@@ -91,9 +100,9 @@ def extract_article(response, config, crawl_info=None):
             article["structured_content"] = custom_readability_article["structured_content"]
             article["plain_content"] = custom_readability_article["plain_content"]
 
+
     # Extract additional article metadata
     if 'metadata' in config:
-        article['metadata'] = dict()
         # Attempt to extract all metadata fields
         for fieldname in config['metadata']:
             article['metadata'][fieldname] = extract_element(response, config['metadata'][fieldname])
