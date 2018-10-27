@@ -8,7 +8,7 @@ conservativehq.com:
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'
-  article_class: 'content'
+  article_class: 'cont'
   metadata:
     title:
       select-method: 'xpath'
