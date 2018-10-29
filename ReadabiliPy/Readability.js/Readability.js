@@ -1,3 +1,7 @@
+// NOTE: Based on commit 3be1aaa of Mozilla's Readability.js Node.js package.
+// Source: https://github.com/mozilla/readability/tree/3be1aaa01c078c25b67ed8dfd1c9aa8f9963490b
+// Added publication date extraction
+
 /*eslint-env es6:false*/
 /*
  * Copyright (c) 2010 Arc90 Inc
