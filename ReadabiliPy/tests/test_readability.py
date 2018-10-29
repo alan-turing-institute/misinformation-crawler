@@ -1,9 +1,9 @@
 import json
 import os
-from readability import readability
+from ReadabiliPy import readability
 
 
-def check_extract_readable_article(test_filename, expected_filename):
+def check_extract_article(test_filename, expected_filename):
     test_data_dir = "data"
     # Read HTML test file
     test_filepath = os.path.join(os.path.dirname(__file__), test_data_dir, test_filename)
@@ -11,7 +11,7 @@ def check_extract_readable_article(test_filename, expected_filename):
         html = h.read()
 
     # Extract simplified article HTML
-    article_json = readability.extract_readable_article(html)
+    article_json = readability.parse(html)
 
     # Get expected simplified article HTML
     expected_filepath = os.path.join(os.path.dirname(__file__), test_data_dir, expected_filename)
@@ -22,17 +22,24 @@ def check_extract_readable_article(test_filename, expected_filename):
     assert article_json == expected_article_json
 
 
-def test_extract_readable_article_full_page():
-    check_extract_readable_article(
+def test_extract_article_full_page():
+    check_extract_article(
         "addictinginfo.com-1_full_page.html",
         "addictinginfo.com-1_simple_article_from_full_page.json"
     )
 
 
-def test_extract_readable_article_full_article():
-    check_extract_readable_article(
+def test_extract_article_full_article():
+    check_extract_article(
         "addictinginfo.com-1_full_article.html",
         "addictinginfo.com-1_simple_article_from_full_article.json"
+    )
+
+
+def test_extract_article_non_article():
+    check_extract_article(
+        "non_article_full_page.html",
+        "non_article_full_page.json"
     )
 
 
@@ -44,7 +51,7 @@ def check_extract_paragraphs_as_plain_text(test_filename, expected_filename):
         article = json.loads(h.read())
 
     # Extract plain text paragraphs
-    paragraphs = readability.extract_paragraphs_as_plain_text(article["structured_content"])
+    paragraphs = readability.extract_paragraphs_as_plain_text(article["content"])
 
     # Get expected plain text paragraphs
     expected_filepath = os.path.join(os.path.dirname(__file__), test_data_dir, expected_filename)
