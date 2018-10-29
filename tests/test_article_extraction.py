@@ -312,3 +312,40 @@ def test_xpath_extract_spec_with_match_rule():
     }
     extract_spec = xpath_extract_spec(expression, match_rule)
     assert extract_spec == expected_extract_spec
+
+
+def test_extract_article_with_no_data_has_all_fields_present_but_null():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div>
+            No article here.
+        </div>
+    </body>
+</html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article_element: 'div'
+    article_class: 'post-content'
+
+"""
+    config = yaml.load(config_yaml)
+
+    expected_article = {
+        'article_url': "http://example.com",
+        'title': None,
+        'byline': None,
+        'published_date': None,
+        'content': None,
+        'plain_content': None,
+        'metadata': None
+    }
+
+    # Test
+    article = extract_article(response, config)
+    assert article == expected_article
+

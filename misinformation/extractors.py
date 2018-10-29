@@ -1,7 +1,7 @@
 import itertools
 from misinformation.items import Article
 import re
-from readability import readability
+from ReadabiliPy import readability
 import warnings
 
 
@@ -67,42 +67,35 @@ def extract_article(response, config, crawl_info=None):
     article = Article()
     article['article_url'] = response.url
 
-    # Ensure core fields are exported as nulls even if they are not extracted from article
-    article["title"] = None  # String field (can be NULL)
-    article["byline"] = None  # String field (can be NULL)
-    article["publication_date"] = None  # Datetime field (can be NULL)
-    article['metadata'] = None  # JSON dictionary (can be NULL)
-    article["structured_content"] = None  # String field (can be NULL)
-    article["plain_content"] = None  # JSON array of strings (can be NULL)
-
-
-    # Get default article by running readability extract on full page
+    # Set default article fields by running readability on full page HTML
     page_html = extract_element(response, xpath_extract_spec("/html", "single"))
-    default_readability_article = readability.extract_readable_article(page_html)
+    default_readability_article = readability.parse(page_html)
     article["title"] = default_readability_article["title"]
     article["byline"] = default_readability_article["byline"]
-    article["structured_content"] = default_readability_article["structured_content"]
+    article["content"] = default_readability_article["content"]
     article["plain_content"] = default_readability_article["plain_content"]
 
     # Overwrite default values where extract specifications have been provided
     if 'article' in config:
         if 'title' in config['article']:
             # Extract title from specified element
-            custom_title = extract_element(response, config['article']['title'])
-            if custom_title:
-                article['title'] = custom_title
+            article['title'] = extract_element(response, config['article']['title'])
         if 'byline' in config['article']:
             article['byline'] = extract_element(response, config['article']['byline'])
+        # Readability metadata fields more likely to be accurate when extracted from full page
+        # so only update article content by running readability on a custom container
         if 'content' in config['article']:
-            # Extract readable article content from specified element
+            # Extract article content from specified element
             article_html = extract_element(response, config['article']['content'])
-            custom_readability_article = readability.extract_readable_article(article_html)
-            article["structured_content"] = custom_readability_article["structured_content"]
+            custom_readability_article = readability.parse(article_html)
+            article["content"] = custom_readability_article["content"]
             article["plain_content"] = custom_readability_article["plain_content"]
 
 
     # Extract additional article metadata
     if 'metadata' in config:
+        # Initialise metadata field
+        article['metadata'] = dict()
         # Attempt to extract all metadata fields
         for fieldname in config['metadata']:
             article['metadata'][fieldname] = extract_element(response, config['metadata'][fieldname])
@@ -112,5 +105,19 @@ def extract_article(response, config, crawl_info=None):
         article["crawl_id"] = crawl_info["crawl_id"]
         article["crawl_datetime"] = crawl_info["crawl_datetime"]
         article['site_name'] = crawl_info['site_name']
+
+    # Ensure all fields included in article even if no data extracted for them
+    if 'title' not in article:
+        article['title'] = None
+    if 'byline' not in article:
+        article['byline'] = None
+    if 'published_date' not in article:
+        article['published_date'] = None
+    if 'content' not in article:
+        article['content'] = None
+    if 'plain_content' not in article:
+        article['plain_content'] = None
+    if 'metadata' not in article:
+        article['metadata'] = None
 
     return article
