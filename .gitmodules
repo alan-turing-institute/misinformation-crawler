@@ -1,0 +1,3 @@
+[submodule "ReadabiliPy"]
+	path = ReadabiliPy
+	url = https://github.com/martintoreilly/ReadabiliPy
