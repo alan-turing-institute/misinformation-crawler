@@ -74,6 +74,7 @@ def extract_article(response, config, crawl_info=None):
     article["byline"] = default_readability_article["byline"]
     article["content"] = default_readability_article["content"]
     article["plain_content"] = default_readability_article["plain_content"]
+    article["plain_text"] = default_readability_article["plain_text"]
 
     # Overwrite default values where extract specifications have been provided
     if 'article' in config:
@@ -90,6 +91,7 @@ def extract_article(response, config, crawl_info=None):
             custom_readability_article = readability.parse(article_html)
             article["content"] = custom_readability_article["content"]
             article["plain_content"] = custom_readability_article["plain_content"]
+            article["plain_text"] = custom_readability_article["plain_text"]
 
 
     # Extract additional article metadata
@@ -117,6 +119,8 @@ def extract_article(response, config, crawl_info=None):
         article['content'] = None
     if 'plain_content' not in article:
         article['plain_content'] = None
+    if 'plain_content' not in article:
+        article['plain_text'] = None
     if 'metadata' not in article:
         article['metadata'] = None
 

@@ -13,7 +13,13 @@ SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_conf
 
 # Load site-specific spider configurations
 SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
-SITE_NAMES = [] #["addictinginfo.com"] #[site_name for site_name in CONFIGS]
+SITE_NAMES = [
+    # "addictinginfo.com",
+    # "conservativehq.com",
+    # "empirenews.net",
+    # "federalistpress.com",
+    # "gellerreport.com"
+]
 
 
 # ================= HELPER FUNCTIONS =================
@@ -124,6 +130,7 @@ def test_extract_article_default():
 
     # Test
     article = extract_article(response, config)
+    print(article)
     assert article == expected_article
 
 
@@ -342,6 +349,7 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
         'published_date': None,
         'content': None,
         'plain_content': None,
+        'plain_text': None,
         'metadata': None
     }
 

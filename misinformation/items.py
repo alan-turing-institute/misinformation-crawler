@@ -11,6 +11,7 @@ class Article(scrapy.Item):
     published_date = scrapy.Field()
     content = scrapy.Field()
     plain_content = scrapy.Field()
+    plain_text = scrapy.Field()
     metadata = scrapy.Field()
 
 
