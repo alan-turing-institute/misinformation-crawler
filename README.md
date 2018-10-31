@@ -43,3 +43,10 @@ to the latest version of macos or (ii) install the `unixodbc` driver libraries u
 2. Add the Microsoft Tap: `brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release`
 3. Update Homebrew: `brew update`
 4. Install the Microsoft SQL ODBC driver: `brew install --no-sandbox msodbcsql17 mssql-tools`
+
+## Developing
+To update to the latest version of [ReadabiliPy](https://github.com/martintoreilly/ReadabiliPy/blob/features/14-plain-content-structure/README.md).
+- Navigate to the `ReadabiliPy` folder with `cd ReadabiliPy`
+- Ensure you are on the `master` branch with `git checkout master`
+- Pull the latest version with `git pull`
+- Install the dependencies for the Readability node app with `npm install`

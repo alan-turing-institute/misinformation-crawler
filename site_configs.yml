@@ -20,15 +20,32 @@ federalistpress.com:
   start_url: 'http://federalistpress.com/category/all-stories'
   follow_url_path: 'category/all-stories/page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
-  metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
-  metadata:
-    title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
+
+gellerreport.com:
+  site_name: 'gellerreport.com'
+  start_url: 'http://gellerreport.com/category/atlas-articles/'
+  follow_url_path: 'category/atlas-articles/page/'
+  article_url_xpath: '//h2[@class="archive-entry-title"]/a'
+
+
+# =========================================
+# ===== Sites not currently extracted =====
+# =========================================
+
+# TODO: Plain text extract does not include list items
+#davidwolfe.com:
+#  site_name: 'davidwolfe.com'
+#  start_url: 'https://www.davidwolfe.com/category/news/'
+#  follow_url_path: 'category/news/page/'
+#  article_url_xpath: '//h2[@class="entry-title"]/a'
+
+# TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
+# the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
+#eyeopening.info:
+#  site_name: 'eyeopening.info'
+#  start_url: 'http://eyeopening.info/category/politics/'
+#  follow_url_path: 'category/politics/page/'
+#  article_url_xpath: '//h2[@class="entry-title"]/a' #FIXME? - Or fix LinkExtractor / use custom parse() method
 
 palmerreport.com:
   site_name: 'palmerreport.com'
@@ -178,21 +195,6 @@ henrymakow.com:
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
-
-gellerreport.com:
-  site_name: 'gellerreport.com'
-  start_url: 'http://gellerreport.com/category/atlas-articles/'
-  follow_url_path: 'category/atlas-articles/page/'
-  article_url_xpath: '//h2[@class="archive-entry-title"]/a'
-  metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
-  metadata:
-    title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
 
 prisonplanet.com:
