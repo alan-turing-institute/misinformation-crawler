@@ -248,7 +248,7 @@ def test_extract_article_custom_content_selector():
     assert article == expected_article
 
 
-def test_extract_article_default_content_digest():
+def test_extract_article_default_content_digests():
     # Load test file
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
@@ -267,6 +267,51 @@ def test_extract_article_default_content_digest():
 
     # Test
     article = extract_article(response, config, content_digests=True)
+    assert article == expected_article
+
+
+def test_extract_article_default_node_indexes():
+    # Load test file
+    html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
+    response = response_from_html_file(html_filepath)
+    # Load expected article data
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_node_indexes.json")
+    expected_article = article_from_json_file(article_filepath)
+
+    # Mock config
+    config_yaml = """
+        site_name: 'addictinginfo.com'
+        start_url: 'http://addictinginfo.com/category/news/'
+        follow_url_path: 'page/'
+        article_url_xpath: '//h2[@class="entry-title"]/a'
+    """
+    config = yaml.load(config_yaml)
+
+    # Test
+    article = extract_article(response, config, node_indexes=True)
+    assert article == expected_article
+
+
+def test_extract_article_default_content_digests_node_indexes():
+    # Load test file
+    html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
+    response = response_from_html_file(html_filepath)
+    # Load expected article data
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
+                                    "addictinginfo.com-1_extracted_data_default_content_digests_node_indexes.json")
+    expected_article = article_from_json_file(article_filepath)
+
+    # Mock config
+    config_yaml = """
+        site_name: 'addictinginfo.com'
+        start_url: 'http://addictinginfo.com/category/news/'
+        follow_url_path: 'page/'
+        article_url_xpath: '//h2[@class="entry-title"]/a'
+    """
+    config = yaml.load(config_yaml)
+
+    # Test
+    article = extract_article(response, config, content_digests=True, node_indexes=True)
     assert article == expected_article
 
 
