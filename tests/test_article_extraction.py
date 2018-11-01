@@ -14,11 +14,11 @@ SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_conf
 # Load site-specific spider configurations
 SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
 SITE_NAMES = [
-    # "addictinginfo.com",
-    # "conservativehq.com",
-    # "empirenews.net",
-    # "federalistpress.com",
-    # "gellerreport.com"
+    "addictinginfo.com"
+    ,"conservativehq.com"
+    # ,"empirenews.net"
+    # ,"federalistpress.com"
+    # ,"gellerreport.com"
 ]
 
 
