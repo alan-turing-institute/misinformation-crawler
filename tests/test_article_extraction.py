@@ -346,7 +346,7 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
         'article_url': "http://example.com",
         'title': None,
         'byline': None,
-        'published_date': None,
+        'publication_datetime': None,
         'content': None,
         'plain_content': None,
         'plain_text': None,

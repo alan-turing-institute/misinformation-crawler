@@ -61,7 +61,7 @@ def extract_element(response, extract_spec):
     return elements
 
 
-def extract_article(response, config, crawl_info=None):
+def extract_article(response, config, crawl_info=None, content_digests=False, node_indexes=False):
     # Create new article and set URL from the response (not the request). The idea here is that this should be the same
     # for the same article, regardless of how it was requested (e.g. aliases, redirects etc).
     article = Article()
@@ -69,7 +69,7 @@ def extract_article(response, config, crawl_info=None):
 
     # Set default article fields by running readability on full page HTML
     page_html = extract_element(response, xpath_extract_spec("/html", "single"))
-    default_readability_article = readability.parse(page_html)
+    default_readability_article = readability.parse(page_html, content_digests, node_indexes)
     article["title"] = default_readability_article["title"]
     article["byline"] = default_readability_article["byline"]
     article["content"] = default_readability_article["content"]
@@ -88,7 +88,7 @@ def extract_article(response, config, crawl_info=None):
         if 'content' in config['article']:
             # Extract article content from specified element
             article_html = extract_element(response, config['article']['content'])
-            custom_readability_article = readability.parse(article_html)
+            custom_readability_article = readability.parse(article_html, content_digests, node_indexes)
             article["content"] = custom_readability_article["content"]
             article["plain_content"] = custom_readability_article["plain_content"]
             article["plain_text"] = custom_readability_article["plain_text"]
@@ -113,8 +113,8 @@ def extract_article(response, config, crawl_info=None):
         article['title'] = None
     if 'byline' not in article:
         article['byline'] = None
-    if 'published_date' not in article:
-        article['published_date'] = None
+    if 'publication_datetime' not in article:
+        article['publication_datetime'] = None
     if 'content' not in article:
         article['content'] = None
     if 'plain_content' not in article:
