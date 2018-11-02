@@ -1,31 +1,43 @@
+
 # Spider configurations for each website to be crawled
+addictinginfo.com:
+  site_name: 'addictinginfo.com'
+  start_url: 'http://addictinginfo.com/category/news/'
+  follow_url_path: 'page/'
+  article_url_xpath: '//h2[@class="entry-title"]/a'
+  article_search: 'paged'
 
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
   follow_url_path: 'exclusives'
   article_url_path: 'article/'
-  metadata_source: 'microdata'
   article_search: 'paged'
-  article_element: 'div'
-  article_class: 'cont'
-  metadata:
-    title:
+empirenews.net:
+  site_name: 'empirenews.net'
+  start_url: 'http://empirenews.net/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h1[@class="entry-title"]/a'
+  article_search: 'paged'
+  article:
+    byline:
       select-method: 'xpath'
-      select-expression: '//h1[@class="title"]/text()'
-      match-rule: 'first'
+      select-expression: '//span[@class="author vcard"]/a/text()'
+      match-rule: 'single'
 
 federalistpress.com:
   site_name: 'federalistpress.com'
   start_url: 'http://federalistpress.com/category/all-stories'
   follow_url_path: 'category/all-stories/page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
+  article_search: 'paged'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
   start_url: 'http://gellerreport.com/category/atlas-articles/'
   follow_url_path: 'category/atlas-articles/page/'
   article_url_xpath: '//h2[@class="archive-entry-title"]/a'
+  article_search: 'paged'
 
 
 # =========================================
@@ -103,21 +115,6 @@ youngcons.com:
     title:
       select-method: 'xpath'
       select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/text()'
-      match-rule: 'first'
-
-addictinginfo.com:
-  site_name: 'addictinginfo.com'
-  start_url: 'http://addictinginfo.com/category/news/'
-  follow_url_path: 'page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
-  metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
-  metadata:
-    title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/a/text()'
       match-rule: 'first'
 
 occupydemocrats.com:
