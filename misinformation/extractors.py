@@ -65,11 +65,13 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     # Create new article and set URL from the response (not the request). The idea here is that this should be the same
     # for the same article, regardless of how it was requested (e.g. aliases, redirects etc).
     article = Article()
+    article['site_name'] = config['site_name']
     article['article_url'] = response.url
 
     # Set default article fields by running readability on full page HTML
     page_html = extract_element(response, xpath_extract_spec("/html", "single"))
     default_readability_article = readability.parse(page_html, content_digests, node_indexes)
+
     article["title"] = default_readability_article["title"]
     article["byline"] = default_readability_article["byline"]
     article["content"] = default_readability_article["content"]
@@ -106,7 +108,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     if crawl_info:
         article["crawl_id"] = crawl_info["crawl_id"]
         article["crawl_datetime"] = crawl_info["crawl_datetime"]
-        article['site_name'] = crawl_info['site_name']
 
     # Ensure all fields included in article even if no data extracted for them
     if 'title' not in article:

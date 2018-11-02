@@ -1,5 +1,5 @@
-# Spider configurations for each website to be crawled
 
+# Spider configurations for each website to be crawled
 addictinginfo.com:
   site_name: 'addictinginfo.com'
   start_url: 'http://addictinginfo.com/category/news/'
@@ -13,6 +13,17 @@ conservativehq.com:
   follow_url_path: 'exclusives'
   article_url_path: 'article/'
   article_search: 'paged'
+empirenews.net:
+  site_name: 'empirenews.net'
+  start_url: 'http://empirenews.net/category/politics/'
+  follow_url_path: 'category/politics/page/'
+  article_url_xpath: '//h1[@class="entry-title"]/a'
+  article_search: 'paged'
+  article:
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@class="author vcard"]/a/text()'
+      match-rule: 'single'
 
 federalistpress.com:
   site_name: 'federalistpress.com'

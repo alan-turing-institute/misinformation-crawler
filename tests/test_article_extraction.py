@@ -1,9 +1,10 @@
+import arrow
 import pytest
 import json
 import os
 import glob
 import pkg_resources
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
 from scrapy.http import Request,  TextResponse
 import yaml
 
@@ -30,7 +31,8 @@ def config_for_site(site_name):
 def response_from_html_file(html_filepath):
     with open(html_filepath) as f:
         html = f.read()
-    filename = os.path.split(html_filepath)[-1]
+    path_parts = os.path.split(html_filepath)
+    filename = path_parts[-1]
     url = "http://{domain}/{path}".format(domain="example.com", path=filename)
     request = Request(url=url)
     response = TextResponse(url=url, body=html, encoding='utf-8', request=request)
@@ -70,7 +72,11 @@ def article_infos_for_all_sites(site_names):
     return article_infos
 
 
-@pytest.fixture(params=article_infos_for_all_sites(SITE_NAMES))
+def id_func(param):
+    return param['article_stem']
+
+
+@pytest.fixture(params=article_infos_for_all_sites(SITE_NAMES), ids=id_func)
 def article_info(request):
     return request.param
 
@@ -85,8 +91,14 @@ def validate_extract_article(response, config, expected):
     article = extract_article(response, config)
     # Check title extraction
     assert article['title'] == expected['title']
+    # Check byline extraction
+    assert article['byline'] == expected['byline']
+    # Check publication datetime extraction
+    assert article['publication_datetime'] == expected['publication_datetime']
     # Check plain content extraction
     assert article['plain_content'] == expected['plain_content']
+    # Check plain text extraction
+    assert article['plain_text'] == expected['plain_text']
 
 
 def test_extract_article_for_sites(article_info):
@@ -121,16 +133,21 @@ def test_extract_article_default():
 
     # Mock config
     config_yaml = """
-        site_name: 'addictinginfo.com'
+        site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
+        article:
+            publication_datetime:
+                select-method: 'xpath'
+                select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
+                match-rule: 'single'
+
     """
     config = yaml.load(config_yaml)
 
     # Test
     article = extract_article(response, config)
-    print(article)
     assert article == expected_article
 
 
@@ -145,7 +162,7 @@ def test_extract_article_default_with_crawl_info():
 
     # Mock config
     config_yaml = """
-        site_name: 'addictinginfo.com'
+        site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
@@ -155,8 +172,7 @@ def test_extract_article_default_with_crawl_info():
     # Mock crawl info
     crawl_info = {
         "crawl_id": "bdbcf1cf-e4,1f-4c10-9958-4ab1b07e46ae",
-        "crawl_datetime": "2018-10-17T20:25:34.2345+00:00",
-        "site_name": "addictinginfo.com"
+        "crawl_datetime": "2018-10-17T20:25:34.2345+00:00"
     }
 
     # Test
@@ -258,7 +274,7 @@ def test_extract_article_default_content_digests():
 
     # Mock config
     config_yaml = """
-        site_name: 'addictinginfo.com'
+        site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
@@ -280,7 +296,7 @@ def test_extract_article_default_node_indexes():
 
     # Mock config
     config_yaml = """
-        site_name: 'addictinginfo.com'
+        site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
@@ -303,7 +319,7 @@ def test_extract_article_default_content_digests_node_indexes():
 
     # Mock config
     config_yaml = """
-        site_name: 'addictinginfo.com'
+        site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
@@ -410,6 +426,7 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
     config = yaml.load(config_yaml)
 
     expected_article = {
+        'site_name': "example.com",
         'article_url': "http://example.com",
         'title': None,
         'byline': None,
@@ -424,3 +441,45 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
     article = extract_article(response, config)
     assert article == expected_article
 
+
+def test_extract_datetime_iso8601_keep_timezone_keep():
+    datetime_string = '2014-10-24T17:32:46+12:00'
+    iso_string = extract_datetime_string(datetime_string, timezone=True)
+    expected_iso_string = '2014-10-24T17:32:46+12:00'
+
+    assert iso_string == expected_iso_string
+
+
+def test_extract_datetime_iso8601_drop_timezone():
+    datetime_string = '2014-10-24T17:32:46+12:00'
+    iso_string = extract_datetime_string(datetime_string)
+    expected_iso_string = '2014-10-24T17:32:46'
+
+    assert iso_string == expected_iso_string
+
+
+def test_extract_datetime_uk_format_without_timezone():
+    datetime_string = '01/03/05'
+    format_string = 'DD/MM/YY'
+    iso_string = extract_datetime_string(datetime_string, format_string)
+    expected_iso_string = '2005-03-01T00:00:00'
+
+    assert iso_string == expected_iso_string
+
+
+def test_extract_datetime_us_format_without_timezone():
+    datetime_string = '03/01/05'
+    format_string = 'MM/DD/YY'
+    iso_string = extract_datetime_string(datetime_string, format_string)
+    expected_iso_string = '2005-03-01T00:00:00'
+
+    assert iso_string == expected_iso_string
+
+
+def test_extract_datetime_byline_conservativehq_com():
+    datetime_string = 'CHQ Staff | 10/17/18'
+    format_string = 'MM/DD/YY'
+    iso_string = extract_datetime_string(datetime_string, format_string)
+    expected_iso_string = '2018-10-17T00:00:00'
+
+    assert iso_string == expected_iso_string

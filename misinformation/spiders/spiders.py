@@ -19,13 +19,14 @@ class MisinformationSpider(CrawlSpider):
     crawl_date = None
 
     def __init__(self, config, *args, **kwargs):
-        self.config = config = config
+        self.config = config
 
         # Set crawl-level metadata
-        self.crawl_id = str(uuid.uuid4())
-        self.crawl_date = \
-            datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
-        self.site_name = config['site_name']
+        self.crawl_info = {
+            "crawl_id": str(uuid.uuid4()),
+            "crawl_datetime": datetime.datetime.utcnow().replace(microsecond=0).replace(
+                tzinfo=datetime.timezone.utc).isoformat()
+        }
         start_url = self.config['start_url']
         self.start_urls = [start_url]
         # Parse domain from start URL and use to restrict crawl to follow only internal site links
@@ -49,7 +50,7 @@ class MisinformationSpider(CrawlSpider):
 
         # Set up saving of raw responses for articles
         output_dir = "articles"
-        output_file = "{}_full.txt".format(self.site_name)
+        output_file = "{}_full.txt".format(self.config['site_name'])
         # Ensure output directory exists
         if not (os.path.isdir(output_dir)):
             os.makedirs(output_dir)
@@ -92,17 +93,15 @@ class MisinformationSpider(CrawlSpider):
         # Save the full response
         self.save_response(response)
         # Extract article metadata and structured text
-        article = extract_article(response, self.config)
-        # Add crawl-level metadata
-        article['crawl_id'] = self.crawl_id
-        article['crawl_date'] = self.crawl_date
-        article['site_name'] = self.site_name
+        article = extract_article(response, self.config, crawl_info=self.crawl_info,
+                                  content_digests=self.settings["CONTENT_DIGESTS"],
+                                  node_indexes=self.settings["NODE_INDEXES"])
         return article
 
     def save_response(self, response):
         raw_article = dict()
-        raw_article['site_name'] = self.site_name
-        raw_article['crawl_date'] = self.crawl_date
+        raw_article['site_name'] = self.config['site_name']
+        raw_article['crawl_datetime'] = self.crawl_info['crawl_datetime']
         raw_article['request_url'] = response.request.url
         raw_article['response_url'] = response.url
         raw_article['status'] = response.status
@@ -114,7 +113,7 @@ class MisinformationSpider(CrawlSpider):
     def closed(self, reason):
         self.exporter.finish_exporting()
         self.exporter.file.close()
-        self.logger.info('Spider closed: {} ({})'.format(self.name, reason))
+        self.logger.info('Spider closed: {} ({})'.format(self.config['site_name'], reason))
 
 
 # Crawlers that have page links on the start URL
