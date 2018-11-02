@@ -6,6 +6,11 @@ addictinginfo.com:
   follow_url_path: 'page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
   article_search: 'paged'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
+      match-rule: 'single'
 
 conservativehq.com:
   site_name: 'conservativehq.com'
@@ -13,6 +18,13 @@ conservativehq.com:
   follow_url_path: 'exclusives'
   article_url_path: 'article/'
   article_search: 'paged'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
+      match-rule: 'single'
+      datetime-format: 'MM/DD/YY'
+
 empirenews.net:
   site_name: 'empirenews.net'
   start_url: 'http://empirenews.net/category/politics/'

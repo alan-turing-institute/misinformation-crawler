@@ -51,7 +51,7 @@ class ArticleDatabaseExporter(object):
         self.cursor = None
         self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) = ?
 
-INSERT INTO articles_v2
+INSERT INTO [articles_v3]
     SELECT crawl_id, crawl_date, site_name, article_url, title, author, publication_date,
     plain_content, structured_content, metadata FROM OPENJSON (@JSON) 
     WITH(
