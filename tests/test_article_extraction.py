@@ -72,11 +72,11 @@ def article_infos_for_all_sites(site_names):
     return article_infos
 
 
-def id_func(param):
-    return param['article_stem']
+def article_info_id(param):
+    return "{site}/{article}".format(site=param['site_name'], article=param['article_stem'])
 
 
-@pytest.fixture(params=article_infos_for_all_sites(SITE_NAMES), ids=id_func)
+@pytest.fixture(params=article_infos_for_all_sites(SITE_NAMES), ids=article_info_id)
 def article_info(request):
     return request.param
 
