@@ -30,15 +30,17 @@ def main():
     # Update settings here as we can't seem to successfully do this when trying to set a spider's custom_settings
     # attribute in it's initialiser
     settings = get_project_settings()
+    # Add custom settings
+    settings.update({
+        'ARTICLE_EXPORTER': args.exporter,
+        'CONTENT_DIGESTS': True,
+        'NODE_INDEXES': True
+    })
+    # Apply an item limit if specified
     if args.max_articles:
         settings.update({
-            'CLOSESPIDER_ITEMCOUNT': args.max_articles,
-            'CONTENT_DIGESTS': True,
-            'NODE_INDEXES': True
+            'CLOSESPIDER_ITEMCOUNT': args.max_articles
         })
-    settings.update({
-        'ARTICLE_EXPORTER': args.exporter
-    })
     process = CrawlerProcess(settings)
 
     # Run crawl for specified site
