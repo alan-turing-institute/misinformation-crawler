@@ -1,8 +1,10 @@
+arrow
 bs4
 datetime
 extruct
 fake-useragent
 iso8601
+pendulum
 pyodbc
 pyyaml
 scrapy
