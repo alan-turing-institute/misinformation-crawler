@@ -18,10 +18,6 @@ def main():
         help='Maximum number of articles to process from each site.')
     parser.add_argument('--exporter', '-e', default='database',
         choices=['file', 'database'], help='Article export method.')
-    parser.add_argument('--content-digests', '-d', action='store_true',
-        help='Include content digests as attribute in plain_content elements.')
-    parser.add_argument('--node-indexes', '-i', action='store_true',
-        help='Include node indexes as attribute in plain_congtent element and plain_text paragraphs')
 
     args = parser.parse_args()
 
@@ -34,15 +30,17 @@ def main():
     # Update settings here as we can't seem to successfully do this when trying to set a spider's custom_settings
     # attribute in it's initialiser
     settings = get_project_settings()
+    # Add custom settings
+    settings.update({
+        'ARTICLE_EXPORTER': args.exporter,
+        'CONTENT_DIGESTS': True,
+        'NODE_INDEXES': True
+    })
+    # Apply an item limit if specified
     if args.max_articles:
         settings.update({
-            'CLOSESPIDER_ITEMCOUNT': args.max_articles,
-            'CONTENT_DIGESTS': args.content_digests,
-            'NODE_INDEXES': args.node_indexes
+            'CLOSESPIDER_ITEMCOUNT': args.max_articles
         })
-    settings.update({
-        'ARTICLE_EXPORTER': args.exporter
-    })
     process = CrawlerProcess(settings)
 
     # Run crawl for specified site
