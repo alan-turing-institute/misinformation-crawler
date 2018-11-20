@@ -19,7 +19,8 @@ SITE_NAMES = [
     ,"conservativehq.com"
     ,"davidwolfe.com"
     ,"empirenews.net"
-    # ,"federalistpress.com"
+    ,"eyeopening.info"
+    ,"federalistpress.com"
     # ,"gellerreport.com"
 ]
 
