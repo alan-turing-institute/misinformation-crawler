@@ -23,6 +23,8 @@ SITE_NAMES = [
     ,"federalistpress.com"
     ,"gellerreport.com"
     ,"globalresearch.ca"
+    ,"henrymakow.com"
+    ,"madworldnews.com"
 ]
 
 
