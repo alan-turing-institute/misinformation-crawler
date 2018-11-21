@@ -25,6 +25,8 @@ SITE_NAMES = [
     ,"globalresearch.ca"
     ,"henrymakow.com"
     ,"madworldnews.com"
+    ,"occupydemocrats.com"
+    ,"palmerreport.com"
 ]
 
 
