@@ -29,6 +29,7 @@ SITE_NAMES = [
     ,"palmerreport.com"
     ,"patriotnewsdaily.com"
     ,"prisonplanet.com"
+    ,"youngcons.com"
 ]
 
 
