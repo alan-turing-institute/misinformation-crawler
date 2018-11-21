@@ -27,6 +27,8 @@ SITE_NAMES = [
     ,"madworldnews.com"
     ,"occupydemocrats.com"
     ,"palmerreport.com"
+    ,"patriotnewsdaily.com"
+    ,"prisonplanet.com"
 ]
 
 
