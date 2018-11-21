@@ -21,7 +21,8 @@ SITE_NAMES = [
     ,"empirenews.net"
     ,"eyeopening.info"
     ,"federalistpress.com"
-    # ,"gellerreport.com"
+    ,"gellerreport.com"
+    ,"globalresearch.ca"
 ]
 
 
