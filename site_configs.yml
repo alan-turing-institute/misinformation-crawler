@@ -36,6 +36,10 @@ empirenews.net:
       select-method: 'xpath'
       select-expression: '//span[@class="author vcard"]/a/text()'
       match-rule: 'single'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//time[@class="entry-date published updated"]/@datetime'
+      match-rule: 'single'
 
 federalistpress.com:
   site_name: 'federalistpress.com'
@@ -43,6 +47,11 @@ federalistpress.com:
   follow_url_path: 'category/all-stories/page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
   article_search: 'paged'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//span[@class="date published time"]/@title'
+      match-rule: 'single'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
@@ -50,6 +59,15 @@ gellerreport.com:
   follow_url_path: 'category/atlas-articles/page/'
   article_url_xpath: '//h2[@class="archive-entry-title"]/a'
   article_search: 'paged'
+  article:
+    byline:
+      select-method: 'xpath'
+      select-expression: '//div[@class="byline"]/a/text()'
+      match-rule: 'single'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//time[@class="post-entry-time"]/@datetime'
+      match-rule: 'single'
 
 
 # =========================================
@@ -85,6 +103,11 @@ palmerreport.com:
       select-method: 'xpath'
       select-expression: '//h1[@class="fl-post-title"]/text()'
       match-rule: 'first'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="article:published_time"]/@content'
+      match-rule: 'single'
 
 # TODO: Test from US IP address (get 403 from UK and Slovakia)
 patriotnewsdaily.com:
@@ -101,24 +124,30 @@ patriotnewsdaily.com:
       select-method: 'xpath'
       select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " post-title ")]/span[@itemprop="name"]/text()'
       match-rule: 'first'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//span[@class="updated"]/text()'
+      match-rule: 'single'
+      datetime-format: 'YYYY-MM-DD'
 
 # TODO: Enhance spider to follow relative links
 # TODO: Find good configurable value for identifying article body DIV (no class)
-#redstatewatcher.com:
-#  site_name: 'redstatewatcher.com'
-#  start_url: 'http://redstatewatcher.com/news.asp'
-#  follow_url_path: 'news.asp\?page=\d*'
-#  article_url_xpath: '//h1[@class="newsheaderpreview"]/a'
-#  metadata_source: 'microdata'
-#  article_search: 'paged'
-#  article_element: 'div'
+redstatewatcher.com:
+  site_name: 'redstatewatcher.com'
+  start_url: 'http://redstatewatcher.com/news.asp'
+  follow_url_path: 'news.asp\?page=\d*'
+  article_url_xpath: '//h1[@class="newsheaderpreview"]/a'
+  metadata_source: 'microdata'
+  article_search: 'paged'
+  article_element: 'div'
 #  article_class: 'FIXME'
 
 youngcons.com:
   site_name: 'youngcons.com'
   start_url: 'http://youngcons.com/category/politics/'
   follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a'
+  article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'
@@ -128,6 +157,11 @@ youngcons.com:
       select-method: 'xpath'
       select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/text()'
       match-rule: 'first'
+  article:
+    publication-datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[contains(concat(" ", normalize-space(@itemprop), " "),  " datePublished ")]/@content'
+      match-rule: 'single'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -143,6 +177,11 @@ occupydemocrats.com:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//time[@class="post-date updated"]/@datetime'
+      match-rule: 'single'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
@@ -158,6 +197,11 @@ davidwolfe.com:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-time ")]/@datetime'
+      match-rule: 'single'
 
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
 # the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
@@ -190,6 +234,12 @@ globalresearch.ca:
       select-method: 'xpath'
       select-expression: '//h2[@itemprop="headline"]/text()'
       match-rule: 'first'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="article:published_time"]/@content'
+      match-rule: 'single'
+      datetime-format: 'YYYY-MM-DD'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
@@ -221,26 +271,26 @@ prisonplanet.com:
       select-expression: '//h1[@class="subheadlinemain"]/a/text()'
       match-rule: 'first'
 
-empirenews.net:
-  site_name: 'empirenews.net'
-  start_url: 'http://empirenews.net/category/politics/'
-  follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h1[@class="entry-title"]/a'
-  metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
-  metadata:
-    title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
+#empirenews.net:
+#  site_name: 'empirenews.net'
+#  start_url: 'http://empirenews.net/category/politics/'
+#  follow_url_path: 'category/politics/page/'
+#  article_url_xpath: '//h1[@class="entry-title"]/a'
+#  metadata_source: 'microdata'
+#  article_search: 'paged'
+#  article_element: 'div'
+#  article_class: 'entry-content'
+#  metadata:
+#    title:
+#      select-method: 'xpath'
+#      select-expression: '//h1[@class="entry-title"]/text()'
+#      match-rule: 'first'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
   follow_url_path: 'politics/page/'
-  article_url_xpath: '//h3[contains(concat(" ",normalize-space(@class)," ")," entry-title ")]/a'
+  article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'
@@ -250,3 +300,8 @@ madworldnews.com:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
+  article:
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[contains(concat(" ", normalize-space(@property), " "), " article:published_time ")]/@content'
+      match-rule: 'single'
