@@ -44,7 +44,7 @@ def extract_element(response, extract_spec):
             if num_matches == 1:
                 elements = elements[0]
             else:
-                elements = None
+                elements = elements[0]
                 logging.log(logging.DEBUG, "Extracted {count} elements from {url} matching {xpath}. \
                     Only one element permitted by match-rule '{rule}. Skipping element.'.".format(
                     count=num_matches, url=response.url, xpath=expression, rule=match_rule))
