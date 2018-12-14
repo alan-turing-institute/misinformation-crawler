@@ -219,6 +219,11 @@ eyeopening.info:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="article:published_time"]/@content'
+      match-rule: 'first'
+      datetime-format: 'YYYY-MM-DD'
 
 globalresearch.ca:
   site_name: 'globalresearch.ca'
