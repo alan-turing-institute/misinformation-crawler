@@ -158,9 +158,9 @@ youngcons.com:
       select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/text()'
       match-rule: 'first'
   article:
-    publication-datetime:
+    publication_datetime:
       select-method: 'xpath'
-      select-expression: '//meta[contains(concat(" ", normalize-space(@itemprop), " "),  " datePublished ")]/@content'
+      select-expression: '//meta[@itemprop="datePublished"]/@content'
       match-rule: 'single'
 
 occupydemocrats.com:
