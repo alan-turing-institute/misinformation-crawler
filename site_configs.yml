@@ -182,6 +182,7 @@ occupydemocrats.com:
       select-method: 'xpath'
       select-expression: '//time[@class="post-date updated"]/@datetime'
       match-rule: 'single'
+      datetime_format: 'YYYY-MM-DD'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
