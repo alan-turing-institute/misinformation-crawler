@@ -217,12 +217,19 @@ davidwolfe.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@itemprop="text"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
       match-rule: 'first'
-  article:
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@class="entry-author-name"]/text()'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-time ")]/@datetime'
