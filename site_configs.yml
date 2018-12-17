@@ -56,6 +56,14 @@ empirenews.net:
   article_url_xpath: '//h1[@class="entry-title"]/a'
   article_search: 'paged'
   article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="entry-content"]'
+      match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//h1[@class="entry-title"]/text()'
+      match-rule: 'first'
     byline:
       select-method: 'xpath'
       select-expression: '//span[@class="author vcard"]/a/text()'
