@@ -33,7 +33,7 @@ conservativehq.com:
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@class="content"]'
+      select-expression: '//div[@class="node"]/div[@class="content"]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
