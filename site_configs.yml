@@ -7,10 +7,22 @@ addictinginfo.com:
   article_url_xpath: '//h2[@class="entry-title"]/a'
   article_search: 'paged'
   article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="entry entry-content"]'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
       match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'first'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//meta[@name="author"]/@content'
+      match-rule: 'first'
 
 conservativehq.com:
   site_name: 'conservativehq.com'
@@ -19,6 +31,18 @@ conservativehq.com:
   article_url_path: 'article/'
   article_search: 'paged'
   article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="content"]'
+      match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'first'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//div[@class="field-item odd"]/text()'
+      match-rule: 'first'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
@@ -182,7 +206,7 @@ occupydemocrats.com:
       select-method: 'xpath'
       select-expression: '//time[@class="post-date updated"]/@datetime'
       match-rule: 'single'
-      datetime_format: 'YYYY-MM-DD'
+      datetime-format: 'YYYY-MM-DD'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
