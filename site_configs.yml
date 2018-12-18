@@ -150,12 +150,19 @@ palmerreport.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'fl-post-content'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@itemprop="text"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
-      select-expression: '//h1[@class="fl-post-title"]/text()'
-      match-rule: 'first'
-  article:
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@class="fl-post-author"]/a/text()'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@property="article:published_time"]/@content'
@@ -224,12 +231,19 @@ occupydemocrats.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry-content'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@itemprop="articleBody"]'
+      select-rule: 'single'
     title:
       select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
+      select-expression: '//meta[@property="og:title"]/@content'
       match-rule: 'first'
-  article:
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@class="author-name vcard fn author"]/a/text()'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//time[@class="post-date updated"]/@datetime'
