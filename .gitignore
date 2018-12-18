@@ -1,6 +1,6 @@
 
 # Secrets folder containing sensitive data
-secrets/
+secrets/*.yaml
 
 # generated data
 /article_urls/
