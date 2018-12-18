@@ -209,10 +209,10 @@ redstatewatcher.com:
   article_element: 'div'
 #  article_class: 'FIXME'
   article:
-    #content:
-    #  select-method: 'xpath'
-    #  select-expression: '//div[@class="row"]'
-    #  match-rule: ''
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="container"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
