@@ -39,30 +39,40 @@ def extract_element(response, extract_spec):
         elements = response.xpath(expression).extract()
         # Strip leading and trailing whitespace
         elements = [item.strip() for item in elements]
-        # Changes to single match rule:
-        # Return first element if there is exactly 1 element, otherwise,
-        # still return first element but also print a warning log message.
-        if match_rule == 'single':
-            num_matches = len(elements)
-            if num_matches == 1:
-                elements = elements[0]
-            else:
-                elements = elements[0]
-                logging.log(logging.WARNING, "Extracted {count} elements \
-                            from {url} matching {xpath}. Only one element \
-                            expected by match-rule {rule}. Returning first \
-                            element.".format(count=num_matches,
-                            url=response.url, xpath=expression,
-                            rule=match_rule))
-        elif match_rule == 'first':
-            elements = elements[0]
-        elif match_rule == 'all':
-            # Nothing to do but need this to pass validity check
-            elements = elements
-        else:
-
+        # Check length of elements is greater than 0. If not, return None
+        # and log a warning.
+        num_matches = len(elements)
+        if num_matches == 0:
             elements = None
-            logging.log(logging.DEBUG, "'{match_rule}' is not a valid match-rule".format(match_rule=match_rule))
+            logging.log(logging.WARNING, "No elements could be found\
+                                    from {url} matching {xpath} expected by\
+                                match-rule '{rule}'. Returning None.".format(
+                url=response.url, xpath=expression, rule=match_rule))
+        else:
+            # Changes to single match rule:
+            # Return first element if there is exactly 1 element, otherwise,
+            # still return first element but also print a warning log message.
+            if match_rule == 'single':
+                if num_matches == 1:
+                    elements = elements[0]
+                else:
+                    elements = elements[0]
+                    logging.log(logging.WARNING, "Extracted {count} elements \
+                                from {url} matching {xpath}. Only one element \
+                                expected by match-rule '{rule}'. Returning first \
+                                element.".format(count=num_matches,
+                                url=response.url, xpath=expression,
+                                rule=match_rule))
+            elif match_rule == 'first':
+                elements = elements[0]
+
+            elif match_rule == 'all':
+                # Nothing to do but need this to pass validity check
+                elements = elements
+            else:
+
+                elements = None
+                logging.log(logging.DEBUG, "'{match_rule}' is not a valid match-rule".format(match_rule=match_rule))
     else:
         elements = None
         logging.log(logging.DEBUG, "'{method}' is not a valid select-expression".format(method=method))
