@@ -1,4 +1,8 @@
 {
+  "crawl_id": "c9905aa6-9955-4b13-aea2-693a22c523f3",
+  "crawl_date": "2018-10-17T20:25:34.2345+00:00",
+  "site_name": "federalistpress.com",
+  "article_url": "http://federalistpress.com/article-1_article.html",
   "title": "Freed American Pastor Brunson Meets Trump, Given Hero’s Welcome in Oval Office",
   "byline": "Editor",
   "publication_datetime": "2018-10-13T12:57:59",
@@ -15,5 +19,16 @@
     {"text": "“There was NO DEAL made with Turkey for the release and return of Pastor Andrew Brunson. I don’t make deals for hostages,” he tweeted. “There was, however, great appreciation on behalf of the United States, which will lead to good, perhaps great, relations between the United States & Turkey!”"},
     {"text": "The Trump administration advocated persistently for Brunson’s release, leading to an intense economic showdown between the two NATO allies. In August, the U.S. slapped sanctions on an array of Turkish officials and on some goods, sending Turkish currency into freefall."},
     {"text": "Fox News’ Greg Norman and The Associated Press contributed to this report."}
-  ]
+  ],
+  "metadata": {
+    "categories": [
+      "All Stories",
+      "Elections",
+      "Ethics",
+      "Foreign",
+      "Gender",
+      "Religion",
+      "Sci-Tech"
+    ]
+  }
 }
