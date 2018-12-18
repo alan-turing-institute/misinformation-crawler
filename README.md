@@ -51,7 +51,7 @@ To update to the latest version of [ReadabiliPy](https://github.com/martintoreil
 - Pull the latest version with `git pull`
 - Install the dependencies with `pip install -r requirements.txt`
 
-## Running the crawler
+## Running the crawler with the Azure database backend
 In order to run the crawler you will need to create a file at `secrets/db_config.yaml` inside the top-level `misinformation-crawler` directory. This should look like the following:
 
 ```
@@ -67,3 +67,5 @@ where the password is obtained from the Azure keyvault for the database, using
 ```az keyvault secret show --vault-name misinformation-user --name database-crawler-user```
 
 A template example is provided in the `secrets` directory.
+The crawler can then be run using `python crawl_all.py -e database`.
+
