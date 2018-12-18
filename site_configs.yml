@@ -258,7 +258,7 @@ occupydemocrats.com:
     content:
       select-method: 'xpath'
       select-expression: '//div[@itemprop="articleBody"]'
-      select-rule: 'single'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
