@@ -17,9 +17,20 @@ SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
 SITE_NAMES = [
     "addictinginfo.com"
     ,"conservativehq.com"
-    # ,"empirenews.net"
-    # ,"federalistpress.com"
-    # ,"gellerreport.com"
+    ,"davidwolfe.com"
+    ,"empirenews.net"
+    ,"eyeopening.info"
+    ,"federalistpress.com"
+    ,"gellerreport.com"
+    ,"globalresearch.ca"
+    ,"henrymakow.com"
+    ,"madworldnews.com"
+    ,"occupydemocrats.com"
+    ,"palmerreport.com"
+    ,"patriotnewsdaily.com"
+    ,"prisonplanet.com"
+    ,"redstatewatcher.com"
+    ,"youngcons.com"
 ]
 
 

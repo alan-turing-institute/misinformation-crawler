@@ -1,3 +1,5 @@
+# Ignore the extract_article.py file I made in repo root for testing
+extract_article.py
 
 # Secrets folder containing sensitive data
 secrets/
