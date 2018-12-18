@@ -366,11 +366,15 @@ prisonplanet.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'subarticle'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="subarticle"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
-      select-expression: '//h1[@class="subheadlinemain"]/a/text()'
-      match-rule: 'first'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
 
 #empirenews.net:
 #  site_name: 'empirenews.net'
