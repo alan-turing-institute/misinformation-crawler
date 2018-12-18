@@ -1,4 +1,8 @@
 {
+  "crawl_id": "14f76dfb-ae0b-43d1-9c72-278a09cba7ba",
+  "crawl_date": "2018-10-17T20:25:34.2345+00:00",
+  "site_name": "eyeopening.info",
+  "article_url": "http://eyeopening.info/article-1_article.html",
   "title": "Why Did World Trade Center Building 7 Fall? New Study Claims Gov’t Story False",
   "byline": null,
   "publication_datetime": "2018-06-05T00:00:00",
@@ -34,5 +38,9 @@
     {"text": "We would like to see some action. We would like to sit down and meet with him, have him hear our side. We know he hears it from the Saudi’s all the time. We want our chance.”"},
     {"text": "via mintpressnews"},
     {"text": "Disclaimer: All information, data and material contained, presented, or provided on EyeOpening.info is for educational purposes only. It is not to be construed or intended as providing medical or legal advice. Decisions you make about your family's healthcare are important and should be made in consultation with a competent medical professional. We are not physicians and do not claim to be. Any views expressed here-in are not necessarily those held by EyeOpening.info"}
-  ]
+  ],
+  "metadata": {
+    "published_datetime": "2018-06-05T17:35:30+13:00",
+    "section": "Politics"
+  }
 }
