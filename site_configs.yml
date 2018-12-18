@@ -208,6 +208,15 @@ redstatewatcher.com:
   article_search: 'paged'
   article_element: 'div'
 #  article_class: 'FIXME'
+  article:
+    #content:
+    #  select-method: 'xpath'
+    #  select-expression: '//div[@class="row"]'
+    #  match-rule: ''
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
 
 youngcons.com:
   site_name: 'youngcons.com'
@@ -218,12 +227,19 @@ youngcons.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'td-post-content'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="td-post-content"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
-      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/text()'
-      match-rule: 'first'
-  article:
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@itemprop="datePublished"]/@content'
