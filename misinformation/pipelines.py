@@ -95,7 +95,16 @@ INSERT INTO [articles_v4]
 
     def process_item(self, article, spider):
         row = self.encoder.encode(dict(article))
-        self.cursor.execute(self.insert_row_sql, row)
-        self.conn.commit()
+        try:
+            self.cursor.execute(self.insert_row_sql, row)
+            self.conn.commit()
+        # Check for duplicate key exceptions and report informative log message
+        except pyodbc.IntegrityError as e:
+            if "Cannot insert duplicate key" in str(e):
+                error_string = str(e).split("(")[4]
+                spider.logger.warning("Refusing to add duplicate entry for: {}".format(article["article_url"]))
+            else:
+                # If this wasn't a duplicate key exception then re-raise it
+                raise
         spider.logger.info("Successfully crawled: {}".format(article["article_url"]))
         return article
