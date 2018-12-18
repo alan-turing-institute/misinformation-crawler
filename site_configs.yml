@@ -80,6 +80,18 @@ federalistpress.com:
   article_url_xpath: '//h2[@class="entry-title"]/a'
   article_search: 'paged'
   article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="article-body"]'
+      match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'first'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@class="author vcard"]//text()'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//span[@class="date published time"]/@title'
