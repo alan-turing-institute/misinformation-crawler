@@ -178,12 +178,19 @@ patriotnewsdaily.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'entry'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="entry"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
-      select-expression: '//h1[contains(concat(" ", normalize-space(@class), " "), " post-title ")]/span[@itemprop="name"]/text()'
+      select-expression: '//meta[@property="og:title"]/@content'
       match-rule: 'first'
-  article:
+    byline:
+      select-method: 'xpath'
+      select-expression: '//div[@class="vcard author"]//a/text()'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//span[@class="updated"]/text()'
