@@ -49,4 +49,21 @@ To update to the latest version of [ReadabiliPy](https://github.com/martintoreil
 - Navigate to the `ReadabiliPy` folder with `cd ReadabiliPy`
 - Ensure you are on the `master` branch with `git checkout master`
 - Pull the latest version with `git pull`
-- Install the dependencies for the Readability node app with `npm install`
+- Install the dependencies with `pip install -r requirements.txt`
+
+## Running the crawler
+In order to run the crawler you will need to create a file at `secrets/db_config.yaml` inside the top-level `misinformation-crawler` directory. This should look like the following:
+
+```
+driver: ODBC Driver 17 for SQL Server
+server: misinformation.database.windows.net
+database: misinformation
+user: database-crawler-user
+password: <password>
+```
+
+where the password is obtained from the Azure keyvault for the database, using
+
+```az keyvault secret show --vault-name misinformation-user --name database-crawler-user```
+
+A template example is provided in the `secrets` directory.
