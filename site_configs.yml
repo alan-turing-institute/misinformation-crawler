@@ -82,7 +82,7 @@ federalistpress.com:
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@class="article-body"]'
+      select-expression: '//div[@class="entry-content"]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
