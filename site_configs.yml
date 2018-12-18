@@ -298,12 +298,19 @@ globalresearch.ca:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'content'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@itemprop="articleBody"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
       select-expression: '//h2[@itemprop="headline"]/text()'
-      match-rule: 'first'
-  article:
+      match-rule: 'single'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//div[@class="author"]/a/text()'
+      match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@property="article:published_time"]/@content'
