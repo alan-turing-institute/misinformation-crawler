@@ -326,11 +326,15 @@ henrymakow.com:
   article_search: 'paged'
   article_element: 'div'
   article_class: 'text-body'
-  metadata:
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="text-body"]'
+      match-rule: 'single'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      match-rule: 'single'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
