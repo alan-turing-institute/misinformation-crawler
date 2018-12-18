@@ -1,4 +1,8 @@
 {
+  "crawl_id": "99ee615d-baa4-43e4-b407-3b4a22816a50",
+  "crawl_date": "2018-10-17T20:25:34.2345+00:00",
+  "site_name": "empirenews.net",
+  "article_url": "http://empirenews.net/article-1_article.html",
   "title": "BREAKING: President Trump Gives Full Pardon to Bill Cosby",
   "byline": "Bob The Empire News Potato",
   "publication_datetime": "2018-09-30T21:11:12",
@@ -17,5 +21,9 @@
     {"text": "| Like 0"},
     {"text": "Comments"},
     {"text": "comments"}
-  ]
+  ],
+  "metadata": {
+    "published_datetime": "2018-09-30T21:11:12+00:00",
+    "modified_datetime": "2018-09-30T21:11:12+00:00"
+  }
 }
