@@ -175,10 +175,12 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         if 'content' in config['article']:
             # Extract article content from specified element
             article_html = extract_element(response, config['article']['content'])
-            custom_readability_article = readability.parse(article_html, content_digests, node_indexes)
-            article["content"] = custom_readability_article["content"]
-            article["plain_content"] = custom_readability_article["plain_content"]
-            article["plain_text"] = custom_readability_article["plain_text"]
+            if article_html is not None:
+                custom_readability_article = readability.parse(article_html,
+                                                                content_digests, node_indexes)
+                article["content"] = custom_readability_article["content"]
+                article["plain_content"] = custom_readability_article["plain_content"]
+                article["plain_text"] = custom_readability_article["plain_text"]
 
 
     # Extract additional article metadata
