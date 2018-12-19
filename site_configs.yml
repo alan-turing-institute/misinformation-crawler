@@ -134,14 +134,6 @@ gellerreport.com:
 #  follow_url_path: 'category/news/page/'
 #  article_url_xpath: '//h2[@class="entry-title"]/a'
 
-# TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
-# the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
-#eyeopening.info:
-#  site_name: 'eyeopening.info'
-#  start_url: 'http://eyeopening.info/category/politics/'
-#  follow_url_path: 'category/politics/page/'
-#  article_url_xpath: '//h2[@class="entry-title"]/a' #FIXME? - Or fix LinkExtractor / use custom parse() method
-
 palmerreport.com:
   site_name: 'palmerreport.com'
   start_url: 'https://palmerreport.com/category/analysis/'
@@ -304,6 +296,7 @@ davidwolfe.com:
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
 # the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
 eyeopening.info:
+  ignore-multi-html-elements: 'False'
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
