@@ -145,8 +145,14 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     article['site_name'] = config['site_name']
     article['article_url'] = response.url
 
+    # This is a flag which will supress warnings "Extracted n elements matching
+    # /html" (where n > 1) for sites which are known to break this rule,
+    # e.g. eyeopening.info. Warnings will still be raised for sites without this
+    # flag.
+    multi_html_extract_warn_flag = config.get('ignore-multi-html-elements', True)
+
     # Set default article fields by running readability on full page HTML
-    page_html = extract_element(response, xpath_extract_spec("/html", "single"))
+    page_html = extract_element(response, xpath_extract_spec("/html", "single"), warn_if_missing=multi_html_extract_warn_flag)
     default_readability_article = readability.parse(page_html, content_digests, node_indexes)
 
     article["title"] = default_readability_article["title"]
