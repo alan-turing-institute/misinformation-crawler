@@ -198,20 +198,18 @@ patriotnewsdaily.com:
       datetime-format: 'YYYY-MM-DD'
 
 # TODO: Enhance spider to follow relative links
-# TODO: Find good configurable value for identifying article body DIV (no class)
+# -- JR: I think this is already done
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
   follow_url_path: 'news.asp\?page=\d*'
-  article_url_xpath: '//h1[@class="newsheaderpreview"]/a'
+  article_url_path: 'article.asp\?id=\d*'
   metadata_source: 'microdata'
   article_search: 'paged'
-  article_element: 'div'
-#  article_class: 'FIXME'
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@class="container"]'
+      select-expression: '//div[@class="container" and div[@class="row"]]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
@@ -391,21 +389,6 @@ prisonplanet.com:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
       match-rule: 'single'
-
-#empirenews.net:
-#  site_name: 'empirenews.net'
-#  start_url: 'http://empirenews.net/category/politics/'
-#  follow_url_path: 'category/politics/page/'
-#  article_url_xpath: '//h1[@class="entry-title"]/a'
-#  metadata_source: 'microdata'
-#  article_search: 'paged'
-#  article_element: 'div'
-#  article_class: 'entry-content'
-#  metadata:
-#    title:
-#      select-method: 'xpath'
-#      select-expression: '//h1[@class="entry-title"]/text()'
-#      match-rule: 'first'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
