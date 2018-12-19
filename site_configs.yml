@@ -341,7 +341,7 @@ globalresearch.ca:
     byline:
       select-method: 'xpath'
       select-expression: '//div[@class="author"]/a/text()'
-      match-rule: 'single'
+      match-rule: 'first'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@property="article:published_time"]/@content'
@@ -360,7 +360,7 @@ henrymakow.com:
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@class="text-body"]'
+      select-expression: '//div[@id="contents"]/div[@class="text"]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
