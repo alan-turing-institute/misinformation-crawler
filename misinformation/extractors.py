@@ -23,7 +23,7 @@ def xpath_extract_spec(xpath_expression, match_rule="single"):
     return extract_spec
 
 
-def extract_element(response, extract_spec):
+def extract_element(response, extract_spec, warn_if_missing=True):
     # Extract selector specification
     method = extract_spec['select-method']
     expression = extract_spec['select-expression']
@@ -44,7 +44,8 @@ def extract_element(response, extract_spec):
         num_matches = len(elements)
         if num_matches == 0:
             elements = None
-            logging.log(logging.WARNING, "No elements could be found\
+            if warn_if_missing:
+                logging.log(logging.WARNING, "No elements could be found\
                                     from {url} matching {xpath} expected by\
                                 match-rule '{rule}'. Returning None.".format(
                 url=response.url, xpath=expression, rule=match_rule))
@@ -54,7 +55,7 @@ def extract_element(response, extract_spec):
             # still return first element but also print a warning log message.
             if match_rule == 'single':
                 elements = elements[0]
-                if num_matches != 1:
+                if num_matches != 1 and warn_if_missing:
                     logging.log(logging.WARNING, "Extracted {count} elements \
                                 from {url} matching {xpath}. Only one element \
                                 expected by match-rule '{rule}'. Returning first \
@@ -160,7 +161,9 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
             # Extract title from specified element
             article['title'] = extract_element(response, config['article']['title'])
         if 'byline' in config['article']:
-            article['byline'] = extract_element(response, config['article']['byline'])
+            article['byline'] = extract_element(response, config['article']['byline'],
+                    warn_if_missing=config['article']['byline'].get(
+                        'warn-if-missing', True))
         if 'publication_datetime' in config['article']:
             datetime_string = extract_element(response, config['article']['publication_datetime'])
             if 'datetime-format' in config['article']['publication_datetime']:
