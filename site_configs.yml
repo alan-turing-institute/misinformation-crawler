@@ -108,7 +108,7 @@ gellerreport.com:
     content:
       select-method: 'xpath'
       select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      match-rule: 'first'
     title:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
