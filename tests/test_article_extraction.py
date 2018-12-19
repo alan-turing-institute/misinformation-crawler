@@ -177,6 +177,15 @@ def test_extract_article_default_with_crawl_info():
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
+        article:
+          title:
+            select-method: 'xpath'
+            select-expression: '//meta[@property="og:title"]/@content'
+            match-rule: 'single'
+          byline:
+            select-method: 'xpath'
+            select-expression: '//meta[@name="author"]/@content'
+            match-rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -327,13 +336,17 @@ def test_extract_article_default_content_digests_node_indexes():
     article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
                                     "addictinginfo.com-1_extracted_data_default_content_digests_node_indexes.json")
     expected_article = article_from_json_file(article_filepath)
-
     # Mock config
     config_yaml = """
         site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
+        article:
+          title:
+            select-method: 'xpath'
+            select-expression: '//meta[@property="og:title"]/@content'
+            match-rule: 'single'
     """
     config = yaml.load(config_yaml)
 
