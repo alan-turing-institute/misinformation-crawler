@@ -43,6 +43,7 @@ conservativehq.com:
       select-method: 'xpath'
       select-expression: '//div[@class="field-item odd"]/text()'
       match-rule: 'first'
+      warn-if-missing: 'False'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
