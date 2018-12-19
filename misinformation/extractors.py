@@ -44,10 +44,11 @@ def extract_element(response, extract_spec):
         num_matches = len(elements)
         if num_matches == 0:
             elements = None
-            logging.log(logging.WARNING, "No elements could be found\
-                                    from {url} matching {xpath} expected by\
-                                match-rule '{rule}'. Returning None.".format(
-                url=response.url, xpath=expression, rule=match_rule))
+            logging.log(logging.WARNING, "No elements could be found from "
+                                         "{url} matching {xpath} expected by "
+                                         "match-rule '{rule}'. Returning "
+                                         "None.".format(url=response.url,
+                                         xpath=expression, rule=match_rule))
         else:
             # Changes to single match rule:
             # Return first element if there is exactly 1 element, otherwise,
@@ -55,12 +56,13 @@ def extract_element(response, extract_spec):
             if match_rule == 'single':
                 elements = elements[0]
                 if num_matches != 1:
-                    logging.log(logging.WARNING, "Extracted {count} elements \
-                                from {url} matching {xpath}. Only one element \
-                                expected by match-rule '{rule}'. Returning first \
-                                element.".format(count=num_matches,
-                                url=response.url, xpath=expression,
-                                rule=match_rule))
+                    logging.log(logging.WARNING, "Extracted {count} elements "
+                                            "from {url} matching {xpath}. Only"
+                                            " one element expected by "
+                                            "match-rule '{rule}'. Returning "
+                                            "first element.".format(
+                        count=num_matches, url=response.url, xpath=expression,
+                        rule=match_rule))
 
             elif match_rule == 'first':
                 elements = elements[0]
