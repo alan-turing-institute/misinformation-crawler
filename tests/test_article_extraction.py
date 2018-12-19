@@ -347,6 +347,10 @@ def test_extract_article_default_content_digests_node_indexes():
             select-method: 'xpath'
             select-expression: '//meta[@property="og:title"]/@content'
             match-rule: 'single'
+          byline:
+            select-method: 'xpath'
+            select-expression: '//meta[@name="author"]/@content'
+            match-rule: 'first'
     """
     config = yaml.load(config_yaml)
 
