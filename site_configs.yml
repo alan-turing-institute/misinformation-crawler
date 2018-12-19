@@ -316,7 +316,7 @@ eyeopening.info:
     content:
       select-method: 'xpath'
       select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      match-rule: 'first'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
