@@ -1,3 +1,30 @@
+#=== Blank config template ===#
+#<site name>:
+#  site_name: ''
+#  start_url: ''
+#  follow_url_path: ''
+#  article_url_xpath: ''
+#  metadata_source: ''
+#  article_search: ''
+#  article_element: ''
+#  article_class: ''
+#  article:
+#    content:
+#      select-method: 'xpath'
+#      select-expression: ''
+#      match-rule: ''
+#    title:
+#      select-method: 'xpath'
+#      select-expression: ''
+#      match-rule: ''
+#    byline:
+#      select-method: 'xpath'
+#      select-expression: ''
+#      match-rule: ''
+#    publication_datetime:
+#      select-method: 'xpath'
+#      select-expression: ''
+#      match-rule: ''
 
 # Spider configurations for each website to be crawled
 addictinginfo.com:
@@ -399,4 +426,33 @@ madworldnews.com:
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[contains(concat(" ", normalize-space(@property), " "), " article:published_time ")]/@content'
+      match-rule: 'single'
+
+#==============================================================================#
+# Adding new sites to crawl                                                    #
+#==============================================================================#
+
+liveaction.org:
+  site_name: 'liveaction.org'
+  start_url: 'https://liveaction.org/news/latest-stories/'
+  follow_url_path: 'news'
+  article_url_xpath: '//h1[@itemprop="headline"]'
+  article_search: 'paged'
+  article_element: 'div'
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@id="content-main"]'
+      match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@itemprop="name"]/a/text()'
+      match-rule: 'single'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="article:published_time"]/@content'
       match-rule: 'single'
