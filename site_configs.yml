@@ -123,18 +123,6 @@ gellerreport.com:
       select-expression: '//time[@class="post-entry-time"]/@datetime'
       match-rule: 'single'
 
-
-# =========================================
-# ===== Sites not currently extracted =====
-# =========================================
-
-# TODO: Plain text extract does not include list items
-#davidwolfe.com:
-#  site_name: 'davidwolfe.com'
-#  start_url: 'https://www.davidwolfe.com/category/news/'
-#  follow_url_path: 'category/news/page/'
-#  article_url_xpath: '//h2[@class="entry-title"]/a'
-
 palmerreport.com:
   site_name: 'palmerreport.com'
   start_url: 'https://palmerreport.com/category/analysis/'
@@ -279,7 +267,7 @@ davidwolfe.com:
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@itemprop="text"]'
+      select-expression: '//div[@class="entry-content"]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
