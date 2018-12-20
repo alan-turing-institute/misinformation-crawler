@@ -149,10 +149,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     # /html" (where n > 1) for sites which are known to break this rule,
     # e.g. eyeopening.info. Warnings will still be raised for sites without this
     # flag.
-    multi_html_extract_warn_flag = config.get('ignore-multi-html-elements', True)
+    warn_on_multiple_html_elements = config.get('ignore-multi-html-elements', True)
 
     # Set default article fields by running readability on full page HTML
-    page_html = extract_element(response, xpath_extract_spec("/html", "single"), warn_if_missing=multi_html_extract_warn_flag)
+    page_html = extract_element(response, xpath_extract_spec("/html", "single"), warn_if_missing=warn_on_multiple_html_elements)
     default_readability_article = readability.parse(page_html, content_digests, node_indexes)
 
     article["title"] = default_readability_article["title"]
@@ -168,12 +168,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
             article['title'] = extract_element(response, config['article']['title'])
         if 'byline' in config['article']:
             article['byline'] = extract_element(response, config['article']['byline'],
-                    warn_if_missing=config['article']['byline'].get(
-                        'warn-if-missing', True))
+                    warn_if_missing=config['article']['byline'].get('warn-if-missing', True))
         if 'publication_datetime' in config['article']:
             datetime_string = extract_element(response, config['article']['publication_datetime'],
-                                              warn_if_missing=config['article']['publication_datetime'].get(
-                                                  'warn-if-missing', True))
+                    warn_if_missing=config['article']['publication_datetime'].get('warn-if-missing', True))
             if 'datetime-format' in config['article']['publication_datetime']:
                 format = config['article']['publication_datetime']['datetime-format']
                 iso_string = extract_datetime_string(datetime_string, format)
@@ -184,11 +182,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         # so only update article content by running readability on a custom container
         if 'content' in config['article']:
             # Extract article content from specified element
-            article_html = extract_element(response, config['article']['content'], warn_if_missing=config['article'][
-                'content'].get('warn-if-missing', True))
+            article_html = extract_element(response, config['article']['content'],
+                    warn_if_missing=config['article']['content'].get('warn-if-missing', True))
             if article_html is not None:
-                custom_readability_article = readability.parse(article_html,
-                                                                content_digests, node_indexes)
+                custom_readability_article = readability.parse(article_html, content_digests, node_indexes)
                 article["content"] = custom_readability_article["content"]
                 article["plain_content"] = custom_readability_article["plain_content"]
                 article["plain_text"] = custom_readability_article["plain_text"]
