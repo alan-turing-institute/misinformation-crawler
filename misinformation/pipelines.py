@@ -94,10 +94,6 @@ INSERT INTO [articles_v4]
         self.conn.close()
 
     def process_item(self, article, spider):
-
-        # if 'Bandwidth exceeded' in response.body:
-        spider.close_down = True
-
         row = self.encoder.encode(dict(article))
         try:
             self.cursor.execute(self.insert_row_sql, row)
