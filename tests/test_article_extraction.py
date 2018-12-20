@@ -24,6 +24,7 @@ SITE_NAMES = [
     ,"gellerreport.com"
     ,"globalresearch.ca"
     ,"henrymakow.com"
+    ,"liveaction.org"
     ,"madworldnews.com"
     ,"occupydemocrats.com"
     ,"palmerreport.com"
