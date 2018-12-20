@@ -171,7 +171,9 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                     warn_if_missing=config['article']['byline'].get(
                         'warn-if-missing', True))
         if 'publication_datetime' in config['article']:
-            datetime_string = extract_element(response, config['article']['publication_datetime'])
+            datetime_string = extract_element(response, config['article']['publication_datetime'],
+                                              warn_if_missing=config['article']['publication_datetime'].get(
+                                                  'warn-if-missing', True))
             if 'datetime-format' in config['article']['publication_datetime']:
                 format = config['article']['publication_datetime']['datetime-format']
                 iso_string = extract_datetime_string(datetime_string, format)
