@@ -49,6 +49,7 @@ conservativehq.com:
       select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
       match-rule: 'single'
       datetime-format: 'MM/DD/YY'
+      warn-if-missing: 'False'
 
 empirenews.net:
   site_name: 'empirenews.net'
