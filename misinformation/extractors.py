@@ -27,9 +27,9 @@ def extract_element(response, extract_spec, warn_if_missing=True):
     # Extract selector specification
     method = extract_spec['select-method']
     expression = extract_spec['select-expression']
-    # Default match rule to 'one', which wil throw an error if multiple matches are found
+    # Default match rule to 'single', which will log a warning message if multiple matches are found
     if 'match-rule' not in extract_spec:
-        match_rule = 'one'
+        match_rule = 'single'
     else:
         match_rule = extract_spec['match-rule']
 
