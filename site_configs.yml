@@ -92,7 +92,7 @@ federalistpress.com:
       match-rule: 'first'
     byline:
       select-method: 'xpath'
-      select-expression: '//span[@class="author vcard"]//text()'
+      select-expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
       match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
