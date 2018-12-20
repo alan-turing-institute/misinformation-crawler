@@ -44,7 +44,8 @@ def extract_element(response, extract_spec, warn_if_missing=True):
         num_matches = len(elements)
         if num_matches == 0:
             elements = None
-            logging.warning("No elements could be found from {url} matching "
+            if warn_if_missing:
+                logging.warning("No elements could be found from {url} matching "
                             "{xpath} expected by match-rule '{rule}'. Returning"
                             " None.".format(url=response.url, xpath=expression,
                             rule=match_rule))
@@ -54,7 +55,7 @@ def extract_element(response, extract_spec, warn_if_missing=True):
             # still return first element but also print a warning log message.
             if match_rule == 'single':
                 elements = elements[0]
-                if num_matches != 1:
+                if (num_matches != 1) and warn_if_missing:
                     logging.warning("Extracted {count} elements from {url} "
                                     "matching {xpath}. Only one element "
                                     "expected by match-rule '{rule}'. Returning"
