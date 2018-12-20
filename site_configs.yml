@@ -1,30 +1,3 @@
-#=== Blank config template ===#
-#<site name>:
-#  site_name: ''
-#  start_url: ''
-#  follow_url_path: ''
-#  article_url_xpath: ''
-#  metadata_source: ''
-#  article_search: ''
-#  article_element: ''
-#  article_class: ''
-#  article:
-#    content:
-#      select-method: 'xpath'
-#      select-expression: ''
-#      match-rule: ''
-#    title:
-#      select-method: 'xpath'
-#      select-expression: ''
-#      match-rule: ''
-#    byline:
-#      select-method: 'xpath'
-#      select-expression: ''
-#      match-rule: ''
-#    publication_datetime:
-#      select-method: 'xpath'
-#      select-expression: ''
-#      match-rule: ''
 
 # Spider configurations for each website to be crawled
 addictinginfo.com:

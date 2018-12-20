@@ -1,6 +1,9 @@
 # Ignore the extract_article.py file I made in repo root for testing
 extract_article.py
 
+# Ignore blank site config template
+blank_site_config.yml
+
 # Secrets folder containing sensitive data
 secrets/
 
