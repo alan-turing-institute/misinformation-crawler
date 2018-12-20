@@ -341,7 +341,7 @@ globalresearch.ca:
       match-rule: 'single'
     byline:
       select-method: 'xpath'
-      select-expression: '//div[@class="author"]/a/text()'
+      select-expression: '//meta[@itemprop="author"]/@content'
       match-rule: 'first'
     publication_datetime:
       select-method: 'xpath'
