@@ -177,15 +177,6 @@ def test_extract_article_default_with_crawl_info():
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
-        article:
-          title:
-            select-method: 'xpath'
-            select-expression: '//meta[@property="og:title"]/@content'
-            match-rule: 'single'
-          byline:
-            select-method: 'xpath'
-            select-expression: '//meta[@name="author"]/@content'
-            match-rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -298,15 +289,6 @@ def test_extract_article_default_content_digests():
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
-        article:
-          title:
-            select-method: 'xpath'
-            select-expression: '//meta[@property="og:title"]/@content'
-            match-rule: 'single'
-          byline:
-            select-method: 'xpath'
-            select-expression: '//head/meta[@itemprop="author"]/@content'
-            match-rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -351,15 +333,6 @@ def test_extract_article_default_content_digests_node_indexes():
         start_url: 'http://addictinginfo.com/category/news/'
         follow_url_path: 'page/'
         article_url_xpath: '//h2[@class="entry-title"]/a'
-        article:
-          title:
-            select-method: 'xpath'
-            select-expression: '//meta[@property="og:title"]/@content'
-            match-rule: 'single'
-          byline:
-            select-method: 'xpath'
-            select-expression: '//meta[@name="author"]/@content'
-            match-rule: 'first'
     """
     config = yaml.load(config_yaml)
 
