@@ -184,7 +184,8 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         # so only update article content by running readability on a custom container
         if 'content' in config['article']:
             # Extract article content from specified element
-            article_html = extract_element(response, config['article']['content'])
+            article_html = extract_element(response, config['article']['content'], warn_if_missing=config['article'][
+                'content'].get('warn-if-missing', True))
             if article_html is not None:
                 custom_readability_article = readability.parse(article_html,
                                                                 content_digests, node_indexes)
