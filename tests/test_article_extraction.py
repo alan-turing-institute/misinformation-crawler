@@ -327,7 +327,6 @@ def test_extract_article_default_content_digests_node_indexes():
     article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
                                     "addictinginfo.com-1_extracted_data_default_content_digests_node_indexes.json")
     expected_article = article_from_json_file(article_filepath)
-
     # Mock config
     config_yaml = """
         site_name: 'example.com'
@@ -442,9 +441,9 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
         'title': None,
         'byline': None,
         'publication_datetime': None,
-        'content': None,
-        'plain_content': None,
-        'plain_text': None,
+        'content': "<div>No article here.</div>",
+        'plain_content': "<div>No article here.</div>",
+        'plain_text': [{'text': 'No article here.'}],
         'metadata': None
     }
 
