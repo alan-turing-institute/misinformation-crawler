@@ -441,9 +441,9 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
         'title': None,
         'byline': None,
         'publication_datetime': None,
-        'content': None,
-        'plain_content': None,
-        'plain_text': None,
+        'content': "<div>No article here.</div>",
+        'plain_content': "<div>No article here.</div>",
+        'plain_text': [{'text': 'No article here.'}],
         'metadata': None
     }
 
