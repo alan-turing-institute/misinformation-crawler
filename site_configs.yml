@@ -43,11 +43,13 @@ conservativehq.com:
       select-method: 'xpath'
       select-expression: '//div[@class="field-item odd"]/text()'
       match-rule: 'first'
+      warn-if-missing: 'False'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
       match-rule: 'single'
       datetime-format: 'MM/DD/YY'
+      warn-if-missing: 'False'
 
 empirenews.net:
   site_name: 'empirenews.net'
@@ -90,7 +92,7 @@ federalistpress.com:
       match-rule: 'first'
     byline:
       select-method: 'xpath'
-      select-expression: '//span[@class="author vcard"]//text()'
+      select-expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
       match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
@@ -107,7 +109,7 @@ gellerreport.com:
     content:
       select-method: 'xpath'
       select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      match-rule: 'first'
     title:
       select-method: 'xpath'
       select-expression: '//h1[@class="entry-title"]/text()'
@@ -120,26 +122,6 @@ gellerreport.com:
       select-method: 'xpath'
       select-expression: '//time[@class="post-entry-time"]/@datetime'
       match-rule: 'single'
-
-
-# =========================================
-# ===== Sites not currently extracted =====
-# =========================================
-
-# TODO: Plain text extract does not include list items
-#davidwolfe.com:
-#  site_name: 'davidwolfe.com'
-#  start_url: 'https://www.davidwolfe.com/category/news/'
-#  follow_url_path: 'category/news/page/'
-#  article_url_xpath: '//h2[@class="entry-title"]/a'
-
-# TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
-# the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
-#eyeopening.info:
-#  site_name: 'eyeopening.info'
-#  start_url: 'http://eyeopening.info/category/politics/'
-#  follow_url_path: 'category/politics/page/'
-#  article_url_xpath: '//h2[@class="entry-title"]/a' #FIXME? - Or fix LinkExtractor / use custom parse() method
 
 palmerreport.com:
   site_name: 'palmerreport.com'
@@ -198,20 +180,18 @@ patriotnewsdaily.com:
       datetime-format: 'YYYY-MM-DD'
 
 # TODO: Enhance spider to follow relative links
-# TODO: Find good configurable value for identifying article body DIV (no class)
+# -- JR: I think this is already done
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
   follow_url_path: 'news.asp\?page=\d*'
-  article_url_xpath: '//h1[@class="newsheaderpreview"]/a'
+  article_url_path: 'article.asp\?id=\d*'
   metadata_source: 'microdata'
   article_search: 'paged'
-  article_element: 'div'
-#  article_class: 'FIXME'
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@class="container"]'
+      select-expression: '//div[@class="container" and div[@class="row"]]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
@@ -285,7 +265,7 @@ davidwolfe.com:
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@itemprop="text"]'
+      select-expression: '//div[@class="entry-content"]'
       match-rule: 'single'
     title:
       select-method: 'xpath'
@@ -303,6 +283,7 @@ davidwolfe.com:
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
 # the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
 eyeopening.info:
+  ignore-multi-html-elements: 'False'
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
@@ -315,7 +296,7 @@ eyeopening.info:
     content:
       select-method: 'xpath'
       select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      match-rule: 'first'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
@@ -346,8 +327,8 @@ globalresearch.ca:
       match-rule: 'single'
     byline:
       select-method: 'xpath'
-      select-expression: '//div[@class="author"]/a/text()'
-      match-rule: 'single'
+      select-expression: '//meta[@itemprop="author"]/@content'
+      match-rule: 'first'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@property="article:published_time"]/@content'
@@ -368,6 +349,7 @@ henrymakow.com:
       select-method: 'xpath'
       select-expression: '//div[@class="text-body"]'
       match-rule: 'single'
+      warn-if-missing: 'False'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
@@ -391,21 +373,6 @@ prisonplanet.com:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
       match-rule: 'single'
-
-#empirenews.net:
-#  site_name: 'empirenews.net'
-#  start_url: 'http://empirenews.net/category/politics/'
-#  follow_url_path: 'category/politics/page/'
-#  article_url_xpath: '//h1[@class="entry-title"]/a'
-#  metadata_source: 'microdata'
-#  article_search: 'paged'
-#  article_element: 'div'
-#  article_class: 'entry-content'
-#  metadata:
-#    title:
-#      select-method: 'xpath'
-#      select-expression: '//h1[@class="entry-title"]/text()'
-#      match-rule: 'first'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
