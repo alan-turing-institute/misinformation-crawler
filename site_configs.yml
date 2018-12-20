@@ -361,8 +361,9 @@ henrymakow.com:
   article:
     content:
       select-method: 'xpath'
-      select-expression: '//div[@id="contents"]/div[@class="text"]'
+      select-expression: '//div[@class="text-body"]'
       match-rule: 'single'
+      warn-if-missing: 'False'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
