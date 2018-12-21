@@ -66,13 +66,13 @@ conservativehq.com:
       select-method: 'xpath'
       select-expression: '//div[@class="field-item odd"]/text()'
       match-rule: 'first'
-      warn-if-missing: 'False'
+      warn-if-missing: False
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
       match-rule: 'single'
       datetime-format: 'MM/DD/YY'
-      warn-if-missing: 'False'
+      warn-if-missing: False
 
 dailykos.com:
   site_name: 'dailykos.com'
@@ -154,7 +154,7 @@ empirenews.net:
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
 # the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
 eyeopening.info:
-  ignore-multi-html-elements: 'False'
+  ignore-multi-html-elements: False
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
@@ -268,7 +268,7 @@ henrymakow.com:
       select-method: 'xpath'
       select-expression: '//div[@class="text-body"]'
       match-rule: 'single'
-      warn-if-missing: 'False'
+      warn-if-missing: False
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
