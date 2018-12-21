@@ -24,7 +24,6 @@ abcnews.go.com:
       select-expression: '//div[@class="article-copy"]'
       match-rule: 'single'
 
-
 addictinginfo.com:
   site_name: 'addictinginfo.com'
   start_url: 'http://addictinginfo.com/category/news/'
@@ -326,6 +325,31 @@ madworldnews.com:
       select-method: 'xpath'
       select-expression: '//div[@id="main-content"]'
       match-rule: 'single'
+
+nbcnews.com:
+  site_name: 'nbcnews.com'
+  start_url: 'http://www.nbcnews.com/politics'
+  follow_url_path: '/pages/'
+  article_url_path: '/politics/.*/.*n\d*'
+  article_search: 'paged'
+  article:
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'first'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//div[@class="founders-cond f6 lh-none"]/text()'
+      match-rule: 'last'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//div/time[contains(@class, "pubDate")]/@datetime'
+      match-rule: 'first'
+      datetime-format: 'ddd MMM D YYYY HH:mm:ss'
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[contains(@class, "body")]/p[@class=""]'
+      match-rule: 'group'
 
 nytimes.com:
     site_name: 'nytimes.com'
