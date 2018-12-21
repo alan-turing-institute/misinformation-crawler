@@ -474,3 +474,27 @@ breitbart.com:
         select-method: 'xpath'
         select-expression: '//footer[@class="byline"]/time/@datetime'
         match-rule: 'single'
+
+nytimes.com:
+    site_name: 'nytimes.com'
+    start_url: 'https://www.nytimes.com/'
+    follow_url_path: 'pages/'
+    article_url_path: '/\d\d\d\d/\d\d/\d\d/'
+    article_search: 'paged'
+    article:
+      content:
+        select-method: 'xpath'
+        select-expression: '//section[@name="articleBody"]'
+        match-rule: 'single'
+      title:
+        select-method: 'xpath'
+        select-expression: '//meta[@property="og:title"]/@content'
+        match-rule: 'single'
+      byline:
+        select-method: 'xpath'
+        select-expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
+        match-rule: 'single'
+      publication_datetime:
+        select-method: 'xpath'
+        select-expression: '//meta[@property="article:published"]/@content'
+        match-rule: 'single'
