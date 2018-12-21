@@ -477,9 +477,9 @@ breitbart.com:
 
 nytimes.com:
     site_name: 'nytimes.com'
-    start_url: 'https://www.nytimes.com/'
+    start_url: 'https://www.nytimes.com/section/politics'
     follow_url_path: 'pages/'
-    article_url_path: '/\d\d\d\d/\d\d/\d\d/'
+    article_url_path: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
     article_search: 'paged'
     article:
       content:
