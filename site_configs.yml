@@ -498,8 +498,8 @@ redstatewatcher.com:
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
-  follow_url_path: 'politics/page/'
-  article_url_xpath: '//h2[contains(concat(" ",normalize-space(@class)," ")," post__title ")]/a'
+  follow_url_path: 'tag/'
+  article_url_xpath: '//h2[contains(@class, "post__title")]//a'
   article_search: 'paged'
   article:
     title:
@@ -509,7 +509,7 @@ thinkprogress.org:
     byline:
       select-method: 'xpath'
       select-expression: '//span[@class="post__byline__author"]//a/text()'
-      match-rule: 'single'
+      match-rule: 'concatenate'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//time[@class="post__date"]/@datetime'
