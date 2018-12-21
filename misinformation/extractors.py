@@ -113,7 +113,12 @@ def pendulum_datetime_extract(date_string, date_format=None):
     # Attempt to extract the date using the specified format if provided
     try:
         if date_format:
-            datetime = pendulum.from_format(date_string, date_format)
+            if "unix" in date_format:
+                if "milliseconds" in date_format:
+                    date_string = date_string[:-3]
+                datetime = pendulum.from_timestamp(int(date_string))
+            else:
+                datetime = pendulum.from_format(date_string, date_format)
         else:
             # Assume ISO-8601
             datetime = pendulum.parse(date_string)
