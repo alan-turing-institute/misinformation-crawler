@@ -30,6 +30,7 @@ SITE_NAMES = [
     ,"patriotnewsdaily.com"
     ,"prisonplanet.com"
     ,"redstatewatcher.com"
+    ,"thinkprogress.org"
     ,"youngcons.com"
 ]
 
