@@ -1,8 +1,8 @@
 # Spider configurations for each website to be crawled
 abcnews.go.com:
   site_name: 'abcnews.go.com'
-  start_url: 'abcnews.go.com/Politics'
-  follow_url_path: '/Politics/'
+  start_url: 'http://abcnews.go.com/Politics'
+  follow_url_path: '/US/'
   article_url_path: 'story\?id=\d*'
   article_search: 'paged'
   article:
