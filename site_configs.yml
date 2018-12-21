@@ -50,9 +50,9 @@ addictinginfo.com:
 
 breitbart.com:
   site_name: 'breitbart.com'
-  start_url: 'https://www.breitbart.com/'
+  start_url: 'https://www.breitbart.com/tag/politics/'
   follow_url_path: '/tag/'
-  article_url_xpath: '//footer[contains(concat(" ",normalize-space(@class)," ")," byline ")]/h2/a'
+  article_url_xpath: '//footer[contains(@class,"byline")]//a'
   article_search: 'paged'
   article:
     title:
@@ -102,8 +102,8 @@ conservativehq.com:
 dailykos.com:
   site_name: 'dailykos.com'
   start_url: 'https://www.dailykos.com/'
-  follow_url_path: '\?page=\d*'
-  article_url_path: '/stories/\d\d\d\d/'
+  follow_url_path: 'user'
+  article_url_path: '/stor[ies|y]/\d\d\d\d/'
   article_search: 'paged'
   obey_robots_txt: False
   article:
@@ -498,8 +498,8 @@ redstatewatcher.com:
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
-  follow_url_path: 'politics/page/'
-  article_url_xpath: '//h2[contains(concat(" ",normalize-space(@class)," ")," post__title ")]/a'
+  follow_url_path: 'tag/'
+  article_url_xpath: '//h2[contains(@class, "post__title")]//a'
   article_search: 'paged'
   article:
     title:
@@ -509,7 +509,7 @@ thinkprogress.org:
     byline:
       select-method: 'xpath'
       select-expression: '//span[@class="post__byline__author"]//a/text()'
-      match-rule: 'single'
+      match-rule: 'concatenate'
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//time[@class="post__date"]/@datetime'
