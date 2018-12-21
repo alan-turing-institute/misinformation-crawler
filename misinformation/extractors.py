@@ -74,6 +74,10 @@ def extract_element(response, extract_spec, warn_if_missing=True):
             elif match_rule == 'first':
                 elements = elements[0]
 
+            elif match_rule == 'concatenate':
+                # Join non-empty elements together with commas
+                elements = ", ".join([x for x in elements if x])
+
             elif match_rule == 'all':
                 # Nothing to do but need this to pass validity check
                 elements = elements
