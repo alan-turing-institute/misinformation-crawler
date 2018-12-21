@@ -427,9 +427,11 @@ thinkprogress.org:
 
 dailykos.com:
   site_name: 'dailykos.com'
-  start_url: 'http://dailykos.com'
+  start_url: 'https://www.dailykos.com/'
   follow_url_path: '\?page=\d*'
-  article_url_xpath: '//div[contains(concat(" ",normalize-space(@class)," ")," story-title ")]/a'
+  article_url_path: '/stories/\d\d\d\d/'
+  article_search: 'paged'
+  obey_robots_txt: False
   article:
     content:
       select-method: 'xpath'
