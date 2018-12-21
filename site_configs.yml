@@ -102,8 +102,8 @@ conservativehq.com:
 dailykos.com:
   site_name: 'dailykos.com'
   start_url: 'https://www.dailykos.com/'
-  follow_url_path: '\?page=\d*'
-  article_url_path: '/stories/\d\d\d\d/'
+  follow_url_path: 'user'
+  article_url_path: '/stor[ies|y]/\d\d\d\d/'
   article_search: 'paged'
   obey_robots_txt: False
   article:
