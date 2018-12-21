@@ -16,6 +16,7 @@ SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_conf
 SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
 SITE_NAMES = [
     "addictinginfo.com"
+    ,"breitbart.com"
     ,"conservativehq.com"
     ,"dailykos.com"
     ,"davidwolfe.com"

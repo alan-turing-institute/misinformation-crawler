@@ -450,3 +450,27 @@ dailykos.com:
       select-expression: '//span[@class="timestamp "]/@data-epoch-time'
       datetime-format: 'unix_milliseconds'
       match-rule: 'first'
+
+breitbart.com:
+    site_name: 'breitbart.com'
+    start_url: 'https://www.breitbart.com/'
+    follow_url_path: '/tag/'
+    article_url_xpath: '//footer[contains(concat(" ",normalize-space(@class)," ")," byline ")]/h2/a'
+    article_search: 'paged'
+    article:
+      content:
+        select-method: 'xpath'
+        select-expression: '//div[@class="entry-content"]'
+        match-rule: 'single'
+      title:
+        select-method: 'xpath'
+        select-expression: '//header/h1/text()'
+        match-rule: 'single'
+      byline:
+        select-method: 'xpath'
+        select-expression: '//meta[@name="author"]/@content'
+        match-rule: 'single'
+      publication_datetime:
+        select-method: 'xpath'
+        select-expression: '//footer[@class="byline"]/time/@datetime'
+        match-rule: 'single'
