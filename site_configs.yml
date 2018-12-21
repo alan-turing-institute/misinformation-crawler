@@ -306,8 +306,6 @@ madworldnews.com:
   article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
   article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
   article:
     title:
       select-method: 'xpath'
@@ -323,8 +321,8 @@ madworldnews.com:
       match-rule: 'single'
     content:
       select-method: 'xpath'
-      select-expression: '//div[@id="main-content"]'
-      match-rule: 'single'
+      select-expression: '//div[contains(@class, "entry-content")]/p'
+      match-rule: 'group'
 
 nbcnews.com:
   site_name: 'nbcnews.com'
