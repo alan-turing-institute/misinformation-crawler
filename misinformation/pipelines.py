@@ -109,7 +109,7 @@ INSERT INTO [articles_v4]
         # Check for database size exceptions and report information log message
         except pyodbc.ProgrammingError as e:
             if "reached its size quota" in str(e):
-                spider.close_down = True
+                spider.database_limit = True
                 spider.logger.error("Closing down as the database has reached its size quota.")
             else:
                 # If this wasn't a duplicate key exception then re-raise it
