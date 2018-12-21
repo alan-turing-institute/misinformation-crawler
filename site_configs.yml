@@ -424,3 +424,22 @@ thinkprogress.org:
       select-method: 'xpath'
       select-expression: '//time[@class="post__date"]/@datetime'
       match-rule: 'single'
+
+
+dailykos.com:
+  site_name: 'dailykos.com'
+  start_url: 'http://dailykos.com'
+  follow_url_path: '\?page=\d*'
+  article_url_xpath: '//div[contains(concat(" ",normalize-space(@class)," ")," story-title ")]/a'
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="story-intro story-content"]'
+      match-rule: 'single'
+  title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+   byline:
+      select-method: 'xpath'
+      select-expression: '//span[@class="post__byline__author"]//a/text()'
+      match-rule: 'single'
