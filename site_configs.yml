@@ -454,6 +454,7 @@ dailykos.com:
 breitbart.com:
     site_name: 'breitbart.com'
     start_url: 'https://www.breitbart.com/'
+    follow_url_path: '/tag/'
     article_url_xpath: '//footer[contains(concat(" ",normalize-space(@class)," ")," byline ")]/h2/a'
     article_search: 'paged'
     article:
