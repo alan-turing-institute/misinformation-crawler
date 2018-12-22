@@ -328,7 +328,7 @@ nbcnews.com:
   site_name: 'nbcnews.com'
   start_url: 'http://www.nbcnews.com/politics'
   follow_url_path: '/pages/'
-  article_url_path: '/politics/.*/.*n\d*'
+  article_url_path: '/politics/[a-z\-]*/.*\d+$'
   article_search: 'paged'
   article:
     title:
