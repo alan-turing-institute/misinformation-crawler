@@ -14,26 +14,7 @@ SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_conf
 
 # Load site-specific spider configurations
 SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
-SITE_NAMES = [
-    "addictinginfo.com"
-    ,"conservativehq.com"
-    ,"davidwolfe.com"
-    ,"empirenews.net"
-    ,"eyeopening.info"
-    ,"federalistpress.com"
-    ,"gellerreport.com"
-    ,"globalresearch.ca"
-    ,"henrymakow.com"
-    ,"liveaction.org"
-    ,"madworldnews.com"
-    ,"occupydemocrats.com"
-    ,"palmerreport.com"
-    ,"patriotnewsdaily.com"
-    ,"prisonplanet.com"
-    ,"redstatewatcher.com"
-    ,"youngcons.com"
-]
-
+SITE_NAMES = sorted(SITE_CONFIGS.keys())
 
 # ================= HELPER FUNCTIONS =================
 def config_for_site(site_name):

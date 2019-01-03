@@ -94,10 +94,6 @@ INSERT INTO [articles_v4]
         self.conn.close()
 
     def process_item(self, article, spider):
-
-        # if 'Bandwidth exceeded' in response.body:
-        spider.close_down = True
-
         row = self.encoder.encode(dict(article))
         try:
             self.cursor.execute(self.insert_row_sql, row)
@@ -113,7 +109,7 @@ INSERT INTO [articles_v4]
         # Check for database size exceptions and report information log message
         except pyodbc.ProgrammingError as e:
             if "reached its size quota" in str(e):
-                spider.close_down = True
+                spider.database_limit = True
                 spider.logger.error("Closing down as the database has reached its size quota.")
             else:
                 # If this wasn't a duplicate key exception then re-raise it

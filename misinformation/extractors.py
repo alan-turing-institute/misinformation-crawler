@@ -74,6 +74,17 @@ def extract_element(response, extract_spec, warn_if_missing=True):
             elif match_rule == 'first':
                 elements = elements[0]
 
+            elif match_rule == 'last':
+                elements = elements[-1]
+
+            elif match_rule == 'concatenate':
+                # Join non-empty elements together with commas
+                elements = ", ".join([x for x in elements if x])
+
+            elif match_rule == 'group':
+                # Group several elements and wrap them in a div
+                elements = "<div>" + "".join(elements) + "</div>"
+
             elif match_rule == 'all':
                 # Nothing to do but need this to pass validity check
                 elements = elements
@@ -113,7 +124,12 @@ def pendulum_datetime_extract(date_string, date_format=None):
     # Attempt to extract the date using the specified format if provided
     try:
         if date_format:
-            datetime = pendulum.from_format(date_string, date_format)
+            if "unix" in date_format:
+                if "milliseconds" in date_format:
+                    date_string = date_string[:-3]
+                datetime = pendulum.from_timestamp(int(date_string))
+            else:
+                datetime = pendulum.from_format(date_string, date_format)
         else:
             # Assume ISO-8601
             datetime = pendulum.parse(date_string)
