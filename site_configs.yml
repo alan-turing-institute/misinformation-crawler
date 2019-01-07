@@ -536,7 +536,7 @@ vox.com:
       match-rule: 'single'
     publication_datetime:
       select-method: 'xpath'
-      select-expression: '//time[@class="c-byline__item"]/@datetime'
+      select-expression: '//meta[@property="article:published_time"]/@content'
       match-rule: 'single'
     content:
       select-method: 'xpath'
