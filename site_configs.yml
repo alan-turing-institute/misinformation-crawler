@@ -2,7 +2,7 @@
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
-  follow_url_path: '/US/'
+  follow_url_path: '/alerts/'
   article_url_path: 'story\?id=\d*'
   article_search: 'paged'
   article:
