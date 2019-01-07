@@ -299,6 +299,31 @@ henrymakow.com:
       match-rule: 'single'
       warn-if-missing: False
 
+liveaction.org:
+  site_name: 'liveaction.org'
+  start_url: 'https://liveaction.org/news/latest-stories/'
+  follow_url_path: 'news/'
+  article_url_xpath: '//h1[@itemprop="headline"]'
+  article_search: 'paged'
+  article_element: 'div'
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@id="content-main"]'
+      match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//span[@itemprop="name"]/a/text()'
+      match-rule: 'single'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="article:published_time"]/@content'
+      match-rule: 'single'      
+    
 madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
@@ -542,7 +567,32 @@ vox.com:
       select-method: 'xpath'
       select-expression: '//div[@class="c-entry-content"]'
       match-rule: 'single'
-      
+  
+westernjournal.org:
+  site_name: 'westernjournal.org'
+  start_url: 'https://www.westernjournal.com/politics/'
+  follow_url_path: 'politics/'
+  article_url_xpath: '//h1[@itemprop="headline"]'
+  article_search: 'paged'
+  article_element: 'div'
+  article:
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="entry-content"]'
+      match-rule: 'single'
+    title:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+    byline:
+      select-method: 'xpath'
+      select-expression: '//meta[@name="author"]/@content'
+      match-rule: 'single'
+    publication_datetime:
+      select-method: 'xpath'
+      select-expression: '//meta[@property="article:published_time"]/@content'
+      match-rule: 'single'
+          
 youngcons.com:
   site_name: 'youngcons.com'
   start_url: 'http://youngcons.com/category/politics/'
@@ -568,58 +618,4 @@ youngcons.com:
     content:
       select-method: 'xpath'
       select-expression: '//div[@class="td-post-content"]'
-      match-rule: 'single'
-
-#==============================================================================#
-# Adding new sites to crawl                                                    #
-#==============================================================================#
-
-liveaction.org:
-  site_name: 'liveaction.org'
-  start_url: 'https://liveaction.org/news/latest-stories/'
-  follow_url_path: 'news/'
-  article_url_xpath: '//h1[@itemprop="headline"]'
-  article_search: 'paged'
-  article_element: 'div'
-  article:
-    content:
-      select-method: 'xpath'
-      select-expression: '//div[@id="content-main"]'
-      match-rule: 'single'
-    title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
-    byline:
-      select-method: 'xpath'
-      select-expression: '//span[@itemprop="name"]/a/text()'
-      match-rule: 'single'
-    publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
-
-westernjournal.org:
-  site_name: 'westernjournal.org'
-  start_url: 'https://www.westernjournal.com/politics/'
-  follow_url_path: 'politics/'
-  article_url_xpath: '//h1[@itemprop="headline"]'
-  article_search: 'paged'
-  article_element: 'div'
-  article:
-    content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
-    title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
-    byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'single'
-    publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
       match-rule: 'single'
