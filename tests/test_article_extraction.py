@@ -14,27 +14,7 @@ SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_conf
 
 # Load site-specific spider configurations
 SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
-SITE_NAMES = [
-    "addictinginfo.com"
-    ,"conservativehq.com"
-    ,"davidwolfe.com"
-    ,"empirenews.net"
-    ,"eyeopening.info"
-    ,"federalistpress.com"
-    ,"gellerreport.com"
-    ,"globalresearch.ca"
-    ,"henrymakow.com"
-    ,"liveaction.org"
-    ,"madworldnews.com"
-    ,"occupydemocrats.com"
-    ,"palmerreport.com"
-    ,"patriotnewsdaily.com"
-    ,"prisonplanet.com"
-    ,"redstatewatcher.com"
-    ,"westernjournal.org"
-    ,"youngcons.com"
-]
-
+SITE_NAMES = sorted(SITE_CONFIGS.keys())
 
 # ================= HELPER FUNCTIONS =================
 def config_for_site(site_name):
@@ -329,7 +309,6 @@ def test_extract_article_default_content_digests_node_indexes():
     article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
                                     "addictinginfo.com-1_extracted_data_default_content_digests_node_indexes.json")
     expected_article = article_from_json_file(article_filepath)
-
     # Mock config
     config_yaml = """
         site_name: 'example.com'
@@ -444,9 +423,9 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
         'title': None,
         'byline': None,
         'publication_datetime': None,
-        'content': None,
-        'plain_content': None,
-        'plain_text': None,
+        'content': "<div>No article here.</div>",
+        'plain_content': "<div>No article here.</div>",
+        'plain_text': [{'text': 'No article here.'}],
         'metadata': None
     }
 

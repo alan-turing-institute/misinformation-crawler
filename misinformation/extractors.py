@@ -53,26 +53,37 @@ def extract_element(response, extract_spec, warn_if_missing=True):
         if num_matches == 0:
             elements = None
             if warn_if_missing:
-                logging.log(logging.WARNING, "No elements could be found\
-                                    from {url} matching {xpath} expected by\
-                                match-rule '{rule}'. Returning None.".format(
-                url=response.url, xpath=expression, rule=match_rule))
+                logging.warning("No elements could be found from {url} matching "
+                            "{xpath} expected by match-rule '{rule}'. Returning"
+                            " None.".format(url=response.url, xpath=expression,
+                            rule=match_rule))
         else:
             # Changes to single match rule:
             # Return first element if there is exactly 1 element, otherwise,
             # still return first element but also print a warning log message.
             if match_rule == 'single':
                 elements = elements[0]
-                if num_matches != 1 and warn_if_missing:
-                    logging.log(logging.WARNING, "Extracted {count} elements \
-                                from {url} matching {xpath}. Only one element \
-                                expected by match-rule '{rule}'. Returning first \
-                                element.".format(count=num_matches,
-                                url=response.url, xpath=expression,
-                                rule=match_rule))
+                if (num_matches != 1) and warn_if_missing:
+                    logging.warning("Extracted {count} elements from {url} "
+                                    "matching {xpath}. Only one element "
+                                    "expected by match-rule '{rule}'. Returning"
+                                    " first element.".format(count=num_matches,
+                                    url=response.url, xpath=expression,
+                                    rule=match_rule))
 
             elif match_rule == 'first':
                 elements = elements[0]
+
+            elif match_rule == 'last':
+                elements = elements[-1]
+
+            elif match_rule == 'concatenate':
+                # Join non-empty elements together with commas
+                elements = ", ".join([x for x in elements if x])
+
+            elif match_rule == 'group':
+                # Group several elements and wrap them in a div
+                elements = "<div>" + "".join(elements) + "</div>"
 
             elif match_rule == 'all':
                 # Nothing to do but need this to pass validity check
@@ -80,10 +91,12 @@ def extract_element(response, extract_spec, warn_if_missing=True):
 
             else:
                 elements = None
-                logging.log(logging.DEBUG, "'{match_rule}' is not a valid match-rule".format(match_rule=match_rule))
+                logging.debug("'{match_rule}' is not a valid match-rule".format(
+                              match_rule=match_rule))
     else:
         elements = None
-        logging.log(logging.DEBUG, "'{method}' is not a valid select-expression".format(method=method))
+        logging.debug("'{method}' is not a valid select-expression".format(
+                      method=method))
     return elements
 
 
@@ -111,7 +124,12 @@ def pendulum_datetime_extract(date_string, date_format=None):
     # Attempt to extract the date using the specified format if provided
     try:
         if date_format:
-            datetime = pendulum.from_format(date_string, date_format)
+            if "unix" in date_format:
+                if "milliseconds" in date_format:
+                    date_string = date_string[:-3]
+                datetime = pendulum.from_timestamp(int(date_string))
+            else:
+                datetime = pendulum.from_format(date_string, date_format)
         else:
             # Assume ISO-8601
             datetime = pendulum.parse(date_string)
