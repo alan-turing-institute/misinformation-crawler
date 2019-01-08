@@ -181,7 +181,7 @@ eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a
+  article_url_xpath: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'
@@ -222,11 +222,8 @@ federalistpress.com:
       match-rule: 'single'
     content:
       select-method: 'xpath'
-      # select-expression: '//div[@class="entry-content"]'
-      # match-rule: 'single'
       select-expression: '//div[@class="entry-content"]//p'
       match-rule: 'group'
-
 
 gellerreport.com:
   site_name: 'gellerreport.com'
@@ -577,10 +574,6 @@ westernjournal.org:
   article_search: 'paged'
   article_element: 'div'
   article:
-    content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
     title:
       select-method: 'xpath'
       select-expression: '//meta[@property="og:title"]/@content'
@@ -592,6 +585,10 @@ westernjournal.org:
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@property="article:published_time"]/@content'
+      match-rule: 'single'
+    content:
+      select-method: 'xpath'
+      select-expression: '//div[@class="entry-content"]'
       match-rule: 'single'
           
 youngcons.com:
