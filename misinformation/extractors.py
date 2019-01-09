@@ -14,11 +14,12 @@ def xpath_class(element, class_name):
         class_name=class_name, element=element)
 
 
-def xpath_extract_spec(xpath_expression, match_rule="single"):
+def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
         "select-method": "xpath",
         "select-expression": xpath_expression,
-        'match-rule': match_rule
+        "match-rule": match_rule,
+        "warn-if-missing": warn_if_missing
     }
     return extract_spec
 
@@ -31,7 +32,7 @@ def retrieve(input_dict, key_chain, default):
         return input_dict[key]
     return default
 
-def extract_element(response, extract_spec, warn_if_missing=True):
+def extract_element(response, extract_spec):
     # Extract selector specification
     method = extract_spec['select-method']
     expression = extract_spec['select-expression']
@@ -40,6 +41,11 @@ def extract_element(response, extract_spec, warn_if_missing=True):
         match_rule = 'single'
     else:
         match_rule = extract_spec['match-rule']
+
+    # This is used to suppress warnings for missing/duplicate elements
+    # in cases where they are known to break for some pages on certain sites
+    # The default is always to warn unless otherwise specified
+    warn_if_missing = extract_spec.get('warn-if-missing', True)
 
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
@@ -171,18 +177,9 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     article['site_name'] = config['site_name']
     article['article_url'] = response.url
 
-    # These variables are used to suppress warnings for missing/duplicate elements
-    # in cases where they are known to break for some pages on certain sites
-    # The default is always to warn unless otherwise specified
-    warn_on_multiple_html_elements = config.get('ignore-multi-html-elements', True)
-    warn_on_missing_title = retrieve(config, ['article', 'title', 'warn-if-missing'], True)
-    warn_on_missing_byline = retrieve(config, ['article', 'byline', 'warn-if-missing'], True)
-    warn_on_missing_datetime = retrieve(config, ['article', 'publication_datetime', 'warn-if-missing'], True)
-    warn_on_missing_content = retrieve(config, ['article', 'content', 'warn-if-missing'], True)
-    warn_on_missing_metadata = retrieve(config, ['metadata', 'warn-if-missing'], True)
-
     # Set default article fields by running readability on full page HTML
-    page_html = extract_element(response, xpath_extract_spec("/html", "single"), warn_if_missing=warn_on_multiple_html_elements)
+    page_spec = xpath_extract_spec("/html", "single", config.get('require-unique-html-element', True))
+    page_html = extract_element(response, page_spec)
     default_readability_article = readability.parse(page_html, content_digests, node_indexes)
 
     article["title"] = default_readability_article["title"]
@@ -195,11 +192,11 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     if 'article' in config:
         if 'title' in config['article']:
             # Extract title from specified element
-            article['title'] = extract_element(response, config['article']['title'], warn_on_missing_title)
+            article['title'] = extract_element(response, config['article']['title'])
         if 'byline' in config['article']:
-            article['byline'] = extract_element(response, config['article']['byline'], warn_on_missing_byline)
+            article['byline'] = extract_element(response, config['article']['byline'])
         if 'publication_datetime' in config['article']:
-            datetime_string = extract_element(response, config['article']['publication_datetime'], warn_on_missing_datetime)
+            datetime_string = extract_element(response, config['article']['publication_datetime'])
             if 'datetime-format' in config['article']['publication_datetime']:
                 format = config['article']['publication_datetime']['datetime-format']
                 iso_string = extract_datetime_string(datetime_string, format)
@@ -210,7 +207,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         # so only update article content by running readability on a custom container
         if 'content' in config['article']:
             # Extract article content from specified element
-            article_html = extract_element(response, config['article']['content'], warn_on_missing_content)
+            article_html = extract_element(response, config['article']['content'])
             if article_html is not None:
                 custom_readability_article = readability.parse(article_html, content_digests, node_indexes)
                 article["content"] = custom_readability_article["content"]

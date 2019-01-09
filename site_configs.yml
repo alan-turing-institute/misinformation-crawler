@@ -179,7 +179,7 @@ empirenews.net:
 # TODO: Get link extraction working. The issue is not the rel="bookmark" attribute of the <a> element containing
 # the article href as both prisonplanet.com and empirenews.net crawl fine with the same attribute present
 eyeopening.info:
-  ignore-multi-html-elements: False
+  require-unique-html-element: False
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
