@@ -378,7 +378,8 @@ def test_xpath_extract_spec_default():
     expected_extract_spec = {
         "select-method": "xpath",
         "select-expression": expression,
-        "match-rule": "single"
+        "match-rule": "single",
+        "warn-if-missing": True
     }
     extract_spec = xpath_extract_spec(expression)
     assert extract_spec == expected_extract_spec
@@ -390,7 +391,8 @@ def test_xpath_extract_spec_with_match_rule():
     expected_extract_spec = {
         "select-method": "xpath",
         "select-expression": expression,
-        "match-rule": match_rule
+        "match-rule": match_rule,
+        "warn-if-missing": True
     }
     extract_spec = xpath_extract_spec(expression, match_rule)
     assert extract_spec == expected_extract_spec

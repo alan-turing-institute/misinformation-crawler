@@ -177,7 +177,6 @@ empirenews.net:
       match-rule: 'single'
 
 eyeopening.info:
-  ignore-multi-html-elements: False
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   follow_url_path: 'category/politics/page/'
@@ -320,8 +319,8 @@ liveaction.org:
     publication_datetime:
       select-method: 'xpath'
       select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'      
-    
+      match-rule: 'single'
+
 madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
@@ -565,7 +564,7 @@ vox.com:
       select-method: 'xpath'
       select-expression: '//div[@class="c-entry-content"]'
       match-rule: 'single'
-  
+
 westernjournal.org:
   site_name: 'westernjournal.org'
   start_url: 'https://www.westernjournal.com/politics/'
@@ -590,7 +589,7 @@ westernjournal.org:
       select-method: 'xpath'
       select-expression: '//div[@class="entry-content"]'
       match-rule: 'single'
-          
+
 youngcons.com:
   site_name: 'youngcons.com'
   start_url: 'http://youngcons.com/category/politics/'
