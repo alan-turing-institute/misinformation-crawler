@@ -172,7 +172,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     article['article_url'] = response.url
 
     # Set default article fields by running readability on full page HTML
-    page_spec = xpath_extract_spec("/html", "single", config.get('require-unique-html-element', True))
+    page_spec = xpath_extract_spec("/html", "largest")
     page_html = extract_element(response, page_spec)
     default_readability_article = readability.parse(page_html, content_digests, node_indexes)
 
