@@ -23,15 +23,6 @@ def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=Tr
     }
     return extract_spec
 
-def retrieve(input_dict, key_chain, default):
-    """Return config[key1][key2]....[keyn] if this value exists, otherwise default"""
-    key = key_chain.pop(0)
-    if key in input_dict:
-        if key_chain:
-            return retrieve(input_dict[key], key_chain, default)
-        return input_dict[key]
-    return default
-
 def extract_element(response, extract_spec):
     # Extract selector specification
     method = extract_spec['select-method']
