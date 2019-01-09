@@ -74,6 +74,9 @@ def extract_element(response, extract_spec):
             elif match_rule == 'last':
                 elements = elements[-1]
 
+            elif match_rule == 'largest':
+                elements = sorted(elements, key = lambda elem: len(elem))[-1]
+
             elif match_rule == 'concatenate':
                 # Join non-empty elements together with commas
                 elements = ", ".join([x for x in elements if x])
@@ -212,7 +215,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         article['metadata'] = dict()
         # Attempt to extract all metadata fields
         for fieldname in config['metadata']:
-            article['metadata'][fieldname] = extract_element(response, config['metadata'][fieldname], warn_on_missing_metadata)
+            article['metadata'][fieldname] = extract_element(response, config['metadata'][fieldname])
 
     # Add crawl information if provided
     if crawl_info:
