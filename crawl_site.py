@@ -1,5 +1,5 @@
 import argparse
-from misinformation.spiders.spiders import MisinformationSpider
+from misinformation.spiders import MisinformationSpider
 import pkg_resources
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
