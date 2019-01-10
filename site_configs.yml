@@ -279,8 +279,7 @@ globalresearch.ca:
 henrymakow.com:
   site_name: 'henrymakow.com'
   start_url: 'http://henrymakow.com/archives.html'
-  follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//p[not(@class)]/a'
+  deny_url_regex: '/deutsche/'
   metadata_source: 'microdata'
   article_search: 'paged'
   article_element: 'div'

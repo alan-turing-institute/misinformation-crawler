@@ -3,6 +3,7 @@ from misinformation.items import Article
 from misinformation.extractors import extract_article
 import datetime
 import os
+import re
 from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
 from scrapy.linkextractors import LinkExtractor
@@ -34,20 +35,15 @@ class MisinformationSpider(CrawlSpider):
         site_domain = urlparse(start_url).netloc
         self.allowed_domains = [site_domain]
 
-        # Rules for finding article links
-        # 1. Rule for identifying links to follow to pages that might have more articles links
-        if self.config['article_search'] == 'paged':
-            follow_rule = Rule(LinkExtractor(allow=(self.config['follow_url_path'], ),))
-        # 2. Rule for identifying article links
-        # 2a. We can match the link URL itself to a pattern
-        if 'article_url_path' in self.config:
-            article_rule = Rule(LinkExtractor(
-                allow=(self.config['article_url_path'],)), callback='parse_item')
-        # 2b. We need to inspect the element containing the link
-        elif 'article_url_xpath' in self.config:
-            article_rule = Rule(LinkExtractor(
-                restrict_xpaths=(self.config['article_url_xpath'],)), callback='parse_item')
-        self.rules = (follow_rule, article_rule, )
+        # Follow all links (after removing duplicates) and pass them to parse_response
+        follow_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                         allow=(self.config.get('restrict_to_url_regex', '')),
+                                         deny=(self.config.get('deny_url_regex', ''))),
+                           follow=True, callback="parse_response")
+        self.rules = [follow_rule]
+
+        # Optional regex for determining whether this is an article using the URL
+        self.article_url_regex = re.compile(self.config.get('article_url_path', ''))
 
         # Set up saving of raw responses for articles
         output_dir = "articles"
@@ -68,14 +64,30 @@ class MisinformationSpider(CrawlSpider):
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
 
-    # This function will automatically get called as part of the item processing pipeline
-    def parse_item(self, response):
-        # Save the full response
-        self.save_response(response)
-        # Extract article metadata and structured text
+
+    def parse_response(self, response):
+        self.logger.info('Parsing response for: {}'.format(response.url))
+
+        # Always reject the front page of the domain since this will change over time
+        # Currently testing this using simple pattern matching
+        # - could be changed to something more sophisticated in future
+        if urlparse(response.url).path in ['', '/', 'index.html']:
+            return
+
+        # Check whether we pass the (optional) requirement on the URL  format
+        if not self.article_url_regex.search(response.url):
+            return
+
+        # Check whether we can extract an article from this page
         article = extract_article(response, self.config, crawl_info=self.crawl_info,
                                   content_digests=self.settings["CONTENT_DIGESTS"],
                                   node_indexes=self.settings["NODE_INDEXES"])
+        if article['content'] is None:
+            return
+
+        # Save the full response and return parsed article
+        self.logger.info('  article identification was successful')
+        self.save_response(response)
         return article
 
     def save_response(self, response):
@@ -90,7 +102,7 @@ class MisinformationSpider(CrawlSpider):
         raw_article['response_url'] = response.url
         raw_article['status'] = response.status
         raw_article['body'] = response.text
-        self.logger.info('Saving response for: {}'.format(response.url))
+        self.logger.info('  saving response and adding to database')
         self.exporter.export_item(raw_article)
         return
 
