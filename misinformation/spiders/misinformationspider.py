@@ -45,9 +45,9 @@ class MisinformationSpider(CrawlSpider):
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             try:
-                index_page_url_regex = self.config['crawl_strategy']['index_page_url_match']
+                index_page_url_match = self.config['crawl_strategy']['index_page_url_match']
                 index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
-                                                     allow=(index_page_url_regex)),
+                                                     allow=(index_page_url_match)),
                                        follow=True)
             except KeyError:
                 raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
