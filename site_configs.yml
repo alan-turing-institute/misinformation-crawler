@@ -4,7 +4,7 @@ abcnews.go.com:
   start_url: 'http://abcnews.go.com/Politics'
   follow_url_path: '/alerts/'
   article_url_path: '/Politics/.+/story\?id=\d*'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -29,7 +29,7 @@ addictinginfo.com:
   start_url: 'http://addictinginfo.com/category/news/'
   follow_url_path: 'page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -53,7 +53,7 @@ breitbart.com:
   start_url: 'https://www.breitbart.com/tag/politics/'
   follow_url_path: '/tag/'
   article_url_xpath: '//footer[contains(@class,"byline")]//a'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -77,7 +77,7 @@ conservativehq.com:
   start_url: 'http://conservativehq.com/exclusives'
   follow_url_path: 'exclusives'
   article_url_path: 'article/'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -104,7 +104,7 @@ dailykos.com:
   start_url: 'https://www.dailykos.com/'
   follow_url_path: 'user'
   article_url_path: '/stor[ies|y]/\d\d\d\d/'
-  article_search: 'paged'
+  method: 'index_page'
   obey_robots_txt: False
   article:
     title:
@@ -131,7 +131,7 @@ davidwolfe.com:
   follow_url_path: 'category/news/page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'entry-content'
   article:
@@ -157,7 +157,7 @@ empirenews.net:
   start_url: 'http://empirenews.net/category/politics/'
   follow_url_path: 'category/politics/page/'
   article_url_xpath: '//h1[@class="entry-title"]/a'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -182,7 +182,7 @@ eyeopening.info:
   follow_url_path: 'category/politics/page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'entry-content'
   article:
@@ -205,7 +205,7 @@ federalistpress.com:
   start_url: 'http://federalistpress.com/category/all-stories'
   follow_url_path: 'category/all-stories/page/'
   article_url_xpath: '//h2[@class="entry-title"]/a'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -229,7 +229,7 @@ gellerreport.com:
   start_url: 'http://gellerreport.com/category/atlas-articles/'
   follow_url_path: 'category/atlas-articles/page/'
   article_url_xpath: '//h2[@class="archive-entry-title"]/a'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -254,7 +254,7 @@ globalresearch.ca:
   follow_url_path: 'latest-news-and-top-stories/page/'
   article_url_xpath: '//strong[@class="title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'content'
   article:
@@ -281,7 +281,7 @@ henrymakow.com:
   start_url: 'http://henrymakow.com/archives.html'
   deny_url_regex: '/deutsche/'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'text-body'
   article:
@@ -300,7 +300,7 @@ liveaction.org:
   start_url: 'https://liveaction.org/news/latest-stories/'
   follow_url_path: 'news/'
   article_url_xpath: '//h1[@itemprop="headline"]'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article:
     content:
@@ -326,7 +326,7 @@ madworldnews.com:
   follow_url_path: 'politics/page/'
   article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -350,7 +350,7 @@ nbcnews.com:
   start_url: 'http://www.nbcnews.com/politics'
   follow_url_path: '/pages/'
   article_url_path: '/politics/[a-z\-]*/.*\d+$'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -375,7 +375,7 @@ nytimes.com:
     start_url: 'https://www.nytimes.com/section/politics'
     follow_url_path: 'pages/'
     article_url_path: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
-    article_search: 'paged'
+    method: 'index_page'
     article:
       title:
         select_method: 'xpath'
@@ -400,7 +400,7 @@ occupydemocrats.com:
   follow_url_path: 'page/'
   article_url_xpath: '//h3[@itemprop="headline"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'entry-content'
   article:
@@ -428,7 +428,7 @@ palmerreport.com:
   follow_url_path: 'category/analysis/page/'
   article_url_xpath: '//h2[@class="fl-post-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'fl-post-content'
   article:
@@ -456,7 +456,7 @@ patriotnewsdaily.com:
   follow_url_path: 'category/all-conservative-news/page/'
   article_url_xpath: '//h2[@class="post-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'entry'
   article:
@@ -484,7 +484,7 @@ prisonplanet.com:
   follow_url_path: 'section/featured-stories/page/'
   article_url_xpath: '//div[@class="nArchiveHeader"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'subarticle'
   article:
@@ -505,7 +505,7 @@ redstatewatcher.com:
   follow_url_path: 'news.asp\?page=\d*'
   article_url_path: 'article.asp\?id=\d*'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -521,7 +521,7 @@ thinkprogress.org:
   start_url: 'http://thinkprogress.org'
   follow_url_path: 'tag/'
   article_url_xpath: '//h2[contains(@class, "post__title")]//a'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -545,7 +545,7 @@ vox.com:
   start_url: 'http://www.vox.com/policy-and-politics'
   follow_url_path: '/[users|authors]/'
   article_url_path: '\d\d\d\d/\d+/\d+/[\-a-z]*'
-  article_search: 'paged'
+  method: 'index_page'
   article:
     title:
       select_method: 'xpath'
@@ -569,7 +569,7 @@ westernjournal.org:
   start_url: 'https://www.westernjournal.com/politics/'
   follow_url_path: 'politics/'
   article_url_xpath: '//h1[@itemprop="headline"]'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article:
     title:
@@ -595,7 +595,7 @@ youngcons.com:
   follow_url_path: 'category/politics/page/'
   article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
+  method: 'index_page'
   article_element: 'div'
   article_class: 'td-post-content'
   article:
