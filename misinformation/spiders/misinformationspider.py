@@ -67,7 +67,7 @@ class MisinformationSpider(CrawlSpider):
             self.rules = (index_page_rule, article_rule)
 
         # - For the scattergun strategy we only need one Rule for which links to follow
-        if crawl_strategy == 'index_page':
+        elif crawl_strategy == 'scattergun':
             # Follow all links (after removing duplicates) and pass them to parse_response
             link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                            allow=(self.config.get('scattergun_url_must_contain', '')),
@@ -77,6 +77,9 @@ class MisinformationSpider(CrawlSpider):
 
             # Optional regex for determining whether this is an article using the URL
             self.article_url_regex = re.compile(self.config.get('article_url_match', ''))
+
+        else:
+            raise CloseSpider(reason="crawl_strategy: '{0}' is not recognised".format(crawl_strategy))
 
         # Set up saving of raw responses for articles
         output_dir = "articles"
