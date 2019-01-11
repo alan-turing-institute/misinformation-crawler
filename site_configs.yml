@@ -2,7 +2,7 @@
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
-  article_url_path: '/Politics/.+/story\?id=\d*'
+  article_url_match: '/Politics/.+/story\?id=\d*'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: '/alerts/'
@@ -78,7 +78,7 @@ breitbart.com:
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
-  article_url_path: 'article/'
+  article_url_match: 'article/'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'exclusives'
@@ -106,7 +106,7 @@ conservativehq.com:
 dailykos.com:
   site_name: 'dailykos.com'
   start_url: 'https://www.dailykos.com/'
-  article_url_path: '/stor[ies|y]/\d\d\d\d/'
+  article_url_match: '/stor[ies|y]/\d\d\d\d/'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'user'
@@ -354,7 +354,7 @@ madworldnews.com:
 nbcnews.com:
   site_name: 'nbcnews.com'
   start_url: 'http://www.nbcnews.com/politics'
-  article_url_path: '/politics/[a-z\-]*/.*\d+$'
+  article_url_match: '/politics/[a-z\-]*/.*\d+$'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: '/pages/'
@@ -380,7 +380,7 @@ nbcnews.com:
 nytimes.com:
   site_name: 'nytimes.com'
   start_url: 'https://www.nytimes.com/section/politics'
-  article_url_path: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
+  article_url_match: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'pages/'
@@ -503,7 +503,7 @@ prisonplanet.com:
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
-  article_url_path: 'article.asp\?id=\d*'
+  article_url_match: 'article.asp\?id=\d*'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'news.asp\?page=\d*'
@@ -546,7 +546,7 @@ thinkprogress.org:
 vox.com:
   site_name: 'vox.com'
   start_url: 'http://www.vox.com/policy-and-politics'
-  article_url_path: '\d\d\d\d/\d+/\d+/[\-a-z]*'
+  article_url_match: '\d\d\d\d/\d+/\d+/[\-a-z]*'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: '/[users|authors]/'
