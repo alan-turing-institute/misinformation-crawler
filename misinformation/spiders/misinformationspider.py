@@ -36,6 +36,7 @@ class MisinformationSpider(CrawlSpider):
         self.start_urls = [start_url]
         site_domain = urlparse(start_url).netloc
         self.allowed_domains = [site_domain]
+        self.article_url_regex = None
 
         # We support two different link following strategies: 'paged' and 'all' (default)
         try:
@@ -111,8 +112,8 @@ class MisinformationSpider(CrawlSpider):
         self.logger.info('Parsing response for: {}'.format(response.url))
 
         # Always reject the front page of the domain since this will change over time
-        # Currently testing this using simple pattern matching
-        # - could be changed to something more sophisticated in future
+        # We need this for henrymakow.com as there is no sane URL match rule for identifying
+        # articles and the index page parses as one.
         if urlparse(response.url).path in ['', '/', 'index.html']:
             return
 
