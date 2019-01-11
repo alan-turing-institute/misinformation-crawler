@@ -138,7 +138,6 @@ davidwolfe.com:
     index_page_url_match: 'category/news/page/'
     index_page_article_links: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
-  article_class: 'entry-content'
   article:
     title:
       select_method: 'xpath'
@@ -190,7 +189,6 @@ eyeopening.info:
     index_page_url_match: 'category/politics/page/'
     index_page_article_links: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
-  article_class: 'entry-content'
   article:
     title:
       select_method: 'xpath'
@@ -264,7 +262,6 @@ globalresearch.ca:
     index_page_url_match: 'latest-news-and-top-stories/page/'
     index_page_article_links: '//strong[@class="title"]/a'
   metadata_source: 'microdata'
-  article_class: 'content'
   article:
     title:
       select_method: 'xpath'
@@ -292,7 +289,6 @@ henrymakow.com:
     index_page_url_match: 'category/politics/page/'
     index_page_article_links: '//p[not(@class)]/a'
   metadata_source: 'microdata'
-  article_class: 'text-body'
   article:
     title:
       select_method: 'xpath'
@@ -414,7 +410,6 @@ occupydemocrats.com:
     index_page_url_match: 'page/'
     index_page_article_links: '//h3[@itemprop="headline"]/a'
   metadata_source: 'microdata'
-  article_class: 'entry-content'
   article:
     title:
       select_method: 'xpath'
@@ -442,7 +437,6 @@ palmerreport.com:
     index_page_url_match: 'category/analysis/page/'
     index_page_article_links: '//h2[@class="fl-post-title"]/a'
   metadata_source: 'microdata'
-  article_class: 'fl-post-content'
   article:
     title:
       select_method: 'xpath'
@@ -469,7 +463,6 @@ patriotnewsdaily.com:
     index_page_url_match: 'category/all-conservative-news/page/'
     index_page_article_links: '//h2[@class="post-title"]/a'
   metadata_source: 'microdata'
-  article_class: 'entry'
   article:
     title:
       select_method: 'xpath'
@@ -497,7 +490,6 @@ prisonplanet.com:
     index_page_url_match: 'section/featured-stories/page/'
     index_page_article_links: '//div[@class="nArchiveHeader"]/a'
   metadata_source: 'microdata'
-  article_class: 'subarticle'
   article:
     title:
       select_method: 'xpath'
@@ -609,7 +601,6 @@ youngcons.com:
     index_page_url_match: 'category/politics/page/'
     index_page_article_links: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
-  article_class: 'td-post-content'
   article:
     title:
       select_method: 'xpath'
