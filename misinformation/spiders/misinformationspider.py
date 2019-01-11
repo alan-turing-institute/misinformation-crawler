@@ -55,15 +55,16 @@ class MisinformationSpider(CrawlSpider):
                 raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
 
             # 2. Rule for identifying article links
-            rule_kwargs = {}
-            # 'index_page_article_links' and 'article_url_match' are optional
-            # if neither are provided then all links will be parsed and if 
-            # content is extracted from them, they will be recorded.
-            # NB. the rule takes iterables as arguments so we wrap the config output in []
+            # Suppress KeyErrors when retrieving optional arguments from nested dictionary
+            # If neither 'index_page_article_links' nor 'article_url_match' are
+            # provided then all links will be parsed and if content is extracted from them, they will be recorded.
+            # NB. the link extractor takes iterables as arguments so we wrap the config output in ()
+            link_kwargs = {}
             with suppress(KeyError):
-                rule_kwargs["restrict_xpaths"] = [self.config['crawl_strategy']['index_page_article_links']]
-                rule_kwargs["allow"] = [self.config['article_url_match']]
-            article_rule = Rule(LinkExtractor(callback="parse_response", **rule_kwargs))
+                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
+                link_kwargs["allow"] = (self.config['article_url_match'])
+            article_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
+                                callback="parse_response")
 
             # Use both rules
             self.rules = (index_page_rule, article_rule)
@@ -71,9 +72,13 @@ class MisinformationSpider(CrawlSpider):
         # - For the scattergun strategy we only need one Rule for which links to follow
         elif crawl_strategy == 'scattergun':
             # Follow all links (after removing duplicates) and pass them to parse_response
-            link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
-                                           allow=(self.config.get('scattergun_url_must_contain', '')),
-                                           deny=(self.config.get('scattergun_url_must_not_contain', ''))),
+            # Suppress KeyErrors when retrieving optional arguments from nested dictionary
+            # NB. the link extractor takes iterables as arguments so we wrap the config output in ()
+            link_kwargs = {}
+            with suppress(KeyError):
+                link_kwargs["allow"] = (self.config['scattergun_url_must_contain'])
+                link_kwargs["deny"] = (self.config['scattergun_url_must_not_contain'])
+            link_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
                              follow=True, callback="parse_response")
             self.rules = (follow_rule)
 
