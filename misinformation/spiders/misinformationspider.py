@@ -11,7 +11,6 @@ from scrapy.spiders import CrawlSpider, Rule
 from urllib.parse import urlparse
 import uuid
 
-
 # Generic crawl spider for websites that meet the following criteria
 # (i) Lists of articles are paged and navigable to with HTML links
 # (ii) Has metadata in a microdata format
@@ -29,21 +28,55 @@ class MisinformationSpider(CrawlSpider):
             "crawl_datetime": datetime.datetime.utcnow().replace(microsecond=0).replace(
                 tzinfo=datetime.timezone.utc).isoformat()
         }
+
+        # Parse domain from start URL and use to restrict crawl to follow only internal site links
         start_url = self.config['start_url']
         self.start_urls = [start_url]
-        # Parse domain from start URL and use to restrict crawl to follow only internal site links
         site_domain = urlparse(start_url).netloc
         self.allowed_domains = [site_domain]
 
-        # Follow all links (after removing duplicates) and pass them to parse_response
-        follow_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
-                                         allow=(self.config.get('restrict_to_url_regex', '')),
-                                         deny=(self.config.get('deny_url_regex', ''))),
-                           follow=True, callback="parse_response")
-        self.rules = [follow_rule]
+        # We support two different link following strategies: 'paged' and 'all' (default)
+        try:
+            crawl_strategy = config['crawl_strategy']['method']
+        except KeyError:
+            crawl_strategy = 'scattergun'
 
-        # Optional regex for determining whether this is an article using the URL
-        self.article_url_regex = re.compile(self.config.get('article_url_path', ''))
+        # - For the paged strategy we need two Rules: one for link pages; one for article pages
+        if crawl_strategy == 'index_page':
+            # 1. Rule for identifying index pages of links
+            try:
+                index_page_url_regex = self.config['crawl_strategy']['index_page_url_match']
+                index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                                     allow=(index_page_url_regex)),
+                                       follow=True)
+            except KeyError:
+                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
+
+            # 2. Rule for identifying article links
+            rule_kwargs = {}
+            try:
+                # If no options are provided then all links from index pages are allowed
+                rule_kwargs["restrict_xpaths"] = self.config['crawl_strategy']['index_page_article_links']
+                rule_kwargs["allow"] = self.config.get('article_url_match', '')
+                article_rule = Rule(LinkExtractor(**rule_kwargs, callback='parse_response'))
+            except KeyError:
+                # We don't require both options to be present in the config
+                pass
+
+            # Use both rules
+            self.rules = (index_page_rule, article_rule)
+
+        # - For the scattergun strategy we only need one Rule for which links to follow
+        if crawl_strategy == 'index_page':
+            # Follow all links (after removing duplicates) and pass them to parse_response
+            link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                           allow=(self.config.get('scattergun_url_must_contain', '')),
+                                           deny=(self.config.get('scattergun_url_must_not_contain', ''))),
+                             follow=True, callback="parse_response")
+            self.rules = (follow_rule)
+
+            # Optional regex for determining whether this is an article using the URL
+            self.article_url_regex = re.compile(self.config.get('article_url_match', ''))
 
         # Set up saving of raw responses for articles
         output_dir = "articles"
@@ -64,7 +97,6 @@ class MisinformationSpider(CrawlSpider):
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
 
-
     def parse_response(self, response):
         self.logger.info('Parsing response for: {}'.format(response.url))
 
@@ -74,8 +106,8 @@ class MisinformationSpider(CrawlSpider):
         if urlparse(response.url).path in ['', '/', 'index.html']:
             return
 
-        # Check whether we pass the (optional) requirement on the URL  format
-        if not self.article_url_regex.search(response.url):
+        # Check whether we pass the (optional) requirement on the URL format
+        if self.article_url_regex and not self.article_url_regex.search(response.url):
             return
 
         # Check whether we can extract an article from this page
