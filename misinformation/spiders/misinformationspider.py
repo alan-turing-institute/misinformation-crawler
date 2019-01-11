@@ -1,7 +1,8 @@
-import iso8601
 from misinformation.items import Article
 from misinformation.extractors import extract_article
+from contextlib import suppress
 import datetime
+import iso8601
 import os
 import re
 from scrapy.exceptions import CloseSpider
@@ -10,6 +11,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from urllib.parse import urlparse
 import uuid
+
 
 # Generic crawl spider for websites that meet the following criteria
 # (i) Lists of articles are paged and navigable to with HTML links
@@ -54,14 +56,14 @@ class MisinformationSpider(CrawlSpider):
 
             # 2. Rule for identifying article links
             rule_kwargs = {}
-            try:
-                # If no options are provided then all links from index pages are allowed
-                rule_kwargs["restrict_xpaths"] = self.config['crawl_strategy']['index_page_article_links']
-                rule_kwargs["allow"] = self.config.get('article_url_match', '')
-                article_rule = Rule(LinkExtractor(**rule_kwargs, callback='parse_response'))
-            except KeyError:
-                # We don't require both options to be present in the config
-                pass
+            # 'index_page_article_links' and 'article_url_match' are optional
+            # if neither are provided then all links will be parsed and if 
+            # content is extracted from them, they will be recorded.
+            # NB. the rule takes iterables as arguments so we wrap the config output in []
+            with suppress(KeyError):
+                rule_kwargs["restrict_xpaths"] = [self.config['crawl_strategy']['index_page_article_links']]
+                rule_kwargs["allow"] = [self.config['article_url_match']]
+            article_rule = Rule(LinkExtractor(callback="parse_response", **rule_kwargs))
 
             # Use both rules
             self.rules = (index_page_rule, article_rule)
