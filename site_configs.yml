@@ -28,7 +28,7 @@ addictinginfo.com:
   site_name: 'addictinginfo.com'
   start_url: 'http://addictinginfo.com/category/news/'
   index_page_url_match: 'page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  index_page_article_links: '//h2[@class="entry-title"]/a'
   method: 'index_page'
   article:
     title:
@@ -52,7 +52,7 @@ breitbart.com:
   site_name: 'breitbart.com'
   start_url: 'https://www.breitbart.com/tag/politics/'
   index_page_url_match: '/tag/'
-  article_url_xpath: '//footer[contains(@class,"byline")]//a'
+  index_page_article_links: '//footer[contains(@class,"byline")]//a'
   method: 'index_page'
   article:
     title:
@@ -129,7 +129,7 @@ davidwolfe.com:
   site_name: 'davidwolfe.com'
   start_url: 'https://www.davidwolfe.com/category/news/'
   index_page_url_match: 'category/news/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  index_page_article_links: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -156,7 +156,7 @@ empirenews.net:
   site_name: 'empirenews.net'
   start_url: 'http://empirenews.net/category/politics/'
   index_page_url_match: 'category/politics/page/'
-  article_url_xpath: '//h1[@class="entry-title"]/a'
+  index_page_article_links: '//h1[@class="entry-title"]/a'
   method: 'index_page'
   article:
     title:
@@ -180,7 +180,7 @@ eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
   index_page_url_match: 'category/politics/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  index_page_article_links: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -204,7 +204,7 @@ federalistpress.com:
   site_name: 'federalistpress.com'
   start_url: 'http://federalistpress.com/category/all-stories'
   index_page_url_match: 'category/all-stories/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  index_page_article_links: '//h2[@class="entry-title"]/a'
   method: 'index_page'
   article:
     title:
@@ -228,7 +228,7 @@ gellerreport.com:
   site_name: 'gellerreport.com'
   start_url: 'http://gellerreport.com/category/atlas-articles/'
   index_page_url_match: 'category/atlas-articles/page/'
-  article_url_xpath: '//h2[@class="archive-entry-title"]/a'
+  index_page_article_links: '//h2[@class="archive-entry-title"]/a'
   method: 'index_page'
   article:
     title:
@@ -252,7 +252,7 @@ globalresearch.ca:
   site_name: 'globalresearch.ca'
   start_url: 'http://globalresearch.ca/latest-news-and-top-stories'
   index_page_url_match: 'latest-news-and-top-stories/page/'
-  article_url_xpath: '//strong[@class="title"]/a'
+  index_page_article_links: '//strong[@class="title"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -299,7 +299,7 @@ liveaction.org:
   site_name: 'liveaction.org'
   start_url: 'https://liveaction.org/news/latest-stories/'
   index_page_url_match: 'news/'
-  article_url_xpath: '//h1[@itemprop="headline"]'
+  index_page_article_links: '//h1[@itemprop="headline"]'
   method: 'index_page'
   article_element: 'div'
   article:
@@ -324,7 +324,7 @@ madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
   index_page_url_match: 'politics/page/'
-  article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
+  index_page_article_links: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article:
@@ -398,7 +398,7 @@ occupydemocrats.com:
   site_name: 'occupydemocrats.com'
   start_url: 'http://occupydemocrats.com'
   index_page_url_match: 'page/'
-  article_url_xpath: '//h3[@itemprop="headline"]/a'
+  index_page_article_links: '//h3[@itemprop="headline"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -426,7 +426,7 @@ palmerreport.com:
   site_name: 'palmerreport.com'
   start_url: 'https://palmerreport.com/category/analysis/'
   index_page_url_match: 'category/analysis/page/'
-  article_url_xpath: '//h2[@class="fl-post-title"]/a'
+  index_page_article_links: '//h2[@class="fl-post-title"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -454,7 +454,7 @@ patriotnewsdaily.com:
   site_name: 'patriotnewsdaily.com'
   start_url: 'http://patriotnewsdaily.com/category/all-conservative-news/'
   index_page_url_match: 'category/all-conservative-news/page/'
-  article_url_xpath: '//h2[@class="post-title"]/a'
+  index_page_article_links: '//h2[@class="post-title"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -482,7 +482,7 @@ prisonplanet.com:
   site_name: 'prisonplanet.com'
   start_url: 'http://prisonplanet.com/section/featured-stories/'
   index_page_url_match: 'section/featured-stories/page/'
-  article_url_xpath: '//div[@class="nArchiveHeader"]/a'
+  index_page_article_links: '//div[@class="nArchiveHeader"]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
@@ -520,7 +520,7 @@ thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
   index_page_url_match: 'tag/'
-  article_url_xpath: '//h2[contains(@class, "post__title")]//a'
+  index_page_article_links: '//h2[contains(@class, "post__title")]//a'
   method: 'index_page'
   article:
     title:
@@ -568,7 +568,7 @@ westernjournal.org:
   site_name: 'westernjournal.org'
   start_url: 'https://www.westernjournal.com/politics/'
   index_page_url_match: 'politics/'
-  article_url_xpath: '//h1[@itemprop="headline"]'
+  index_page_article_links: '//h1[@itemprop="headline"]'
   method: 'index_page'
   article_element: 'div'
   article:
@@ -593,7 +593,7 @@ youngcons.com:
   site_name: 'youngcons.com'
   start_url: 'http://youngcons.com/category/politics/'
   index_page_url_match: 'category/politics/page/'
-  article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
+  index_page_article_links: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
   method: 'index_page'
   article_element: 'div'
