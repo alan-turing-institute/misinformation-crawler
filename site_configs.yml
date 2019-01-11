@@ -3,26 +3,26 @@ abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
   follow_url_path: '/alerts/'
-  article_url_path: 'story\?id=\d*'
+  article_url_path: '/Politics/.+/story\?id=\d*'
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@rel="author"][contains(@class, "author")]/text()'
-      match-rule: 'concatenate'
+      select_method: 'xpath'
+      select_expression: '//div[@rel="author"][contains(@class, "author")]/text()'
+      match_rule: 'concatenate'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="timestamp"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="timestamp"]/text()'
+      match_rule: 'single'
       datetime-format: 'MMM D, YYYY, h:mm A'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="article-copy"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-copy"]'
+      match_rule: 'single'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
@@ -32,21 +32,21 @@ addictinginfo.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'first'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry entry-content"]'
+      match_rule: 'single'
 
 breitbart.com:
   site_name: 'breitbart.com'
@@ -56,21 +56,21 @@ breitbart.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//header/h1/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//header/h1/text()'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//footer[@class="byline"]/time/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//footer[@class="byline"]/time/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 conservativehq.com:
   site_name: 'conservativehq.com'
@@ -80,24 +80,24 @@ conservativehq.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="field-item odd"]/text()'
-      match-rule: 'first'
-      warn-if-missing: False
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-item odd"]/text()'
+      match_rule: 'first'
+      warn_if_missing: False
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
+      match_rule: 'single'
       datetime-format: 'MM/DD/YY'
-      warn-if-missing: False
+      warn_if_missing: False
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="node"]/div[@class="content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="node"]/div[@class="content"]'
+      match_rule: 'single'
 
 dailykos.com:
   site_name: 'dailykos.com'
@@ -108,22 +108,22 @@ dailykos.com:
   obey_robots_txt: False
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="timestamp "]/@data-epoch-time'
+      select_method: 'xpath'
+      select_expression: '//span[@class="timestamp "]/@data-epoch-time'
       datetime-format: 'unix_milliseconds'
-      match-rule: 'first'
+      match_rule: 'first'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="story-intro story-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="story-intro story-content"]'
+      match_rule: 'single'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
@@ -136,21 +136,21 @@ davidwolfe.com:
   article_class: 'entry-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="entry-author-name"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-author-name"]/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-time ")]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-time ")]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 empirenews.net:
   site_name: 'empirenews.net'
@@ -160,21 +160,21 @@ empirenews.net:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="author vcard"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="entry-date published updated"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="entry-date published updated"]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 eyeopening.info:
   site_name: 'eyeopening.info'
@@ -187,18 +187,18 @@ eyeopening.info:
   article_class: 'entry-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'first'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'first'
 
 federalistpress.com:
   site_name: 'federalistpress.com'
@@ -208,21 +208,21 @@ federalistpress.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="date published time"]/@title'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="date published time"]/@title'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]//p'
-      match-rule: 'group'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]//p'
+      match_rule: 'group'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
@@ -232,21 +232,21 @@ gellerreport.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="byline"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="byline"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="post-entry-time"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="post-entry-time"]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'first'
 
 globalresearch.ca:
   site_name: 'globalresearch.ca'
@@ -259,22 +259,22 @@ globalresearch.ca:
   article_class: 'content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h2[@itemprop="headline"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//h2[@itemprop="headline"]/text()'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@itemprop="author"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="author"]/@content'
+      match_rule: 'first'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@itemprop="articleBody"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
@@ -286,14 +286,14 @@ henrymakow.com:
   article_class: 'text-body'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="text-body"]'
-      match-rule: 'single'
-      warn-if-missing: False
+      select_method: 'xpath'
+      select_expression: '//div[@class="text-body"]'
+      match_rule: 'single'
+      warn_if_missing: False
 
 liveaction.org:
   site_name: 'liveaction.org'
@@ -304,21 +304,21 @@ liveaction.org:
   article_element: 'div'
   article:
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@id="content-main"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@id="content-main"]'
+      match_rule: 'single'
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@itemprop="name"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="name"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
@@ -329,21 +329,21 @@ madworldnews.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="entry-meta-author author vcard"]//a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-meta-author author vcard"]//a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[contains(concat(" ", normalize-space(@property), " "), " article:published_time ")]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[contains(concat(" ", normalize-space(@property), " "), " article:published_time ")]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[contains(@class, "entry-content")]/p'
-      match-rule: 'group'
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]/p'
+      match_rule: 'group'
 
 nbcnews.com:
   site_name: 'nbcnews.com'
@@ -353,22 +353,22 @@ nbcnews.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="founders-cond f6 lh-none"]/text()'
-      match-rule: 'last'
+      select_method: 'xpath'
+      select_expression: '//div[@class="founders-cond f6 lh-none"]/text()'
+      match_rule: 'last'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//div/time[contains(@class, "pubDate")]/@datetime'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//div/time[contains(@class, "pubDate")]/@datetime'
+      match_rule: 'first'
       datetime-format: 'ddd MMM D YYYY HH:mm:ss'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[contains(@class, "body")]/p[@class=""]'
-      match-rule: 'group'
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "body")]/p[@class=""]'
+      match_rule: 'group'
 
 nytimes.com:
     site_name: 'nytimes.com'
@@ -378,21 +378,21 @@ nytimes.com:
     article_search: 'paged'
     article:
       title:
-        select-method: 'xpath'
-        select-expression: '//meta[@property="og:title"]/@content'
-        match-rule: 'single'
+        select_method: 'xpath'
+        select_expression: '//meta[@property="og:title"]/@content'
+        match_rule: 'single'
       byline:
-        select-method: 'xpath'
-        select-expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
-        match-rule: 'single'
+        select_method: 'xpath'
+        select_expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
+        match_rule: 'single'
       publication_datetime:
-        select-method: 'xpath'
-        select-expression: '//meta[@property="article:published"]/@content'
-        match-rule: 'single'
+        select_method: 'xpath'
+        select_expression: '//meta[@property="article:published"]/@content'
+        match_rule: 'single'
       content:
-        select-method: 'xpath'
-        select-expression: '//section[@name="articleBody"]'
-        match-rule: 'single'
+        select_method: 'xpath'
+        select_expression: '//section[@name="articleBody"]'
+        match_rule: 'single'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -405,22 +405,22 @@ occupydemocrats.com:
   article_class: 'entry-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="author-name vcard fn author"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="author-name vcard fn author"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="post-date updated"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="post-date updated"]/@datetime'
+      match_rule: 'single'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@itemprop="articleBody"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
 
 palmerreport.com:
   site_name: 'palmerreport.com'
@@ -433,21 +433,21 @@ palmerreport.com:
   article_class: 'fl-post-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="fl-post-author"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="fl-post-author"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@itemprop="text"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="text"]'
+      match_rule: 'single'
 
 # TODO: Test from US IP address (get 403 from UK and Slovakia)
 patriotnewsdaily.com:
@@ -461,22 +461,22 @@ patriotnewsdaily.com:
   article_class: 'entry'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="vcard author"]//a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="vcard author"]//a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="updated"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="updated"]/text()'
+      match_rule: 'single'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
@@ -489,13 +489,13 @@ prisonplanet.com:
   article_class: 'subarticle'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="subarticle"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]'
+      match_rule: 'single'
 
 # TODO: Enhance spider to follow relative links
 # -- JR: I think this is already done
@@ -508,13 +508,13 @@ redstatewatcher.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="container" and div[@class="row"]]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="container" and div[@class="row"]]'
+      match_rule: 'single'
 
 thinkprogress.org:
   site_name: 'thinkprogress.org'
@@ -524,21 +524,21 @@ thinkprogress.org:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="post__byline__author"]//a/text()'
-      match-rule: 'concatenate'
+      select_method: 'xpath'
+      select_expression: '//span[@class="post__byline__author"]//a/text()'
+      match_rule: 'concatenate'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="post__date"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="post__date"]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="post__content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="post__content"]'
+      match_rule: 'single'
 
 vox.com:
   site_name: 'vox.com'
@@ -548,21 +548,21 @@ vox.com:
   article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="author"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="author"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="c-entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="c-entry-content"]'
+      match_rule: 'single'
 
 westernjournal.org:
   site_name: 'westernjournal.org'
@@ -573,21 +573,21 @@ westernjournal.org:
   article_element: 'div'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 youngcons.com:
   site_name: 'youngcons.com'
@@ -600,18 +600,18 @@ youngcons.com:
   article_class: 'td-post-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@itemprop="datePublished"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="td-post-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'

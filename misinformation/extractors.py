@@ -16,27 +16,27 @@ def xpath_class(element, class_name):
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
-        "select-method": "xpath",
-        "select-expression": xpath_expression,
-        "match-rule": match_rule,
-        "warn-if-missing": warn_if_missing
+        "select_method": "xpath",
+        "select_expression": xpath_expression,
+        "match_rule": match_rule,
+        "warn_if_missing": warn_if_missing
     }
     return extract_spec
 
 def extract_element(response, extract_spec):
     # Extract selector specification
-    method = extract_spec['select-method']
-    expression = extract_spec['select-expression']
+    method = extract_spec['select_method']
+    expression = extract_spec['select_expression']
     # Default match rule to 'single', which will log a warning message if multiple matches are found
-    if 'match-rule' not in extract_spec:
+    if 'match_rule' not in extract_spec:
         match_rule = 'single'
     else:
-        match_rule = extract_spec['match-rule']
+        match_rule = extract_spec['match_rule']
 
     # This is used to suppress warnings for missing/duplicate elements
     # in cases where they are known to break for some pages on certain sites
     # The default is always to warn unless otherwise specified
-    warn_if_missing = extract_spec.get('warn-if-missing', True)
+    warn_if_missing = extract_spec.get('warn_if_missing', True)
 
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
@@ -51,7 +51,7 @@ def extract_element(response, extract_spec):
             elements = None
             if warn_if_missing:
                 logging.warning("No elements could be found from {url} matching "
-                            "{xpath} expected by match-rule '{rule}'. Returning"
+                            "{xpath} expected by match_rule '{rule}'. Returning"
                             " None.".format(url=response.url, xpath=expression,
                             rule=match_rule))
         else:
@@ -63,7 +63,7 @@ def extract_element(response, extract_spec):
                 if (num_matches != 1) and warn_if_missing:
                     logging.warning("Extracted {count} elements from {url} "
                                     "matching {xpath}. Only one element "
-                                    "expected by match-rule '{rule}'. Returning"
+                                    "expected by match_rule '{rule}'. Returning"
                                     " first element.".format(count=num_matches,
                                     url=response.url, xpath=expression,
                                     rule=match_rule))
@@ -91,11 +91,11 @@ def extract_element(response, extract_spec):
 
             else:
                 elements = None
-                logging.debug("'{match_rule}' is not a valid match-rule".format(
+                logging.debug("'{match_rule}' is not a valid match_rule".format(
                               match_rule=match_rule))
     else:
         elements = None
-        logging.debug("'{method}' is not a valid select-expression".format(
+        logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
     return elements
 
