@@ -2,8 +2,8 @@
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
-  index_page_url_match: '/alerts/'
   article_url_path: '/Politics/.+/story\?id=\d*'
+  index_page_url_match: '/alerts/'
   method: 'index_page'
   article:
     title:
@@ -75,8 +75,8 @@ breitbart.com:
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
-  index_page_url_match: 'exclusives'
   article_url_path: 'article/'
+  index_page_url_match: 'exclusives'
   method: 'index_page'
   article:
     title:
@@ -102,8 +102,8 @@ conservativehq.com:
 dailykos.com:
   site_name: 'dailykos.com'
   start_url: 'https://www.dailykos.com/'
-  index_page_url_match: 'user'
   article_url_path: '/stor[ies|y]/\d\d\d\d/'
+  index_page_url_match: 'user'
   method: 'index_page'
   obey_robots_txt: False
   article:
@@ -348,8 +348,8 @@ madworldnews.com:
 nbcnews.com:
   site_name: 'nbcnews.com'
   start_url: 'http://www.nbcnews.com/politics'
-  index_page_url_match: '/pages/'
   article_url_path: '/politics/[a-z\-]*/.*\d+$'
+  index_page_url_match: '/pages/'
   method: 'index_page'
   article:
     title:
@@ -371,28 +371,28 @@ nbcnews.com:
       match_rule: 'group'
 
 nytimes.com:
-    site_name: 'nytimes.com'
-    start_url: 'https://www.nytimes.com/section/politics'
-    index_page_url_match: 'pages/'
-    article_url_path: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
-    method: 'index_page'
-    article:
-      title:
-        select_method: 'xpath'
-        select_expression: '//meta[@property="og:title"]/@content'
-        match_rule: 'single'
-      byline:
-        select_method: 'xpath'
-        select_expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
-        match_rule: 'single'
-      publication_datetime:
-        select_method: 'xpath'
-        select_expression: '//meta[@property="article:published"]/@content'
-        match_rule: 'single'
-      content:
-        select_method: 'xpath'
-        select_expression: '//section[@name="articleBody"]'
-        match_rule: 'single'
+  site_name: 'nytimes.com'
+  start_url: 'https://www.nytimes.com/section/politics'
+  article_url_path: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
+  index_page_url_match: 'pages/'
+  method: 'index_page'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//section[@name="articleBody"]'
+      match_rule: 'single'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -502,8 +502,8 @@ prisonplanet.com:
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
-  index_page_url_match: 'news.asp\?page=\d*'
   article_url_path: 'article.asp\?id=\d*'
+  index_page_url_match: 'news.asp\?page=\d*'
   metadata_source: 'microdata'
   method: 'index_page'
   article:
@@ -543,8 +543,8 @@ thinkprogress.org:
 vox.com:
   site_name: 'vox.com'
   start_url: 'http://www.vox.com/policy-and-politics'
-  index_page_url_match: '/[users|authors]/'
   article_url_path: '\d\d\d\d/\d+/\d+/[\-a-z]*'
+  index_page_url_match: '/[users|authors]/'
   method: 'index_page'
   article:
     title:
