@@ -35,7 +35,7 @@ def main():
         'ARTICLE_EXPORTER': args.exporter,
         'CONTENT_DIGESTS': True,
         'NODE_INDEXES': True,
-        'ROBOTSTXT_OBEY': site_configs[args.site_name].get("obey_robots_txt", True)
+        'ROBOTSTXT_OBEY': site_configs.get(args.site_name, {}).get("obey_robots_txt", True)
     })
     # Apply an item limit if specified
     if args.max_articles:

@@ -302,7 +302,8 @@ henrymakow.com:
 
 liveaction.org:
   site_name: 'liveaction.org'
-  start_url: 'https://liveaction.org/news/latest-stories/'
+  # start_url: 'http://liveaction.org/news/latest-stories/'
+  start_url: 'http://liveaction.org/news/'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'news/'
@@ -568,13 +569,13 @@ vox.com:
       select_expression: '//div[@class="c-entry-content"]'
       match_rule: 'single'
 
-westernjournal.org:
-  site_name: 'westernjournal.org'
+westernjournal.com:
+  site_name: 'westernjournal.com'
   start_url: 'https://www.westernjournal.com/politics/'
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'politics/'
-    index_page_article_links: '//h1[@itemprop="headline"]'
+    index_page_article_links: '//a[contains(@data-type-location, "archive")]'
   article:
     title:
       select_method: 'xpath'
