@@ -2,617 +2,619 @@
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
-  follow_url_path: '/alerts/'
-  article_url_path: 'story\?id=\d*'
-  article_search: 'paged'
+  article_url_match: '/Politics/.+/story\?id=\d*'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: '/alerts/'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@rel="author"][contains(@class, "author")]/text()'
-      match-rule: 'concatenate'
+      select_method: 'xpath'
+      select_expression: '//div[@rel="author"][contains(@class, "author")]/text()'
+      match_rule: 'concatenate'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="timestamp"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="timestamp"]/text()'
+      match_rule: 'single'
       datetime-format: 'MMM D, YYYY, h:mm A'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="article-copy"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-copy"]'
+      match_rule: 'single'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
   start_url: 'http://addictinginfo.com/category/news/'
-  follow_url_path: 'page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
-  article_search: 'paged'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'page/'
+    index_page_article_links: '//h2[@class="entry-title"]/a'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'first'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry entry-content"]'
+      match_rule: 'single'
 
 breitbart.com:
   site_name: 'breitbart.com'
   start_url: 'https://www.breitbart.com/tag/politics/'
-  follow_url_path: '/tag/'
-  article_url_xpath: '//footer[contains(@class,"byline")]//a'
-  article_search: 'paged'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: '/tag/'
+    index_page_article_links: '//footer[contains(@class,"byline")]//a'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//header/h1/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//header/h1/text()'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//footer[@class="byline"]/time/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//footer[@class="byline"]/time/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
-  follow_url_path: 'exclusives'
-  article_url_path: 'article/'
-  article_search: 'paged'
+  article_url_match: 'article/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'exclusives'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="field-item odd"]/text()'
-      match-rule: 'first'
-      warn-if-missing: False
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-item odd"]/text()'
+      match_rule: 'first'
+      warn_if_missing: False
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
+      match_rule: 'single'
       datetime-format: 'MM/DD/YY'
-      warn-if-missing: False
+      warn_if_missing: False
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="node"]/div[@class="content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="node"]/div[@class="content"]'
+      match_rule: 'single'
 
 dailykos.com:
   site_name: 'dailykos.com'
   start_url: 'https://www.dailykos.com/'
-  follow_url_path: 'user'
-  article_url_path: '/stor[ies|y]/\d\d\d\d/'
-  article_search: 'paged'
+  article_url_match: '/stor[ies|y]/\d\d\d\d/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'user'
   obey_robots_txt: False
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="timestamp "]/@data-epoch-time'
+      select_method: 'xpath'
+      select_expression: '//span[@class="timestamp "]/@data-epoch-time'
       datetime-format: 'unix_milliseconds'
-      match-rule: 'first'
+      match_rule: 'first'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="story-intro story-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="story-intro story-content"]'
+      match_rule: 'single'
 
 davidwolfe.com:
   site_name: 'davidwolfe.com'
   start_url: 'https://www.davidwolfe.com/category/news/'
-  follow_url_path: 'category/news/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/news/page/'
+    index_page_article_links: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="entry-author-name"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-author-name"]/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-time ")]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-time ")]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 empirenews.net:
   site_name: 'empirenews.net'
   start_url: 'http://empirenews.net/category/politics/'
-  follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h1[@class="entry-title"]/a'
-  article_search: 'paged'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/politics/page/'
+    index_page_article_links: '//h1[@class="entry-title"]/a'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="author vcard"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="entry-date published updated"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="entry-date published updated"]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
-  follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/politics/page/'
+    index_page_article_links: '//h2[@class="entry-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'first'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'first'
 
 federalistpress.com:
   site_name: 'federalistpress.com'
   start_url: 'http://federalistpress.com/category/all-stories'
-  follow_url_path: 'category/all-stories/page/'
-  article_url_xpath: '//h2[@class="entry-title"]/a'
-  article_search: 'paged'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/all-stories/page/'
+    index_page_article_links: '//h2[@class="entry-title"]/a'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="date published time"]/@title'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="date published time"]/@title'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]//p'
-      match-rule: 'group'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]//p'
+      match_rule: 'group'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
   start_url: 'http://gellerreport.com/category/atlas-articles/'
-  follow_url_path: 'category/atlas-articles/page/'
-  article_url_xpath: '//h2[@class="archive-entry-title"]/a'
-  article_search: 'paged'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/atlas-articles/page/'
+    index_page_article_links: '//h2[@class="archive-entry-title"]/a'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h1[@class="entry-title"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="byline"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="byline"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="post-entry-time"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="post-entry-time"]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'first'
 
 globalresearch.ca:
   site_name: 'globalresearch.ca'
   start_url: 'http://globalresearch.ca/latest-news-and-top-stories'
-  follow_url_path: 'latest-news-and-top-stories/page/'
-  article_url_xpath: '//strong[@class="title"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'latest-news-and-top-stories/page/'
+    index_page_article_links: '//strong[@class="title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//h2[@itemprop="headline"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//h2[@itemprop="headline"]/text()'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@itemprop="author"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="author"]/@content'
+      match_rule: 'first'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@itemprop="articleBody"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
   start_url: 'http://henrymakow.com/archives.html'
-  follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//p[not(@class)]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/politics/page/'
+    index_page_article_links: '//p[not(@class)]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'text-body'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="text-body"]'
-      match-rule: 'single'
-      warn-if-missing: False
+      select_method: 'xpath'
+      select_expression: '//div[@class="text-body"]'
+      match_rule: 'single'
+      warn_if_missing: False
 
-liveaction.org:
-  site_name: 'liveaction.org'
-  start_url: 'https://liveaction.org/news/latest-stories/'
-  follow_url_path: 'news/'
-  article_url_xpath: '//h1[@itemprop="headline"]'
-  article_search: 'paged'
-  article_element: 'div'
-  article:
-    content:
-      select-method: 'xpath'
-      select-expression: '//div[@id="content-main"]'
-      match-rule: 'single'
-    title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
-    byline:
-      select-method: 'xpath'
-      select-expression: '//span[@itemprop="name"]/a/text()'
-      match-rule: 'single'
-    publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+# liveaction.org:
+#   site_name: 'liveaction.org'
+#   start_url: 'http://liveaction.org/news/latest-stories/'
+#   crawl_strategy:
+#     method: 'index_page'
+#     index_page_url_match: 'news/'
+#     index_page_article_links: '//h1[@itemprop="headline"]'
+#   article:
+#     content:
+#       select_method: 'xpath'
+#       select_expression: '//div[@id="content-main"]'
+#       match_rule: 'single'
+#     title:
+#       select_method: 'xpath'
+#       select_expression: '//meta[@property="og:title"]/@content'
+#       match_rule: 'single'
+#     byline:
+#       select_method: 'xpath'
+#       select_expression: '//span[@itemprop="name"]/a/text()'
+#       match_rule: 'single'
+#     publication_datetime:
+#       select_method: 'xpath'
+#       select_expression: '//meta[@property="article:published_time"]/@content'
+#       match_rule: 'single'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
-  follow_url_path: 'politics/page/'
-  article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'politics/page/'
+    index_page_article_links: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="entry-meta-author author vcard"]//a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-meta-author author vcard"]//a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[contains(concat(" ", normalize-space(@property), " "), " article:published_time ")]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[contains(concat(" ", normalize-space(@property), " "), " article:published_time ")]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[contains(@class, "entry-content")]/p'
-      match-rule: 'group'
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]/p'
+      match_rule: 'group'
 
 nbcnews.com:
   site_name: 'nbcnews.com'
   start_url: 'http://www.nbcnews.com/politics'
-  follow_url_path: '/pages/'
-  article_url_path: '/politics/[a-z\-]*/.*\d+$'
-  article_search: 'paged'
+  article_url_match: '/politics/[a-z\-]*/.*\d+$'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: '/pages/'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="founders-cond f6 lh-none"]/text()'
-      match-rule: 'last'
+      select_method: 'xpath'
+      select_expression: '//div[@class="founders-cond f6 lh-none"]/text()'
+      match_rule: 'last'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//div/time[contains(@class, "pubDate")]/@datetime'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//div/time[contains(@class, "pubDate")]/@datetime'
+      match_rule: 'first'
       datetime-format: 'ddd MMM D YYYY HH:mm:ss'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[contains(@class, "body")]/p[@class=""]'
-      match-rule: 'group'
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "body")]/p[@class=""]'
+      match_rule: 'group'
 
 nytimes.com:
-    site_name: 'nytimes.com'
-    start_url: 'https://www.nytimes.com/section/politics'
-    follow_url_path: 'pages/'
-    article_url_path: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
-    article_search: 'paged'
-    article:
-      title:
-        select-method: 'xpath'
-        select-expression: '//meta[@property="og:title"]/@content'
-        match-rule: 'single'
-      byline:
-        select-method: 'xpath'
-        select-expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
-        match-rule: 'single'
-      publication_datetime:
-        select-method: 'xpath'
-        select-expression: '//meta[@property="article:published"]/@content'
-        match-rule: 'single'
-      content:
-        select-method: 'xpath'
-        select-expression: '//section[@name="articleBody"]'
-        match-rule: 'single'
+  site_name: 'nytimes.com'
+  start_url: 'https://www.nytimes.com/section/politics'
+  article_url_match: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'pages/'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//section[@name="articleBody"]'
+      match_rule: 'single'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
   start_url: 'http://occupydemocrats.com'
-  follow_url_path: 'page/'
-  article_url_xpath: '//h3[@itemprop="headline"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'page/'
+    index_page_article_links: '//h3[@itemprop="headline"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="author-name vcard fn author"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="author-name vcard fn author"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="post-date updated"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="post-date updated"]/@datetime'
+      match_rule: 'single'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@itemprop="articleBody"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
 
 palmerreport.com:
   site_name: 'palmerreport.com'
   start_url: 'https://palmerreport.com/category/analysis/'
-  follow_url_path: 'category/analysis/page/'
-  article_url_xpath: '//h2[@class="fl-post-title"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/analysis/page/'
+    index_page_article_links: '//h2[@class="fl-post-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'fl-post-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="fl-post-author"]/a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="fl-post-author"]/a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@itemprop="text"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="text"]'
+      match_rule: 'single'
 
-# TODO: Test from US IP address (get 403 from UK and Slovakia)
 patriotnewsdaily.com:
   site_name: 'patriotnewsdaily.com'
   start_url: 'http://patriotnewsdaily.com/category/all-conservative-news/'
-  follow_url_path: 'category/all-conservative-news/page/'
-  article_url_xpath: '//h2[@class="post-title"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/all-conservative-news/page/'
+    index_page_article_links: '//h2[@class="post-title"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'entry'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'first'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
     byline:
-      select-method: 'xpath'
-      select-expression: '//div[@class="vcard author"]//a/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="vcard author"]//a/text()'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//span[@class="updated"]/text()'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@class="updated"]/text()'
+      match_rule: 'single'
       datetime-format: 'YYYY-MM-DD'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
   start_url: 'http://prisonplanet.com/section/featured-stories/'
-  follow_url_path: 'section/featured-stories/page/'
-  article_url_xpath: '//div[@class="nArchiveHeader"]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'section/featured-stories/page/'
+    index_page_article_links: '//div[@class="nArchiveHeader"]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'subarticle'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="subarticle"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]'
+      match_rule: 'single'
 
-# TODO: Enhance spider to follow relative links
-# -- JR: I think this is already done
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
-  follow_url_path: 'news.asp\?page=\d*'
-  article_url_path: 'article.asp\?id=\d*'
+  article_url_match: 'article.asp\?id=\d*'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'news.asp\?page=\d*'
   metadata_source: 'microdata'
-  article_search: 'paged'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="container" and div[@class="row"]]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="container" and div[@class="row"]]'
+      match_rule: 'single'
 
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
-  follow_url_path: 'tag/'
-  article_url_xpath: '//h2[contains(@class, "post__title")]//a'
-  article_search: 'paged'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'tag/'
+    index_page_article_links: '//h2[contains(@class, "post__title")]//a'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@class="post__byline__author"]//a/text()'
-      match-rule: 'concatenate'
+      select_method: 'xpath'
+      select_expression: '//span[@class="post__byline__author"]//a/text()'
+      match_rule: 'concatenate'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//time[@class="post__date"]/@datetime'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//time[@class="post__date"]/@datetime'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="post__content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="post__content"]'
+      match_rule: 'single'
 
 vox.com:
   site_name: 'vox.com'
   start_url: 'http://www.vox.com/policy-and-politics'
-  follow_url_path: '/[users|authors]/'
-  article_url_path: '\d\d\d\d/\d+/\d+/[\-a-z]*'
-  article_search: 'paged'
+  article_url_match: '\d\d\d\d/\d+/\d+/[\-a-z]*'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: '/[users|authors]/'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="author"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="author"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="c-entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="c-entry-content"]'
+      match_rule: 'single'
 
-westernjournal.org:
-  site_name: 'westernjournal.org'
+westernjournal.com:
+  site_name: 'westernjournal.com'
   start_url: 'https://www.westernjournal.com/politics/'
-  follow_url_path: 'politics/'
-  article_url_xpath: '//h1[@itemprop="headline"]'
-  article_search: 'paged'
-  article_element: 'div'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'politics/'
+    index_page_article_links: '//a[contains(@data-type-location, "archive")]'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//meta[@name="author"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="article:published_time"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="entry-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 youngcons.com:
   site_name: 'youngcons.com'
   start_url: 'http://youngcons.com/category/politics/'
-  follow_url_path: 'category/politics/page/'
-  article_url_xpath: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/politics/page/'
+    index_page_article_links: '//h3[contains(concat(" ", normalize-space(@class), " "), " entry-title ")]/a'
   metadata_source: 'microdata'
-  article_search: 'paged'
-  article_element: 'div'
-  article_class: 'td-post-content'
   article:
     title:
-      select-method: 'xpath'
-      select-expression: '//meta[@property="og:title"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
     byline:
-      select-method: 'xpath'
-      select-expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
+      match_rule: 'single'
     publication_datetime:
-      select-method: 'xpath'
-      select-expression: '//meta[@itemprop="datePublished"]/@content'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
     content:
-      select-method: 'xpath'
-      select-expression: '//div[@class="td-post-content"]'
-      match-rule: 'single'
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'

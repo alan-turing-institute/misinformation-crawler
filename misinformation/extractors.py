@@ -16,27 +16,27 @@ def xpath_class(element, class_name):
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
-        "select-method": "xpath",
-        "select-expression": xpath_expression,
-        "match-rule": match_rule,
-        "warn-if-missing": warn_if_missing
+        "select_method": "xpath",
+        "select_expression": xpath_expression,
+        "match_rule": match_rule,
+        "warn_if_missing": warn_if_missing
     }
     return extract_spec
 
 def extract_element(response, extract_spec):
     # Extract selector specification
-    method = extract_spec['select-method']
-    expression = extract_spec['select-expression']
+    method = extract_spec['select_method']
+    expression = extract_spec['select_expression']
     # Default match rule to 'single', which will log a warning message if multiple matches are found
-    if 'match-rule' not in extract_spec:
+    if 'match_rule' not in extract_spec:
         match_rule = 'single'
     else:
-        match_rule = extract_spec['match-rule']
+        match_rule = extract_spec['match_rule']
 
     # This is used to suppress warnings for missing/duplicate elements
     # in cases where they are known to break for some pages on certain sites
     # The default is always to warn unless otherwise specified
-    warn_if_missing = extract_spec.get('warn-if-missing', True)
+    warn_if_missing = extract_spec.get('warn_if_missing', True)
 
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
@@ -51,7 +51,7 @@ def extract_element(response, extract_spec):
             elements = None
             if warn_if_missing:
                 logging.warning("No elements could be found from {url} matching "
-                            "{xpath} expected by match-rule '{rule}'. Returning"
+                            "{xpath} expected by match_rule '{rule}'. Returning"
                             " None.".format(url=response.url, xpath=expression,
                             rule=match_rule))
         else:
@@ -63,7 +63,7 @@ def extract_element(response, extract_spec):
                 if (num_matches != 1) and warn_if_missing:
                     logging.warning("Extracted {count} elements from {url} "
                                     "matching {xpath}. Only one element "
-                                    "expected by match-rule '{rule}'. Returning"
+                                    "expected by match_rule '{rule}'. Returning"
                                     " first element.".format(count=num_matches,
                                     url=response.url, xpath=expression,
                                     rule=match_rule))
@@ -91,11 +91,11 @@ def extract_element(response, extract_spec):
 
             else:
                 elements = None
-                logging.debug("'{match_rule}' is not a valid match-rule".format(
+                logging.debug("'{match_rule}' is not a valid match_rule".format(
                               match_rule=match_rule))
     else:
         elements = None
-        logging.debug("'{method}' is not a valid select-expression".format(
+        logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
     return elements
 
@@ -174,21 +174,16 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     # Set default article fields by running readability on full page HTML
     page_spec = xpath_extract_spec("/html", "largest")
     page_html = extract_element(response, page_spec)
-    default_readability_article = readability.parse(page_html, content_digests, node_indexes)
 
-    article["title"] = default_readability_article["title"]
-    article["byline"] = default_readability_article["byline"]
-    article["content"] = default_readability_article["content"]
-    article["plain_content"] = default_readability_article["plain_content"]
-    article["plain_text"] = default_readability_article["plain_text"]
-
-    # Overwrite default values where extract specifications have been provided
+    # Look for a set of extraction specifications
     if 'article' in config:
+        # Extract title
         if 'title' in config['article']:
-            # Extract title from specified element
             article['title'] = extract_element(response, config['article']['title'])
+        # Extract byline
         if 'byline' in config['article']:
             article['byline'] = extract_element(response, config['article']['byline'])
+        # Extract publication_datetime
         if 'publication_datetime' in config['article']:
             datetime_string = extract_element(response, config['article']['publication_datetime'])
             if 'datetime-format' in config['article']['publication_datetime']:
@@ -197,8 +192,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
             else:
                 iso_string = extract_datetime_string(datetime_string)
             article['publication_datetime'] = iso_string
-        # Readability metadata fields more likely to be accurate when extracted from full page
-        # so only update article content by running readability on a custom container
+        # Extract article content
         if 'content' in config['article']:
             # Extract article content from specified element
             article_html = extract_element(response, config['article']['content'])
@@ -207,6 +201,14 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article["content"] = custom_readability_article["content"]
                 article["plain_content"] = custom_readability_article["plain_content"]
                 article["plain_text"] = custom_readability_article["plain_text"]
+    # ... otherwise simply use the default values from parsing the whole page 
+    else:
+        default_readability_article = readability.parse(page_html, content_digests, node_indexes)
+        article["title"] = default_readability_article["title"]
+        article["byline"] = default_readability_article["byline"]
+        article["content"] = default_readability_article["content"]
+        article["plain_content"] = default_readability_article["plain_content"]
+        article["plain_text"] = default_readability_article["plain_text"]
 
 
     # Extract additional article metadata
