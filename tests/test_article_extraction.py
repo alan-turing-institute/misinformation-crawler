@@ -323,6 +323,22 @@ def test_extract_article_default_content_digests_node_indexes():
 
     # Test
     article = extract_article(response, config, content_digests=True, node_indexes=True)
+    if article != expected_article:
+        for key in article.keys():
+            if article[key] != expected_article[key]:
+                if key == "plain_text":
+                    for a, b in zip(article[key], expected_article[key]):
+                        for idx, (i, j) in enumerate(zip(a, b)):
+                            if i != j:
+                                print("\n\n", key, "\n\n", b[idx-1:idx+10], "=>", a[idx-1:idx+10])
+                                break
+                else:
+                    for idx, (i, j) in enumerate(zip(article[key], expected_article[key])):
+                        if i != j:
+                            print("\n\n", key, "\n\n", expected_article[key][idx-1:idx+10], "=>", article[key][idx-1:idx+10])
+                            break
+
+            # print(json.dumps(article[key]))
     assert article == expected_article
 
 
