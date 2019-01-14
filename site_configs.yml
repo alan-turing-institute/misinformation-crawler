@@ -300,31 +300,30 @@ henrymakow.com:
       match_rule: 'single'
       warn_if_missing: False
 
-liveaction.org:
-  site_name: 'liveaction.org'
-  # start_url: 'http://liveaction.org/news/latest-stories/'
-  start_url: 'http://liveaction.org/news/'
-  crawl_strategy:
-    method: 'index_page'
-    index_page_url_match: 'news/'
-    index_page_article_links: '//h1[@itemprop="headline"]'
-  article:
-    content:
-      select_method: 'xpath'
-      select_expression: '//div[@id="content-main"]'
-      match_rule: 'single'
-    title:
-      select_method: 'xpath'
-      select_expression: '//meta[@property="og:title"]/@content'
-      match_rule: 'single'
-    byline:
-      select_method: 'xpath'
-      select_expression: '//span[@itemprop="name"]/a/text()'
-      match_rule: 'single'
-    publication_datetime:
-      select_method: 'xpath'
-      select_expression: '//meta[@property="article:published_time"]/@content'
-      match_rule: 'single'
+# liveaction.org:
+#   site_name: 'liveaction.org'
+#   start_url: 'http://liveaction.org/news/latest-stories/'
+#   crawl_strategy:
+#     method: 'index_page'
+#     index_page_url_match: 'news/'
+#     index_page_article_links: '//h1[@itemprop="headline"]'
+#   article:
+#     content:
+#       select_method: 'xpath'
+#       select_expression: '//div[@id="content-main"]'
+#       match_rule: 'single'
+#     title:
+#       select_method: 'xpath'
+#       select_expression: '//meta[@property="og:title"]/@content'
+#       match_rule: 'single'
+#     byline:
+#       select_method: 'xpath'
+#       select_expression: '//span[@itemprop="name"]/a/text()'
+#       match_rule: 'single'
+#     publication_datetime:
+#       select_method: 'xpath'
+#       select_expression: '//meta[@property="article:published_time"]/@content'
+#       match_rule: 'single'
 
 madworldnews.com:
   site_name: 'madworldnews.com'
