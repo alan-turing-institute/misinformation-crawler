@@ -81,7 +81,7 @@ class MisinformationSpider(CrawlSpider):
                 link_kwargs["deny"] = (self.config['scattergun_url_must_not_contain'])
             link_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
                              follow=True, callback="parse_response")
-            self.rules = (link_rule)
+            self.rules = (link_rule, )
 
             # Optional regex for determining whether this is an article using the URL
             self.article_url_regex = re.compile(self.config.get('article_url_match', ''))
