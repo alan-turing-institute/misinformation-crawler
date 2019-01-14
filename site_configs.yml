@@ -4,8 +4,8 @@ abcnews.go.com:
   start_url: 'http://abcnews.go.com/Politics'
   article_url_match: '/Politics/.+/story\?id=\d*'
   crawl_strategy:
-    method: 'index_page'
-    index_page_url_match: '/alerts/'
+    method: 'scattergun'
+    scattergun_url_must_not_contain: '/beta-story-container/'
   article:
     title:
       select_method: 'xpath'
@@ -22,8 +22,8 @@ abcnews.go.com:
       datetime-format: 'MMM D, YYYY, h:mm A'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-copy"]'
-      match_rule: 'single'
+      select_expression: '//div[@class="article-copy"]/p[@itemprop="articleBody"]'
+      match_rule: 'group'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
