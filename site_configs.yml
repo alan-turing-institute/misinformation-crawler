@@ -55,7 +55,7 @@ breitbart.com:
   start_url: 'https://www.breitbart.com/tag/politics/'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: '/tag/'
+    index_page_url_match: '/tag/politics/page/'
     index_page_article_links: '//footer[contains(@class,"byline")]//a'
   article:
     title:
@@ -81,22 +81,24 @@ conservativehq.com:
   article_url_match: 'article/'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: 'exclusives'
+    index_page_url_match: '/category/tags/'
   article:
     title:
       select_method: 'xpath'
-      select_expression: '//meta[@property="og:title"]/@content'
-      match_rule: 'first'
+      select_expression: '//h1[@class="title"]/text()'
+      match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="field-item odd"]/text()'
+      # Stored in comments of the form '<!-- By NAME - DATE -->'
+      select_expression: 'substring-after(substring-before(//*[comment()[contains(., "By")]]/comment(), "-"), "By ")'
       match_rule: 'first'
       warn_if_missing: False
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//div[@class="content"]/div[contains(concat(" ", normalize-space(@class), " "), " field ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-items ")]/div[contains(concat(" ", normalize-space(@class), " "), " field-item ")]/text()'
-      match_rule: 'single'
-      datetime-format: 'MM/DD/YY'
+      # Stored in comments of the form '<!-- By NAME - DATE -->'
+      select_expression: 'substring-after(//*[comment()[contains(., "By")]]/comment(), "-")'
+      match_rule: 'first'
+      datetime-format: 'DD/MM/YY'
       warn_if_missing: False
     content:
       select_method: 'xpath'

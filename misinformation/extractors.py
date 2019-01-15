@@ -5,14 +5,12 @@ import pendulum
 from ReadabiliPy.readabilipy import parse_to_json
 import warnings
 
-
 # Helper function for selecting elements by class name. This is a little complex in xpath as
 # (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
 # (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
 def xpath_class(element, class_name):
     return "{element}[contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')]".format(
         class_name=class_name, element=element)
-
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
@@ -97,6 +95,9 @@ def extract_element(response, extract_spec):
         elements = None
         logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
+    # Return None if we matched to a blank string
+    if elements == "":
+        return None
     return elements
 
 
@@ -187,8 +188,8 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         if 'publication_datetime' in config['article']:
             datetime_string = extract_element(response, config['article']['publication_datetime'])
             if 'datetime-format' in config['article']['publication_datetime']:
-                format = config['article']['publication_datetime']['datetime-format']
-                iso_string = extract_datetime_string(datetime_string, format)
+                dt_format = config['article']['publication_datetime']['datetime-format']
+                iso_string = extract_datetime_string(datetime_string, dt_format)
             else:
                 iso_string = extract_datetime_string(datetime_string)
             article['publication_datetime'] = iso_string
