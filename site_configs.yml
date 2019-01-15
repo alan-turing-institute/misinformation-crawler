@@ -138,7 +138,7 @@ davidwolfe.com:
   crawl_strategy:
     method: 'index_page'
     index_page_url_match: 'category/news/page/'
-    index_page_article_links: '//h2[@class="entry-title"]/a'
+    index_page_article_links: '//h2[@itemprop="headline"]/a'
   metadata_source: 'microdata'
   article:
     title:
@@ -155,8 +155,8 @@ davidwolfe.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="entry-content"]'
-      match_rule: 'single'
+      select_expression: '//div[@class="entry-content"]/node()[not(contains(@class, "swp_social_panel"))]'
+      match_rule: 'group'
 
 empirenews.net:
   site_name: 'empirenews.net'
