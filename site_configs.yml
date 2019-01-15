@@ -163,7 +163,7 @@ empirenews.net:
   start_url: 'http://empirenews.net/category/politics/'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: 'category/politics/page/'
+    index_page_url_match: '/category/politics/page/'
     index_page_article_links: '//h1[@class="entry-title"]/a'
   article:
     title:
@@ -180,8 +180,8 @@ empirenews.net:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="entry-content"]'
-      match_rule: 'single'
+      select_expression: //div[@class="entry-content"]/*[not(@id="top_share_widget") and not(text()[normalize-space()="comments" or normalize-space()="Comments"])]
+      match_rule: 'group'
 
 eyeopening.info:
   site_name: 'eyeopening.info'
