@@ -4,6 +4,7 @@ from misinformation.items import Article
 import pendulum
 from ReadabiliPy.readabilipy import parse_to_json
 import warnings
+from scrapy.http import XmlResponse
 
 
 # Helper function for selecting elements by class name. This is a little complex in xpath as
@@ -27,7 +28,7 @@ def extract_element(response, extract_spec):
     # Extract selector specification
     method = extract_spec['select_method']
     select_expression = extract_spec['select_expression']
-    remove_expression = extract_spec.get('remove_expression', None)
+    remove_expressions = extract_spec.get('remove_expressions', [])
     # Default match rule to 'single', which will log a warning message if multiple matches are found
     match_rule = extract_spec.get('match_rule', 'single')
 
@@ -83,15 +84,17 @@ def extract_element(response, extract_spec):
         logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
 
-    # Remove elements if specified in the config
-    if remove_expression:
-        for substr_to_remove in response.xpath(remove_expression).extract():
-            # This is safe even if one substr_to_remove contains another inside
-            # it, since the strings are produced in the order that they appear
-            # in the tree, and therefore the outside string will be removed
-            # before the inside one (if this order was reversed there would be
-            # a problem).
-            if extracted_string:
+    # Sequentially find and remove elements if specified in the config
+    for remove_expression in remove_expressions:
+        if extracted_string:
+            # Use XmlResponse as TextResponse would wrap the string in <html> and <body> tags
+            xml_response = XmlResponse(body=extracted_string, url=response.url, encoding=response.encoding)
+            for substr_to_remove in xml_response.xpath(remove_expression).extract():
+                # This is safe even if one substr_to_remove contains another inside
+                # it, since the strings are produced in the order that they appear
+                # in the tree, and therefore the outside string will be removed
+                # before the inside one (if this order was reversed there would be
+                # a problem).
                 extracted_string = extracted_string.replace(substr_to_remove, "")
 
     # This check ensures that blank strings return as None
