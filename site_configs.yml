@@ -47,8 +47,8 @@ addictinginfo.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="entry entry-content"]'
-      match_rule: 'single'
+      select_expression: '//div[@class="entry entry-content"]/*[not(contains(@class, "vcard")) and not(contains(@class, "ad-inserter"))]'
+      match_rule: 'group'
 
 breitbart.com:
   site_name: 'breitbart.com'
