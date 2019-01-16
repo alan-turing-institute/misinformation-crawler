@@ -220,7 +220,7 @@ federalistpress.com:
       match_rule: 'first'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="post-info"]//span[@class="author vcard"]//text()'
+      select_expression: '//span[@class="author vcard"]//text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
@@ -261,7 +261,7 @@ globalresearch.ca:
   start_url: 'http://globalresearch.ca/latest-news-and-top-stories'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: 'latest-news-and-top-stories/page/'
+    index_page_url_match: '/latest-news-and-top-stories/page/'
     index_page_article_links: '//strong[@class="title"]/a'
   metadata_source: 'microdata'
   article:
