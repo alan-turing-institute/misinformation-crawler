@@ -45,7 +45,7 @@ def article_stems_for_site(site_name):
     html_file_paths = glob.glob(os.path.join(SITE_TEST_DATA_DIR, site_name, '*.html'))
     article_stems = []
     for html_file_path in html_file_paths:
-        _file = os.path.split(html_file_path)[1]
+        _, _file = os.path.split(html_file_path)
         article_stems.append(_file.split('_')[0])
     # Fail fixture set up if no test sites found for site
     assert article_stems != [], "No HTML test files found for site '{site}'".format(site=site_name)
