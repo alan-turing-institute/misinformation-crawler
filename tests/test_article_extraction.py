@@ -482,7 +482,6 @@ def test_remove_expression_nested():
                 <p>Paragraph 3</p>
             </div>
         </div>"""
-    print(extract_element(response, config['article']['content']))
     assert False
     validate_extract_element(response, config['article']['content'], expected_html)
 

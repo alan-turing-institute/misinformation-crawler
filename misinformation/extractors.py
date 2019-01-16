@@ -85,13 +85,14 @@ def extract_element(response, extract_spec):
 
     # Remove elements if specified in the config
     if remove_expression:
-        for substring_to_remove in response.xpath(remove_expression).extract():
-            # This is safe even if one substring_to_remove contains another
-            # inside it, since the strings are produced in the order that they
-            # appear in the tree, and therefore the outside string will be
-            # removed before the inside one (if this order was reversed there
-            # would be a problem).
-            extracted_string = extracted_string.replace(substring_to_remove, "")
+        for substr_to_remove in response.xpath(remove_expression).extract():
+            # This is safe even if one substr_to_remove contains another inside
+            # it, since the strings are produced in the order that they appear
+            # in the tree, and therefore the outside string will be removed
+            # before the inside one (if this order was reversed there would be
+            # a problem).
+            if extracted_string:
+                extracted_string = extracted_string.replace(substr_to_remove, "")
 
     # This check ensures that blank strings return as None
     if not extracted_string:
