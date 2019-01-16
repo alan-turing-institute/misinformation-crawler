@@ -26,12 +26,10 @@ def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=Tr
 def extract_element(response, extract_spec):
     # Extract selector specification
     method = extract_spec['select_method']
-    expression = extract_spec['select_expression']
+    select_expression = extract_spec['select_expression']
+    remove_expression = extract_spec.get('remove_expression', None)
     # Default match rule to 'single', which will log a warning message if multiple matches are found
-    if 'match_rule' not in extract_spec:
-        match_rule = 'single'
-    else:
-        match_rule = extract_spec['match_rule']
+    match_rule = extract_spec.get('match_rule', 'single')
 
     # This is used to suppress warnings for missing/duplicate elements
     # in cases where they are known to break for some pages on certain sites
@@ -41,26 +39,23 @@ def extract_element(response, extract_spec):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = response.xpath(expression).extract()
+        elements = response.xpath(select_expression).extract()
         # Strip leading and trailing whitespace
         elements = [item.strip() for item in elements]
-        # Check length of elements is greater than 0. If not, return None
-        # and log a warning.
+        # If no elements are found then return None and log a warning.
         num_matches = len(elements)
         if num_matches == 0:
             extracted_string = None
             if warn_if_missing:
                 logging.warning("No elements could be found from {url} matching {xpath} expected by match_rule '{rule}'. Returning None.".format(
-                    url=response.url, xpath=expression, rule=match_rule))
+                    url=response.url, xpath=select_expression, rule=match_rule))
         else:
-            # Changes to single match rule:
-            # Return first element if there is exactly 1 element, otherwise,
-            # still return first element but also print a warning log message.
             if match_rule == 'single':
+                # Return first element, with a warning if more than one is found
                 extracted_string = elements[0]
                 if (num_matches != 1) and warn_if_missing:
                     logging.warning("Extracted {count} elements from {url} matching {xpath}. Only one element expected by match_rule '{rule}'. Returning first element.".format(
-                        count=num_matches, url=response.url, xpath=expression, rule=match_rule))
+                        count=num_matches, url=response.url, xpath=select_expression, rule=match_rule))
 
             elif match_rule == 'first':
                 extracted_string = elements[0]
@@ -87,6 +82,20 @@ def extract_element(response, extract_spec):
         extracted_string = None
         logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
+
+    # Remove elements if specified in the config
+    if remove_expression:
+        for substring_to_remove in response.xpath(remove_expression).extract():
+            # This is safe even if one substring_to_remove contains another
+            # inside it, since the strings are produced in the order that they
+            # appear in the tree, and therefore the outside string will be
+            # removed before the inside one (if this order was reversed there
+            # would be a problem).
+            extracted_string = extracted_string.replace(substring_to_remove, "")
+
+    # This check ensures that blank strings return as None
+    if not extracted_string:
+        extracted_string = None
     return extracted_string
 
 
