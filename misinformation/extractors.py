@@ -48,7 +48,7 @@ def extract_element(response, extract_spec):
         # and log a warning.
         num_matches = len(elements)
         if num_matches == 0:
-            elements = None
+            extracted_string = None
             if warn_if_missing:
                 logging.warning("No elements could be found from {url} matching {xpath} expected by match_rule '{rule}'. Returning None.".format(
                     url=response.url, xpath=expression, rule=match_rule))
@@ -57,41 +57,41 @@ def extract_element(response, extract_spec):
             # Return first element if there is exactly 1 element, otherwise,
             # still return first element but also print a warning log message.
             if match_rule == 'single':
-                elements = elements[0]
+                extracted_string = elements[0]
                 if (num_matches != 1) and warn_if_missing:
                     logging.warning("Extracted {count} elements from {url} matching {xpath}. Only one element expected by match_rule '{rule}'. Returning first element.".format(
                         count=num_matches, url=response.url, xpath=expression, rule=match_rule))
 
             elif match_rule == 'first':
-                elements = elements[0]
+                extracted_string = elements[0]
 
             elif match_rule == 'last':
-                elements = elements[-1]
+                extracted_string = elements[-1]
 
             elif match_rule == 'largest':
-                elements = sorted(elements, key = lambda elem: len(elem))[-1]
+                extracted_string = sorted(elements, key = lambda elem: len(elem))[-1]
 
             elif match_rule == 'concatenate':
                 # Join non-empty elements together with commas
-                elements = ", ".join([x for x in elements if x])
+                extracted_string = ", ".join([x for x in elements if x])
 
             elif match_rule == 'group':
                 # Group several elements and wrap them in a div
-                elements = "<div>" + "".join(elements) + "</div>"
+                extracted_string = "<div>" + "".join(elements) + "</div>"
 
             elif match_rule == 'all':
                 # Nothing to do but need this to pass validity check
-                elements = elements
+                extracted_string = elements
 
             else:
-                elements = None
+                extracted_string = None
                 logging.debug("'{match_rule}' is not a valid match_rule".format(
                               match_rule=match_rule))
     else:
-        elements = None
+        extracted_string = None
         logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
-    return elements
+    return extracted_string
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
