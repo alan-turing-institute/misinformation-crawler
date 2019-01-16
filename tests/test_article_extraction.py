@@ -45,8 +45,8 @@ def article_stems_for_site(site_name):
     html_file_paths = glob.glob(os.path.join(SITE_TEST_DATA_DIR, site_name, '*.html'))
     article_stems = []
     for html_file_path in html_file_paths:
-        path, file = os.path.split(html_file_path)
-        article_stems.append(file.split('_')[0])
+        _file = os.path.split(html_file_path)[1]
+        article_stems.append(_file.split('_')[0])
     # Fail fixture set up if no test sites found for site
     assert article_stems != [], "No HTML test files found for site '{site}'".format(site=site_name)
     return article_stems
@@ -369,8 +369,8 @@ def test_extract_element():
             match_rule: 'single'
         paragraphs:
             select_method: 'xpath'
-            select_expression: '//p/text()'
-            match_rule: 'all'
+            select_expression: '//p'
+            match_rule: 'group'
         first-paragraph:
             select_method: 'xpath'
             select_expression: '//p/text()'
@@ -381,8 +381,8 @@ def test_extract_element():
     # Test single element extraction
     expected_title = "Article title"
     validate_extract_element(response, config['article']['title'], expected_title)
-    # Test all element extraction
-    expected_paragraphs = ["Paragraph 1", "Paragraph 2", "Paragraph 3"]
+    # Test group element extraction
+    expected_paragraphs = "<div><p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p></div>"
     validate_extract_element(response, config['article']['paragraphs'], expected_paragraphs)
     # Test first element extraction
     expected_first_paragraph = "Paragraph 1"

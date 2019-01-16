@@ -79,10 +79,6 @@ def extract_element(response, extract_spec):
                 # Group several elements and wrap them in a div
                 extracted_string = "<div>" + "".join(elements) + "</div>"
 
-            elif match_rule == 'all':
-                # Nothing to do but need this to pass validity check
-                extracted_string = elements
-
             else:
                 extracted_string = None
                 logging.debug("'{match_rule}' is not a valid match_rule".format(

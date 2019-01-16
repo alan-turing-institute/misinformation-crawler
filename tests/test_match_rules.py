@@ -86,15 +86,3 @@ def test_extract_group():
     """
     expected_result = "<div><p>First</p><p>Second</p></div>"
     assert simplified_extraction(html, "//div/p", "group") == expected_result
-
-
-def test_extract_all():
-    html = """
-        <div>
-            <p>First</p>
-            <p>Second</p>
-            <span>Third</span>
-        </div>
-    """
-    expected_result = ["<p>First</p>", "<p>Second</p>"]
-    assert perform_extraction(html, "//div/p", "all") == expected_result
