@@ -75,6 +75,14 @@ def extract_element(response, extract_spec):
                 # Group several elements and wrap them in a div
                 extracted_string = "<div>" + "".join(elements) + "</div>"
 
+            elif match_rule == 'all':
+                # Nothing to do so return here. This avoids having to deal with
+                # the special case interaction where extracted_string is a list
+                # but we also have a non-empty remove_expressions and therefore
+                # we need to apply each remove_expression to each element of
+                # extracted_string
+                return elements
+
             else:
                 extracted_string = None
                 logging.debug("'{match_rule}' is not a valid match_rule".format(
