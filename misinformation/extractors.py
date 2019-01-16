@@ -50,10 +50,8 @@ def extract_element(response, extract_spec):
         if num_matches == 0:
             elements = None
             if warn_if_missing:
-                logging.warning("No elements could be found from {url} matching "
-                            "{xpath} expected by match_rule '{rule}'. Returning"
-                            " None.".format(url=response.url, xpath=expression,
-                            rule=match_rule))
+                logging.warning("No elements could be found from {url} matching {xpath} expected by match_rule '{rule}'. Returning None.".format(
+                    url=response.url, xpath=expression, rule=match_rule))
         else:
             # Changes to single match rule:
             # Return first element if there is exactly 1 element, otherwise,
@@ -61,12 +59,8 @@ def extract_element(response, extract_spec):
             if match_rule == 'single':
                 elements = elements[0]
                 if (num_matches != 1) and warn_if_missing:
-                    logging.warning("Extracted {count} elements from {url} "
-                                    "matching {xpath}. Only one element "
-                                    "expected by match_rule '{rule}'. Returning"
-                                    " first element.".format(count=num_matches,
-                                    url=response.url, xpath=expression,
-                                    rule=match_rule))
+                    logging.warning("Extracted {count} elements from {url} matching {xpath}. Only one element expected by match_rule '{rule}'. Returning first element.".format(
+                        count=num_matches, url=response.url, xpath=expression, rule=match_rule))
 
             elif match_rule == 'first':
                 elements = elements[0]
@@ -201,7 +195,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article["content"] = custom_readability_article["content"]
                 article["plain_content"] = custom_readability_article["plain_content"]
                 article["plain_text"] = custom_readability_article["plain_text"]
-    # ... otherwise simply use the default values from parsing the whole page 
+    # ... otherwise simply use the default values from parsing the whole page
     else:
         default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
         article["title"] = default_readability_article["title"]
