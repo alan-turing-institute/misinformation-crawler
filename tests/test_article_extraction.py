@@ -78,7 +78,7 @@ def article_info(request):
 def validate_extract_element(html, extract_spec, expected):
     actual = extract_element(html, extract_spec)
     # Ignore whitespace differences
-    assert ''.join(actual.split()) == ''.join(expected.split())
+    assert actual == expected or ''.join(actual.split()) == ''.join(expected.split())
 
 
 def validate_extract_article(response, config, expected):
@@ -368,10 +368,14 @@ def test_extract_element():
             select_method: 'xpath'
             select_expression: '//h1[@class="post-title"]/text()'
             match_rule: 'single'
-        paragraphs:
+        grouped-paragraphs:
             select_method: 'xpath'
             select_expression: '//p'
             match_rule: 'group'
+        paragraphs:
+            select_method: 'xpath'
+            select_expression: '//p/text()'
+            match_rule: 'all'
         first-paragraph:
             select_method: 'xpath'
             select_expression: '//p/text()'
@@ -384,6 +388,9 @@ def test_extract_element():
     validate_extract_element(response, config['article']['title'], expected_title)
     # Test group element extraction
     expected_paragraphs = "<div><p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p></div>"
+    validate_extract_element(response, config['article']['grouped-paragraphs'], expected_paragraphs)
+    # Test all element extraction
+    expected_paragraphs = ["Paragraph 1", "Paragraph 2", "Paragraph 3"]
     validate_extract_element(response, config['article']['paragraphs'], expected_paragraphs)
     # Test first element extraction
     expected_first_paragraph = "Paragraph 1"
