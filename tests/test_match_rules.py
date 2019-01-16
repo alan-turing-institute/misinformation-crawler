@@ -89,7 +89,7 @@ def test_extract_group():
 
 
 def test_extract_all():
-     html = """
+    html = """
         <div>
             <p>First</p>
             <p>Second</p>
