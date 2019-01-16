@@ -382,10 +382,10 @@ nbcnews.com:
 nytimes.com:
   site_name: 'nytimes.com'
   start_url: 'https://www.nytimes.com/section/politics'
-  article_url_match: '/\d\d\d\d/\d\d/\d\d/[us/politics/|world]'
+  article_url_match: '/\d\d\d\d/\d\d/\d\d/(us|politics|news|world|climate)/'
   crawl_strategy:
-    method: 'index_page'
-    index_page_url_match: 'pages/'
+    method: 'scattergun'
+    scattergun_url_must_not_contain: '(/video/|/es/)'
   article:
     title:
       select_method: 'xpath'
@@ -393,8 +393,8 @@ nytimes.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//p[contains(@itemprop, "author")]/a/span[@itemprop="name"]/text()'
-      match_rule: 'single'
+      select_expression: '//p[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
+      match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@property="article:published"]/@content'
@@ -551,7 +551,7 @@ vox.com:
   article_url_match: '\d\d\d\d/\d+/\d+/[\-a-z]*'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: '/[users|authors]/'
+    index_page_url_match: '/(users|authors)/'
   article:
     title:
       select_method: 'xpath'
