@@ -358,8 +358,7 @@ nbcnews.com:
   start_url: 'http://www.nbcnews.com/politics'
   article_url_match: '/politics/[a-z\-]*/.*\d+$'
   crawl_strategy:
-    method: 'index_page'
-    index_page_url_match: '/pages/'
+    method: 'scattergun'
   article:
     title:
       select_method: 'xpath'
@@ -369,6 +368,7 @@ nbcnews.com:
       select_method: 'xpath'
       select_expression: '//div[@class="founders-cond f6 lh-none"]/text()'
       match_rule: 'last'
+      warn_if_missing: False
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//div/time[contains(@class, "pubDate")]/@datetime'
