@@ -312,6 +312,11 @@ henrymakow.com:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="text"]/p/text()'
+      match_rule: 'first'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="text-body"]'
