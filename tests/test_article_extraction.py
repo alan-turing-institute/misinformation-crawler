@@ -41,7 +41,6 @@ def article_from_json_file(json_filepath):
 
 def article_stems_for_site(site_name):
     # Find all HTML files in site test data directory
-    print(os.path.join(SITE_TEST_DATA_DIR, site_name))
     html_file_paths = glob.glob(os.path.join(SITE_TEST_DATA_DIR, site_name, '*.html'))
     article_stems = []
     for html_file_path in html_file_paths:
@@ -134,7 +133,6 @@ def test_extract_article_default():
 
     # Test
     article = extract_article(response, config)
-    print(article)
     assert article == expected_article
 
 
@@ -324,22 +322,6 @@ def test_extract_article_default_content_digests_node_indexes():
 
     # Test
     article = extract_article(response, config, content_digests=True, node_indexes=True)
-    if article != expected_article:
-        for key in article.keys():
-            if article[key] != expected_article[key]:
-                if key == "plain_text":
-                    for a, b in zip(article[key], expected_article[key]):
-                        for idx, (i, j) in enumerate(zip(a, b)):
-                            if i != j:
-                                print("\n\n", key, "\n\n", b[idx-1:idx+10], "=>", a[idx-1:idx+10])
-                                break
-                else:
-                    for idx, (i, j) in enumerate(zip(article[key], expected_article[key])):
-                        if i != j:
-                            print("\n\n", key, "\n\n", expected_article[key][idx-1:idx+10], "=>", article[key][idx-1:idx+10])
-                            break
-
-            # print(json.dumps(article[key]))
     assert article == expected_article
 
 
@@ -441,7 +423,6 @@ def test_remove_single_expression():
                 <p>Paragraph 3</p>
             </div>
         </div>"""
-    print(extract_element(response, config['article']['content']))
     validate_extract_element(response, config['article']['content'], expected_html)
 
 

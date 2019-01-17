@@ -7,14 +7,6 @@ import warnings
 from scrapy.http import XmlResponse
 
 
-# Helper function for selecting elements by class name. This is a little complex in xpath as
-# (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
-# (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
-def xpath_class(element, class_name):
-    return "{element}[contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')]".format(
-        class_name=class_name, element=element)
-
-
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
         "select_method": "xpath",
