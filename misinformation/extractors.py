@@ -4,7 +4,7 @@ from misinformation.items import Article
 import pendulum
 from ReadabiliPy.readabilipy import parse_to_json
 import warnings
-from scrapy.http import XmlResponse
+from scrapy.http import XmlResponse, HtmlResponse
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
@@ -79,8 +79,6 @@ def extract_element(response, extract_spec):
 
     # Remove elements either from all strings in a list or from a single string
     if isinstance(extracted_element, list):
-        print("is a list:", extracted_element)
-        print("remove_expressions:", remove_expressions)
         extracted_element = [remove_elements_by_xpath(
             elem, remove_expressions, response.url, response.encoding) for elem in extracted_element]
     else:
@@ -95,19 +93,21 @@ def extract_element(response, extract_spec):
 
 def remove_elements_by_xpath(input_string, remove_expressions, url, encoding):
     # Sequentially find and remove elements if specified in the config
+    # print("\n\n", input_string, "\n\n")
     for remove_expression in remove_expressions:
-        print("removing:", remove_expression, "from", input_string)
         if input_string:
-            # Use XmlResponse as TextResponse would wrap the string in <html> and <body> tags
-            xml_response = XmlResponse(body=input_string, url=url, encoding=encoding)
-            for substr_to_remove in xml_response.xpath(remove_expression).extract():
+            if remove_expression.startswith("//"):
+                extracted_response = HtmlResponse(body=input_string, url=url, encoding=encoding)
+            else:
+                # Use XmlResponse when searching from root to avoid wrapping the string in <html> and <body> tags
+                extracted_response = XmlResponse(body=input_string, url=url, encoding=encoding)
+            for substr_to_remove in extracted_response.xpath(remove_expression).extract():
                 # This is safe even if one substr_to_remove contains another
                 # inside it, since the strings are produced in the order that
                 # they appear in the tree, and therefore the outside string
                 # will be removed before the inside one (if this order was
                 # reversed there would be a problem).
                 input_string = input_string.replace(substr_to_remove, "")
-        print("=>", input_string)
     return input_string
 
 

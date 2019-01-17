@@ -101,7 +101,6 @@ def test_extract_article_for_sites(article_info):
 
     # Define test file locations
     article_stem = article_info['article_stem']
-    print("\nTesting {site}: {article}".format(site=site_name, article=article_stem))
     data_dir = os.path.join(SITE_TEST_DATA_DIR, site_name)
     html_filename = article_stem + '_article.html'
     json_filename = article_stem + '_extracted_data.json'
