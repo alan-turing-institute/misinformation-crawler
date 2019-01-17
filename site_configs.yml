@@ -587,7 +587,7 @@ westernjournal.com:
   start_url: 'https://www.westernjournal.com/politics/'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: 'politics/'
+    index_page_url_match: '/politics/page/'
     index_page_article_links: '//a[contains(@data-type-location, "archive")]'
   article:
     title:
@@ -606,6 +606,8 @@ westernjournal.com:
       select_method: 'xpath'
       select_expression: '//div[@class="entry-content"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@id, "-ad")]'
 
 youngcons.com:
   site_name: 'youngcons.com'
