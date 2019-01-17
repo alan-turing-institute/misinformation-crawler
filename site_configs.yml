@@ -445,6 +445,10 @@ occupydemocrats.com:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="articleBody"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
+        - '//div[contains(@class, "btn")]'
+        - '//div[contains(@class, "author")]'
 
 palmerreport.com:
   site_name: 'palmerreport.com'
