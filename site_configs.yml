@@ -264,6 +264,11 @@ gellerreport.com:
       select_method: 'xpath'
       select_expression: '//div[@class="entry-content"]'
       match_rule: 'first'
+      remove_expressions:
+        - '//div[@class="grey-box"]'
+        - '//div[contains(@class, "et_social")]'
+        - '//div[contains(@class, "pamel-after-content")]'
+        - '//footer'
 
 globalresearch.ca:
   site_name: 'globalresearch.ca'
