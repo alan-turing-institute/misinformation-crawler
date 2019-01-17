@@ -106,6 +106,8 @@ conservativehq.com:
       select_method: 'xpath'
       select_expression: '//div[@class="node"]/div[@class="content"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "field-field-byline")]'
 
 dailykos.com:
   site_name: 'dailykos.com'
