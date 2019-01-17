@@ -475,6 +475,8 @@ palmerreport.com:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="text"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="saboxplugin-wrap"]'
 
 patriotnewsdaily.com:
   site_name: 'patriotnewsdaily.com'
