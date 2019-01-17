@@ -291,6 +291,8 @@ globalresearch.ca:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="articleBody"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[div[@class="copyright"]]'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
