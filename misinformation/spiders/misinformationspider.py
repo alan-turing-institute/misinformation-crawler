@@ -50,6 +50,7 @@ class MisinformationSpider(CrawlSpider):
             try:
                 index_page_url_match = self.config['crawl_strategy']['index_page_url_match']
                 index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                                     process_value=self.strip_query_strings,
                                                      allow=(index_page_url_match)),
                                        follow=True)
             except KeyError:
@@ -65,7 +66,9 @@ class MisinformationSpider(CrawlSpider):
                 link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
             with suppress(KeyError):
                 link_kwargs["allow"] = (self.config['article_url_match'])
-            article_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
+            article_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                              process_value=self.strip_query_strings,
+                                              **link_kwargs),
                                 callback="parse_response")
 
             # Use both rules
@@ -81,7 +84,9 @@ class MisinformationSpider(CrawlSpider):
                 link_kwargs["allow"] = (self.config['crawl_strategy']['scattergun_url_must_contain'])
             with suppress(KeyError):
                 link_kwargs["deny"] = (self.config['crawl_strategy']['scattergun_url_must_not_contain'])
-            link_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
+            link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                           process_value=self.strip_query_strings,
+                                           **link_kwargs),
                              follow=True, callback="parse_response")
             self.rules = (link_rule, )
 
@@ -109,6 +114,11 @@ class MisinformationSpider(CrawlSpider):
         # in self._rules. If we call the super constructor before we define the rules, they will not be compiled and
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
+
+
+    def strip_query_strings(self, url):
+        return urlparse(url)._replace(query=None).geturl()
+
 
     def parse_response(self, response):
         self.logger.info('Searching for an article at: {}'.format(response.url))
