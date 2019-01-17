@@ -46,69 +46,69 @@ def extract_element(response, extract_spec):
         # If no elements are found then return None and log a warning.
         num_matches = len(elements)
         if num_matches == 0:
-            extracted_string = None
+            extracted_element = None
             if warn_if_missing:
                 logging.warning("No elements could be found from {url} matching {xpath} expected by match_rule '{rule}'. Returning None.".format(
                     url=response.url, xpath=select_expression, rule=match_rule))
         else:
             if match_rule == 'single':
                 # Return first element, with a warning if more than one is found
-                extracted_string = elements[0]
+                extracted_element = elements[0]
                 if (num_matches != 1) and warn_if_missing:
                     logging.warning("Extracted {count} elements from {url} matching {xpath}. Only one element expected by match_rule '{rule}'. Returning first element.".format(
                         count=num_matches, url=response.url, xpath=select_expression, rule=match_rule))
 
             elif match_rule == 'first':
-                extracted_string = elements[0]
+                extracted_element = elements[0]
 
             elif match_rule == 'last':
-                extracted_string = elements[-1]
+                extracted_element = elements[-1]
 
             elif match_rule == 'largest':
-                extracted_string = sorted(elements, key = lambda elem: len(elem))[-1]
+                extracted_element = sorted(elements, key = lambda elem: len(elem))[-1]
 
             elif match_rule == 'concatenate':
                 # Join non-empty elements together with commas
-                extracted_string = ", ".join([x for x in elements if x])
+                extracted_element = ", ".join([x for x in elements if x])
 
             elif match_rule == 'group':
                 # Group several elements and wrap them in a div
-                extracted_string = "<div>" + "".join(elements) + "</div>"
+                extracted_element = "<div>" + "".join(elements) + "</div>"
 
             elif match_rule == 'all':
                 # Nothing to do so return here. This avoids having to deal with
-                # the special case interaction where extracted_string is a list
+                # the special case interaction where extracted_element is a list
                 # but we also have a non-empty remove_expressions and therefore
                 # we need to apply each remove_expression to each element of
-                # extracted_string
+                # extracted_element
                 return elements
 
             else:
-                extracted_string = None
+                extracted_element = None
                 logging.debug("'{match_rule}' is not a valid match_rule".format(
                               match_rule=match_rule))
     else:
-        extracted_string = None
+        extracted_element = None
         logging.debug("'{method}' is not a valid select_expression".format(
                       method=method))
 
     # Sequentially find and remove elements if specified in the config
     for remove_expression in remove_expressions:
-        if extracted_string:
+        if extracted_element:
             # Use XmlResponse as TextResponse would wrap the string in <html> and <body> tags
-            xml_response = XmlResponse(body=extracted_string, url=response.url, encoding=response.encoding)
+            xml_response = XmlResponse(body=extracted_element, url=response.url, encoding=response.encoding)
             for substr_to_remove in xml_response.xpath(remove_expression).extract():
                 # This is safe even if one substr_to_remove contains another inside
                 # it, since the strings are produced in the order that they appear
                 # in the tree, and therefore the outside string will be removed
                 # before the inside one (if this order was reversed there would be
                 # a problem).
-                extracted_string = extracted_string.replace(substr_to_remove, "")
+                extracted_element = extracted_element.replace(substr_to_remove, "")
 
     # This check ensures that blank strings return as None
-    if not extracted_string:
-        extracted_string = None
-    return extracted_string
+    if not extracted_element:
+        extracted_element = None
+    return extracted_element
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
