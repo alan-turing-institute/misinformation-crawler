@@ -412,11 +412,12 @@ nytimes.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '(//section[@name="articleBody"] | //article[@id="story"])[last()]'
-      match_rule: 'single'
-      # remove_from_selection:
-      #   - '//section[@name="social"]'
-      #   - '//div[@class="adwords"]'
+      select_expression: '(//section[@name="articleBody"] | //article[@id="story"]//div[contains(@class, "story-body-supplemental")])'
+      match_rule: 'group'
+      remove_expressions:
+        - '//figure[@itemprop="associatedMedia"]'
+        - '//*[contains(@class, "hidden")]'
+        - '//footer'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
