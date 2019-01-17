@@ -518,10 +518,23 @@ prisonplanet.com:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]/p//strong/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]/p/text()'
+      match_rule: 'group'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="shareinpost"]'
+        - '//div[@class="print_sub"]'
+        - '//h1[@class="page_title single_title"]'
 
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
