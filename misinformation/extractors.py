@@ -93,7 +93,6 @@ def extract_element(response, extract_spec):
 
 def remove_elements_by_xpath(input_string, remove_expressions, url, encoding):
     # Sequentially find and remove elements if specified in the config
-    # print("\n\n", input_string, "\n\n")
     for remove_expression in remove_expressions:
         if input_string:
             if remove_expression.startswith("//"):

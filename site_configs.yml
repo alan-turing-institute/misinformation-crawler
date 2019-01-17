@@ -268,6 +268,7 @@ gellerreport.com:
         - '//div[@class="grey-box"]'
         - '//div[contains(@class, "et_social")]'
         - '//div[contains(@class, "pamel-after-content")]'
+        - '//footer'
 
 globalresearch.ca:
   site_name: 'globalresearch.ca'
@@ -295,6 +296,8 @@ globalresearch.ca:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="articleBody"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[div[@class="copyright"]]'
 
 henrymakow.com:
   site_name: 'henrymakow.com'
@@ -309,6 +312,11 @@ henrymakow.com:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="text"]/p/text()'
+      match_rule: 'first'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="text-body"]'
@@ -414,11 +422,12 @@ nytimes.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '(//section[@name="articleBody"] | //article[@id="story"])[last()]'
-      match_rule: 'single'
-      # remove_from_selection:
-      #   - '//section[@name="social"]'
-      #   - '//div[@class="adwords"]'
+      select_expression: '(//section[@name="articleBody"] | //article[@id="story"]//div[contains(@class, "story-body-supplemental")])'
+      match_rule: 'group'
+      remove_expressions:
+        - '//figure[@itemprop="associatedMedia"]'
+        - '//*[contains(@class, "hidden")]'
+        - '//footer'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -446,6 +455,10 @@ occupydemocrats.com:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="articleBody"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
+        - '//div[contains(@class, "btn")]'
+        - '//div[contains(@class, "author")]'
 
 palmerreport.com:
   site_name: 'palmerreport.com'
@@ -472,6 +485,8 @@ palmerreport.com:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="text"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="saboxplugin-wrap"]'
 
 patriotnewsdaily.com:
   site_name: 'patriotnewsdaily.com'
@@ -513,10 +528,23 @@ prisonplanet.com:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]/p//strong/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]/p/text()'
+      match_rule: 'group'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="shareinpost"]'
+        - '//div[@class="print_sub"]'
+        - '//h1[@class="page_title single_title"]'
 
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
@@ -531,10 +559,25 @@ redstatewatcher.com:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: 'substring-after(//div[@class="container"]/div[@class="row"]/div[@class="col-md-8"]/p[contains(text(), "Submitted")]/text(), "by ")'
+      match_rule: 'first'
+      warn_if_missing: False
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: 'substring-after(//p[@class="text-muted"]/text(), ",")'
+      match_rule: 'single'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="container" and div[@class="row"]]'
-      match_rule: 'single'
+      select_expression: '//div[@class="container"]/div[@class="row"]/div[@class="col-md-8"]'
+      match_rule: 'largest'
+      remove_expressions:
+        - '//div[contains(@id, "Script")]'
+        - '//div[@class=""]'
+        - '//p[contains(text(), "Submitted by")]'
+        - '//p[@class="text-muted"]'
 
 thinkprogress.org:
   site_name: 'thinkprogress.org'
@@ -563,11 +606,11 @@ thinkprogress.org:
 
 vox.com:
   site_name: 'vox.com'
-  start_url: 'http://www.vox.com/policy-and-politics'
+  start_url: 'http://www.vox.com/policy-and-politics/archives'
   article_url_match: '\d\d\d\d/\d+/\d+/[\-a-z]*'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: '/(users|authors)/'
+    index_page_url_match: '/policy-and-politics/archives/'
   article:
     title:
       select_method: 'xpath'
@@ -591,7 +634,7 @@ westernjournal.com:
   start_url: 'https://www.westernjournal.com/politics/'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: 'politics/'
+    index_page_url_match: '/politics/page/'
     index_page_article_links: '//a[contains(@data-type-location, "archive")]'
   article:
     title:
@@ -610,6 +653,8 @@ westernjournal.com:
       select_method: 'xpath'
       select_expression: '//div[@class="entry-content"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@id, "-ad")]'
 
 youngcons.com:
   site_name: 'youngcons.com'
@@ -636,3 +681,5 @@ youngcons.com:
       select_method: 'xpath'
       select_expression: '//div[@class="td-post-content"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
