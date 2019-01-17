@@ -32,8 +32,8 @@ def extract_element(response, extract_spec):
     # Default match rule to 'single', which will log a warning message if multiple matches are found
     match_rule = extract_spec.get('match_rule', 'single')
 
-    # This is used to suppress warnings for missing/duplicate elements
-    # in cases where they are known to break for some pages on certain sites
+    # This is used to suppress warnings for missing/duplicate elements in cases
+    # where they are known to break for some pages on certain sites.
     # The default is always to warn unless otherwise specified
     warn_if_missing = extract_spec.get('warn_if_missing', True)
 
@@ -76,39 +76,48 @@ def extract_element(response, extract_spec):
                 extracted_element = "<div>" + "".join(elements) + "</div>"
 
             elif match_rule == 'all':
-                # Nothing to do so return here. This avoids having to deal with
-                # the special case interaction where extracted_element is a list
-                # but we also have a non-empty remove_expressions and therefore
-                # we need to apply each remove_expression to each element of
-                # extracted_element
-                return elements
+                # Keep the full list of elements
+                extracted_element = elements
 
             else:
                 extracted_element = None
-                logging.debug("'{match_rule}' is not a valid match_rule".format(
-                              match_rule=match_rule))
+                logging.debug("'{match_rule}' is not a valid match_rule".format(match_rule=match_rule))
     else:
         extracted_element = None
-        logging.debug("'{method}' is not a valid select_expression".format(
-                      method=method))
+        logging.debug("'{method}' is not a valid select_expression".format(method=method))
 
-    # Sequentially find and remove elements if specified in the config
-    for remove_expression in remove_expressions:
-        if extracted_element:
-            # Use XmlResponse as TextResponse would wrap the string in <html> and <body> tags
-            xml_response = XmlResponse(body=extracted_element, url=response.url, encoding=response.encoding)
-            for substr_to_remove in xml_response.xpath(remove_expression).extract():
-                # This is safe even if one substr_to_remove contains another inside
-                # it, since the strings are produced in the order that they appear
-                # in the tree, and therefore the outside string will be removed
-                # before the inside one (if this order was reversed there would be
-                # a problem).
-                extracted_element = extracted_element.replace(substr_to_remove, "")
+    # Remove elements either from all strings in a list or from a single string
+    if isinstance(extracted_element, list):
+        print("is a list:", extracted_element)
+        print("remove_expressions:", remove_expressions)
+        extracted_element = [remove_elements_by_xpath(
+            elem, remove_expressions, response.url, response.encoding) for elem in extracted_element]
+    else:
+        extracted_element = remove_elements_by_xpath(
+            extracted_element, remove_expressions, response.url, response.encoding)
 
-    # This check ensures that blank strings return as None
+    # This check ensures that blank strings/empty lists return as None
     if not extracted_element:
         extracted_element = None
     return extracted_element
+
+
+def remove_elements_by_xpath(input_string, remove_expressions, url, encoding):
+    # Sequentially find and remove elements if specified in the config
+    for remove_expression in remove_expressions:
+        print("removing:", remove_expression, "from", input_string)
+        if input_string:
+            # Use XmlResponse as TextResponse would wrap the string in <html> and <body> tags
+            xml_response = XmlResponse(body=input_string, url=url, encoding=encoding)
+            for substr_to_remove in xml_response.xpath(remove_expression).extract():
+                # This is safe even if one substr_to_remove contains another
+                # inside it, since the strings are produced in the order that
+                # they appear in the tree, and therefore the outside string
+                # will be removed before the inside one (if this order was
+                # reversed there would be a problem).
+                input_string = input_string.replace(substr_to_remove, "")
+        print("=>", input_string)
+    return input_string
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
@@ -176,8 +185,9 @@ def arrow_datetime_extract(date_string, date_format=None):
 
 
 def extract_article(response, config, crawl_info=None, content_digests=False, node_indexes=False):
-    # Create new article and set URL from the response (not the request). The idea here is that this should be the same
-    # for the same article, regardless of how it was requested (e.g. aliases, redirects etc).
+    # Create new article and set URL from the response (not the request).
+    # The idea here is that this should be the same for the same article,
+    # regardless of how it was requested (e.g. aliases, redirects etc).
     article = Article()
     article['site_name'] = config['site_name']
     article['article_url'] = response.url
