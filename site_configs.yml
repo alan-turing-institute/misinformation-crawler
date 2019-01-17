@@ -549,10 +549,25 @@ redstatewatcher.com:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: 'substring-after(//div[@class="container"]/div[@class="row"]/div[@class="col-md-8"]/p[contains(text(), "Submitted")]/text(), "by ")'
+      match_rule: 'first'
+      warn_if_missing: False
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: 'substring-after(//p[@class="text-muted"]/text(), ",")'
+      match_rule: 'single'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="container" and div[@class="row"]]'
-      match_rule: 'single'
+      select_expression: '//div[@class="container"]/div[@class="row"]/div[@class="col-md-8"]'
+      match_rule: 'largest'
+      remove_expressions:
+        - '//div[contains(@id, "Script")]'
+        - '//div[@class=""]'
+        - '//p[contains(text(), "Submitted by")]'
+        - '//p[@class="text-muted"]'
 
 thinkprogress.org:
   site_name: 'thinkprogress.org'
