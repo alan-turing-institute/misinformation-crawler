@@ -671,3 +671,5 @@ youngcons.com:
       select_method: 'xpath'
       select_expression: '//div[@class="td-post-content"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
