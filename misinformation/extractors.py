@@ -4,13 +4,7 @@ from misinformation.items import Article
 import pendulum
 from ReadabiliPy.readabilipy import parse_to_json
 import warnings
-
-# Helper function for selecting elements by class name. This is a little complex in xpath as
-# (i) div[@class="<classname>"] only matches a single exact class name (no whitespace padding or multiple classes)
-# (ii) div[contains(@class, "<classname>")] will also select class names containing <classname> as a substring
-def xpath_class(element, class_name):
-    return "{element}[contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')]".format(
-        class_name=class_name, element=element)
+from scrapy.http import XmlResponse, HtmlResponse
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
@@ -24,81 +18,97 @@ def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=Tr
 def extract_element(response, extract_spec):
     # Extract selector specification
     method = extract_spec['select_method']
-    expression = extract_spec['select_expression']
+    select_expression = extract_spec['select_expression']
+    remove_expressions = extract_spec.get('remove_expressions', [])
     # Default match rule to 'single', which will log a warning message if multiple matches are found
-    if 'match_rule' not in extract_spec:
-        match_rule = 'single'
-    else:
-        match_rule = extract_spec['match_rule']
+    match_rule = extract_spec.get('match_rule', 'single')
 
-    # This is used to suppress warnings for missing/duplicate elements
-    # in cases where they are known to break for some pages on certain sites
+    # This is used to suppress warnings for missing/duplicate elements in cases
+    # where they are known to break for some pages on certain sites.
     # The default is always to warn unless otherwise specified
     warn_if_missing = extract_spec.get('warn_if_missing', True)
 
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = response.xpath(expression).extract()
+        elements = response.xpath(select_expression).extract()
         # Strip leading and trailing whitespace
         elements = [item.strip() for item in elements]
-        # Check length of elements is greater than 0. If not, return None
-        # and log a warning.
+        # If no elements are found then return None and log a warning.
         num_matches = len(elements)
         if num_matches == 0:
-            elements = None
+            extracted_element = None
             if warn_if_missing:
-                logging.warning("No elements could be found from {url} matching "
-                            "{xpath} expected by match_rule '{rule}'. Returning"
-                            " None.".format(url=response.url, xpath=expression,
-                            rule=match_rule))
+                logging.warning("No elements could be found from {url} matching {xpath} expected by match_rule '{rule}'. Returning None.".format(
+                    url=response.url, xpath=select_expression, rule=match_rule))
         else:
-            # Changes to single match rule:
-            # Return first element if there is exactly 1 element, otherwise,
-            # still return first element but also print a warning log message.
             if match_rule == 'single':
-                elements = elements[0]
+                # Return first element, with a warning if more than one is found
+                extracted_element = elements[0]
                 if (num_matches != 1) and warn_if_missing:
-                    logging.warning("Extracted {count} elements from {url} "
-                                    "matching {xpath}. Only one element "
-                                    "expected by match_rule '{rule}'. Returning"
-                                    " first element.".format(count=num_matches,
-                                    url=response.url, xpath=expression,
-                                    rule=match_rule))
+                    logging.warning("Extracted {count} elements from {url} matching {xpath}. Only one element expected by match_rule '{rule}'. Returning first element.".format(
+                        count=num_matches, url=response.url, xpath=select_expression, rule=match_rule))
 
             elif match_rule == 'first':
-                elements = elements[0]
+                extracted_element = elements[0]
 
             elif match_rule == 'last':
-                elements = elements[-1]
+                extracted_element = elements[-1]
 
             elif match_rule == 'largest':
-                elements = sorted(elements, key = lambda elem: len(elem))[-1]
+                extracted_element = sorted(elements, key = lambda elem: len(elem))[-1]
 
             elif match_rule == 'concatenate':
                 # Join non-empty elements together with commas
-                elements = ", ".join([x for x in elements if x])
+                extracted_element = ", ".join([x for x in elements if x])
 
             elif match_rule == 'group':
                 # Group several elements and wrap them in a div
-                elements = "<div>" + "".join(elements) + "</div>"
+                extracted_element = "<div>" + "".join(elements) + "</div>"
 
             elif match_rule == 'all':
-                # Nothing to do but need this to pass validity check
-                elements = elements
+                # Keep the full list of elements
+                extracted_element = elements
 
             else:
-                elements = None
-                logging.debug("'{match_rule}' is not a valid match_rule".format(
-                              match_rule=match_rule))
+                extracted_element = None
+                logging.debug("'{match_rule}' is not a valid match_rule".format(match_rule=match_rule))
     else:
-        elements = None
-        logging.debug("'{method}' is not a valid select_expression".format(
-                      method=method))
-    # Return None if we matched to a blank string
-    if elements == "":
-        return None
-    return elements
+        extracted_element = None
+        logging.debug("'{method}' is not a valid select_expression".format(method=method))
+
+    # Remove elements either from all strings in a list or from a single string
+    if isinstance(extracted_element, list):
+        extracted_element = [remove_elements_by_xpath(
+            elem, remove_expressions, response.url, response.encoding) for elem in extracted_element]
+    else:
+        extracted_element = remove_elements_by_xpath(
+            extracted_element, remove_expressions, response.url, response.encoding)
+
+    # This check ensures that blank strings/empty lists return as None
+    if not extracted_element:
+        extracted_element = None
+    return extracted_element
+
+
+def remove_elements_by_xpath(input_string, remove_expressions, url, encoding):
+    # Sequentially find and remove elements if specified in the config
+    # print("\n\n", input_string, "\n\n")
+    for remove_expression in remove_expressions:
+        if input_string:
+            if remove_expression.startswith("//"):
+                extracted_response = HtmlResponse(body=input_string, url=url, encoding=encoding)
+            else:
+                # Use XmlResponse when searching from root to avoid wrapping the string in <html> and <body> tags
+                extracted_response = XmlResponse(body=input_string, url=url, encoding=encoding)
+            for substr_to_remove in extracted_response.xpath(remove_expression).extract():
+                # This is safe even if one substr_to_remove contains another
+                # inside it, since the strings are produced in the order that
+                # they appear in the tree, and therefore the outside string
+                # will be removed before the inside one (if this order was
+                # reversed there would be a problem).
+                input_string = input_string.replace(substr_to_remove, "")
+    return input_string
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
@@ -166,8 +176,9 @@ def arrow_datetime_extract(date_string, date_format=None):
 
 
 def extract_article(response, config, crawl_info=None, content_digests=False, node_indexes=False):
-    # Create new article and set URL from the response (not the request). The idea here is that this should be the same
-    # for the same article, regardless of how it was requested (e.g. aliases, redirects etc).
+    # Create new article and set URL from the response (not the request).
+    # The idea here is that this should be the same for the same article,
+    # regardless of how it was requested (e.g. aliases, redirects etc).
     article = Article()
     article['site_name'] = config['site_name']
     article['article_url'] = response.url
@@ -202,7 +213,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article["content"] = custom_readability_article["content"]
                 article["plain_content"] = custom_readability_article["plain_content"]
                 article["plain_text"] = custom_readability_article["plain_text"]
-    # ... otherwise simply use the default values from parsing the whole page 
+    # ... otherwise simply use the default values from parsing the whole page
     else:
         default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
         article["title"] = default_readability_article["title"]

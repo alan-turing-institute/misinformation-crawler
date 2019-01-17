@@ -5,7 +5,7 @@ import os
 import glob
 import pkg_resources
 from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
-from scrapy.http import Request,  TextResponse
+from scrapy.http import Request, TextResponse
 import yaml
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
@@ -41,12 +41,11 @@ def article_from_json_file(json_filepath):
 
 def article_stems_for_site(site_name):
     # Find all HTML files in site test data directory
-    print(os.path.join(SITE_TEST_DATA_DIR, site_name))
     html_file_paths = glob.glob(os.path.join(SITE_TEST_DATA_DIR, site_name, '*.html'))
     article_stems = []
     for html_file_path in html_file_paths:
-        path, file = os.path.split(html_file_path)
-        article_stems.append(file.split('_')[0])
+        _, _file = os.path.split(html_file_path)
+        article_stems.append(_file.split('_')[0])
     # Fail fixture set up if no test sites found for site
     assert article_stems != [], "No HTML test files found for site '{site}'".format(site=site_name)
     return article_stems
@@ -77,7 +76,8 @@ def article_info(request):
 # ================= TEST FUNCTIONS =================
 def validate_extract_element(html, extract_spec, expected):
     actual = extract_element(html, extract_spec)
-    assert actual == expected
+    # Ignore whitespace differences
+    assert actual == expected or ''.join(actual.split()) == ''.join(expected.split())
 
 
 def validate_extract_article(response, config, expected):
@@ -101,7 +101,6 @@ def test_extract_article_for_sites(article_info):
 
     # Define test file locations
     article_stem = article_info['article_stem']
-    print("\nTesting {site}: {article}".format(site=site_name, article=article_stem))
     data_dir = os.path.join(SITE_TEST_DATA_DIR, site_name)
     html_filename = article_stem + '_article.html'
     json_filename = article_stem + '_extracted_data.json'
@@ -133,7 +132,6 @@ def test_extract_article_default():
 
     # Test
     article = extract_article(response, config)
-    print(article)
     assert article == expected_article
 
 
@@ -323,22 +321,6 @@ def test_extract_article_default_content_digests_node_indexes():
 
     # Test
     article = extract_article(response, config, content_digests=True, node_indexes=True)
-    if article != expected_article:
-        for key in article.keys():
-            if article[key] != expected_article[key]:
-                if key == "plain_text":
-                    for a, b in zip(article[key], expected_article[key]):
-                        for idx, (i, j) in enumerate(zip(a, b)):
-                            if i != j:
-                                print("\n\n", key, "\n\n", b[idx-1:idx+10], "=>", a[idx-1:idx+10])
-                                break
-                else:
-                    for idx, (i, j) in enumerate(zip(article[key], expected_article[key])):
-                        if i != j:
-                            print("\n\n", key, "\n\n", expected_article[key][idx-1:idx+10], "=>", article[key][idx-1:idx+10])
-                            break
-
-            # print(json.dumps(article[key]))
     assert article == expected_article
 
 
@@ -367,6 +349,10 @@ def test_extract_element():
             select_method: 'xpath'
             select_expression: '//h1[@class="post-title"]/text()'
             match_rule: 'single'
+        grouped-paragraphs:
+            select_method: 'xpath'
+            select_expression: '//p'
+            match_rule: 'group'
         paragraphs:
             select_method: 'xpath'
             select_expression: '//p/text()'
@@ -381,12 +367,161 @@ def test_extract_element():
     # Test single element extraction
     expected_title = "Article title"
     validate_extract_element(response, config['article']['title'], expected_title)
+    # Test group element extraction
+    expected_paragraphs = "<div><p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p></div>"
+    validate_extract_element(response, config['article']['grouped-paragraphs'], expected_paragraphs)
     # Test all element extraction
     expected_paragraphs = ["Paragraph 1", "Paragraph 2", "Paragraph 3"]
     validate_extract_element(response, config['article']['paragraphs'], expected_paragraphs)
     # Test first element extraction
     expected_first_paragraph = "Paragraph 1"
     validate_extract_element(response, config['article']['first-paragraph'], expected_first_paragraph)
+
+
+def test_remove_single_expression():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="social">
+                <p>Twitter</p>
+                <p>Facebook</p>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '//div[@class="social"]'
+    """
+    config = yaml.load(config_yaml)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
+def test_remove_nested_expressions():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="social">
+                <div class="social">
+                    <p>Twitter</p>
+                    <p>Facebook</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '//div[@class="social"]'
+    """
+    config = yaml.load(config_yaml)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
+def test_remove_multiple_nested_expressions():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="bad">
+                <div class="social">
+                    <p>Twitter</p>
+                    <p>Facebook</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '//div[@class="social"]'
+                - '/div/div[@class="bad"]'
+    """
+    config = yaml.load(config_yaml)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
 
 
 def test_xpath_extract_spec_default():

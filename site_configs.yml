@@ -47,8 +47,10 @@ addictinginfo.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="entry entry-content"]/*[not(contains(@class, "vcard")) and not(contains(@class, "ad-inserter"))]'
-      match_rule: 'group'
+      select_expression: '//div[@class="entry entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "ad-inserter")]'
 
 breitbart.com:
   site_name: 'breitbart.com'
@@ -104,6 +106,8 @@ conservativehq.com:
       select_method: 'xpath'
       select_expression: '//div[@class="node"]/div[@class="content"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "field-field-byline")]'
 
 dailykos.com:
   site_name: 'dailykos.com'
@@ -155,8 +159,10 @@ davidwolfe.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="entry-content"]/node()[not(contains(@class, "swp_social_panel"))]'
-      match_rule: 'group'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "swp_social_panel")]'
 
 empirenews.net:
   site_name: 'empirenews.net'
@@ -180,8 +186,11 @@ empirenews.net:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: //div[@class="entry-content"]/*[not(@id="top_share_widget") and not(text()[normalize-space()="comments" or normalize-space()="Comments"])]
-      match_rule: 'group'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id="top_share_widget"]'
+        - '//text()[normalize-space()="comments" or normalize-space()="Comments"]'
 
 eyeopening.info:
   site_name: 'eyeopening.info'
