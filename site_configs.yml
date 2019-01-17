@@ -385,7 +385,7 @@ nytimes.com:
   article_url_match: '/\d\d\d\d/\d\d/\d\d/(us|politics|news|world|climate)/'
   crawl_strategy:
     method: 'scattergun'
-    scattergun_url_must_not_contain: '(/video/|/es/)'
+    scattergun_url_must_not_contain: '/(video|es|interactive)/'
   article:
     title:
       select_method: 'xpath'
@@ -393,7 +393,7 @@ nytimes.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//p[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
+      select_expression: '//*[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
       match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
@@ -401,8 +401,11 @@ nytimes.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//section[@name="articleBody"]'
+      select_expression: '(//section[@name="articleBody"] | //article[@id="story"])[last()]'
       match_rule: 'single'
+      # remove_from_selection:
+      #   - '//section[@name="social"]'
+      #   - '//div[@class="adwords"]'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
