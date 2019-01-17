@@ -550,11 +550,11 @@ thinkprogress.org:
 
 vox.com:
   site_name: 'vox.com'
-  start_url: 'http://www.vox.com/policy-and-politics'
+  start_url: 'http://www.vox.com/policy-and-politics/archives'
   article_url_match: '\d\d\d\d/\d+/\d+/[\-a-z]*'
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: '/(users|authors)/'
+    index_page_url_match: '/policy-and-politics/archives/'
   article:
     title:
       select_method: 'xpath'
