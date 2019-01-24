@@ -190,7 +190,7 @@ empirenews.net:
       match_rule: 'single'
       remove_expressions:
         - '//div[@id="top_share_widget"]'
-        - '//text()[normalize-space()="comments" or normalize-space()="Comments"]'
+        - '//node()[text()[normalize-space()="comments" or normalize-space()="Comments"]]'
 
 eyeopening.info:
   site_name: 'eyeopening.info'

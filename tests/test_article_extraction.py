@@ -489,7 +489,11 @@ def test_remove_multiple_nested_expressions():
             <div class="bad">
                 <div class="social">
                     <p>Twitter</p>
-                    <p>Facebook</p>
+                </div>
+                <div class="social">
+                    <div class="bad">
+                        <p>Facebook</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -507,7 +511,54 @@ def test_remove_multiple_nested_expressions():
             match_rule: 'first'
             remove_expressions:
                 - '//div[@class="social"]'
-                - '/div/div[@class="bad"]'
+                - '//div[@class="bad"]'
+    """
+    config = yaml.load(config_yaml)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
+def test_remove_by_relative_path():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="social">
+                <p>Twitter</p>
+                <p>Facebook</p>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '/div/div[@class="social"]'
     """
     config = yaml.load(config_yaml)
 
