@@ -38,13 +38,13 @@ class MisinformationSpider(CrawlSpider):
         self.allowed_domains = [site_domain]
         self.article_url_regex = None
 
-        # We support two different link following strategies: 'paged' and 'scattergun' (default)
+        # We support two different link following strategies: 'index_page' and 'scattergun' (default)
         try:
             crawl_strategy = config['crawl_strategy']['method']
         except KeyError:
             crawl_strategy = 'scattergun'
 
-        # - For the paged strategy we need two Rules: one for link pages; one for article pages
+        # - For the index_page strategy we need two Rules: one for link pages; one for article pages
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             try:
