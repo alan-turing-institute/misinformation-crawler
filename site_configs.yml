@@ -244,6 +244,34 @@ federalistpress.com:
       select_expression: '//div[@class="entry-content"]//p'
       match_rule: 'group'
 
+foxnews.com:
+  site_name: 'foxnews.com'
+  start_url: 'http://www.foxnews.com/politics.html'
+  article_url_match: '/politics/[\-a-z]+'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun_url_must_not_contain: '/video/'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match-rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="author-byline"]/span/span/a/text()'
+      match-rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="dcterms.created"]/@content'
+      match-rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-body"]'
+      match-rule: 'first'
+      remove_expressions:
+        - '//div[contains(@class, "related")]'
+        - '//a[@href="https://www.foxnews.com/apps-products"]'
+      
 gellerreport.com:
   site_name: 'gellerreport.com'
   start_url: 'http://gellerreport.com/category/atlas-articles/'
