@@ -250,7 +250,7 @@ foxnews.com:
   article_url_match: '/politics/[\-a-z]+'
   crawl_strategy:
     method: 'scattergun'
-    scattergun_url_must_not_contain: '/video/'
+    scattergun_url_must_not_contain: '\.print$'
   article:
     title:
       select_method: 'xpath'
@@ -259,7 +259,7 @@ foxnews.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="author-byline"]/span/span/a/text()'
-      match-rule: 'single'
+      match-rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@name="dcterms.created"]/@content'
@@ -271,6 +271,7 @@ foxnews.com:
       remove_expressions:
         - '//div[contains(@class, "related")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
+        - '//div[@class="contain"]'
       
 gellerreport.com:
   site_name: 'gellerreport.com'
