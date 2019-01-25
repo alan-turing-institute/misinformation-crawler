@@ -38,13 +38,13 @@ class MisinformationSpider(CrawlSpider):
         self.allowed_domains = [site_domain]
         self.article_url_regex = None
 
-        # We support two different link following strategies: 'paged' and 'all' (default)
+        # We support two different link following strategies: 'index_page' and 'scattergun' (default)
         try:
             crawl_strategy = config['crawl_strategy']['method']
         except KeyError:
             crawl_strategy = 'scattergun'
 
-        # - For the paged strategy we need two Rules: one for link pages; one for article pages
+        # - For the index_page strategy we need two Rules: one for link pages; one for article pages
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             try:
@@ -56,13 +56,14 @@ class MisinformationSpider(CrawlSpider):
                 raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
 
             # 2. Rule for identifying article links
-            # Suppress KeyErrors when retrieving optional arguments from nested dictionary
+            # Suppress KeyErrors when retrieving optional arguments from nested dictionary - need one suppress per retrieve
             # If neither 'index_page_article_links' nor 'article_url_match' are
             # provided then all links will be parsed and if content is extracted from them, they will be recorded.
             # NB. the link extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
                 link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
+            with suppress(KeyError):
                 link_kwargs["allow"] = (self.config['article_url_match'])
             article_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
                                 callback="parse_response")
@@ -73,15 +74,16 @@ class MisinformationSpider(CrawlSpider):
         # - For the scattergun strategy we only need one Rule for which links to follow
         elif crawl_strategy == 'scattergun':
             # Follow all links (after removing duplicates) and pass them to parse_response
-            # Suppress KeyErrors when retrieving optional arguments from nested dictionary
+            # Suppress KeyErrors when retrieving optional arguments from nested dictionary - need one suppress per retrieve
             # NB. the link extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['scattergun_url_must_contain'])
-                link_kwargs["deny"] = (self.config['scattergun_url_must_not_contain'])
+                link_kwargs["allow"] = (self.config['crawl_strategy']['scattergun_url_must_contain'])
+            with suppress(KeyError):
+                link_kwargs["deny"] = (self.config['crawl_strategy']['scattergun_url_must_not_contain'])
             link_rule = Rule(LinkExtractor(canonicalize=True, unique=True, **link_kwargs),
                              follow=True, callback="parse_response")
-            self.rules = (link_rule)
+            self.rules = (link_rule, )
 
             # Optional regex for determining whether this is an article using the URL
             self.article_url_regex = re.compile(self.config.get('article_url_match', ''))
@@ -108,8 +110,9 @@ class MisinformationSpider(CrawlSpider):
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
 
+
     def parse_response(self, response):
-        self.logger.info('Parsing response for: {}'.format(response.url))
+        self.logger.info('Searching for an article at: {}'.format(response.url))
 
         # Always reject the front page of the domain since this will change over time
         # We need this for henrymakow.com as there is no sane URL match rule for identifying

@@ -1,11 +1,8 @@
-import arrow
 import logging
-from misinformation.items import Article
+import arrow
 import pendulum
+from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
-import warnings
-from scrapy.http import XmlResponse
-
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
@@ -32,8 +29,11 @@ def extract_element(response, extract_spec):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = response.xpath(select_expression).extract()
-        # Strip leading and trailing whitespace
+        elements = response.xpath(select_expression)
+        # Remove all instances matching xpath expressions
+        remove_xpath_expressions(elements, remove_expressions)
+        # Stringify elements then strip leading and trailing whitespace
+        elements = elements.extract()
         elements = [item.strip() for item in elements]
         # If no elements are found then return None and log a warning.
         num_matches = len(elements)
@@ -78,38 +78,26 @@ def extract_element(response, extract_spec):
         extracted_element = None
         logging.debug("'{method}' is not a valid select_expression".format(method=method))
 
-    # Remove elements either from all strings in a list or from a single string
-    if isinstance(extracted_element, list):
-        print("is a list:", extracted_element)
-        print("remove_expressions:", remove_expressions)
-        extracted_element = [remove_elements_by_xpath(
-            elem, remove_expressions, response.url, response.encoding) for elem in extracted_element]
-    else:
-        extracted_element = remove_elements_by_xpath(
-            extracted_element, remove_expressions, response.url, response.encoding)
-
     # This check ensures that blank strings/empty lists return as None
     if not extracted_element:
         extracted_element = None
     return extracted_element
 
 
-def remove_elements_by_xpath(input_string, remove_expressions, url, encoding):
-    # Sequentially find and remove elements if specified in the config
-    for remove_expression in remove_expressions:
-        print("removing:", remove_expression, "from", input_string)
-        if input_string:
-            # Use XmlResponse as TextResponse would wrap the string in <html> and <body> tags
-            xml_response = XmlResponse(body=input_string, url=url, encoding=encoding)
-            for substr_to_remove in xml_response.xpath(remove_expression).extract():
-                # This is safe even if one substr_to_remove contains another
-                # inside it, since the strings are produced in the order that
-                # they appear in the tree, and therefore the outside string
-                # will be removed before the inside one (if this order was
-                # reversed there would be a problem).
-                input_string = input_string.replace(substr_to_remove, "")
-        print("=>", input_string)
-    return input_string
+def remove_xpath_expressions(input_selectors, remove_expressions):
+    # We can access the lxml tree using the 'root' attribute - this is done in place
+    for input_element in [s.root for s in input_selectors]:
+        # Input element can be a string or an lxml.html.HtmlElement
+        # - ensure that we only try to remove elements if this is an HtmlElement
+        if hasattr(input_element, 'xpath'):
+            # For each element identified by each remove expression we find the
+            # parent and then remove the child from it
+            for r in remove_expressions:
+                # Prefix relative paths with the implicit "/html/body"
+                if r.startswith("/") and not r.startswith("//") and not r.startswith("/html"):
+                    r = "/html/body" + r
+                for element_to_remove in input_element.xpath(r):
+                    element_to_remove.getparent().remove(element_to_remove)
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
@@ -200,8 +188,8 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         if 'publication_datetime' in config['article']:
             datetime_string = extract_element(response, config['article']['publication_datetime'])
             if 'datetime-format' in config['article']['publication_datetime']:
-                format = config['article']['publication_datetime']['datetime-format']
-                iso_string = extract_datetime_string(datetime_string, format)
+                dt_format = config['article']['publication_datetime']['datetime-format']
+                iso_string = extract_datetime_string(datetime_string, dt_format)
             else:
                 iso_string = extract_datetime_string(datetime_string)
             article['publication_datetime'] = iso_string
