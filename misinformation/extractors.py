@@ -87,17 +87,25 @@ def extract_element(response, extract_spec):
 def remove_xpath_expressions(input_selectors, remove_expressions):
     # We can access the lxml tree using the 'root' attribute - this is done in place
     for input_element in [s.root for s in input_selectors]:
-        # Input element can be a string or an lxml.html.HtmlElement
-        # - ensure that we only try to remove elements if this is an HtmlElement
+        # Input element can be a string or an lxml.html.HtmlElement.
+        # Ensure here that we do not call xpath() on a string
         if hasattr(input_element, 'xpath'):
-            # For each element identified by each remove expression we find the
-            # parent and then remove the child from it
-            for r in remove_expressions:
-                # Prefix relative paths with the implicit "/html/body"
-                if r.startswith("/") and not r.startswith("//") and not r.startswith("/html"):
-                    r = "/html/body" + r
-                for element_to_remove in input_element.xpath(r):
-                    element_to_remove.getparent().remove(element_to_remove)
+            for expression in remove_expressions:
+                # When searching html responses with xpath, an implicit
+                # <html><body> wrapper is added. We don't want to require the
+                # authors of site configs to have to worry about this, so for
+                # absolute expressions (starting with /) we will attempt to
+                # remove each of "<expr>", "/html/<expr>" and "/html/body/<expr>"
+                # # Prefix relative paths with the implicit "/html/body"
+                if expression.startswith('//'):
+                    r_xpaths = [expression]
+                else:
+                    r_xpaths = [xpath.format(expression) for xpath in ('{}', '/html{}', '/html/body{}')]
+                # For each element identified by each remove expression we find
+                # the parent and then remove the child from it
+                for r_xpath in r_xpaths:
+                    for element_to_remove in input_element.xpath(r_xpath):
+                        element_to_remove.getparent().remove(element_to_remove)
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
