@@ -635,6 +635,47 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
     assert article == expected_article
 
 
+def test_extract_datetime_works_with_multiple_dates():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="subarticle">
+            <p>October 22, 2018</p>
+            <p>Article text here.</p>
+            <p>May 15, 2006</p>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        publication_datetime:
+            select_method: 'xpath'
+            select_expression: '//div[@class="subarticle"]/p/text()'
+            match_rule: 'group'
+            datetime-format: 'MMMM D, YYYY'
+    """
+    config = yaml.load(config_yaml)
+
+    expected_article = {
+        'site_name': 'example.com',
+        'article_url': 'http://example.com',
+        'title': None,
+        'byline': None,
+        'publication_datetime': "2018-10-22T00:00:00",
+        'content': None,
+        'plain_content': None,
+        'metadata': None
+    }
+
+    # Test
+    article = extract_article(response, config)
+    assert article == expected_article
+
 def test_extract_datetime_iso8601_keep_timezone_keep():
     datetime_string = '2014-10-24T17:32:46+12:00'
     iso_string = extract_datetime_string(datetime_string, timezone=True)
