@@ -22,8 +22,12 @@ abcnews.go.com:
       datetime-format: 'MMM D, YYYY, h:mm A'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-copy"]/p[@itemprop="articleBody"]'
-      match_rule: 'group'
+      select_expression: '//div[@class="article-copy"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "insert")]'
+        - '//div[contains(@class, "callout")]'
+        - '//figure[contains(@class, "e_image")]'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
