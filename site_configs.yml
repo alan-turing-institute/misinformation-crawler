@@ -5,7 +5,7 @@ abcnews.go.com:
   article_url_match: '/Politics/.+/story\?id=\d*'
   crawl_strategy:
     method: 'scattergun'
-    scattergun_url_must_not_contain: '/beta-story-container/'
+    scattergun_url_must_not_contain: '(/beta-story-container/|&page=)'
   article:
     title:
       select_method: 'xpath'
@@ -13,21 +13,24 @@ abcnews.go.com:
       match_rule: 'first'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@rel="author"][contains(@class, "author")]/text()'
+      select_expression: '//node()[@rel="author"][contains(@class, "author")]/text()'
       match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//span[@class="timestamp"]/text()'
+      select_expression: '//meta[@name="Last-Modified"]/@content'
       match_rule: 'single'
-      datetime-format: 'MMM D, YYYY, h:mm A'
+      datetime-format: 'YYYY-MM-DD hh:mm:ss'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-copy"]'
+      select_expression: '(//div[@class="article-copy"] | //div[@id="listStoryText"])'
       match_rule: 'single'
       remove_expressions:
+        - '//div[contains(@id, "leadItemMedia")]'
+        - '//div[contains(@class, "listItemMedia")]'
         - '//div[contains(@class, "insert")]'
         - '//div[contains(@class, "callout")]'
         - '//figure[contains(@class, "e_image")]'
+
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
