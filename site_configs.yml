@@ -586,10 +586,11 @@ redstatewatcher.com:
 rt.com:
   site_name: 'rt.com'
   start_url: 'https://www.rt.com/listing/category.usa/prepare/last-news/20/1'
-  article_url_match: '/usa/\d*[a-z\-]*/'
+  article_url_match: '/\d*[a-z\-]*/'
+  obey_robots_txt: False
   crawl_strategy:
     method: 'index_page'
-    index_page_url_match: 'listing/category.usa/prepare/last-news/'
+    index_page_url_match: '/listing/category.usa/prepare/last-news/'
     index_page_article_links: '//strong/a[@class="link link_hover"]'
   article:
     title:
@@ -602,7 +603,7 @@ rt.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "article")]'
+      select_expression: '//div[contains(@class, "article ")]'
       match_rule: 'single'
       remove_expressions:
         - '//div[contains(@class, "article__breadcrumbs")]'
