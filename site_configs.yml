@@ -270,9 +270,8 @@ foxnews.com:
       select_expression: '//div[@class="article-body"]'
       match-rule: 'first'
       remove_expressions:
-        - '//div[contains(@class, "related")]'
+        - '//div[contains(@class, "video-ct")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
-        - '//div[@class="contain"]'
       
 gellerreport.com:
   site_name: 'gellerreport.com'
