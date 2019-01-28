@@ -359,6 +359,34 @@ henrymakow.com:
       match_rule: 'single'
       warn_if_missing: False
 
+liberalamerica.life:
+  site_name: 'liberalamerica.life'
+  start_url: 'http://liberalamerica.life/category/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: 'category/news/page/'
+    index_page_article_links: '//h3[contains(@class, "entry-title")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[contains(@itemprop, "headline")]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
+        - '//div[contains(@class, "td-post-featured-image")]'
+
 # liveaction.org:
 #   site_name: 'liveaction.org'
 #   start_url: 'http://liveaction.org/news/latest-stories/'
@@ -367,10 +395,6 @@ henrymakow.com:
 #     index_page_url_match: 'news/'
 #     index_page_article_links: '//h1[@itemprop="headline"]'
 #   article:
-#     content:
-#       select_method: 'xpath'
-#       select_expression: '//div[@id="content-main"]'
-#       match_rule: 'single'
 #     title:
 #       select_method: 'xpath'
 #       select_expression: '//meta[@property="og:title"]/@content'
@@ -382,6 +406,10 @@ henrymakow.com:
 #     publication_datetime:
 #       select_method: 'xpath'
 #       select_expression: '//meta[@property="article:published_time"]/@content'
+#       match_rule: 'single'
+#     content:
+#       select_method: 'xpath'
+#       select_expression: '//div[@id="content-main"]'
 #       match_rule: 'single'
 
 madworldnews.com:
