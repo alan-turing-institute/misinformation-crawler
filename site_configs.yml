@@ -323,7 +323,7 @@ henrymakow.com:
       datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@id="content-main"]'
+      select_expression: '//div[@id="text-body"]'
       match_rule: 'single'
       warn_if_missing: False
 
