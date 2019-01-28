@@ -330,7 +330,6 @@ henrymakow.com:
 infowars.com:
   site_name: 'infowars.com'
   start_url: 'http://infowars.com/category/us-news/'
-  article_url_match: '/[a-z\-]*/$'
   crawl_strategy:
     method: 'scattergun'
     scattergun_url_must_not_contain: '/(watch|category|author|contributors|tag)/'
@@ -341,7 +340,6 @@ infowars.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      # select_expression: '(//span[@class="author"]/a/strong/text() | //div[@class="text"]/article/p/strong/text())'
       select_expression: '(//span[@class="author"]/descendant::*/text() | //div[@class="text"]/article/descendant::*/text())'
       match_rule: 'first'
     publication_datetime:
