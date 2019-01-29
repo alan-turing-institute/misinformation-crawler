@@ -1,4 +1,3 @@
-import arrow
 import pytest
 import json
 import os
@@ -15,6 +14,7 @@ SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_conf
 # Load site-specific spider configurations
 SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
 SITE_NAMES = sorted(SITE_CONFIGS.keys())
+
 
 # ================= HELPER FUNCTIONS =================
 def config_for_site(site_name):
@@ -140,8 +140,7 @@ def test_extract_article_default_with_crawl_info():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_with_crawl_info.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_with_crawl_info.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
@@ -167,8 +166,7 @@ def test_extract_article_custom_title_selector():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_custom_title_selector.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_title_selector.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
@@ -196,8 +194,7 @@ def test_extract_article_custom_byline_selector():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_custom_byline_selector.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_byline_selector.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
@@ -225,8 +222,7 @@ def test_extract_article_custom_content_selector():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_custom_content_selector.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_content_selector.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
@@ -244,6 +240,7 @@ def test_extract_article_custom_content_selector():
     # Test
     article = extract_article(response, config)
     assert article["content"] == expected_article["content"]
+
 
 def test_extract_article_custom_publication_datetime_selector():
     # Load test file
@@ -272,6 +269,7 @@ def test_extract_article_custom_publication_datetime_selector():
     # Test
     article = extract_article(response, config)
     assert article["publication_datetime"] == expected_article["publication_datetime"]
+
 
 def test_extract_article_default_content_digests():
     # Load test file
@@ -689,6 +687,7 @@ def test_extract_datetime_works_with_multiple_dates():
     # Test
     article = extract_article(response, config)
     assert article == expected_article
+
 
 def test_extract_datetime_iso8601_keep_timezone_keep():
     datetime_string = '2014-10-24T17:32:46+12:00'

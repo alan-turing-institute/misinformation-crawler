@@ -5,6 +5,7 @@ import pendulum
 from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
 
+
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
         "select_method": "xpath",
@@ -13,6 +14,7 @@ def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=Tr
         "warn_if_missing": warn_if_missing
     }
     return extract_spec
+
 
 def extract_element(response, extract_spec):
     # Extract selector specification
@@ -30,9 +32,9 @@ def extract_element(response, extract_spec):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = copy.deepcopy(response).xpath(select_expression)
+        elements = response.xpath(select_expression)
         # Remove all instances matching xpath expressions
-        remove_xpath_expressions(elements, remove_expressions)
+        elements = remove_xpath_expressions(elements, remove_expressions)
         # Stringify elements then strip leading and trailing whitespace
         elements = elements.extract()
         elements = [item.strip() for item in elements]
@@ -86,11 +88,18 @@ def extract_element(response, extract_spec):
 
 
 def remove_xpath_expressions(input_selectors, remove_expressions):
+    # Copy input_selectors to a new SelectorList as the remove operations will
+    # modify them in-place (and we don't want to do that). We are not able to
+    # use copy.deepcopy directly on the Selector as that class is incompatible
+    # with it.
+    output_selectors = type(input_selectors)()
+    for selector in input_selectors:
+        output_selectors.append(type(selector)(type=selector.type, root=copy.deepcopy(selector.root)))
     # We can access the lxml tree using the 'root' attribute - this is done in place
-    for input_element in [s.root for s in input_selectors]:
+    for output_element in [s.root for s in output_selectors]:
         # Input element can be a string or an lxml.html.HtmlElement.
         # Ensure here that we do not call xpath() on a string
-        if hasattr(input_element, 'xpath'):
+        if hasattr(output_element, 'xpath'):
             for expression in remove_expressions:
                 # When searching html responses with xpath, an implicit
                 # <html><body> wrapper is added. We don't want to require the
@@ -105,8 +114,9 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
                 # For each element identified by each remove expression we find
                 # the parent and then remove the child from it
                 for r_xpath in r_xpaths:
-                    for element_to_remove in input_element.xpath(r_xpath):
+                    for element_to_remove in output_element.xpath(r_xpath):
                         element_to_remove.getparent().remove(element_to_remove)
+    return output_selectors
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
@@ -222,7 +232,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         article["content"] = default_readability_article["content"]
         article["plain_content"] = default_readability_article["plain_content"]
         article["plain_text"] = default_readability_article["plain_text"]
-
 
     # Extract additional article metadata
     if 'metadata' in config:

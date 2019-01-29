@@ -1,11 +1,13 @@
 arrow
 bs4
 datetime
-extruct
 fake-useragent
+html5lib
 iso8601
 pendulum
+pycodestyle
 pyodbc
+pyflakes
 pytest
 pyyaml
 regex

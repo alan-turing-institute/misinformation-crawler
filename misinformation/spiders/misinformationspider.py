@@ -1,22 +1,22 @@
-from misinformation.items import Article
-from misinformation.extractors import extract_article
 from contextlib import suppress
 import datetime
-import iso8601
+import uuid
 import os
 import re
+from urllib.parse import urlparse
 from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
-from urllib.parse import urlparse
-import uuid
+from misinformation.extractors import extract_article
 
 
-# Generic crawl spider for websites that meet the following criteria
-# (i) Lists of articles are paged and navigable to with HTML links
-# (ii) Has metadata in a microdata format
 class MisinformationSpider(CrawlSpider):
+    """Generic crawl spider for websites that meet one of the following criteria
+       (i)  Lists of articles are paged and navigable to with HTML links
+       (ii) Articles can be identified using a known URL format or content element
+       If they have metadata in a microdata format this can also be extracted
+    """
     name = 'misinformation'
     exporter = None
     crawl_date = None
@@ -100,11 +100,11 @@ class MisinformationSpider(CrawlSpider):
         output_dir = "articles"
         output_file = "{}_full.txt".format(self.config['site_name'])
         # Ensure output directory exists
-        if not (os.path.isdir(output_dir)):
+        if not os.path.isdir(output_dir):
             os.makedirs(output_dir)
         output_path = os.path.join(output_dir, output_file)
-        f = open(output_path, 'wb')
-        self.exporter = JsonItemExporter(f)
+        file_handle = open(output_path, 'wb')
+        self.exporter = JsonItemExporter(file_handle)
         self.exporter.start_exporting()
 
         # Add flag to allow spider to be closed from inside a pipeline
@@ -114,7 +114,6 @@ class MisinformationSpider(CrawlSpider):
         # in self._rules. If we call the super constructor before we define the rules, they will not be compiled and
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
-
 
     def parse_response(self, response):
         self.logger.info('Searching for an article at: {}'.format(response.url))
@@ -155,7 +154,6 @@ class MisinformationSpider(CrawlSpider):
         raw_article['body'] = response.text
         self.logger.info('  saving response and adding to database')
         self.exporter.export_item(raw_article)
-        return
 
     def closed(self, reason):
         self.exporter.finish_exporting()

@@ -1,28 +1,26 @@
 import argparse
-from misinformation.spiders import MisinformationSpider
 import pkg_resources
+import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
-import yaml
-
-SPIDER_CONFIG = pkg_resources.resource_string(__name__, "site_configs.yml")
+from misinformation.spiders import MisinformationSpider
 
 
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)
     parser.add_argument('--site_name', '-s', required=True,
-        help='Name of site configuration.')
+                        help='Name of site configuration.')
     parser.add_argument('--max_articles', '-n', type=int, default=0,
-        help='Maximum number of articles to process from each site.')
-    parser.add_argument('--exporter', '-e', default='database',
-        choices=['file', 'database'], help='Article export method.')
-
+                        help='Maximum number of articles to process from each site.')
+    parser.add_argument('--exporter', '-e', default='database', choices=['file', 'database'],
+                        help='Article export method.')
     args = parser.parse_args()
 
     # Load crawl configuration for site from configuration
-    site_configs = yaml.load(SPIDER_CONFIG)
+    spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
+    site_configs = yaml.load(spider_config)
 
     configure_logging()
 

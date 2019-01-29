@@ -2,6 +2,7 @@ from misinformation.extractors import extract_element, xpath_extract_spec
 from scrapy.http import Request, TextResponse
 import regex
 
+
 def perform_extraction(html, xpath, match_rule):
     extract_spec = xpath_extract_spec(xpath, match_rule)
     return perform_extraction_using_spec(html, extract_spec)
@@ -43,7 +44,6 @@ def test_extract_single():
     """
     expected_result = "<p>First</p>"
     assert simplified_extraction(html, "//div/p", "single") == expected_result
-
 
 
 def test_extract_last():
