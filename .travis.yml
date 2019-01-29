@@ -23,6 +23,6 @@ script:
   # Run all pytest unit tests
   - python -m pytest -v tests
   # Run pyflakes for error detection
-  - pyflakes .
+  - pyflakes *.py misinformation tests
   # Check PEP8 compliance
-  - pycodestyle --statistics --ignore=E501 --count *.py misinformation
+  - pycodestyle --statistics --ignore=E501 --count *.py misinformation tests
