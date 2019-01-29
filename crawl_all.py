@@ -1,6 +1,6 @@
 import argparse
 import pkg_resources
-from subprocess import Popen, PIPE
+from subprocess import Popen
 import yaml
 
 SPIDER_CONFIG = pkg_resources.resource_string(__name__, "site_configs.yml")

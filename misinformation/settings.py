@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from fake_useragent import UserAgent
 
 # Scrapy settings for misinformation project
 #
@@ -28,9 +29,7 @@ URLLENGTH_LIMIT = 850
 # However, we get 403 forbidden errors with some sites when using the scrapy default user-agent
 # Here we fix our user agent as the latest one for Chrome for reproducibility (rather than generate a random
 # one based on real world usage distribution).
-from fake_useragent import UserAgent
-ua = UserAgent()
-USER_AGENT = ua.chrome
+USER_AGENT = UserAgent().chrome
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -85,8 +84,8 @@ EXTENSIONS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'misinformation.pipelines.ArticleJsonFileExporter': 300,
-   'misinformation.pipelines.ArticleDatabaseExporter': 300,
+    'misinformation.pipelines.ArticleJsonFileExporter': 300,
+    'misinformation.pipelines.ArticleDatabaseExporter': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

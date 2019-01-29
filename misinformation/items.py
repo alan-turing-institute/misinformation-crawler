@@ -13,5 +13,3 @@ class Article(scrapy.Item):
     content = scrapy.Field()
     plain_content = scrapy.Field()
     plain_text = scrapy.Field()
-
-

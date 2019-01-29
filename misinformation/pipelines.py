@@ -1,10 +1,10 @@
 import json
 import os
 import pkg_resources
-import pyodbc
 from scrapy.exceptions import NotConfigured
 from scrapy.exporters import JsonItemExporter
 import yaml
+import pyodbc
 
 
 class ArticleJsonFileExporter(object):
@@ -25,11 +25,11 @@ class ArticleJsonFileExporter(object):
         output_dir = "articles"
         output_file = "{}_extracted.txt".format(spider.config['site_name'])
         # Ensure output directory exists
-        if not(os.path.isdir(output_dir)):
+        if not os.path.isdir(output_dir):
             os.makedirs(output_dir)
         output_path = os.path.join(output_dir, output_file)
-        f = open(output_path, 'wb')
-        self.exporter = JsonItemExporter(f)
+        file_handle = open(output_path, 'wb')
+        self.exporter = JsonItemExporter(file_handle)
         self.exporter.start_exporting()
 
     # Tidy up after crawler closed
@@ -99,16 +99,16 @@ INSERT INTO [articles_v5]
             self.cursor.execute(self.insert_row_sql, row)
             self.conn.commit()
         # Check for duplicate key exceptions and report informative log message
-        except pyodbc.IntegrityError as e:
-            if "Cannot insert duplicate key" in str(e):
-                error_string = str(e).split("(")[4]
-                spider.logger.warning("Refusing to add duplicate entry for: {}".format(article["article_url"]))
+        except pyodbc.IntegrityError as err:
+            if "Cannot insert duplicate key" in str(err):
+                error_string = str(err).split("(")[4]
+                spider.logger.warning("Refusing to add duplicate entry for: {} ({})".format(article["article_url"], error_string))
             else:
                 # If this wasn't a duplicate key exception then re-raise it
                 raise
         # Check for database size exceptions and report information log message
-        except pyodbc.ProgrammingError as e:
-            if "reached its size quota" in str(e):
+        except pyodbc.ProgrammingError as err:
+            if "reached its size quota" in str(err):
                 spider.database_limit = True
                 spider.logger.error("Closing down as the database has reached its size quota.")
             else:
