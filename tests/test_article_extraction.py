@@ -179,7 +179,10 @@ def test_extract_article_custom_title_selector():
                 select_method: 'xpath'
                 select_expression: '//p[@id="test-custom-title"]/text()'
                 match_rule: 'single'
-
+            content:
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -205,7 +208,10 @@ def test_extract_article_custom_byline_selector():
                 select_method: 'xpath'
                 select_expression: '//p[@id="test-custom-byline"]/text()'
                 match_rule: 'single'
-
+            content:
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -256,7 +262,10 @@ def test_extract_article_custom_publication_datetime_selector():
                 select_method: 'xpath'
                 select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
                 match_rule: 'single'
-
+            content:
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -658,6 +667,10 @@ def test_extract_datetime_works_with_multiple_dates():
             select_expression: '//div[@class="subarticle"]/p/text()'
             match_rule: 'group'
             datetime-format: 'MMMM D, YYYY'
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="subarticle"]'
+            match_rule: 'single'
     """
     config = yaml.load(config_yaml)
 
@@ -667,9 +680,10 @@ def test_extract_datetime_works_with_multiple_dates():
         'title': None,
         'byline': None,
         'publication_datetime': "2018-10-22T00:00:00",
-        'content': None,
-        'plain_content': None,
-        'metadata': None
+        'content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
+        'plain_content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
+        'metadata': None,
+        'plain_text': [{'text': 'October 22, 2018'}, {'text': 'Article text here.'}, {'text': 'May 15, 2006'}]
     }
 
     # Test
