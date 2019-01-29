@@ -667,6 +667,38 @@ redstatewatcher.com:
         - '//p[contains(text(), "Submitted by")]'
         - '//p[@class="text-muted"]'
 
+rt.com:
+  site_name: 'rt.com'
+  start_url: 'https://www.rt.com/listing/category.usa/prepare/last-news/20/1'
+  article_url_match: '/\d*[a-z\-]*/'
+  obey_robots_txt: False
+  crawl_strategy:
+    method: 'index_page'
+    index_page_url_match: '/listing/category.usa/prepare/last-news/'
+    index_page_article_links: '//strong/a[@class="link link_hover"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="published_time_telegram"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "article ")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "article__breadcrumbs")]'
+        - '//div[contains(@class, "article__short-url")]'
+        - '//div[contains(@class, "article__date")]'
+        - '//h1[contains(@class, "article__heading")]'
+        - '//div[contains(@class, "article__cover")]'
+        - '//div[contains(@class, "article__share")]'
+        - '//div[contains(@class, "article__summary")]'
+        - '//span[contains(@class, "read-more")]'
+    
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
