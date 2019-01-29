@@ -54,13 +54,13 @@ class MisinformationSpider(CrawlSpider):
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             try:
-                index_page_url_match = self.config['crawl_strategy']['index_page_url_match']
+                index_page_url_must_contain = self.config['crawl_strategy']['index_page']['url_must_contain']
                 index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                                      attrs=('href', 'data-href', 'data-url'),
-                                                     allow=(index_page_url_match)),
+                                                     allow=(index_page_url_must_contain)),
                                        follow=True)
             except KeyError:
-                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
+                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'url_must_contain' argument is required.")
 
             # 2. Rule for identifying article links
             # If neither 'index_page_article_links' nor 'article:url_must_contain'
@@ -72,7 +72,7 @@ class MisinformationSpider(CrawlSpider):
             # extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
-                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
+                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page']['article_links'])
             with suppress(KeyError):
                 link_kwargs["allow"] = (self.config['article']['url_must_contain'])
             with suppress(KeyError):
@@ -95,9 +95,9 @@ class MisinformationSpider(CrawlSpider):
             # extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['crawl_strategy']['scattergun_url_must_contain'])
+                link_kwargs["allow"] = (self.config['crawl_strategy']['scattergun']['url_must_contain'])
             with suppress(KeyError):
-                link_kwargs["deny"] = (self.config['crawl_strategy']['scattergun_url_must_not_contain'])
+                link_kwargs["deny"] = (self.config['crawl_strategy']['scattergun']['url_must_not_contain'])
             link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                            attrs=('href', 'data-href', 'data-url'),
                                            **link_kwargs),
@@ -143,11 +143,9 @@ class MisinformationSpider(CrawlSpider):
 
         # Check whether we pass the (optional) requirements on the URL format
         if self.article_url_require_regex and not self.article_url_require_regex.search(response.url):
-            print("failed require", response.url)
             return
 
         if self.article_url_reject_regex and self.article_url_reject_regex.search(response.url):
-            print("failed reject", response.url)
             return
 
         # Check whether we can extract an article from this page
