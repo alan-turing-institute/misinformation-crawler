@@ -1,6 +1,6 @@
 import argparse
-import subprocess
 import pkg_resources
+import subprocess
 import yaml
 
 

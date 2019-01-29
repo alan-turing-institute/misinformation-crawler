@@ -1,6 +1,6 @@
 import argparse
-import yaml
 import pkg_resources
+import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
