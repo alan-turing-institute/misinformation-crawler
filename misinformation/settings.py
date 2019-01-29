@@ -71,6 +71,7 @@ FEED_EXPORT_ENCODING = 'utf-8'
 # DOWNLOADER_MIDDLEWARES = {
 #    'misinformation.middlewares.MisinformationDownloaderMiddleware': 543,
 # }
+DOWNLOADER_MIDDLEWARES = {'misinformation.middlewares.CloudFlareMiddleware': 560}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html

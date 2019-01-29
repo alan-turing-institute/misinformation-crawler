@@ -419,9 +419,9 @@ liveaction.org:
   #   method: 'index_page'
   #   index_page_url_match: 'news/author'
   #   index_page_article_links: '//a[@rel="bookmark"]'
-#     method: 'index_page'
-#     index_page_url_match: 'news/'
-#     index_page_article_links: '//h1[@itemprop="headline"]'
+  #     method: 'index_page'
+  #     index_page_url_match: 'news/'
+  #     index_page_article_links: '//h1[@itemprop="headline"]'
   # article_url_match: '/news/.+/$'
   crawl_strategy:
     method: 'scattergun'
