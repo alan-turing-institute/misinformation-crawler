@@ -5,6 +5,7 @@ import pendulum
 from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
 
+
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
         "select_method": "xpath",
@@ -13,6 +14,7 @@ def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=Tr
         "warn_if_missing": warn_if_missing
     }
     return extract_spec
+
 
 def extract_element(response, extract_spec):
     # Extract selector specification
@@ -230,7 +232,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
         article["content"] = default_readability_article["content"]
         article["plain_content"] = default_readability_article["plain_content"]
         article["plain_text"] = default_readability_article["plain_text"]
-
 
     # Extract additional article metadata
     if 'metadata' in config:

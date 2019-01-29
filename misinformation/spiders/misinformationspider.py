@@ -115,7 +115,6 @@ class MisinformationSpider(CrawlSpider):
         # self._rules will be empty, even though self.rules will have the right rules present.
         super().__init__(*args, **kwargs)
 
-
     def parse_response(self, response):
         self.logger.info('Searching for an article at: {}'.format(response.url))
 

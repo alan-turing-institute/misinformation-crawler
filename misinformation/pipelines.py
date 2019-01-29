@@ -53,7 +53,7 @@ class ArticleDatabaseExporter():
 
 INSERT INTO [articles_v5]
     SELECT crawl_id, crawl_datetime, site_name, article_url, title, byline, publication_datetime,
-    content, plain_content, plain_text, metadata FROM OPENJSON (@JSON) 
+    content, plain_content, plain_text, metadata FROM OPENJSON (@JSON)
     WITH(
     crawl_id UNIQUEIDENTIFIER,
     crawl_datetime DATETIMEOFFSET(7),
