@@ -31,41 +31,52 @@ class MisinformationSpider(CrawlSpider):
                 tzinfo=datetime.timezone.utc).isoformat()
         }
 
-        # Parse domain from start URL and use to restrict crawl to follow only internal site links
+        # Parse domain from start URL and use to restrict crawl to follow only
+        # internal site links
         start_url = self.config['start_url']
         self.start_urls = [start_url]
         site_domain = urlparse(start_url).netloc
         self.allowed_domains = [site_domain]
-        self.article_url_regex = None
+        self.article_url_require_regex = None
+        self.article_url_reject_regex = None
 
-        # We support two different link following strategies: 'index_page' and 'scattergun' (default)
+        # We support two different link following strategies:
+        # - 'index_page'
+        # - 'scattergun' (default)
         try:
             crawl_strategy = config['crawl_strategy']['method']
         except KeyError:
             crawl_strategy = 'scattergun'
 
-        # - For the index_page strategy we need two Rules: one for link pages; one for article pages
+        # For the index_page strategy we need:
+        # - one Rule for link pages
+        # - one Rule for article pages
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             try:
-                index_page_url_match = self.config['crawl_strategy']['index_page_url_match']
+                index_page_url_must_contain = self.config['crawl_strategy']['index_page']['url_must_contain']
                 index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                                      attrs=('href', 'data-href', 'data-url'),
-                                                     allow=(index_page_url_match)),
+                                                     allow=(index_page_url_must_contain)),
                                        follow=True)
             except KeyError:
-                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
+                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'url_must_contain' argument is required.")
 
             # 2. Rule for identifying article links
-            # Suppress KeyErrors when retrieving optional arguments from nested dictionary - need one suppress per retrieve
-            # If neither 'index_page_article_links' nor 'article_url_match' are
-            # provided then all links will be parsed and if content is extracted from them, they will be recorded.
-            # NB. the link extractor takes iterables as arguments so we wrap the config output in ()
+            # If neither 'index_page_article_links' nor 'article:url_must_contain'
+            # are provided then all links will be parsed and if content is
+            # extracted from them, they will be recorded.
+            #
+            # Suppress KeyErrors when retrieving optional arguments from
+            # nested dictionary - need one suppress per retrieve. NB. the link
+            # extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
-                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
+                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page']['article_links'])
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['article_url_match'])
+                link_kwargs["allow"] = (self.config['article']['url_must_contain'])
+            with suppress(KeyError):
+                link_kwargs["deny"] = (self.config['article']['url_must_not_contain'])
             article_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                               attrs=('href', 'data-href', 'data-url'),
                                               **link_kwargs),
@@ -74,24 +85,30 @@ class MisinformationSpider(CrawlSpider):
             # Use both rules
             self.rules = (index_page_rule, article_rule)
 
-        # - For the scattergun strategy we only need one Rule for which links to follow
+        # For the scattergun strategy we only need one Rule for following links
         elif crawl_strategy == 'scattergun':
-            # Follow all links (after removing duplicates) and pass them to parse_response
-            # Suppress KeyErrors when retrieving optional arguments from nested dictionary - need one suppress per retrieve
-            # NB. the link extractor takes iterables as arguments so we wrap the config output in ()
+            # Follow all links (after removing duplicates) and pass them to
+            # parse_response
+            #
+            # Suppress KeyErrors when retrieving optional arguments from
+            # nested dictionary - need one suppress per retrieve. NB. the link
+            # extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['crawl_strategy']['scattergun_url_must_contain'])
+                link_kwargs["allow"] = (self.config['crawl_strategy']['scattergun']['url_must_contain'])
             with suppress(KeyError):
-                link_kwargs["deny"] = (self.config['crawl_strategy']['scattergun_url_must_not_contain'])
+                link_kwargs["deny"] = (self.config['crawl_strategy']['scattergun']['url_must_not_contain'])
             link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                            attrs=('href', 'data-href', 'data-url'),
                                            **link_kwargs),
                              follow=True, callback="parse_response")
             self.rules = (link_rule, )
 
-            # Optional regex for determining whether this is an article using the URL
-            self.article_url_regex = re.compile(self.config.get('article_url_match', ''))
+            # Optional regexes for determining whether this is an article using the URL
+            with suppress(KeyError):
+                self.article_url_require_regex = re.compile(self.config['article']['url_must_contain'])
+            with suppress(KeyError):
+                self.article_url_reject_regex = re.compile(self.config['article']['url_must_not_contain'])
 
         else:
             raise CloseSpider(reason="crawl_strategy: '{0}' is not recognised".format(crawl_strategy))
@@ -124,8 +141,11 @@ class MisinformationSpider(CrawlSpider):
         if urlparse(response.url).path in ['', '/', 'index.html']:
             return
 
-        # Check whether we pass the (optional) requirement on the URL format
-        if self.article_url_regex and not self.article_url_regex.search(response.url):
+        # Check whether we pass the (optional) requirements on the URL format
+        if self.article_url_require_regex and not self.article_url_require_regex.search(response.url):
+            return
+
+        if self.article_url_reject_regex and self.article_url_reject_regex.search(response.url):
             return
 
         # Check whether we can extract an article from this page

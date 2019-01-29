@@ -1,7 +1,7 @@
-# This package will contain the spiders of your Scrapy project
+# This package contains any project-specific Scrapy middleware
 #
-# Please refer to the documentation for information on how to create and manage
-# your spiders.
+# See documentation at:
+# https://doc.scrapy.org/en/latest/topics/spiders.html
 from .misinformationspider import MisinformationSpider
 
 __all__ = ['MisinformationSpider']

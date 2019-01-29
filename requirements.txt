@@ -1,5 +1,6 @@
 arrow
 bs4
+cfscrape
 datetime
 fake-useragent
 html5lib
