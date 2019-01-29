@@ -24,5 +24,5 @@ script:
   - python -m pytest -v tests
   # Run pyflakes for error detection
   - pyflakes *.py misinformation tests
-  # Check PEP8 compliance
+  # Check PEP8 compliance (ignoring long lines)
   - pycodestyle --statistics --ignore=E501 --count *.py misinformation tests
