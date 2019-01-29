@@ -1,3 +1,4 @@
+import copy
 import logging
 import arrow
 import pendulum
@@ -29,7 +30,7 @@ def extract_element(response, extract_spec):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = response.xpath(select_expression)
+        elements = copy.deepcopy(response).xpath(select_expression)
         # Remove all instances matching xpath expressions
         remove_xpath_expressions(elements, remove_expressions)
         # Stringify elements then strip leading and trailing whitespace
@@ -57,7 +58,7 @@ def extract_element(response, extract_spec):
                 extracted_element = elements[-1]
 
             elif match_rule == 'largest':
-                extracted_element = sorted(elements, key = lambda elem: len(elem))[-1]
+                extracted_element = sorted(elements, key=len)[-1]
 
             elif match_rule == 'concatenate':
                 # Join non-empty elements together with commas
@@ -186,30 +187,33 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
 
     # Look for a set of extraction specifications
     if 'article' in config:
-        # Extract title
-        if 'title' in config['article']:
-            article['title'] = extract_element(response, config['article']['title'])
-        # Extract byline
-        if 'byline' in config['article']:
-            article['byline'] = extract_element(response, config['article']['byline'])
-        # Extract publication_datetime
-        if 'publication_datetime' in config['article']:
-            datetime_string = extract_element(response, config['article']['publication_datetime'])
-            if 'datetime-format' in config['article']['publication_datetime']:
-                dt_format = config['article']['publication_datetime']['datetime-format']
-                iso_string = extract_datetime_string(datetime_string, dt_format)
-            else:
-                iso_string = extract_datetime_string(datetime_string)
-            article['publication_datetime'] = iso_string
         # Extract article content
         if 'content' in config['article']:
-            # Extract article content from specified element
+            # Extract article content from specified element if present
+            config['article']['content']['warn_if_missing'] = False
             article_html = extract_element(response, config['article']['content'])
             if article_html is not None:
                 custom_readability_article = parse_to_json(article_html, content_digests, node_indexes, False)
-                article["content"] = custom_readability_article["content"]
-                article["plain_content"] = custom_readability_article["plain_content"]
-                article["plain_text"] = custom_readability_article["plain_text"]
+                article['content'] = custom_readability_article['content']
+                article['plain_content'] = custom_readability_article['plain_content']
+                article['plain_text'] = custom_readability_article['plain_text']
+        # Only try to extract other data if the article has identified content
+        if 'content' in article and article['content'] is not None:
+            # Extract title
+            if 'title' in config['article']:
+                article['title'] = extract_element(response, config['article']['title'])
+            # Extract byline
+            if 'byline' in config['article']:
+                article['byline'] = extract_element(response, config['article']['byline'])
+            # Extract publication_datetime
+            if 'publication_datetime' in config['article']:
+                datetime_string = extract_element(response, config['article']['publication_datetime'])
+                if 'datetime-format' in config['article']['publication_datetime']:
+                    dt_format = config['article']['publication_datetime']['datetime-format']
+                    iso_string = extract_datetime_string(datetime_string, dt_format)
+                else:
+                    iso_string = extract_datetime_string(datetime_string)
+                article['publication_datetime'] = iso_string
     # ... otherwise simply use the default values from parsing the whole page
     else:
         default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)

@@ -359,6 +359,30 @@ henrymakow.com:
       match_rule: 'single'
       warn_if_missing: False
 
+infowars.com:
+  site_name: 'infowars.com'
+  start_url: 'http://infowars.com/category/us-news/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun_url_must_not_contain: '/(watch|category|author|contributors|tag)/'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '(//span[@class="author"]/descendant::*/text() | //div[@class="text"]/article/descendant::*/text())'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="text"]/article'
+      match_rule: 'single'
+
 liberalamerica.life:
   site_name: 'liberalamerica.life'
   start_url: 'http://liberalamerica.life/category/news/'
