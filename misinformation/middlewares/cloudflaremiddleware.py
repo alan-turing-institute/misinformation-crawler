@@ -1,7 +1,3 @@
-# Define here the models for your spider middleware
-#
-# See documentation in:
-# https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 # Taken from https://github.com/clemfromspace/scrapy-cloudflare-middleware
 
 from cfscrape import get_tokens
