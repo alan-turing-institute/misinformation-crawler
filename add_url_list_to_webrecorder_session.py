@@ -1,37 +1,30 @@
 #! /usr/bin/env python
-
 import argparse
 import subprocess
 import time
 import random
 
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)
-    parser.add_argument('--input-file',
-        help='Input file with URLs to capture, one URL per line.')
-    parser.add_argument('--start-line', type=int,
-        help='Line number of first URL to capture.')
-    parser.add_argument('--num-lines', type=int,
-        help='Number of URLs to capture.')
-    parser.add_argument('--user',
-        help='User ID on webrecorder.io.')
-    parser.add_argument('--collection',
-        help='Collection name on webrecorder.io.')
-    parser.add_argument('--session',
-        help='Session ID on webrecorder.io.')
+    parser.add_argument('--input-file', help='Input file with URLs to capture, one URL per line.')
+    parser.add_argument('--start-line', type=int, help='Line number of first URL to capture.')
+    parser.add_argument('--num-lines', type=int, help='Number of URLs to capture.')
+    parser.add_argument('--user', help='User ID on webrecorder.io.')
+    parser.add_argument('--collection', help='Collection name on webrecorder.io.')
+    parser.add_argument('--session', help='Session ID on webrecorder.io.')
 
     args = parser.parse_args()
     mean_load_interval_seconds = 3
     max_jitter_seconds = 1
 
-
     session_base_url = "https://webrecorder.io/{}/{}/{}/record/".format(args.user, args.collection, args.session)
 
-    with open(args.input_file, 'r') as f:
+    with open(args.input_file, 'r') as file_handle:
         line_num = 1
         stop_line = args.start_line + args.num_lines
-        for capture_url in f:
+        for capture_url in file_handle:
             if line_num >= stop_line:
                 break
             if line_num >= args.start_line:

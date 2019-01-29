@@ -11,10 +11,10 @@ from scrapy.spiders import CrawlSpider, Rule
 from misinformation.extractors import extract_article
 
 
-# Generic crawl spider for websites that meet the following criteria
-# (i) Lists of articles are paged and navigable to with HTML links
-# (ii) Has metadata in a microdata format
 class MisinformationSpider(CrawlSpider):
+    """Generic crawl spider for websites that meet the following criteria
+       (i) Lists of articles are paged and navigable to with HTML links
+       (ii) Has metadata in a microdata format"""
     name = 'misinformation'
     exporter = None
     crawl_date = None

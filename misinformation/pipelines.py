@@ -7,7 +7,7 @@ import yaml
 import pyodbc
 
 
-class ArticleJsonFileExporter(object):
+class ArticleJsonFileExporter():
 
     def __init__(self):
         self.exporter = None
@@ -43,7 +43,7 @@ class ArticleJsonFileExporter(object):
         return article
 
 
-class ArticleDatabaseExporter(object):
+class ArticleDatabaseExporter():
 
     def __init__(self):
         self.encoder = None
