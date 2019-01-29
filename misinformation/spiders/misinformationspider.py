@@ -62,7 +62,7 @@ class MisinformationSpider(CrawlSpider):
                 raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'index_page_url_match' argument is required.")
 
             # 2. Rule for identifying article links
-            # If neither 'index_page_article_links' nor 'article:url_must_match'
+            # If neither 'index_page_article_links' nor 'article:url_must_contain'
             # are provided then all links will be parsed and if content is
             # extracted from them, they will be recorded.
             #
@@ -73,7 +73,7 @@ class MisinformationSpider(CrawlSpider):
             with suppress(KeyError):
                 link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['article']['url_must_match'])
+                link_kwargs["allow"] = (self.config['article']['url_must_contain'])
             article_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                               attrs=('href', 'data-href', 'data-url'),
                                               **link_kwargs),
@@ -103,7 +103,7 @@ class MisinformationSpider(CrawlSpider):
 
             # Optional regex for determining whether this is an article using the URL
             with suppress(KeyError):
-                self.article_url_regex = re.compile(self.config['article']['url_must_match'])
+                self.article_url_regex = re.compile(self.config['article']['url_must_contain'])
 
         else:
             raise CloseSpider(reason="crawl_strategy: '{0}' is not recognised".format(crawl_strategy))

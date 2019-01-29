@@ -6,7 +6,7 @@ abcnews.go.com:
     method: 'scattergun'
     scattergun_url_must_not_contain: '(/beta-story-container/|&page=)'
   article:
-    url_must_match: '/Politics/.+/story\?id=\d*'
+    url_must_contain: '/Politics/.+/story\?id=\d*'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -91,7 +91,7 @@ conservativehq.com:
     method: 'index_page'
     index_page_url_match: '/category/tags/'
   article:
-    url_must_match: 'article/'
+    url_must_contain: 'article/'
     title:
       select_method: 'xpath'
       select_expression: '//h1[@class="title"]/text()'
@@ -124,7 +124,7 @@ dailykos.com:
     index_page_url_match: 'user'
   obey_robots_txt: False
   article:
-    url_must_match: '/stor[ies|y]/\d\d\d\d/'
+    url_must_contain: '/stor[ies|y]/\d\d\d\d/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -254,7 +254,7 @@ foxnews.com:
     method: 'scattergun'
     scattergun_url_must_not_contain: '\.print$'
   article:
-    url_must_match: '^((?!category).)*/politics/[\-a-z]+'
+    url_must_contain: '^((?!category).)*/politics/[\-a-z]+'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -418,7 +418,7 @@ liveaction.org:
     method: 'scattergun'
     scattergun_url_must_not_contain: '/news/.*/.*/'
   article:
-    url_must_match: '/news/.*/$'
+    url_must_contain: '/news/.*/$'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -468,7 +468,7 @@ nbcnews.com:
   crawl_strategy:
     method: 'scattergun'
   article:
-    url_must_match: '/politics/[a-z\-]*/.*\d+$'
+    url_must_contain: '/politics/[a-z\-]*/.*\d+$'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -495,7 +495,7 @@ nytimes.com:
     method: 'scattergun'
     scattergun_url_must_not_contain: '/(video|es|interactive)/'
   article:
-    url_must_match: '/\d\d\d\d/\d\d/\d\d/.*/politics/'
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/politics/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -642,7 +642,7 @@ redstatewatcher.com:
     index_page_url_match: 'news.asp\?page=\d*'
   metadata_source: 'microdata'
   article:
-    url_must_match: 'article.asp\?id=\d*'
+    url_must_contain: 'article.asp\?id=\d*'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -676,7 +676,7 @@ rt.com:
     index_page_url_match: '/listing/category.usa/prepare/last-news/'
     index_page_article_links: '//strong/a[@class="link link_hover"]'
   article:
-    url_must_match: '/\d*[a-z\-]*/'
+    url_must_contain: '/\d*[a-z\-]*/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -731,7 +731,7 @@ vox.com:
     method: 'index_page'
     index_page_url_match: '/policy-and-politics/archives/'
   article:
-    url_must_match: '\d\d\d\d/\d+/\d+/[\-a-z]*'
+    url_must_contain: '\d\d\d\d/\d+/\d+/[\-a-z]*'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
