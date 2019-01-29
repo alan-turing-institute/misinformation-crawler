@@ -111,4 +111,3 @@ ITEM_PIPELINES = {
 # This does not work as scrapy now uses HTTP1.1, which uses a higher-level Agent class from Twisted
 # See https://groups.google.com/forum/#!topic/scrapy-users/pKDXCJlFJaw
 # DOWNLOADER_HTTPCLIENTFACTORY = 'warcclientfactory.WarcHTTPClientFactory'
-

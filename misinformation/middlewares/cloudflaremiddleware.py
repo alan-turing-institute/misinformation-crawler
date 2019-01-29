@@ -2,6 +2,7 @@
 
 from cfscrape import get_tokens
 
+
 class CloudFlareMiddleware:
     """Scrapy middleware to bypass the CloudFlare anti-bot protection"""
 
@@ -9,12 +10,16 @@ class CloudFlareMiddleware:
     def is_cloudflare(response):
         """Test if the given response contains the CloudFlare anti-bot protection"""
 
-        return (
-            response.status == 503
-            and response.headers.get('Server', '').startswith(b'cloudflare')
-            and 'jschl_vc' in response.text
-            and 'jschl_answer' in response.text
-        )
+        # CloudFlare returns a 503
+        cf_status = (response.status == 503)
+
+        # The server will be cloudflare
+        cf_headers = (response.headers.get('Server', '').startswith(b'cloudflare'))
+
+        # The CloudFlare page will have jschl_vc and jschl_answer in the text
+        cf_text = ('jschl_vc' in response.text and 'jschl_answer' in response.text)
+
+        return (cf_status and cf_headers and cf_text)
 
     def process_response(self, request, response, spider):
         """If we can identify a CloudFlare check on this page then use cfscrape to get the cookies"""
