@@ -10,10 +10,12 @@ from misinformation.spiders import MisinformationSpider
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)
-    parser.add_argument('--site_name', '-s', required=True, help='Name of site configuration.')
-    parser.add_argument('--max_articles', '-n', type=int, default=0, help='Maximum number of articles to process from each site.')
-    parser.add_argument('--exporter', '-e', default='database', choices=['file', 'database'], help='Article export method.')
-
+    parser.add_argument('--site_name', '-s', required=True,
+                        help='Name of site configuration.')
+    parser.add_argument('--max_articles', '-n', type=int, default=0,
+                        help='Maximum number of articles to process from each site.')
+    parser.add_argument('--exporter', '-e', default='database', choices=['file', 'database'],
+                        help='Article export method.')
     args = parser.parse_args()
 
     # Load crawl configuration for site from configuration
