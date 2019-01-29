@@ -498,7 +498,7 @@ nbcnews.com:
       warn_if_missing: False
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//div/time[contains(@class, "pubDate")]/@datetime'
+      select_expression: '//div/time/@datetime'
       match_rule: 'first'
       datetime-format: 'ddd MMM D YYYY HH:mm:ss'
     content:
