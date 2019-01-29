@@ -6,8 +6,6 @@ from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 from misinformation.spiders import MisinformationSpider
 
-SPIDER_CONFIG = pkg_resources.resource_string(__name__, "site_configs.yml")
-
 
 def main():
     # Parse command line arguments
@@ -19,7 +17,8 @@ def main():
     args = parser.parse_args()
 
     # Load crawl configuration for site from configuration
-    site_configs = yaml.load(SPIDER_CONFIG)
+    spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
+    site_configs = yaml.load(spider_config)
 
     configure_logging()
 

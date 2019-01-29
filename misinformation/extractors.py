@@ -1,3 +1,4 @@
+import copy
 import logging
 import arrow
 import pendulum
@@ -29,8 +30,6 @@ def extract_element(response, extract_spec):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        # type(response)
-        # type(response.xpath("//html"))
         elements = response.xpath(select_expression)
         # Remove all instances matching xpath expressions
         elements = remove_xpath_expressions(elements, remove_expressions)
@@ -89,10 +88,11 @@ def extract_element(response, extract_spec):
 def remove_xpath_expressions(input_selectors, remove_expressions):
     # Copy input_selectors to a new SelectorList as the remove operations will
     # modify them in-place (and we don't want to do that). We are not able to
-    # use copy.deepcopy here as the Selector object is incompatible with it.
+    # use copy.deepcopy directly on the Selector as that class is incompatible
+    # with it.
     output_selectors = type(input_selectors)()
-    for input_selector in input_selectors:
-        output_selectors.append(type(input_selector)(type=input_selector.type, root=input_selector.root))
+    for selector in input_selectors:
+        output_selectors.append(type(selector)(type=selector.type, root=copy.deepcopy(selector.root)))
     # We can access the lxml tree using the 'root' attribute - this is done in place
     for output_element in [s.root for s in output_selectors]:
         # Input element can be a string or an lxml.html.HtmlElement.
