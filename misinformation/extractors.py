@@ -1,3 +1,4 @@
+import copy
 import logging
 import arrow
 import pendulum
@@ -29,7 +30,7 @@ def extract_element(response, extract_spec):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = response.xpath(select_expression)
+        elements = copy.deepcopy(response).xpath(select_expression)
         # Remove all instances matching xpath expressions
         remove_xpath_expressions(elements, remove_expressions)
         # Stringify elements then strip leading and trailing whitespace
@@ -57,7 +58,7 @@ def extract_element(response, extract_spec):
                 extracted_element = elements[-1]
 
             elif match_rule == 'largest':
-                extracted_element = sorted(elements, key = lambda elem: len(elem))[-1]
+                extracted_element = sorted(elements, key=len)[-1]
 
             elif match_rule == 'concatenate':
                 # Join non-empty elements together with commas
