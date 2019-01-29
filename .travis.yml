@@ -9,6 +9,9 @@ before_install:
   - sudo apt install curl
   - curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
   - sudo apt install nodejs
+  # Install ODBC development libraries
+  - sudo apt install unixodbc-dev
+
 
 install:
   # Install node.js dependencies
