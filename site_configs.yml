@@ -419,6 +419,7 @@ liveaction.org:
     scattergun_url_must_not_contain: '/news/.*/.*/'
   article:
     url_must_contain: '/news/.*/$'
+    url_must_not_contain: '/(about|latest-stories)/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'

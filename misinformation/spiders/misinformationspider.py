@@ -37,7 +37,8 @@ class MisinformationSpider(CrawlSpider):
         self.start_urls = [start_url]
         site_domain = urlparse(start_url).netloc
         self.allowed_domains = [site_domain]
-        self.article_url_regex = None
+        self.article_url_require_regex = None
+        self.article_url_reject_regex = None
 
         # We support two different link following strategies:
         # - 'index_page'
@@ -74,6 +75,8 @@ class MisinformationSpider(CrawlSpider):
                 link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page_article_links'])
             with suppress(KeyError):
                 link_kwargs["allow"] = (self.config['article']['url_must_contain'])
+            with suppress(KeyError):
+                link_kwargs["deny"] = (self.config['article']['url_must_not_contain'])
             article_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                               attrs=('href', 'data-href', 'data-url'),
                                               **link_kwargs),
@@ -101,9 +104,11 @@ class MisinformationSpider(CrawlSpider):
                              follow=True, callback="parse_response")
             self.rules = (link_rule, )
 
-            # Optional regex for determining whether this is an article using the URL
+            # Optional regexes for determining whether this is an article using the URL
             with suppress(KeyError):
-                self.article_url_regex = re.compile(self.config['article']['url_must_contain'])
+                self.article_url_require_regex = re.compile(self.config['article']['url_must_contain'])
+            with suppress(KeyError):
+                self.article_url_reject_regex = re.compile(self.config['article']['url_must_not_contain'])
 
         else:
             raise CloseSpider(reason="crawl_strategy: '{0}' is not recognised".format(crawl_strategy))
@@ -136,8 +141,13 @@ class MisinformationSpider(CrawlSpider):
         if urlparse(response.url).path in ['', '/', 'index.html']:
             return
 
-        # Check whether we pass the (optional) requirement on the URL format
-        if self.article_url_regex and not self.article_url_regex.search(response.url):
+        # Check whether we pass the (optional) requirements on the URL format
+        if self.article_url_require_regex and not self.article_url_require_regex.search(response.url):
+            print("failed require", response.url)
+            return
+
+        if self.article_url_reject_regex and self.article_url_reject_regex.search(response.url):
+            print("failed reject", response.url)
             return
 
         # Check whether we can extract an article from this page
