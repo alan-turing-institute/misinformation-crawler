@@ -414,18 +414,9 @@ liberalamerica.life:
 liveaction.org:
   site_name: 'liveaction.org'
   start_url: 'http://liveaction.org/news/latest-stories/'
-  article_url_match: '/news/((?!author)(?!category).)*/$'
-  # crawl_strategy:
-  #   method: 'index_page'
-  #   index_page_url_match: 'news/author'
-  #   index_page_article_links: '//a[@rel="bookmark"]'
-  #     method: 'index_page'
-  #     index_page_url_match: 'news/'
-  #     index_page_article_links: '//h1[@itemprop="headline"]'
-  # article_url_match: '/news/.+/$'
+  article_url_match: '/news/.*/$'
   crawl_strategy:
     method: 'scattergun'
-    # scattergun_url_must_not_contain: '/(video|es|interactive)/'
   article:
     title:
       select_method: 'xpath'

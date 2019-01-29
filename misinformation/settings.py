@@ -68,16 +68,14 @@ FEED_EXPORT_ENCODING = 'utf-8'
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'misinformation.middlewares.MisinformationDownloaderMiddleware': 543,
-# }
-DOWNLOADER_MIDDLEWARES = {'misinformation.middlewares.CloudFlareMiddleware': 560}
+DOWNLOADER_MIDDLEWARES = {
+    'misinformation.middlewares.CloudFlareMiddleware': 560
+}
+# This does not work as all the code is Python 2 and I haven't managed to port it to Python 3
+# DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
-# }
 EXTENSIONS = {
     'scrapy.extensions.closespider.CloseSpider': 500
 }
@@ -114,5 +112,3 @@ ITEM_PIPELINES = {
 # See https://groups.google.com/forum/#!topic/scrapy-users/pKDXCJlFJaw
 # DOWNLOADER_HTTPCLIENTFACTORY = 'warcclientfactory.WarcHTTPClientFactory'
 
-# This does not work as all the code is Python 2 and I haven't managed to por tit to Python 3
-# DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
