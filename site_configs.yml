@@ -1,4 +1,4 @@
-# Spider configurations for each website to be crawled
+---  # Spider configurations for each website to be crawled
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
@@ -31,7 +31,6 @@ abcnews.go.com:
         - '//div[contains(@class, "insert")]'
         - '//div[contains(@class, "callout")]'
         - '//figure[contains(@class, "e_image")]'
-
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
@@ -105,14 +104,14 @@ conservativehq.com:
       # Stored in comments of the form '<!-- By NAME - DATE -->'
       select_expression: 'substring-after(substring-before(//*[comment()[contains(., "By")]]/comment(), "-"), "By ")'
       match_rule: 'first'
-      warn_if_missing: False
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       # Stored in comments of the form '<!-- By NAME - DATE -->'
       select_expression: 'substring-after(//*[comment()[contains(., "By")]]/comment(), "-")'
       match_rule: 'first'
       datetime-format: 'DD/MM/YY'
-      warn_if_missing: False
+      warn_if_missing: false
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="node"]/div[@class="content"]'
@@ -127,7 +126,7 @@ dailykos.com:
     method: 'index_page'
     index_page:
       url_must_contain: 'user'
-  obey_robots_txt: False
+  obey_robots_txt: false
   article:
     url_must_contain: '/stor[ies|y]/\d\d\d\d/'
     title:
@@ -273,7 +272,7 @@ foxnews.com:
       select_method: 'xpath'
       select_expression: '//div[@class="author-byline"]/span/span/a/text()'
       match-rule: 'concatenate'
-      warn_if_missing: False
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@name="dcterms.created"]/@content'
@@ -370,7 +369,7 @@ henrymakow.com:
       select_method: 'xpath'
       select_expression: '//div[@class="text-body"]'
       match_rule: 'single'
-      warn_if_missing: False
+      warn_if_missing: false
 
 infowars.com:
   site_name: 'infowars.com'
@@ -495,7 +494,7 @@ nbcnews.com:
       select_method: 'xpath'
       select_expression: '//div[@class="founders-cond f6 lh-none"]/text()'
       match_rule: 'last'
-      warn_if_missing: False
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//div/time/@datetime'
@@ -675,7 +674,7 @@ redstatewatcher.com:
       select_method: 'xpath'
       select_expression: 'substring-after(//div[@class="container"]/div[@class="row"]/div[@class="col-md-8"]/p[contains(text(), "Submitted")]/text(), "by ")'
       match_rule: 'first'
-      warn_if_missing: False
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: 'substring-after(//p[@class="text-muted"]/text(), ",")'
@@ -694,7 +693,7 @@ redstatewatcher.com:
 rt.com:
   site_name: 'rt.com'
   start_url: 'https://www.rt.com/listing/category.usa/prepare/last-news/20/1'
-  obey_robots_txt: False
+  obey_robots_txt: false
   crawl_strategy:
     method: 'index_page'
     index_page:
