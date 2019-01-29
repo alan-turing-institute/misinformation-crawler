@@ -417,6 +417,7 @@ liveaction.org:
   article_url_match: '/news/.*/$'
   crawl_strategy:
     method: 'scattergun'
+    scattergun_url_must_not_contain: '/news/.*/.*/'
   article:
     title:
       select_method: 'xpath'
