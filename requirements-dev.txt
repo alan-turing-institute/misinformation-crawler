@@ -2,6 +2,7 @@ arrow
 bs4
 datetime
 fake-useragent
+html5lib
 iso8601
 pendulum
 pyodbc
