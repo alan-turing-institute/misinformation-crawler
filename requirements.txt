@@ -1,5 +1,5 @@
 arrow
-bs4
+beautifulsoup4
 cfscrape
 datetime
 fake-useragent
