@@ -60,6 +60,35 @@ addictinginfo.com:
       remove_expressions:
         - '//div[contains(@class, "ad-inserter")]'
 
+alternet.org:
+  site_name: 'alternet.org'
+  start_url: 'https://www.alternet.org/category/news-politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/news-politics/page/'
+      article_links: '//h2[contains(@class, "entry-title")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '(//meta[@itemprop="author"]/@content | //span[@class="author vcard"]/span[contains(@class, "coauthors")]/a[@rel="author"]/text())'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "advertisement")]'
+        - '//div[@class="post-tags"]'
+
 breitbart.com:
   site_name: 'breitbart.com'
   start_url: 'https://www.breitbart.com/politics/'
