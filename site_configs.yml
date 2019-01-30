@@ -115,6 +115,36 @@ breitbart.com:
       select_expression: '//div[@class="entry-content"]'
       match_rule: 'single'
 
+christianpost.com:
+  site_name: 'christianpost.com'
+  start_url: 'https://www.christianpost.com/politics/'
+  crawl_strategy:
+    method: 'scattergun'
+  article:
+    url_must_contain: '/(politics|news)/[a-z0-9\-]+\.html$'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-byline"]/span[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-byline"]/time[@class="visually-hidden"]/text()'
+      match_rule: 'single'
+      datetime-format: 'dddd, MMMM DD, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//article[@id="article_content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//header'
+        - '//figure'
+        - '//div[@class="share-icons"]'
+        - '//div[@class="article_credit"]'
+
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
