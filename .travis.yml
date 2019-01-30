@@ -21,7 +21,7 @@ install:
 
 script:
   # Run all pytest unit tests
-  - python -m pytest -v tests
+  - python -m pytest -v tests --cov misinformation --cov-report term-missing
   # Run pyflakes for error detection
   - pyflakes *.py misinformation tests
   # Check PEP8 compliance (ignoring long lines)

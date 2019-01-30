@@ -1,5 +1,5 @@
 arrow
-bs4
+beautifulsoup4
 cfscrape
 datetime
 fake-useragent
@@ -10,6 +10,7 @@ pycodestyle
 pyodbc
 pyflakes
 pytest
+pytest-cov
 pyyaml
 regex
 scrapy
