@@ -313,6 +313,34 @@ davidwolfe.com:
       select_expression: '//section[@itemprop="articleBody"]'
       match_rule: 'single'
 
+disclose.tv:
+  site_name: 'disclose.tv'
+  start_url: 'https://www.disclose.tv/d/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/d/politics\?page'
+      article_links: '//a[@class="article-link"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-author"]/span[contains(@class, "article-author")]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="read-next"]'
+
 empirenews.net:
   site_name: 'empirenews.net'
   start_url: 'http://empirenews.net/category/politics/'
