@@ -571,6 +571,7 @@ nytimes.com:
       url_must_not_contain: '/(video|es|interactive)/'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/politics/'
+    url_must_not_contain: '(action=click|module=)'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
