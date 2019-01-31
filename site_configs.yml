@@ -144,6 +144,33 @@ breitbart.com:
       select_expression: '//div[@class="entry-content"]'
       match_rule: 'single'
 
+cap-news.com:
+  site_name: 'cap-news.com'
+  start_url: 'http://www.cap-news.com/section.php?id=politics'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_not_contain: 'section.php\?id='
+  article:
+    url_must_contain: '/story.php\?id=\d+$'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: 'substring-after(//div[@id="sto_graphs"]/p[last()]/text(), "- ")'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:article:published_time"]/@content'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="sto_graphs"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//p[contains(@class, "subtext")]'
+
 christianpost.com:
   site_name: 'christianpost.com'
   start_url: 'https://www.christianpost.com/politics/'
