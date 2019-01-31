@@ -171,6 +171,30 @@ cap-news.com:
       remove_expressions:
         - '//p[contains(@class, "subtext")]'
 
+centerforsecuritypolicy.org:
+  site_name: 'centerforsecuritypolicy.org'
+  start_url: 'https://www.centerforsecuritypolicy.org/#articles'
+  crawl_strategy:
+    method: 'scattergun'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/.+/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+
 christianpost.com:
   site_name: 'christianpost.com'
   start_url: 'https://www.christianpost.com/politics/'
