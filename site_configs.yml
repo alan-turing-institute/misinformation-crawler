@@ -258,6 +258,31 @@ conservativehq.com:
       remove_expressions:
         - '//div[contains(@class, "field-field-byline")]'
 
+dailycaller.com:
+  site_name: 'dailycaller.com'
+  start_url: 'https://dailycaller.com/section/politics'
+  crawl_strategy:
+    method: 'scattergun'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: 'substring-before(//div[@class="author"]/text(), "|")'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time/text()'
+      match_rule: 'single'
+      datetime-format: 'h:m A MM/DD/YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//article[contains(@class, "section-politics")]/div[contains(@id, "ob-read-more-selector")]'
+      match_rule: 'single'
+
 dailykos.com:
   site_name: 'dailykos.com'
   start_url: 'https://www.dailykos.com/'
