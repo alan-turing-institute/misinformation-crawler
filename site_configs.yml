@@ -1088,6 +1088,34 @@ vox.com:
       select_expression: '//div[@class="c-entry-content"]'
       match_rule: 'single'
 
+weeklyworldnews.com:
+  site_name: 'weeklyworldnews.com'
+  start_url: 'http://weeklyworldnews.com/category/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h1/a[@rel="bookmark"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="entry-byline"]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//p[@class="entry-byline"]//time[@class="entry-date"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id]'
+
 westernjournal.com:
   site_name: 'westernjournal.com'
   start_url: 'https://www.westernjournal.com/politics/'
