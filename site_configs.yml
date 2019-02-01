@@ -1007,8 +1007,8 @@ weeklyworldnews.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/politics/page/'
-      article_links: '//h1[@rel="bookmark"]'
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h1/a[@rel="bookmark"]'
   article:
     title:
       select_method: 'xpath'
