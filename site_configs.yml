@@ -588,6 +588,39 @@ infowars.com:
       select_expression: '//div[@class="text"]/article'
       match_rule: 'single'
 
+islamicanews.com:
+  site_name: 'islamicanews.com'
+  start_url: 'https://islamicanews.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h3[contains(@class, "entry-title")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "author-name")]/a/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "featured-image")]'
+        - '//div[contains(@class, "fb-")]'
+        - '//a[@class="twitter-share-button"]'
+        - '//div[contains(@id, "comment")]'
+        - '//div[contains(@id, "relatedposts")]'
+        - '//div[@class="shorten_url"]'
+
 liberalamerica.life:
   site_name: 'liberalamerica.life'
   start_url: 'http://liberalamerica.life/category/news/'
