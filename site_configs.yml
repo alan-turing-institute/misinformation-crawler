@@ -325,21 +325,26 @@ disclose.tv:
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
-      match_rule: 'first'
+      match_rule: 'single'
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="article-author"]/span[contains(@class, "article-author")]/a/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//meta[@property="article:published_time"]/@content'
-      match_rule: 'first'
+      # # select_expression: '//meta[@property="article:published_time"]/@content'
+      select_expression: '//span[@class="article-element__meta-item"]'
+      match_rule: 'single'
+      datetime-format: 'MMM DD YYYY'
+      # select_expression: '(//meta[@property="article:published_time"]/@content | //span[@class="article-element__meta-item"])'
+      # match_rule: 'first'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-content"]'
       match_rule: 'single'
       remove_expressions:
         - '//div[@class="read-next"]'
+        - '//figure[@id="video-preview"]'
 
 empirenews.net:
   site_name: 'empirenews.net'
