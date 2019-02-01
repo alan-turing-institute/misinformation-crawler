@@ -736,6 +736,26 @@ liveaction.org:
       select_expression: '//div[@id="content-main"]'
       match_rule: 'single'
 
+madpatriots.com:
+  site_name: 'madpatriots.com'
+  start_url: 'http://madpatriots.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//article[contains(@class, "latestPost")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "post-single-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
+
 madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
