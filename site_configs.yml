@@ -650,6 +650,36 @@ judicialwatch.org:
       select_expression: '//div[@class="entrycontent"]'
       match_rule: 'single'
 
+ladylibertysnews.com:
+  site_name: 'ladylibertysnews.com'
+  start_url: 'http://ladylibertysnews.com/category/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/news/page/'
+      article_links: '//li[contains(@class, "infinite-post")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@itemprop="headline"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author-name vcard fn author"]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="content-main"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//node()[contains(@class, "social")]'
+        - '//div[@class="post-tags"]'
+        - '//div[contains(@class, "related-posts")]'
+
 liberalamerica.life:
   site_name: 'liberalamerica.life'
   start_url: 'http://liberalamerica.life/category/news/'
