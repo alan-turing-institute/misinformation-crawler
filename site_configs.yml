@@ -621,6 +621,35 @@ islamicanews.com:
         - '//div[contains(@id, "relatedposts")]'
         - '//div[@class="shorten_url"]'
 
+judicialwatch.org:
+  site_name: 'judicialwatch.org'
+  start_url:
+    - 'https://www.judicialwatch.org/press-room/press-releases/'
+    - 'https://www.judicialwatch.org/blog/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+  article:
+    url_must_not_contain: 'weekly-update'
+    title:
+      select_method: 'xpath'
+      select_expression: '//h2[@itemprop="headline"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@itemprop="author"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//p[@itemprop="datePublished"]/text()'
+      match_rule: 'single'
+      datetime-format: 'MMMM DD, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entrycontent"]'
+      match_rule: 'single'
+
 liberalamerica.life:
   site_name: 'liberalamerica.life'
   start_url: 'http://liberalamerica.life/category/news/'
