@@ -10,12 +10,12 @@ abcnews.go.com:
     url_must_contain: '/Politics/.+/story\?id=\d*'
     title:
       select_method: 'xpath'
-      select_expression: '//meta[@property="og:title"]/@content'
+      select_expression: '//meta[@name="fb_title"]/@content'
       match_rule: 'first'
     byline:
       select_method: 'xpath'
-      select_expression: '//node()[@rel="author"][contains(@class, "author")]/text()'
-      match_rule: 'concatenate'
+      select_expression: 'substring-before(substring-after(//script[contains(text(), "tq.byline")], "tq.byline = ''"), "'';")'
+      match_rule: 'first'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@name="Last-Modified"]/@content'
