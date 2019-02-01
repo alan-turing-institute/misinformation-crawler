@@ -1060,7 +1060,10 @@ veteransnewsreport.com:
       select_expression: '//div[@class="td-post-content"]'
       match_rule: 'single'
       remove_expressions:
-        - '//div[@style]'
+        - '//div[contains(@class, "id-content_bottom")]'
+        - '//a[contains(@href, "www.batr.org")]'
+        - '//a[contains(@href, "eepurl.com")]'
+        - '//a[contains(@href, "forum.batr.net")]'
 
 vox.com:
   site_name: 'vox.com'
