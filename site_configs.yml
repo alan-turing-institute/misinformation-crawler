@@ -1034,6 +1034,34 @@ thinkprogress.org:
       select_expression: '//div[@class="post__content"]'
       match_rule: 'single'
 
+veteransnewsreport.com:
+  site_name: 'veteransnewsreport.com'
+  start_url: 'https://www.veteransnewsreport.com/category/government-and-politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+      article_links: '//div[@class="td-module-thumb"]/a[@rel="bookmark"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@style]'
+
 vox.com:
   site_name: 'vox.com'
   start_url: 'http://www.vox.com/policy-and-politics/archives'
