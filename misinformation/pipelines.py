@@ -101,18 +101,25 @@ INSERT INTO [articles_v5]
         # Check for duplicate key exceptions and report informative log message
         except pyodbc.IntegrityError as err:
             if "Cannot insert duplicate key" in str(err):
-                error_string = str(err).split("(")[4]
-                spider.logger.warning("Refusing to add duplicate entry for: {} ({})".format(article["article_url"], error_string))
+                spider.logger.warning("Refusing to add duplicate entry for: {}".format(article["article_url"]))
             else:
-                # If this wasn't a duplicate key exception then re-raise it
+                # Re-raise the exception if it had a different cause
                 raise
-        # Check for database size exceptions and report information log message
+        # Check for database communication failure and report informative log message
+        except pyodbc.OperationalError as err:
+            if "Communication link failure" in str(err):
+                spider.request_closure = True
+                spider.logger.error("Lost connection with the database. Ending the crawl.")
+            else:
+                # Re-raise the exception if it had a different cause
+                raise
+        # Check for database size exceptions and report informative log message
         except pyodbc.ProgrammingError as err:
             if "reached its size quota" in str(err):
-                spider.database_limit = True
+                spider.request_closure = True
                 spider.logger.error("Closing down as the database has reached its size quota.")
             else:
-                # If this wasn't a duplicate key exception then re-raise it
+                # Re-raise the exception if it had a different cause
                 raise
         spider.logger.info("Finished crawling: {}".format(article["article_url"]))
         return article

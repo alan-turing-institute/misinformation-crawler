@@ -125,7 +125,7 @@ class MisinformationSpider(CrawlSpider):
         self.exporter.start_exporting()
 
         # Add flag to allow spider to be closed from inside a pipeline
-        self.database_limit = False
+        self.request_closure = False
 
         # We need to call the super constructor AFTER setting any rules as it calls self._compile_rules(), storing them
         # in self._rules. If we call the super constructor before we define the rules, they will not be compiled and
@@ -162,8 +162,8 @@ class MisinformationSpider(CrawlSpider):
 
     def save_response(self, response):
         # If we've hit the database size limit then stop crawling
-        if self.database_limit:
-            raise CloseSpider(reason="Database size exceeded.")
+        if self.request_closure:
+            raise CloseSpider(reason="Closing spider due to database issue.")
         # Otherwise save the response
         raw_article = dict()
         raw_article['site_name'] = self.config['site_name']
