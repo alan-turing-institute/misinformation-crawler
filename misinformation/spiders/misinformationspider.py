@@ -31,11 +31,13 @@ class MisinformationSpider(CrawlSpider):
                 tzinfo=datetime.timezone.utc).isoformat()
         }
 
-        # Parse domain from start URL and use to restrict crawl to follow only
-        # internal site links
-        start_url = self.config['start_url']
-        self.start_urls = [start_url]
-        site_domain = urlparse(start_url).netloc
+        # Parse domain from start URL(s) and use to restrict crawl to follow
+        # only internal site links
+        start_urls = self.config['start_url']
+        if not isinstance(start_urls, list):
+            start_urls = [start_urls]
+        self.start_urls = start_urls
+        site_domain = urlparse(start_urls[0]).netloc
         self.allowed_domains = [site_domain]
         self.article_url_require_regex = None
         self.article_url_reject_regex = None
