@@ -332,12 +332,9 @@ disclose.tv:
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      # # select_expression: '//meta[@property="article:published_time"]/@content'
       select_expression: '//span[@class="article-element__meta-item"]'
       match_rule: 'single'
       datetime-format: 'MMM DD YYYY'
-      # select_expression: '(//meta[@property="article:published_time"]/@content | //span[@class="article-element__meta-item"])'
-      # match_rule: 'first'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-content"]'
