@@ -10,12 +10,12 @@ abcnews.go.com:
     url_must_contain: '/Politics/.+/story\?id=\d*'
     title:
       select_method: 'xpath'
-      select_expression: '//meta[@property="og:title"]/@content'
+      select_expression: '//meta[@name="fb_title"]/@content'
       match_rule: 'first'
     byline:
       select_method: 'xpath'
-      select_expression: '//node()[@rel="author"][contains(@class, "author")]/text()'
-      match_rule: 'concatenate'
+      select_expression: 'substring-before(substring-after(//script[contains(text(), "tq.byline")], "tq.byline = ''"), "'';")'
+      match_rule: 'first'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@name="Last-Modified"]/@content'
@@ -736,6 +736,26 @@ liveaction.org:
       select_expression: '//div[@id="content-main"]'
       match_rule: 'single'
 
+madpatriots.com:
+  site_name: 'madpatriots.com'
+  start_url: 'http://madpatriots.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//article[contains(@class, "latestPost")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "post-single-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
+
 madworldnews.com:
   site_name: 'madworldnews.com'
   start_url: 'http://madworldnews.com/politics/'
@@ -1037,10 +1057,10 @@ thinkprogress.org:
 usasupreme.com:
   site_name: 'usasupreme.com'
   start_url: 'http://www.usasupreme.com/category/politics/'
-#  crawl_strategy:
-#    method: 'index_page'
-#    index_page:
-#      url_must_contain: '/policy-and-politics/archives/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
   article:
     title:
       select_method: 'xpath'
@@ -1061,6 +1081,37 @@ usasupreme.com:
       remove_expressions:
         - '//div[@id]'
         - '//div[@itemprop]'
+
+veteransnewsreport.com:
+  site_name: 'veteransnewsreport.com'
+  start_url: 'https://www.veteransnewsreport.com/category/government-and-politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/government-and-politics/page/'
+      article_links: '//div[@class="td-module-thumb"]/a[@rel="bookmark"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="author"]/meta[@itemprop="name"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "id-content_bottom")]'
+        - '//a[contains(@href, "www.batr.org")]'
+        - '//a[contains(@href, "eepurl.com")]'
+        - '//a[contains(@href, "forum.batr.net")]'
 
 vox.com:
   site_name: 'vox.com'
@@ -1087,6 +1138,34 @@ vox.com:
       select_method: 'xpath'
       select_expression: '//div[@class="c-entry-content"]'
       match_rule: 'single'
+
+weeklyworldnews.com:
+  site_name: 'weeklyworldnews.com'
+  start_url: 'http://weeklyworldnews.com/category/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h1/a[@rel="bookmark"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="entry-byline"]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//p[@class="entry-byline"]//time[@class="entry-date"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id]'
 
 westernjournal.com:
   site_name: 'westernjournal.com'
