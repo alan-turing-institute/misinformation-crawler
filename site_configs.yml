@@ -1037,22 +1037,22 @@ thinkprogress.org:
 usasupreme.com:
   site_name: 'usasupreme.com'
   start_url: 'http://www.usasupreme.com/category/politics/'
-#  crawl_strategy:
-#    method: 'index_page'
-#    index_page:
-#      url_must_contain: '/policy-and-politics/archives/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
   article:
     title:
       select_method: 'xpath'
-      select_expression: '//h1[@class="entry-title"]/text()'
+      select_expression: '//div[@class="article-content clearfix"]//h1[@class="entry-title"]/text()'
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@class="byline"]/span[@class="author vcard"]//text()'
+      select_expression: '//div[@class="article-content clearfix"]//span[@class="author vcard"]//text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//span[@class="posted-on"]//time[@class="entry-date published"]/@datetime'
+      select_expression: '//div[@class="article-content clearfix"]//time[@class="entry-date published"]/@datetime'
       match_rule: 'single'
     content:
       select_method: 'xpath'
