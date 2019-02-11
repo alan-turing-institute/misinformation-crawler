@@ -1061,27 +1061,26 @@ usasupreme.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/category/politics/page/'
-      article_links: '//li/a[@title]'
+      article_links: '//h2[@class="entry-title"]/a'
   article:
     title:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-content clearfix"]//h1[@class="entry-title"]/text()'
+      select_expression: '//h1[@class="entry-title"]/text()'
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-content clearfix"]//span[@class="author vcard"]//text()'
+      select_expression: '//span[@class="author vcard"]//text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-content clearfix"]//time[@class="entry-date published"]/@datetime'
+      select_expression: '//time[@class="entry-date published"]/@datetime'
       match_rule: 'single'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "entry-content")]'
       match_rule: 'single'
       remove_expressions:
-        - '//div[@id]'
-        - '//div[@itemprop]'
+        - '//div[contains(@class, "saboxplugin")]'
 
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
