@@ -1028,6 +1028,27 @@ rt.com:
         - '//div[contains(@class, "article__summary")]'
         - '//span[contains(@class, "read-more")]'
 
+satirewire.com:
+  site_name: 'satirewire.com'
+  start_url: 'http://www.satirewire.com/content1/?cat=13'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/content1/?p='
+      article_links: '//h2/a[@rel="bookmark"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//div[@class="postarea"]/h2/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="tags"]'
+        - '//div[@class="bnavigation"]'
+
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
