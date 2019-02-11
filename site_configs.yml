@@ -1051,7 +1051,7 @@ scrappleface.com:
       select_expression: '//div[@class="entry"]'
       match_rule: 'single'
       remove_expressions:
-        - '//div[@id]'
+        - '//div[contains(@id, "attachment")]'
 
 thinkprogress.org:
   site_name: 'thinkprogress.org'
