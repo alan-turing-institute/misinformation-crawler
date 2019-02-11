@@ -1054,6 +1054,34 @@ thinkprogress.org:
       select_expression: '//div[@class="post__content"]'
       match_rule: 'single'
 
+usasupreme.com:
+  site_name: 'usasupreme.com'
+  start_url: 'http://www.usasupreme.com/category/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h2[@class="entry-title"]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="entry-title"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]//text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@class="entry-date published"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "saboxplugin")]'
+
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
   start_url: 'https://www.veteransnewsreport.com/category/government-and-politics/'
