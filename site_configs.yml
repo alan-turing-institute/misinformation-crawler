@@ -1140,11 +1140,15 @@ veteransnewsreport.com:
 
 vox.com:
   site_name: 'vox.com'
-  start_url: 'http://www.vox.com/policy-and-politics/archives'
+  # start_url: 'http://www.vox.com/policy-and-politics/archives'
+  # Start month is irrelevant here as we crawl through both past and future date pages
+  start_url: 'https://www.vox.com/archives/policy-and-politics/2019/1'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/policy-and-politics/archives/'
+      # url_must_contain: '/policy-and-politics/archives/'
+      url_must_contain: 'archives/policy-and-politics/\d\d\d\d/\d+'
+      article_links: '//h2[contains(@class, "compact__title")]/a'
   article:
     url_must_contain: '\d\d\d\d/\d+/\d+/[\-a-z]*'
     title:
