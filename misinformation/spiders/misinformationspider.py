@@ -41,28 +41,32 @@ class MisinformationSpider(CrawlSpider):
         self.allowed_domains = [site_domain]
         self.article_url_require_regex = None
         self.article_url_reject_regex = None
+        self.infinite_index_url_require_regex = None
+        self.infinite_index_load_button_expression = None
+        self.infinite_index_max_clicks = -1
 
-        # We support two different link following strategies:
+        # We support three different link following strategies:
         # - 'index_page'
+        # - 'infinite_index'
         # - 'scattergun' (default)
         try:
             crawl_strategy = config['crawl_strategy']['method']
         except KeyError:
             crawl_strategy = 'scattergun'
 
-        # For the index_page strategy we need:
+        # For the index_page and infinite_index strategies we need:
         # - one Rule for link pages
         # - one Rule for article pages
-        if crawl_strategy == 'index_page':
+        if crawl_strategy in ['index_page', 'infinite_index']:
             # 1. Rule for identifying index pages of links
             try:
-                index_page_url_must_contain = self.config['crawl_strategy']['index_page']['url_must_contain']
+                index_page_url_must_contain = self.config['crawl_strategy'][crawl_strategy]['url_must_contain']
                 index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                                      attrs=('href', 'data-href', 'data-url'),
                                                      allow=(index_page_url_must_contain)),
                                        follow=True)
             except KeyError:
-                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'url_must_contain' argument is required.")
+                raise CloseSpider(reason="When using the 'index_page' or 'infinite_index' crawl strategies, the 'url_must_contain' argument is required.")
 
             # 2. Rule for identifying article links
             # If neither 'index_page_article_links' nor 'article:url_must_contain'
@@ -74,11 +78,12 @@ class MisinformationSpider(CrawlSpider):
             # extractor takes iterables as arguments so we wrap the config output in ()
             link_kwargs = {}
             with suppress(KeyError):
-                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy']['index_page']['article_links'])
+                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy'][crawl_strategy]['article_links'])
             with suppress(KeyError):
                 link_kwargs["allow"] = (self.config['article']['url_must_contain'])
             with suppress(KeyError):
                 link_kwargs["deny"] = (self.config['article']['url_must_not_contain'])
+            # Construct rule
             article_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                               attrs=('href', 'data-href', 'data-url'),
                                               **link_kwargs),
@@ -86,6 +91,16 @@ class MisinformationSpider(CrawlSpider):
 
             # Use both rules
             self.rules = (index_page_rule, article_rule)
+
+            # If this is an infinite index, allow a maximum number of clicks to be specified
+            if crawl_strategy == 'infinite_index':
+                with suppress(KeyError):
+                    self.infinite_index_max_clicks = self.config['crawl_strategy']['infinite_index']['max_button_clicks']
+                self.infinite_index_url_require_regex = re.compile(index_page_url_must_contain)
+                try:
+                    self.infinite_index_load_button_expression = self.config['crawl_strategy']['infinite_index']['load_button_expression']
+                except KeyError:
+                    raise CloseSpider(reason="When using the 'infinite_index' crawl strategy, the 'load_button_expression' argument is required.")
 
         # For the scattergun strategy we only need one Rule for following links
         elif crawl_strategy == 'scattergun':

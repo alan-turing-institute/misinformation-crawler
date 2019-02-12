@@ -814,12 +814,14 @@ nytimes.com:
   site_name: 'nytimes.com'
   start_url: 'https://www.nytimes.com/section/politics'
   crawl_strategy:
-    method: 'scattergun'
-    scattergun:
-      url_must_not_contain: '/(video|es|interactive)/'
+    method: 'infinite_index'
+    infinite_index:
+      url_must_contain: 'section/politics'
+      article_links: '//a[h2]'
+      load_button_expression: '//button[text()="Show More"]'
+      # max_button_clicks: 500
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/politics/'
-    url_must_not_contain: '(action=click|module=)'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -828,6 +830,7 @@ nytimes.com:
       select_method: 'xpath'
       select_expression: '//*[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
       match_rule: 'concatenate'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@property="article:published"]/@content'

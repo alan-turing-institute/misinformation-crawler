@@ -69,7 +69,8 @@ FEED_EXPORT_ENCODING = 'utf-8'
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'misinformation.middlewares.CloudFlareMiddleware': 560
+    'misinformation.middlewares.CloudFlareMiddleware': 560,
+    'misinformation.middlewares.JSLoadButtonMiddleware': 800
 }
 # This does not work as all the code is Python 2 and I haven't managed to port it to Python 3
 # DOWNLOADER_MIDDLEWARES = {'warcmiddleware.WarcMiddleware': 820}
@@ -84,7 +85,7 @@ EXTENSIONS = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'misinformation.pipelines.ArticleJsonFileExporter': 300,
-    'misinformation.pipelines.ArticleDatabaseExporter': 300,
+    'misinformation.pipelines.ArticleDatabaseExporter': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
