@@ -1035,13 +1035,19 @@ satirewire.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/content1/?p='
-      article_links: '//h2/a[@rel="bookmark"]'
+      url_must_contain: '/content1/\?cat=13&paged'
+      article_links: '//div[@class="excerpt"]/h2/a[@rel="bookmark"]'
   article:
+    url_must_contain: '/content1/\?p=\d+'
     title:
       select_method: 'xpath'
       select_expression: '//div[@class="postarea"]/h2/a/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-date"]/text()'
+      match_rule: 'single'
+      datetime-format: 'MMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entry"]'
