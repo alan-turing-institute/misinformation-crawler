@@ -1029,6 +1029,33 @@ rt.com:
         - '//div[contains(@class, "article__summary")]'
         - '//span[contains(@class, "read-more")]'
 
+satirewire.com:
+  site_name: 'satirewire.com'
+  start_url: 'http://www.satirewire.com/content1/?cat=13'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/content1/\?cat=13&paged'
+      article_links: '//div[@class="excerpt"]/h2/a[@rel="bookmark"]'
+  article:
+    url_must_contain: '/content1/\?p=\d+'
+    title:
+      select_method: 'xpath'
+      select_expression: '//div[@class="postarea"]/h2/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-date"]/text()'
+      match_rule: 'single'
+      datetime-format: 'MMM D, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="tags"]'
+        - '//div[@class="bnavigation"]'
+
 scrappleface.com:
   site_name: 'scrappleface.com'
   start_url: 'http://scrappleface.com/blog/category/politics/'
