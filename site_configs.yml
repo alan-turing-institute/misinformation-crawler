@@ -437,7 +437,7 @@ federalistpress.com:
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="author vcard"]//text()'
-      match_rule: 'single'
+      match_rule: 'last'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="date published time"]/@title'
@@ -488,7 +488,7 @@ gellerreport.com:
   article:
     title:
       select_method: 'xpath'
-      select_expression: '//h1[@class="entry-title"]/text()'
+      select_expression: '//header[@class="entry-header"]/h1[@class="entry-title"]/text()'
       match_rule: 'single'
     byline:
       select_method: 'xpath'
@@ -630,6 +630,7 @@ judicialwatch.org:
     method: 'index_page'
     index_page:
       url_must_contain: '/page/'
+      article_links: '//div[@class="post"]/h2/a'
   article:
     url_must_not_contain: 'weekly-update'
     title:
@@ -1094,11 +1095,11 @@ usasupreme.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@class="author vcard"]//text()'
+      select_expression: '//span[@class="author vcard" and @itemprop="name"]/a/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//time[@class="entry-date published"]/@datetime'
+      select_expression: '//article[contains(@id, "post")]//time[@class="entry-date published"]/@datetime'
       match_rule: 'single'
     content:
       select_method: 'xpath'
