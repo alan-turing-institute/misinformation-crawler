@@ -39,7 +39,6 @@ def test_extract_single():
     html = """
         <div>
             <p>First</p>
-            <p>Second</p>
         </div>
     """
     expected_result = "<p>First</p>"
