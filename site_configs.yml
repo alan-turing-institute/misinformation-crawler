@@ -620,6 +620,34 @@ henrymakow.com:
       match_rule: 'single'
       warn_if_missing: false
 
+huffingtonpost.com:
+  site_name: 'huffingtonpost.com'
+  start_url: 'https://www.huffingtonpost.com/section/politics?guccounter=1'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/entry/'
+      article_links: '//h1[contains(@class, "headline__title")]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[contains(@class, "author-card__details__name")]'
+      match_rule: 'last'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "content-list-component text")]'
+      match_rule: 'group'
+      remove_expressions:
+        - '//div[contains(@class, "advertisement-holder")]'
+
 infowars.com:
   site_name: 'infowars.com'
   start_url: 'http://infowars.com/category/us-news/'
