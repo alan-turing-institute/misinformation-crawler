@@ -814,12 +814,10 @@ nytimes.com:
   site_name: 'nytimes.com'
   start_url: 'https://www.nytimes.com/section/politics'
   crawl_strategy:
-    method: 'infinite_index'
-    infinite_index:
+    method: 'index_page'
+    index_page:
       url_must_contain: 'section/politics'
       article_links: '//a[h2]'
-      load_button_expression: '//button[text()="Show More"]'
-      # max_button_clicks: 500
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/politics/'
     title:
