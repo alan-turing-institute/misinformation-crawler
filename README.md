@@ -28,6 +28,11 @@ Several other sites have custom crawlers defined in `misinformation/spiders/spid
 converted into configurations for the custom crawler. If scrapy is installed, these can be run using
 `scrapy <spider-name>` (spider name is the website domain).
 
+## Prerequisites
+- `node.js` (for `ReadabiliPy`)
+- Microsoft SQL drivers (if pushing to the Azure server rather than running locally only)
+- `chromedriver` for Selenium (see [installation instructions](https://selenium-python.readthedocs.io/installation.html))
+
 ## Testing
 To run tests, run `python -m pytest` from the repository root.
 
@@ -35,8 +40,7 @@ To run tests, run `python -m pytest` from the repository root.
 If you are not using the latest version of macos, you may get an "sql.h not found" error when installing the `pyodbc`
 dependency via pip. This is because there is no compiled wheel for your version of macos.
 
-The options are (i) upgrade
-to the latest version of macos or (ii) install the `unixodbc` driver libraries using `brew install unixodbc`.
+The options are (i) upgrade to the latest version of macos or (ii) install the `unixodbc` driver libraries using `brew install unixodbc`.
 
 ## Install drivers for Microsoft SQL Server on macos
 1. Install Homebrew is you have not already: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
