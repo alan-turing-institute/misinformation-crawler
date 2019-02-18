@@ -819,7 +819,6 @@ nytimes.com:
       url_must_contain: 'section/politics'
       article_links: '//a[h2]'
   article:
-    url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/politics/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
@@ -1173,7 +1172,8 @@ vox.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/policy-and-politics/archives/'
+      url_must_contain: '/archives/'
+      article_links: '//h2/a'
   article:
     url_must_contain: '\d\d\d\d/\d+/\d+/[\-a-z]*'
     title:
