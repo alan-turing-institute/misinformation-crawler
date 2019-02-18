@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException,
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 
+
 class JSLoadButtonMiddleware:
     '''Scrapy middleware to bypass javascript 'load more' buttons using selenium.
 
@@ -14,7 +15,6 @@ class JSLoadButtonMiddleware:
         2. The page takes too long to load (currently 30s)
         3. A maximum number of button presses is reached (currently 10000)
     '''
-
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
@@ -34,7 +34,6 @@ class JSLoadButtonMiddleware:
         we only do this if we actively identify the page as having a javascript
         load button.
         '''
-
         # Do not use the selenium driver if this is not an index page
         if spider.index_page_url_require_regex and not spider.index_page_url_require_regex.search(request.url):
             return None
@@ -93,7 +92,6 @@ class JSLoadButtonMiddleware:
                 # timeouts this needs to be changed in the WebDriverWait
                 # constructor
                 WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != load_button.location)
-
 
             except (NoSuchElementException, StaleElementReferenceException):
                 spider.logger.info('Terminating button clicking since the button no longer exists.')
