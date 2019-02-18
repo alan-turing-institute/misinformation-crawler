@@ -43,19 +43,17 @@ class MisinformationSpider(CrawlSpider):
         self.article_url_require_regex = None
         self.article_url_reject_regex = None
 
-        # We support three different link following strategies:
+        # We support two different link following strategies:
         # - 'index_page'
-        # - 'infinite_index'
         # - 'scattergun' (default)
         try:
             crawl_strategy = config['crawl_strategy']['method']
         except KeyError:
             crawl_strategy = 'scattergun'
 
-        # For the index_page and infinite_index strategies we need:
+        # For the index_page strategy we need:
         # - one Rule for link pages
         # - one Rule for article pages
-        # if crawl_strategy in ['index_page', 'infinite_index']:
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             try:

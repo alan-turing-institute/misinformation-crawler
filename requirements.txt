@@ -7,7 +7,6 @@ html5lib
 iso8601
 pendulum
 pyodbc
-pyvirtualdisplay
 pyyaml
 regex
 scrapy
