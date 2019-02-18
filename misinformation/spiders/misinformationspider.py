@@ -92,11 +92,6 @@ class MisinformationSpider(CrawlSpider):
             # Use both rules
             self.rules = (index_page_rule, article_rule)
 
-            # # If this is an infinite index, allow a maximum number of clicks to be specified
-            # if crawl_strategy == 'infinite_index':
-            #     with suppress(KeyError):
-            #         self.infinite_index_max_clicks = self.config['crawl_strategy']['infinite_index']['max_button_clicks']
-
         # For the scattergun strategy we only need one Rule for following links
         elif crawl_strategy == 'scattergun':
             # Follow all links (after removing duplicates) and pass them to
