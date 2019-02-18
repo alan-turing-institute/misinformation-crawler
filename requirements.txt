@@ -10,4 +10,5 @@ pyodbc
 pyyaml
 regex
 scrapy
+selenium
 twisted
