@@ -803,7 +803,6 @@ nationalvanguard.org:
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      # select_expression: '//article[contains(@class, "main-post")]/meta[@itemprop="datePublished"]/@content'
       select_expression: '//time[@itemprop="datePublished"]/@datetime'
       match_rule: 'single'
     content:
@@ -838,6 +837,35 @@ nbcnews.com:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "body")]/p[@class=""]'
       match_rule: 'group'
+
+notallowedto.com:
+  site_name: 'notallowedto.com'
+  start_url: 'https://notallowedto.com/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h2[@itemprop="headline"]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/span/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//aside[contains(@class, "mashsb")]'
+        - '//figure[contains(@id, "attachment")]'
 
 nytimes.com:
   site_name: 'nytimes.com'
