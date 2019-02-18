@@ -7,11 +7,12 @@ html5lib
 iso8601
 pendulum
 pycodestyle
-pyodbc
 pyflakes
+pyodbc
 pytest
 pytest-cov
 pyyaml
 regex
 scrapy
+selenium
 twisted

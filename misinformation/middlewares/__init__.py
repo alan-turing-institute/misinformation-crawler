@@ -3,5 +3,6 @@
 # See documentation at:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 from .cloudflaremiddleware import CloudFlareMiddleware
+from .jsloadbuttonmiddleware import JSLoadButtonMiddleware
 
-__all__ = ['CloudFlareMiddleware']
+__all__ = ['CloudFlareMiddleware', 'JSLoadButtonMiddleware']
