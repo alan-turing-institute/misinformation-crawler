@@ -784,6 +784,35 @@ madworldnews.com:
       select_expression: '//div[contains(@class, "entry-content")]/p'
       match_rule: 'group'
 
+nationalvanguard.org:
+  site_name: 'nationalvanguard.org'
+  start_url: 'http://nationalvanguard.org'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h3[@itemprop="headline"]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[contains(@class, "author vcard"  )]/span/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      # select_expression: '//article[contains(@class, "main-post")]/meta[@itemprop="datePublished"]/@content'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "yuzo")]'
+
 nbcnews.com:
   site_name: 'nbcnews.com'
   start_url: 'http://www.nbcnews.com/politics'
