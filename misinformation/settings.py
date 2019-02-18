@@ -24,7 +24,6 @@ LOG_LEVEL = 'INFO'
 # a unicode storing NVCHAR column can require two bytes of storage
 URLLENGTH_LIMIT = 850
 
-
 # The polite thing to do is to crawl responsibly by identifying ourselves in the user-agent string.
 # However, we get 403 forbidden errors with some sites when using the scrapy default user-agent
 # Here we fix our user agent as the latest one for Chrome for reproducibility (rather than generate a random
@@ -35,7 +34,7 @@ USER_AGENT = UserAgent().chrome
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 8
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
