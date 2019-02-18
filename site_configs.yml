@@ -1019,6 +1019,38 @@ prisonplanet.com:
         - '//div[@class="print_sub"]'
         - '//h1[@class="page_title single_title"]'
 
+realnewsrightnow.com:
+  site_name: 'realnewsrightnow.com'
+  start_url:
+    - 'http://realnewsrightnow.com/politics/'
+    - 'http://realnewsrightnow.com/author/hobbus/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//article[contains(@class, "category-politics")]//node()[@itemprop="headline"]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//aside[@class="post-author"]/a[@rel="author"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "sharedaddy")]'
+        - '//div[contains(@class, "author-information")]'
+        - '//footer[contains(@class, "article-tags")]'
+
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
