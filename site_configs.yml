@@ -1281,6 +1281,36 @@ usasupreme.com:
       remove_expressions:
         - '//div[contains(@class, "saboxplugin")]'
 
+usatoday.com:
+  site_name: 'usatoday.com'
+  start_url: 'https://eu.usatoday.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="publish-date"]/text()'
+      match_rule: 'single'
+      datetime-format: '[Published] hh:mm A [EST] MMM DD, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-wrapper"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//h1[@class="title"]'
+        - '//div[@class="byline-section"]'
+        - '//div[@class="footer-publish-date"]'
+
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
   start_url: 'https://www.veteransnewsreport.com/category/government-and-politics/'
