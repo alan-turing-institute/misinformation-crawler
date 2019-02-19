@@ -256,6 +256,32 @@ christianpost.com:
         - '//div[@class="share-icons"]'
         - '//div[@class="article_credit"]'
 
+cnn.com:
+  site_name: 'cnn.com'
+  start_url: 'https://edition.cnn.com/politics'
+  crawl_strategy:
+    method: 'scattergun'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/politics/.+/index.html'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:pubdate"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "read-more")]'
+
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
