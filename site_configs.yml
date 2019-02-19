@@ -51,7 +51,7 @@ addictinginfo.com:
       match_rule: 'first'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
+      select_expression: '//time[contains(@class, "entry-date")]/@datetime'
       match_rule: 'single'
     content:
       select_method: 'xpath'
@@ -59,6 +59,37 @@ addictinginfo.com:
       match_rule: 'single'
       remove_expressions:
         - '//div[contains(@class, "ad-inserter")]'
+
+aljazeera.com:
+  site_name: 'aljazeera.com'
+  start_url: 'https://www.aljazeera.com/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/$'
+      article_links: '//a[h2[@class="topics-sec-item-head"]]'
+  article:
+    url_must_contain: '/news/\d\d\d\d/\d\d/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-heading-author-name"]//a[@rel="author"]/text()'
+      match_rule: 'single'
+      warn_if_missing: False
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-heading-author-name"]//time[@class="timeagofunction"]/@datetime'
+      match_rule: 'single'
+      datetime-format: 'ddd MMM DD YYYY hh:mm:ss'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-p-wrapper"]'
+      match_rule: 'single'
+      # remove_expressions:
+      #   - '//div[contains(@class, "ad-inserter")]'
 
 alternet.org:
   site_name: 'alternet.org'
