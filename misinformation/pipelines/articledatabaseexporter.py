@@ -9,7 +9,8 @@ class ArticleDatabaseExporter():
     def __init__(self):
         self.encoder = None
         self.conn = None
-        self.cursor = None
+        # Load database configuration from file in secrets folder
+        self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
         self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) = ?
 
 INSERT INTO [articles_v5]
@@ -36,26 +37,43 @@ INSERT INTO [articles_v5]
             raise NotConfigured
         return cls()
 
-    # Initialise pipeline when crawler opened
-    def open_spider(self, spider):
-        # Load database configuration from file in secrets folder
-        db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
-        # Set up database connection
-        self.conn = pyodbc.connect(
-            'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}'.format(
-                driver=db_config['driver'], server=db_config['server'], database=db_config['database'],
-                user=db_config['user'], password=db_config['password']
-            ))
-        self.cursor = self.conn.cursor()
+    @property
+    def cursor(self):
+        '''Get the database cursor, attempting to reconnect once if the connection is closed'''
+        if not self.conn:
+            return None
+        try:
+            cursor = self.conn.cursor()
+        except pyodbc.ProgrammingError as err:
+            if "Attempt to use a closed connection." in str(err):
+                self.connect_to_database()
+            cursor = self.conn.cursor()
+        return cursor
+
+    def open_spider(self, _):
+        '''Initialise pipeline when crawler is opened'''
+        # Connect to the database using configuration from file in secrets folder
+        self.connect_to_database()
         # Set up JSON encoder
         self.encoder = json.JSONEncoder(ensure_ascii=False)
 
-    # Tidy up after crawler closed
-    def close_spider(self, spider):
+    def close_spider(self, _):
+        '''Tidy up after crawler is closed'''
         self.conn.close()
 
+    def connect_to_database(self):
+        '''Set up database connection'''
+        self.conn = pyodbc.connect(
+            'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}'.format(
+                driver=self.db_config['driver'], server=self.db_config['server'],
+                database=self.db_config['database'], user=self.db_config['user'],
+                password=self.db_config['password']
+            ))
+
     def process_item(self, article, spider):
+        '''Add an article to the database'''
         row = self.encoder.encode(dict(article))
+
         try:
             self.cursor.execute(self.insert_row_sql, row)
             self.conn.commit()
