@@ -3,6 +3,7 @@ import datetime
 import uuid
 import os
 import re
+from w3lib.url import url_query_cleaner
 from urllib.parse import urlparse
 from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
@@ -51,30 +52,41 @@ class MisinformationSpider(CrawlSpider):
         except KeyError:
             crawl_strategy = 'scattergun'
 
+        # Strip query strings from URLs if requested
+        try:
+            strip_query_strings = config['crawl_strategy']['strip_query_strings']
+            if strip_query_strings:
+                link_kwargs_base = {"process_value": url_query_cleaner}
+        except KeyError:
+            link_kwargs_base = {}
+
         # For the index_page strategy we need:
         # - one Rule for link pages
         # - one Rule for article pages
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
+            link_kwargs = dict(link_kwargs_base)
             try:
-                index_page_url_must_contain = self.config['crawl_strategy'][crawl_strategy]['url_must_contain']
-                index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
-                                                     attrs=('href', 'data-href', 'data-url'),
-                                                     allow=(index_page_url_must_contain)),
-                                       follow=True)
-                self.index_page_url_require_regex = re.compile(index_page_url_must_contain)
+                link_kwargs["allow"] = self.config['crawl_strategy'][crawl_strategy]['url_must_contain']
+                self.index_page_url_require_regex = re.compile(link_kwargs["allow"])
             except KeyError:
-                raise CloseSpider(reason="When using the 'index_page' crawl strategy, the 'url_must_contain' argument is required.")
+                self.logger.warning("Using the 'index_page' crawl strategy without giving the 'url_must_contain' argument - only the start_url will be used as an index page.")
+                link_kwargs["deny"] = '.*'
+            index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
+                                                    attrs=('href', 'data-href', 'data-url'),
+                                                    **link_kwargs),
+                                    follow=True)
 
             # 2. Rule for identifying article links
-            # If neither 'index_page_article_links' nor 'article:url_must_contain'
+            # If neither 'index_page:article_links' nor 'article:url_must_contain'
             # are provided then all links will be parsed and if content is
             # extracted from them, they will be recorded.
             #
             # Suppress KeyErrors when retrieving optional arguments from
             # nested dictionary - need one suppress per retrieve. NB. the link
-            # extractor takes iterables as arguments so we wrap the config output in ()
-            link_kwargs = {}
+            # extractor takes iterables as arguments so we wrap the config
+            # output in ()
+            link_kwargs = dict(link_kwargs_base)
             with suppress(KeyError):
                 link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy'][crawl_strategy]['article_links'])
             with suppress(KeyError):
@@ -97,8 +109,9 @@ class MisinformationSpider(CrawlSpider):
             #
             # Suppress KeyErrors when retrieving optional arguments from
             # nested dictionary - need one suppress per retrieve. NB. the link
-            # extractor takes iterables as arguments so we wrap the config output in ()
-            link_kwargs = {}
+            # extractor takes iterables as arguments so we wrap the config
+            # output in ()
+            link_kwargs = dict(link_kwargs_base)
             with suppress(KeyError):
                 link_kwargs["allow"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_contain'])
             with suppress(KeyError):
@@ -109,7 +122,7 @@ class MisinformationSpider(CrawlSpider):
                              follow=True, callback="parse_response")
             self.rules = (link_rule, )
 
-            # Optional regexes for determining whether this is an article using the URL
+            # Optional regexes which test the URL to see if this is an article
             with suppress(KeyError):
                 self.article_url_require_regex = re.compile(self.config['article']['url_must_contain'])
             with suppress(KeyError):
@@ -132,17 +145,19 @@ class MisinformationSpider(CrawlSpider):
         # Add flag to allow spider to be closed from inside a pipeline
         self.request_closure = False
 
-        # We need to call the super constructor AFTER setting any rules as it calls self._compile_rules(), storing them
-        # in self._rules. If we call the super constructor before we define the rules, they will not be compiled and
-        # self._rules will be empty, even though self.rules will have the right rules present.
+        # We need to call the super constructor AFTER setting any rules as it
+        # calls self._compile_rules(), storing them in self._rules. If we call
+        # the super constructor before we define the rules, they will not be
+        # compiled and self._rules will be empty, even though self.rules will
+        # have the right rules present.
         super().__init__(*args, **kwargs)
 
     def parse_response(self, response):
         self.logger.info('Searching for an article at: {}'.format(response.url))
 
-        # Always reject the front page of the domain since this will change over time
-        # We need this for henrymakow.com as there is no sane URL match rule for identifying
-        # articles and the index page parses as one.
+        # Always reject the front page of the domain since this will change
+        # over time We need this for henrymakow.com as there is no sane URL
+        # match rule for identifying articles and the index page parses as one.
         if urlparse(response.url).path in ['', '/', 'index.html']:
             return
 
