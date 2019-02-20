@@ -26,7 +26,8 @@ class JSLoadButtonMiddleware:
         self.max_button_clicks = 10000
         self.button_xpaths = [
             '//button[text()="Show More"]',
-            '//button[text()="Load More"]'
+            '//button[text()="Load More"]',
+            '//button[contains(@class, "show-more")]'
         ]
 
     def process_request(self, request, spider):

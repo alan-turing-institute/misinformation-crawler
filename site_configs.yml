@@ -848,6 +848,7 @@ mic.com:
     strip_query_strings: True
     method: 'index_page'
     index_page:
+      url_must_not_contain: '/articles/'
       article_links: '//a[contains(@class, "headline__link")]'
   article:
     url_must_not_contain: 'mailto:'
@@ -858,7 +859,7 @@ mic.com:
     byline:
       select_method: 'xpath'
       select_expression: '//span[contains(@itemprop, "author")]//span[@itemprop="name"]/@data-byline-name'
-      match_rule: 'single'
+      match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time[@itemprop="datePublished"]/@datetime'
