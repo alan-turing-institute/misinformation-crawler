@@ -77,8 +77,8 @@ class MisinformationSpider(CrawlSpider):
                 self.logger.warning("Using the 'index_page' crawl strategy without giving 'url_must_contain' or 'url_must_not_contain' arguments. Only the start_url will be used as an index page.")
                 link_kwargs["deny"] = ('.*')
             index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
-                                                    attrs=('href', 'data-href', 'data-url'),
-                                                    **link_kwargs),
+                                                 attrs=('href', 'data-href', 'data-url'),
+                                                 **link_kwargs),
                                    follow=True)
 
             # 2. Rule for identifying article links
