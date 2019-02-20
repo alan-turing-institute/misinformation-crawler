@@ -41,6 +41,7 @@ class MisinformationSpider(CrawlSpider):
         site_domain = urlparse(start_urls[0]).netloc
         self.allowed_domains = [site_domain]
         self.index_page_url_require_regex = None
+        self.index_page_url_reject_regex = None
         self.article_url_require_regex = None
         self.article_url_reject_regex = None
 
@@ -66,16 +67,19 @@ class MisinformationSpider(CrawlSpider):
         if crawl_strategy == 'index_page':
             # 1. Rule for identifying index pages of links
             link_kwargs = dict(link_kwargs_base)
-            try:
-                link_kwargs["allow"] = self.config['crawl_strategy'][crawl_strategy]['url_must_contain']
+            with suppress(KeyError):
+                link_kwargs["allow"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_contain'])
                 self.index_page_url_require_regex = re.compile(link_kwargs["allow"])
-            except KeyError:
-                self.logger.warning("Using the 'index_page' crawl strategy without giving the 'url_must_contain' argument - only the start_url will be used as an index page.")
-                link_kwargs["deny"] = '.*'
+            with suppress(KeyError):
+                link_kwargs["deny"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_not_contain'])
+                self.index_page_url_reject_regex = re.compile(link_kwargs["deny"])
+            if "allow" not in link_kwargs and "deny" not in link_kwargs:
+                self.logger.warning("Using the 'index_page' crawl strategy without giving 'url_must_contain' or 'url_must_not_contain' arguments. Only the start_url will be used as an index page.")
+                link_kwargs["deny"] = ('.*')
             index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                                     attrs=('href', 'data-href', 'data-url'),
                                                     **link_kwargs),
-                                    follow=True)
+                                   follow=True)
 
             # 2. Rule for identifying article links
             # If neither 'index_page:article_links' nor 'article:url_must_contain'
