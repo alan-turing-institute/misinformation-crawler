@@ -622,12 +622,15 @@ henrymakow.com:
 
 huffingtonpost.com:
   site_name: 'huffingtonpost.com'
-  start_url: 'https://www.huffingtonpost.com/section/politics?guccounter=1'
+  additional_domains:
+    - 'huffpost.com'
+    - 'huffingtonpost.co.uk'
+  start_url: 'https://www.huffingtonpost.com/section/politics'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/entry/'
-      article_links: '//h1[contains(@class, "headline__title")]/a'
+      url_must_contain: 'politics\?page='
+      article_links: '//div[@class="card__headline"]/a'
   article:
     title:
       select_method: 'xpath'
@@ -635,18 +638,21 @@ huffingtonpost.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[contains(@class, "author-card__details__name")]'
+      select_expression: '//span[contains(@class, "author-card__details__name")]/text()|//div[contains(@class, "wire-byline")]/span/text()|//div[contains(@class, "author-list")]/span/text()'
       match_rule: 'last'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@property="article:published_time"]/@content'
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "content-list-component text")]'
+      select_expression: '//div[contains(@class, "content-list-component")]'
       match_rule: 'group'
       remove_expressions:
         - '//div[contains(@class, "advertisement-holder")]'
+        - '//figure'
+        - '//blockquote'
 
 infowars.com:
   site_name: 'infowars.com'
