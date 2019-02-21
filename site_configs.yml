@@ -191,6 +191,7 @@ cap-news.com:
     byline:
       select_method: 'xpath'
       select_expression: 'substring-after(//div[@id="sto_graphs"]/p[last()]/text(), "- ")'
+      match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:article:published_time"]/@content'
@@ -201,6 +202,35 @@ cap-news.com:
       match_rule: 'single'
       remove_expressions:
         - '//p[contains(@class, "subtext")]'
+
+cbsnews.com:
+  site_name: 'cbsnews.com'
+  start_url: 'https://www.cbsnews.com/latest/us/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/latest/us/\d+'
+      article_links: '//a[h3[@class="title"]]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "author-info")]/span[contains(@class, "author--name")]/text()'
+      match_rule: 'single'
+      warn_if_missing: False
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//section[@data-page="1"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//figure[contains(@class, "embed")]'
 
 centerforsecuritypolicy.org:
   site_name: 'centerforsecuritypolicy.org'
