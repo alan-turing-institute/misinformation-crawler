@@ -1215,6 +1215,7 @@ pbs.org:
       select_method: 'xpath'
       select_expression: '//a[@class="post__byline-name-hyphenated"]/text()'
       match_rule: 'first'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time[@class="post__date"]/@content'
