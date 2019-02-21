@@ -161,7 +161,6 @@ def pendulum_datetime_extract(date_string, date_format=None):
                     date_string = date_string[:-3]
                 datetime = pendulum.from_timestamp(int(date_string))
             else:
-                print("::", date_string, date_format)
                 datetime = pendulum.from_format(date_string, date_format)
         else:
             # Assume ISO-8601
