@@ -26,7 +26,8 @@ class JSLoadButtonMiddleware:
         self.max_button_clicks = 10000
         self.button_xpaths = [
             '//button[text()="Show More"]',
-            '//button[text()="Load More"]'
+            '//button[text()="Load More"]',
+            '//button[contains(@class, "show-more")]'
         ]
 
     def process_request(self, request, spider):
@@ -39,6 +40,8 @@ class JSLoadButtonMiddleware:
         # Do not use the selenium driver if this is not an index page
         if spider.index_page_url_require_regex and not spider.index_page_url_require_regex.search(request.url):
             return None
+        if spider.index_page_url_reject_regex and spider.index_page_url_reject_regex.search(request.url):
+            return
 
         # Do not process the same request URL twice
         if request.url in self.seen_urls:

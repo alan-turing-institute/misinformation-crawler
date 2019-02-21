@@ -875,6 +875,36 @@ madworldnews.com:
       select_expression: '//div[contains(@class, "entry-content")]/p'
       match_rule: 'group'
 
+mic.com:
+  site_name: 'mic.com'
+  start_url: 'https://mic.com/'
+  crawl_strategy:
+    strip_query_strings: True
+    method: 'index_page'
+    index_page:
+      url_must_not_contain: '/articles/'
+      article_links: '//a[contains(@class, "headline__link")]'
+  article:
+    url_must_not_contain: 'mailto:'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[contains(@itemprop, "author")]//span[@itemprop="name"]/@data-byline-name'
+      match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "article-page-body")]/article'
+      match_rule: 'single'
+      remove_expressions:
+        - '//figure[@class="embed"]'
+
 nationalvanguard.org:
   site_name: 'nationalvanguard.org'
   start_url: 'http://nationalvanguard.org'
