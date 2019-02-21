@@ -4,6 +4,7 @@ import arrow
 import pendulum
 from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
+import re
 
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
@@ -120,6 +121,19 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
 
 
 def extract_datetime_string(date_string, date_format=None, timezone=False):
+    # Replace lower-case AM and PM with upper-case equivalents since pendulum
+    # can only interpret upper-case
+    if date_string:
+        date_string = date_string.replace("am", "AM").replace("pm", "PM")
+
+    # Huffington Post (sometimes) uses datetimes in the following format:
+    # YYYY-MM-DD hh:mm:ss Z and sometimes the normal form with 'T' and no spaces
+    # Here we convert the first to the second
+    # so 2019-01-30 09:39:19 -0500 goes to 2019-01-30T09:39:19-0500
+    if date_string:
+        if re.search(r"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\s[+-]\d{4}", date_string):
+            date_string = date_string.replace(" -", "-").replace(" +", "+").replace(" ", "T")
+
     # First try pendulum as it seems to have fewer bugs
     # Source: http://blog.eustace.io/please-stop-using-arrow.html
     datetime = pendulum_datetime_extract(date_string, date_format)
