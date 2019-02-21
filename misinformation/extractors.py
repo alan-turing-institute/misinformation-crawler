@@ -6,6 +6,7 @@ from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
 import re
 
+
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
         "select_method": "xpath",
