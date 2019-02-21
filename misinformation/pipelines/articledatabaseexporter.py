@@ -61,7 +61,7 @@ INSERT INTO [articles_v5]
             try:
                 self.cnxn.cursor().execute(self.insert_row_sql, row)
                 self.cnxn.commit()
-                return # Stop on success
+                return  # Stop on success
             except (pyodbc.ProgrammingError, pyodbc.OperationalError):
                 spider.logger.info("Database connection failure: retrying, attempt {}/{}".format(retry + 1, n_attempts))
                 self.connect_to_database()
