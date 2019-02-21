@@ -1198,6 +1198,35 @@ patriotnewsdaily.com:
       select_expression: '//div[@class="entry"]'
       match_rule: 'single'
 
+pbs.org:
+  site_name: 'pbs.org'
+  start_url: 'https://www.pbs.org/newshour/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'newshour/politics/page/'
+      article_links: '//article[@class="card-horiz"]/div[@class="card-horiz__body"]/p[@class="card-horiz__link"]/a[text()="Continue reading"]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="post__title"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//a[@class="post__byline-name-hyphenated"]/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@class="post__date"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="body-text"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//aside'
+        - '//h3'
+
 prisonplanet.com:
   site_name: 'prisonplanet.com'
   start_url: 'http://prisonplanet.com/section/featured-stories/'
