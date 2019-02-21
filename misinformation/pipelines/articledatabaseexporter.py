@@ -8,7 +8,7 @@ import pyodbc
 class ArticleDatabaseExporter():
     def __init__(self):
         self.encoder = None
-        self.conn = None
+        self.cnxn = None
         # Load database configuration from file in secrets folder
         self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
         self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) = ?
@@ -37,46 +37,43 @@ INSERT INTO [articles_v5]
             raise NotConfigured
         return cls()
 
-    @property
-    def cursor(self):
-        '''Get the database cursor, attempting to reconnect once if the connection is closed'''
-        if not self.conn:
-            return None
-        try:
-            cursor = self.conn.cursor()
-        except pyodbc.ProgrammingError as err:
-            if "Attempt to use a closed connection." in str(err):
-                self.connect_to_database()
-            cursor = self.conn.cursor()
-        return cursor
-
-    def open_spider(self, _):
-        '''Initialise pipeline when crawler is opened'''
-        # Connect to the database using configuration from file in secrets folder
+    def open_spider(self, spider):
+        '''Initialise database connection and JSON encoder when crawler is opened'''
         self.connect_to_database()
-        # Set up JSON encoder
         self.encoder = json.JSONEncoder(ensure_ascii=False)
 
     def close_spider(self, _):
         '''Tidy up after crawler is closed'''
-        self.conn.close()
+        self.cnxn.close()
 
     def connect_to_database(self):
-        '''Set up database connection'''
-        self.conn = pyodbc.connect(
+        '''Connect to the database using configuration from file in secrets folder'''
+        self.cnxn = pyodbc.connect(
             'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}'.format(
                 driver=self.db_config['driver'], server=self.db_config['server'],
                 database=self.db_config['database'], user=self.db_config['user'],
                 password=self.db_config['password']
             ))
 
+    def add_dbentry_with_reconnection(self, spider, row, n_attempts=3):
+        '''Attempt to commit transaction to the database, with 'n_attempts' reconnection attempts.'''
+        for retry in range(n_attempts):
+            try:
+                self.cnxn.cursor().execute(self.insert_row_sql, row)
+                self.cnxn.commit()
+                return # Stop on success
+            except (pyodbc.ProgrammingError, pyodbc.OperationalError):
+                spider.logger.info("Database connection failure: retrying, attempt {}/{}".format(retry + 1, n_attempts))
+                self.connect_to_database()
+        # If we get here then reconnecting has failed so end the crawl
+        spider.request_closure = True
+        spider.logger.error("Ending crawl as no connection to the database is possible.")
+
     def process_item(self, article, spider):
         '''Add an article to the database'''
         row = self.encoder.encode(dict(article))
-
         try:
-            self.cursor.execute(self.insert_row_sql, row)
-            self.conn.commit()
+            self.add_dbentry_with_reconnection(spider, row)
         # Check for duplicate key exceptions and report informative log message
         except pyodbc.IntegrityError as err:
             if "Cannot insert duplicate key" in str(err):
@@ -92,11 +89,11 @@ INSERT INTO [articles_v5]
             else:
                 # Re-raise the exception if it had a different cause
                 raise
-        # Check for database size exceptions and report informative log message
+        # Check for database size or lost connection exceptions and report informative log message
         except pyodbc.ProgrammingError as err:
             if "reached its size quota" in str(err):
                 spider.request_closure = True
-                spider.logger.error("Closing down as the database has reached its size quota.")
+                spider.logger.error("Ending crawl as the database has reached its size quota.")
             else:
                 # Re-raise the exception if it had a different cause
                 raise
