@@ -961,7 +961,7 @@ nbcnews.com:
 
 newsweek.com:
   site_name: 'newsweek.com'
-  start_url: 'newsweek.com/us'
+  start_url: 'https://www.newsweek.com/us'
   crawl_strategy:
     method: 'index_page'
     index_page:
@@ -970,13 +970,12 @@ newsweek.com:
   article:
     title:
       select_method: 'xpath'
-      # select_expression: '//meta[@property="og:title"]/@content'
       select_expression: '//h1[@itemprop="headline"]/text()'
       match_rule: 'single'
     byline:
       select_method: 'xpath'
       select_expression: '//span[@itemprop="author"]/a/span[@itemprop="name"]/text()'
-      match_rule: 'single'
+      match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time[@itemprop="datePublished"]/@datetime'
