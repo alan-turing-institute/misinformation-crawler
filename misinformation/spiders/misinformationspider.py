@@ -38,8 +38,8 @@ class MisinformationSpider(CrawlSpider):
         if not isinstance(start_urls, list):
             start_urls = [start_urls]
         self.start_urls = start_urls
-        site_domain = urlparse(start_urls[0]).netloc
-        self.allowed_domains = [site_domain]
+        allowed_domains = self.config.get('additional_domains', []) + [urlparse(url).netloc for url in start_urls]
+        self.allowed_domains = list(set(allowed_domains))
         self.index_page_url_require_regex = None
         self.index_page_url_reject_regex = None
         self.article_url_require_regex = None
