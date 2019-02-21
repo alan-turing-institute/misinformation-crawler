@@ -959,6 +959,36 @@ nbcnews.com:
       select_expression: '//div[contains(@class, "body")]/p[@class=""]'
       match_rule: 'group'
 
+newsweek.com:
+  site_name: 'newsweek.com'
+  start_url: 'newsweek.com/us'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/us?page='
+      article_links: '//h3/a'
+  article:
+    title:
+      select_method: 'xpath'
+      # select_expression: '//meta[@property="og:title"]/@content'
+      select_expression: '//h1[@itemprop="headline"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="author"]/a/span[@itemprop="name"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//span[contains(@class, "embed-image")]'
+        - '//span[contains(@class, "figure")]'
+
 notallowedto.com:
   site_name: 'notallowedto.com'
   start_url: 'https://notallowedto.com/news/'
