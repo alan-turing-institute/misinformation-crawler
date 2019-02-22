@@ -1216,6 +1216,7 @@ prisonplanet.com:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]/p//strong/text()'
       match_rule: 'first'
+      warn_if_missing: False
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]/p/text()'
