@@ -1,54 +1,16 @@
 import json
-import os
+import yaml
 import pkg_resources
 from scrapy.exceptions import NotConfigured
-from scrapy.exporters import JsonItemExporter
-import yaml
 import pyodbc
 
 
-class ArticleJsonFileExporter():
-
-    def __init__(self):
-        self.exporter = None
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        exporter = crawler.settings['ARTICLE_EXPORTER']
-        if exporter != 'file':
-            # if this isn't specified in settings, the pipeline will be completely disabled
-            raise NotConfigured
-        return cls()
-
-    # Initialise pipeline when crawler opened
-    def open_spider(self, spider):
-        output_dir = "articles"
-        output_file = "{}_extracted.txt".format(spider.config['site_name'])
-        # Ensure output directory exists
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
-        output_path = os.path.join(output_dir, output_file)
-        file_handle = open(output_path, 'wb')
-        self.exporter = JsonItemExporter(file_handle)
-        self.exporter.start_exporting()
-
-    # Tidy up after crawler closed
-    def close_spider(self, spider):
-        self.exporter.finish_exporting()
-        self.exporter.file.close()
-
-    def process_item(self, article, spider):
-        self.exporter.export_item(article)
-        spider.logger.info("Successfully crawled: {}".format(article["article_url"]))
-        return article
-
-
 class ArticleDatabaseExporter():
-
     def __init__(self):
         self.encoder = None
-        self.conn = None
-        self.cursor = None
+        self.cnxn = None
+        # Load database configuration from file in secrets folder
+        self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
         self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) = ?
 
 INSERT INTO [articles_v5]
@@ -75,29 +37,43 @@ INSERT INTO [articles_v5]
             raise NotConfigured
         return cls()
 
-    # Initialise pipeline when crawler opened
     def open_spider(self, spider):
-        # Load database configuration from file in secrets folder
-        db_config = yaml.load(pkg_resources.resource_string(__name__, "../secrets/db_config.yml"))
-        # Set up database connection
-        self.conn = pyodbc.connect(
-            'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}'.format(
-                driver=db_config['driver'], server=db_config['server'], database=db_config['database'],
-                user=db_config['user'], password=db_config['password']
-            ))
-        self.cursor = self.conn.cursor()
-        # Set up JSON encoder
+        '''Initialise database connection and JSON encoder when crawler is opened'''
+        self.connect_to_database()
         self.encoder = json.JSONEncoder(ensure_ascii=False)
 
-    # Tidy up after crawler closed
-    def close_spider(self, spider):
-        self.conn.close()
+    def close_spider(self, _):
+        '''Tidy up after crawler is closed'''
+        self.cnxn.close()
+
+    def connect_to_database(self):
+        '''Connect to the database using configuration from file in secrets folder'''
+        self.cnxn = pyodbc.connect(
+            'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}'.format(
+                driver=self.db_config['driver'], server=self.db_config['server'],
+                database=self.db_config['database'], user=self.db_config['user'],
+                password=self.db_config['password']
+            ))
+
+    def add_dbentry_with_reconnection(self, spider, row, n_attempts=3):
+        '''Attempt to commit transaction to the database, with 'n_attempts' reconnection attempts.'''
+        for retry in range(n_attempts):
+            try:
+                self.cnxn.cursor().execute(self.insert_row_sql, row)
+                self.cnxn.commit()
+                return  # Stop on success
+            except (pyodbc.ProgrammingError, pyodbc.OperationalError):
+                spider.logger.info("Database connection failure: retrying, attempt {}/{}".format(retry + 1, n_attempts))
+                self.connect_to_database()
+        # If we get here then reconnecting has failed so end the crawl
+        spider.request_closure = True
+        spider.logger.error("Ending crawl as no connection to the database is possible.")
 
     def process_item(self, article, spider):
+        '''Add an article to the database'''
         row = self.encoder.encode(dict(article))
         try:
-            self.cursor.execute(self.insert_row_sql, row)
-            self.conn.commit()
+            self.add_dbentry_with_reconnection(spider, row)
         # Check for duplicate key exceptions and report informative log message
         except pyodbc.IntegrityError as err:
             if "Cannot insert duplicate key" in str(err):
@@ -113,11 +89,11 @@ INSERT INTO [articles_v5]
             else:
                 # Re-raise the exception if it had a different cause
                 raise
-        # Check for database size exceptions and report informative log message
+        # Check for database size or lost connection exceptions and report informative log message
         except pyodbc.ProgrammingError as err:
             if "reached its size quota" in str(err):
                 spider.request_closure = True
-                spider.logger.error("Closing down as the database has reached its size quota.")
+                spider.logger.error("Ending crawl as the database has reached its size quota.")
             else:
                 # Re-raise the exception if it had a different cause
                 raise
