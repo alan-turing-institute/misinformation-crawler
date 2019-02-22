@@ -18,15 +18,20 @@ def main():
                         help='Article export method.')
     args = parser.parse_args()
 
-    # Load crawl configuration for site from configuration
-    spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
-    site_configs = yaml.load(spider_config)
-
+    # Set up logging
     configure_logging()
 
-    # Set up a crawler runner
-    # Update settings here as we can't seem to successfully do this when trying to set a spider's custom_settings
-    # attribute in it's initialiser
+    # Load crawl configuration for site from configuration
+    site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"))
+
+    # Retrieve configuration for specified site
+    site_config = site_configs[args.site_name]
+    article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"))
+    if args.site_name in article_lists:
+        site_config["article_list"] = article_lists[args.site_name]
+
+    # Update crawler settings here as we can't seem to do this when using the
+    # custom_settings attribute in the spider initialiser
     settings = get_project_settings()
     # Add custom settings
     settings.update({
@@ -40,9 +45,9 @@ def main():
         settings.update({
             'CLOSESPIDER_ITEMCOUNT': args.max_articles
         })
-    process = CrawlerProcess(settings)
 
-    # Run crawl for specified site
+    # Set up a crawler process and run crawl for specified site
+    process = CrawlerProcess(settings)
     process.crawl(MisinformationSpider, config=site_configs[args.site_name])
     process.start()
 
