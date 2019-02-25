@@ -2,6 +2,7 @@
 #
 # See documentation at:
 # https://doc.scrapy.org/en/latest/topics/spiders.html
-from .misinformationspider import MisinformationSpider
+from .misinformationindexpagespider import MisinformationIndexPageSpider
+from .misinformationscattergunspider import MisinformationScattergunSpider
 
-__all__ = ['MisinformationSpider']
+__all__ = ['MisinformationIndexPageSpider', 'MisinformationScattergunSpider']

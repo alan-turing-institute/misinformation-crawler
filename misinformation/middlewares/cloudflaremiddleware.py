@@ -30,7 +30,7 @@ class CloudFlareMiddleware:
 
         # Otherwise try to retrieve the cookie using cfscrape
         spider.logger.info('Cloudflare protection detected on {}, trying to bypass...'.format(response.url))
-        cloudflare_tokens, __ = get_tokens(request.url, user_agent=spider.settings.get('USER_AGENT'))
+        cloudflare_tokens, _ = get_tokens(request.url, user_agent=spider.settings.get('USER_AGENT'))
         spider.logger.info('Obtained CloudFlare tokens for {}, re-scheduling the request'.format(response.url))
 
         # Add the cookies to the request and continue

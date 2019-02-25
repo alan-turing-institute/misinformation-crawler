@@ -4,7 +4,7 @@ import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
-from misinformation.spiders import MisinformationSpider
+from misinformation.spiders import MisinformationIndexPageSpider, MisinformationScattergunSpider
 
 
 def main():
@@ -46,9 +46,21 @@ def main():
             'CLOSESPIDER_ITEMCOUNT': args.max_articles
         })
 
-    # Set up a crawler process and run crawl for specified site
+    # Set up a crawler process
     process = CrawlerProcess(settings)
-    process.crawl(MisinformationSpider, config=site_configs[args.site_name])
+
+    # Get appropriate spider class for this site
+    spider_classes = {
+        'index_page': MisinformationIndexPageSpider,
+        'scattergun': MisinformationScattergunSpider
+    }
+    try:
+        crawl_strategy = site_configs[args.site_name]['crawl_strategy']['method']
+    except KeyError:
+        crawl_strategy = 'scattergun'
+
+    # Run crawl for specified site
+    process.crawl(spider_classes[crawl_strategy], config=site_configs[args.site_name])
     process.start()
 
 
