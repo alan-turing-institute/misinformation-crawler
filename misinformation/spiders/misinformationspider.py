@@ -27,19 +27,24 @@ class MisinformationSpider(CrawlSpider):
 
         # Set crawl-level metadata
         self.crawl_info = {
-            "crawl_id": str(uuid.uuid4()),
-            "crawl_datetime": datetime.datetime.utcnow().replace(microsecond=0).replace(
+            'crawl_id': str(uuid.uuid4()),
+            'crawl_datetime': datetime.datetime.utcnow().replace(microsecond=0).replace(
                 tzinfo=datetime.timezone.utc).isoformat()
         }
 
-        # Parse domain from start URL(s) and use to restrict crawl to follow
-        # only internal site links
+        # Construct list of start URL(s)
         start_urls = self.config['start_url']
         if not isinstance(start_urls, list):
             start_urls = [start_urls]
+        start_urls += config.get('article_list', [])
         self.start_urls = start_urls
+
+        # Parse domain from start URL(s) and then restrict crawl to follow only
+        # links in this domain plus additional (optional) user-specifed domains
         allowed_domains = self.config.get('additional_domains', []) + [urlparse(url).netloc for url in start_urls]
         self.allowed_domains = list(set(allowed_domains))
+
+        # Initialise index/article page URL regexes
         self.index_page_url_require_regex = None
         self.index_page_url_reject_regex = None
         self.article_url_require_regex = None
@@ -57,7 +62,7 @@ class MisinformationSpider(CrawlSpider):
         try:
             strip_query_strings = config['crawl_strategy']['strip_query_strings']
             if strip_query_strings:
-                link_kwargs_base = {"process_value": url_query_cleaner}
+                link_kwargs_base = {'process_value': url_query_cleaner}
         except KeyError:
             link_kwargs_base = {}
 
@@ -68,14 +73,14 @@ class MisinformationSpider(CrawlSpider):
             # 1. Rule for identifying index pages of links
             link_kwargs = dict(link_kwargs_base)
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_contain'])
-                self.index_page_url_require_regex = re.compile(link_kwargs["allow"])
+                link_kwargs['allow'] = (self.config['crawl_strategy'][crawl_strategy]['url_must_contain'])
+                self.index_page_url_require_regex = re.compile(link_kwargs['allow'])
             with suppress(KeyError):
-                link_kwargs["deny"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_not_contain'])
-                self.index_page_url_reject_regex = re.compile(link_kwargs["deny"])
-            if "allow" not in link_kwargs and "deny" not in link_kwargs:
+                link_kwargs['deny'] = (self.config['crawl_strategy'][crawl_strategy]['url_must_not_contain'])
+                self.index_page_url_reject_regex = re.compile(link_kwargs['deny'])
+            if 'allow' not in link_kwargs and 'deny' not in link_kwargs:
                 self.logger.warning("Using the 'index_page' crawl strategy without giving 'url_must_contain' or 'url_must_not_contain' arguments. Only the start_url will be used as an index page.")
-                link_kwargs["deny"] = ('.*')
+                link_kwargs['deny'] = ('.*')
             index_page_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                                  attrs=('href', 'data-href', 'data-url'),
                                                  **link_kwargs),
@@ -92,16 +97,16 @@ class MisinformationSpider(CrawlSpider):
             # output in ()
             link_kwargs = dict(link_kwargs_base)
             with suppress(KeyError):
-                link_kwargs["restrict_xpaths"] = (self.config['crawl_strategy'][crawl_strategy]['article_links'])
+                link_kwargs['restrict_xpaths'] = (self.config['crawl_strategy'][crawl_strategy]['article_links'])
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['article']['url_must_contain'])
+                link_kwargs['allow'] = (self.config['article']['url_must_contain'])
             with suppress(KeyError):
-                link_kwargs["deny"] = (self.config['article']['url_must_not_contain'])
+                link_kwargs['deny'] = (self.config['article']['url_must_not_contain'])
             # Construct rule
             article_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                               attrs=('href', 'data-href', 'data-url'),
                                               **link_kwargs),
-                                callback="parse_response")
+                                callback='parse_response')
 
             # Use both rules
             self.rules = (index_page_rule, article_rule)
@@ -117,13 +122,13 @@ class MisinformationSpider(CrawlSpider):
             # output in ()
             link_kwargs = dict(link_kwargs_base)
             with suppress(KeyError):
-                link_kwargs["allow"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_contain'])
+                link_kwargs['allow'] = (self.config['crawl_strategy'][crawl_strategy]['url_must_contain'])
             with suppress(KeyError):
-                link_kwargs["deny"] = (self.config['crawl_strategy'][crawl_strategy]['url_must_not_contain'])
+                link_kwargs['deny'] = (self.config['crawl_strategy'][crawl_strategy]['url_must_not_contain'])
             link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                            attrs=('href', 'data-href', 'data-url'),
                                            **link_kwargs),
-                             follow=True, callback="parse_response")
+                             follow=True, callback='parse_response')
             self.rules = (link_rule, )
 
             # Optional regexes which test the URL to see if this is an article
@@ -136,8 +141,8 @@ class MisinformationSpider(CrawlSpider):
             raise CloseSpider(reason="crawl_strategy: '{0}' is not recognised".format(crawl_strategy))
 
         # Set up saving of raw responses for articles
-        output_dir = "articles"
-        output_file = "{}_full.txt".format(self.config['site_name'])
+        output_dir = 'articles'
+        output_file = '{}_full.txt'.format(self.config['site_name'])
         # Ensure output directory exists
         if not os.path.isdir(output_dir):
             os.makedirs(output_dir)
@@ -174,8 +179,8 @@ class MisinformationSpider(CrawlSpider):
 
         # Check whether we can extract an article from this page
         article = extract_article(response, self.config, crawl_info=self.crawl_info,
-                                  content_digests=self.settings["CONTENT_DIGESTS"],
-                                  node_indexes=self.settings["NODE_INDEXES"])
+                                  content_digests=self.settings['CONTENT_DIGESTS'],
+                                  node_indexes=self.settings['NODE_INDEXES'])
         if article['content'] is None:
             return
 
@@ -185,9 +190,9 @@ class MisinformationSpider(CrawlSpider):
         return article
 
     def save_response(self, response):
-        # If we've hit the database size limit then stop crawling
+        # If the closure flag has been set then stop crawling
         if self.request_closure:
-            raise CloseSpider(reason="Closing spider due to database issue.")
+            raise CloseSpider(reason='Ending crawl cleanly after a close request.')
         # Otherwise save the response
         raw_article = dict()
         raw_article['site_name'] = self.config['site_name']
