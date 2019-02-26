@@ -1299,15 +1299,14 @@ redstatewatcher.com:
 
 rt.com:
   site_name: 'rt.com'
-  start_url: 'https://www.rt.com/listing/category.usa/prepare/last-news/20/1'
+  start_url: 'https://www.rt.com/sitemap.xml'
   obey_robots_txt: false
   crawl_strategy:
-    method: 'index_page'
-    index_page:
-      url_must_contain: '/listing/category.usa/prepare/last-news/'
-      article_links: '//strong/a[@class="link link_hover"]'
+    method: 'sitemap'
+    site_map:
+      url_must_contain: 'sitemap'
   article:
-    url_must_contain: '/\d*[a-z\-]*/'
+    url_must_contain: '/usa/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
