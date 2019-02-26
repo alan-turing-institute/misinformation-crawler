@@ -2,6 +2,8 @@
 #
 # See documentation at:
 # https://doc.scrapy.org/en/latest/topics/spiders.html
-from .misinformationspider import MisinformationSpider
+from .indexpagespider import IndexPageSpider
+from .scattergunspider import ScattergunSpider
+from .xmlsitemapspider import XMLSitemapSpider
 
-__all__ = ['MisinformationSpider']
+__all__ = ['IndexPageSpider', 'ScattergunSpider', 'XMLSitemapSpider']
