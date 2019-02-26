@@ -4,7 +4,7 @@ import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
-from misinformation.spiders import MisinformationIndexPageSpider, MisinformationScattergunSpider
+from misinformation.spiders import IndexPageSpider, ScattergunSpider, XMLSitemapSpider
 
 
 def main():
@@ -51,8 +51,9 @@ def main():
 
     # Get appropriate spider class for this site
     spider_classes = {
-        'index_page': MisinformationIndexPageSpider,
-        'scattergun': MisinformationScattergunSpider
+        'index_page': IndexPageSpider,
+        'scattergun': ScattergunSpider,
+        'sitemap': XMLSitemapSpider
     }
     try:
         crawl_strategy = site_configs[args.site_name]['crawl_strategy']['method']

@@ -1,23 +1,22 @@
 import datetime
-import uuid
 import os
-from w3lib.url import url_query_cleaner
+import re
+import uuid
 from urllib.parse import urlparse
+from w3lib.url import url_query_cleaner
 from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
-from scrapy.spiders import CrawlSpider
 from misinformation.extractors import extract_article
 
+class MisinformationMixin():
+    """Mixin to provide useful defaults for Misinformation crawl spiders."""
+    # Define attributes that will be overridden by child classes
+    url_regexes = {}
 
-class MisinformationSpider(CrawlSpider):
-    """Generic crawl spider for websites that contain a series of articles."""
-    name = 'misinformation'
-    exporter = None
-    crawl_date = None
-
-    def __init__(self, name, config, *args, **kwargs):
-        self.name = name
+    def __init__(self, config, *args, **kwargs):
+        # Load config and set spider display name to the name of the class
         self.config = config
+        self.name = type(self).__name__
 
         # Set crawl-level metadata
         self.crawl_info = {
@@ -25,37 +24,14 @@ class MisinformationSpider(CrawlSpider):
             'crawl_datetime': datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
         }
 
-        # Construct list of start URL(s)
-        start_urls = self.config['start_url']
-        if not isinstance(start_urls, list):
-            start_urls = [start_urls]
-        start_urls += config.get('article_list', [])
-        self.start_urls = start_urls
-
         # Parse domain from start URL(s) and then restrict crawl to follow only
         # links in this domain plus additional (optional) user-specifed domains
-        allowed_domains = self.config.get('additional_domains', []) + [urlparse(url).netloc for url in start_urls]
+        allowed_domains = self.config.get('additional_domains', []) + \
+                          [urlparse(url).netloc for url in self.load_start_urls(self.config)]
         self.allowed_domains = list(set(allowed_domains))
-
-        # Ensure that index/article page URL regexes are initialised
-        self.index_page_url_require_regex = None
-        self.index_page_url_reject_regex = None
-        self.article_url_require_regex = None
-        self.article_url_reject_regex = None
 
         # Add flag to allow spider to be closed from inside a pipeline
         self.request_closure = False
-
-        # Strip query strings from URLs if requested
-        try:
-            strip_query_strings = config['crawl_strategy']['strip_query_strings']
-            if strip_query_strings:
-                link_extractor_kwargs = {'process_value': url_query_cleaner}
-        except KeyError:
-            link_extractor_kwargs = {}
-
-        # Set up the link following rules
-        self.define_rules(link_extractor_kwargs)
 
         # Set up saving of raw responses for articles
         output_dir = 'articles'
@@ -68,15 +44,50 @@ class MisinformationSpider(CrawlSpider):
         self.exporter = JsonItemExporter(file_handle)
         self.exporter.start_exporting()
 
-        # We need to call the super constructor AFTER setting any rules as it
-        # calls self._compile_rules(), storing them in self._rules. If we call
-        # the super constructor before we define the rules, they will not be
-        # compiled and self._rules will be empty, even though self.rules will
-        # have the right rules present.
+        # Compile regexes
+        self.url_regexes = dict((k, re.compile(v)) for k, v in self.url_regexes.items())
+
+        # On first glance, this next line seems a bit weird, since
+        # MisinformationMixin has no parents. However, this is needed to
+        # correctly navigate Python's multiple inheritance structure - what it
+        # will actually do is call the next constructor in MRO order for the
+        # *derived* class, which will be the appropriate scrapy.Spider class
         super().__init__(*args, **kwargs)
 
-    def define_rules(self, link_extractor_kwargs):
-        raise NotImplementedError("This method should be overridden by child classes")
+    @staticmethod
+    def load_start_urls(config):
+        start_urls = config['start_url']
+        if not isinstance(start_urls, list):
+            start_urls = [start_urls]
+        start_urls += config.get('article_list', [])
+        return start_urls
+
+    @staticmethod
+    def common_link_kwargs(config):
+        """Get common arguments for link extraction"""
+        try:
+            # Strip query strings from URLs if requested
+            strip_query_strings = config['crawl_strategy']['strip_query_strings']
+            if strip_query_strings:
+                return {'process_value': url_query_cleaner}
+        except KeyError:
+            pass
+        return {}
+
+    def is_index_page(self, url):
+        if 'index_page_require' in self.url_regexes and not self.url_regexes['index_page_require'].search(url):
+            return False
+        if 'index_page_reject' in self.url_regexes and self.url_regexes['index_page_reject'].search(url):
+            return False
+        return True
+
+    def is_article(self, url):
+        # Check whether we pass the (optional) requirements on the URL format
+        if 'article_require' in self.url_regexes and not self.url_regexes['article_require'].search(url):
+            return False
+        if 'article_reject' in self.url_regexes and self.url_regexes['article_reject'].search(url):
+            return False
+        return True
 
     def parse_response(self, response):
         self.logger.info('Searching for an article at: {}'.format(response.url))
@@ -88,10 +99,7 @@ class MisinformationSpider(CrawlSpider):
             return
 
         # Check whether we pass the (optional) requirements on the URL format
-        if self.article_url_require_regex and not self.article_url_require_regex.search(response.url):
-            return
-
-        if self.article_url_reject_regex and self.article_url_reject_regex.search(response.url):
+        if not self.is_article(response.url):
             return
 
         # Check whether we can extract an article from this page

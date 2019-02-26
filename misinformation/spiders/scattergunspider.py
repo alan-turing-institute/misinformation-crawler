@@ -1,16 +1,15 @@
 from contextlib import suppress
-import re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule
-from .misinformationspider import MisinformationSpider
+from scrapy.spiders import CrawlSpider
+from .misinformationmixin import MisinformationMixin
 
 
-class MisinformationScattergunSpider(MisinformationSpider):
+class ScattergunSpider(MisinformationMixin, CrawlSpider):
     """Crawl spider for websites containing articles that can be identified using a known URL format or content element."""
-    def __init__(self, *args, **kwargs):
-        super().__init__(name='scattergun', *args, **kwargs)
+    name = 'scattergun'
 
-    def define_rules(self, link_extractor_kwargs):
+    def __init__(self, config, *args, **kwargs):
         # For the scattergun strategy we only need one Rule for following links
         #  - follow all links (after removing duplicates) and pass them to parse_response
         #
@@ -18,19 +17,31 @@ class MisinformationScattergunSpider(MisinformationSpider):
         # nested dictionary we need one suppress per retrieve.
         # NB. the link extractor takes iterables as arguments so we wrap the
         # config output in ()
-        link_kwargs = dict(link_extractor_kwargs)
+        link_kwargs = self.common_link_kwargs(config)
         with suppress(KeyError):
-            link_kwargs['allow'] = (self.config['crawl_strategy']['scattergun']['url_must_contain'])
+            link_kwargs['allow'] = (config['crawl_strategy']['scattergun']['url_must_contain'])
         with suppress(KeyError):
-            link_kwargs['deny'] = (self.config['crawl_strategy']['scattergun']['url_must_not_contain'])
+            link_kwargs['deny'] = (config['crawl_strategy']['scattergun']['url_must_not_contain'])
         link_rule = Rule(LinkExtractor(canonicalize=True, unique=True,
                                        attrs=('href', 'data-href', 'data-url'),
                                        **link_kwargs),
                          follow=True, callback='parse_response')
+
+        # Add link following rule
         self.rules = (link_rule, )
+
+        # Load starting URLs
+        self.start_urls = self.load_start_urls(config)
 
         # Optional regexes which test the URL to see if this is an article
         with suppress(KeyError):
-            self.article_url_require_regex = re.compile(self.config['article']['url_must_contain'])
+            self.url_regexes['article_require'] = config['article']['url_must_contain']
         with suppress(KeyError):
-            self.article_url_reject_regex = re.compile(self.config['article']['url_must_not_contain'])
+            self.url_regexes['article_reject'] = config['article']['url_must_not_contain']
+
+        # We need to call the super constructor AFTER setting any rules as it
+        # calls self._compile_rules(), storing them in self._rules. If we call
+        # the super constructor before we define the rules, they will not be
+        # compiled and self._rules will be empty, even though self.rules will
+        # have the right rules present.
+        super().__init__(config, *args, **kwargs)
