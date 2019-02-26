@@ -12,7 +12,7 @@ class IndexPageSpider(MisinformationMixin, CrawlSpider):
         # For the index_page strategy we need:
         # 1. Rule for identifying index pages of links
         # 2. Rule for identifying article links
-        link_kwargs = self.common_link_kwargs(config) #dict(link_extractor_kwargs)
+        link_kwargs = self.common_link_kwargs(config)
         with suppress(KeyError):
             link_kwargs['allow'] = (config['crawl_strategy']['index_page']['url_must_contain'])
             self.url_regexes['index_page_require'] = link_kwargs['allow']

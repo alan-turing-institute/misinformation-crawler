@@ -8,6 +8,7 @@ from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
 from misinformation.extractors import extract_article
 
+
 class MisinformationMixin():
     """Mixin to provide useful defaults for Misinformation crawl spiders."""
     # Define attributes that will be overridden by child classes
@@ -26,8 +27,8 @@ class MisinformationMixin():
 
         # Parse domain from start URL(s) and then restrict crawl to follow only
         # links in this domain plus additional (optional) user-specifed domains
-        allowed_domains = self.config.get('additional_domains', []) + \
-                          [urlparse(url).netloc for url in self.load_start_urls(self.config)]
+        allowed_domains = self.config.get('additional_domains', [])
+        allowed_domains += [urlparse(url).netloc for url in self.load_start_urls(self.config)]
         self.allowed_domains = list(set(allowed_domains))
 
         # Add flag to allow spider to be closed from inside a pipeline
