@@ -27,8 +27,8 @@ class MisinformationMixin():
 
         # Parse domain from start URL(s) and then restrict crawl to follow only
         # links in this domain plus additional (optional) user-specifed domains
-        allowed_domains = self.config.get('additional_domains', [])
-        allowed_domains += [urlparse(url).netloc for url in self.load_start_urls(self.config)]
+        allowed_domains = self.as_list(config.get('additional_domains', []))
+        allowed_domains += [urlparse(url).netloc for url in self.load_start_urls(config)]
         self.allowed_domains = list(set(allowed_domains))
 
         # Add flag to allow spider to be closed from inside a pipeline
@@ -36,7 +36,7 @@ class MisinformationMixin():
 
         # Set up saving of raw responses for articles
         output_dir = 'articles'
-        output_file = '{}_full.txt'.format(self.config['site_name'])
+        output_file = '{}_full.txt'.format(config['site_name'])
         # Ensure output directory exists
         if not os.path.isdir(output_dir):
             os.makedirs(output_dir)
@@ -56,10 +56,14 @@ class MisinformationMixin():
         super().__init__(*args, **kwargs)
 
     @staticmethod
+    def as_list(item_or_list):
+        if isinstance(item_or_list, list):
+            return item_or_list
+        return [item_or_list]
+
+    @staticmethod
     def load_start_urls(config):
-        start_urls = config['start_url']
-        if not isinstance(start_urls, list):
-            start_urls = [start_urls]
+        start_urls = MisinformationMixin.as_list(config['start_url'])
         start_urls += config.get('article_list', [])
         return start_urls
 
