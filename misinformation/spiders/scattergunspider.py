@@ -33,12 +33,6 @@ class ScattergunSpider(MisinformationMixin, CrawlSpider):
         # Load starting URLs
         self.start_urls = self.load_start_urls(config)
 
-        # Optional regexes which test the URL to see if this is an article
-        with suppress(KeyError):
-            self.url_regexes['article_require'] = config['article']['url_must_contain']
-        with suppress(KeyError):
-            self.url_regexes['article_reject'] = config['article']['url_must_not_contain']
-
         # We need to call the super constructor AFTER setting any rules as it
         # calls self._compile_rules(), storing them in self._rules. If we call
         # the super constructor before we define the rules, they will not be

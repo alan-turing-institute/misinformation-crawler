@@ -97,5 +97,5 @@ INSERT INTO [articles_v5]
             else:
                 # Re-raise the exception if it had a different cause
                 raise
-        spider.logger.info("Finished crawling: {}".format(article["article_url"]))
+        spider.logger.info("Finished database export for: {}".format(article["article_url"]))
         return article
