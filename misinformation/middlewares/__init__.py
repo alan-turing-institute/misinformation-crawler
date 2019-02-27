@@ -6,4 +6,6 @@ from .cloudflaremiddleware import CloudFlareMiddleware
 from .delayedretrymiddleware import DelayedRetryMiddleware
 from .jsloadbuttonmiddleware import JSLoadButtonMiddleware
 
-__all__ = ['CloudFlareMiddleware', 'JSLoadButtonMiddleware']
+__all__ = ['CloudFlareMiddleware',
+           'DelayedRetryMiddleware',
+           'JSLoadButtonMiddleware']
