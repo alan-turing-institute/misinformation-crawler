@@ -1,3 +1,4 @@
+from contextlib import suppress
 import datetime
 import os
 import re
@@ -44,6 +45,12 @@ class MisinformationMixin():
         file_handle = open(output_path, 'wb')
         self.exporter = JsonItemExporter(file_handle)
         self.exporter.start_exporting()
+
+        # Optional regexes which test the URL to see if this is an article
+        with suppress(KeyError):
+            self.url_regexes['article_require'] = config['article']['url_must_contain']
+        with suppress(KeyError):
+            self.url_regexes['article_reject'] = config['article']['url_must_not_contain']
 
         # Compile regexes
         self.url_regexes = dict((k, re.compile(v)) for k, v in self.url_regexes.items())
