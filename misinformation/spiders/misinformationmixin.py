@@ -138,7 +138,7 @@ class MisinformationMixin():
         raw_article['response_url'] = response.url
         raw_article['status'] = response.status
         raw_article['body'] = response.text
-        self.logger.info('  saving response and adding to database')
+        self.logger.info('  preparing to save response to database')
         self.exporter.export_item(raw_article)
 
     def closed(self, reason):
