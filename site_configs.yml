@@ -1411,6 +1411,40 @@ scrappleface.com:
       remove_expressions:
         - '//div[contains(@id, "attachment")]'
 
+thehill.com:
+  site_name: 'thehill.com'
+  start_url:
+    - 'https://thehill.com/opinion/op-ed-archive'
+    - 'https://thehill.com/opinion/opinion-archive'
+    - 'https://thehill.com/news-by-subject-archive'
+    - 'https://thehill.com/homenews/sunday-talk-shows-archive'
+    - 'https://thehill.com/homenews/house/house-archive'
+    - 'https://thehill.com/homenews/campaign/campaign-archive'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '\?page='
+      article_links: '//span[@class="field-content"]/a'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="dcterms.title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "field-name-body")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//span[@class="rollover-block"]'
+
 thenation.com:
   site_name: 'thenation.com'
   start_url: 'https://www.thenation.com/subject/politics/'

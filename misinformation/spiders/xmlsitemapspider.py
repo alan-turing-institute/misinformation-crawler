@@ -12,7 +12,7 @@ class XMLSitemapSpider(MisinformationMixin, SitemapSpider):
         # Define which sitemap index links to follow
         self.sitemap_follow = []
         with suppress(KeyError):
-            for regex in config['crawl_strategy']['sitemap']['url_must_contain']:
+            for regex in self.as_list(config['crawl_strategy']['sitemap']['url_must_contain']):
                 self.sitemap_follow.append(regex)
         if not self.sitemap_follow:
             self.sitemap_follow = ['']
@@ -20,14 +20,8 @@ class XMLSitemapSpider(MisinformationMixin, SitemapSpider):
         # For the sitemap strategy we need a single rule to identify article links:
         self.sitemap_rules = []
         with suppress(KeyError):
-            for regex in config['article']['url_must_contain']:
+            for regex in self.as_list(config['article']['url_must_contain']):
                 self.sitemap_rules.append((regex, 'parse_response'))
-
-        # Optional regexes which test the URL to see if this is an article
-        with suppress(KeyError):
-            self.url_regexes['article_require'] = config['article']['url_must_contain']
-        with suppress(KeyError):
-            self.url_regexes['article_reject'] = config['article']['url_must_not_contain']
 
         # We need to call the super constructor AFTER setting any rules as it
         # calls self._compile_rules(), storing them in self._rules. If we call
