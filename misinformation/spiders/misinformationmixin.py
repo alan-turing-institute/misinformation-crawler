@@ -87,19 +87,23 @@ class MisinformationMixin():
         return {}
 
     def is_index_page(self, url):
-        if 'index_page_require' in self.url_regexes and not self.url_regexes['index_page_require'].search(url):
+        """Check whether this is an index page"""
+        # If no 'index_page*' regexes are defined then this site does not use index pages
+        if not any(['index_page' in re_name for re_name in self.url_regexes]):
             return False
-        if 'index_page_reject' in self.url_regexes and self.url_regexes['index_page_reject'].search(url):
-            return False
-        return True
+        # Check whether we match the 'require' or 'reject' regexes
+        required = self.url_regexes['index_page_require'].search(url) if 'index_page_require' in self.url_regexes else True
+        rejected = self.url_regexes['index_page_reject'].search(url) if 'index_page_reject' in self.url_regexes else False
+        # This is an index page if it matches 'require' (or there is not require) and does not match 'reject'
+        return required and not rejected
 
     def is_article(self, url):
-        # Check whether we pass the (optional) requirements on the URL format
-        if 'article_require' in self.url_regexes and not self.url_regexes['article_require'].search(url):
-            return False
-        if 'article_reject' in self.url_regexes and self.url_regexes['article_reject'].search(url):
-            return False
-        return True
+        """Check whether this is an article"""
+        # Check whether we match the 'require' or 'reject' regexes
+        required = self.url_regexes['article_require'].search(url) if 'article_require' in self.url_regexes else True
+        rejected = self.url_regexes['article_reject'].search(url) if 'article_reject' in self.url_regexes else False
+        # This is an article if it matches 'require' (or there is not require) and does not match 'reject'
+        return required and not rejected
 
     def parse_response(self, response):
         self.logger.info('Searching for an article at: {}'.format(response.url))
@@ -122,7 +126,7 @@ class MisinformationMixin():
             return
 
         # Save the full response and return parsed article
-        self.logger.info('  article identification was successful')
+        self.logger.info('  found an article at: {}'.format(response.url))
         self.save_response(response)
         return article
 
@@ -130,7 +134,7 @@ class MisinformationMixin():
         # If the closure flag has been set then stop crawling
         if self.request_closure:
             raise CloseSpider(reason='Ending crawl cleanly after a close request.')
-        # Otherwise save the response
+        # Otherwise save the response to a local file
         raw_article = dict()
         raw_article['site_name'] = self.config['site_name']
         raw_article['crawl_datetime'] = self.crawl_info['crawl_datetime']
@@ -138,7 +142,6 @@ class MisinformationMixin():
         raw_article['response_url'] = response.url
         raw_article['status'] = response.status
         raw_article['body'] = response.text
-        self.logger.info('  preparing to save response to database')
         self.exporter.export_item(raw_article)
 
     def closed(self, reason):

@@ -9,7 +9,6 @@ class ArticleDatabaseExporter():
     def __init__(self):
         self.encoder = None
         self.cnxn = None
-        # Load database configuration from file in secrets folder
         self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
         self.insert_row_sql = """DECLARE @JSON NVARCHAR(MAX) = ?
 
@@ -63,7 +62,7 @@ INSERT INTO [articles_v5]
                 self.cnxn.commit()
                 return  # Stop on success
             except (pyodbc.ProgrammingError, pyodbc.OperationalError):
-                spider.logger.info("Database connection failure: retrying, attempt {}/{}".format(retry + 1, n_attempts))
+                spider.logger.info("Database connection failure: retrying [attempt {}/{}]".format(retry + 1, n_attempts))
                 self.connect_to_database()
         # If we get here then reconnecting has failed so end the crawl
         spider.request_closure = True
@@ -71,6 +70,7 @@ INSERT INTO [articles_v5]
 
     def process_item(self, article, spider):
         '''Add an article to the database'''
+        spider.logger.info("  starting database export for: {}".format(article["article_url"]))
         row = self.encoder.encode(dict(article))
         try:
             self.add_dbentry_with_reconnection(spider, row)
@@ -97,5 +97,5 @@ INSERT INTO [articles_v5]
             else:
                 # Re-raise the exception if it had a different cause
                 raise
-        spider.logger.info("Finished database export for: {}".format(article["article_url"]))
+        spider.logger.info("Finished processing: {}".format(article["article_url"]))
         return article
