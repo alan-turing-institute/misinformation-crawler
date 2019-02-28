@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 class JSLoadButtonMiddleware:
-    '''Scrapy middleware to bypass javascript 'load more' buttons using selenium.
+    """Scrapy middleware to bypass javascript 'load more' buttons using selenium.
 
     Javascript load buttons are identified by searching for XPath patterns.
 
@@ -16,27 +16,39 @@ class JSLoadButtonMiddleware:
         1. The button disappears (eg. when there are no more articles to load)
         2. The page takes too long to load (currently 30s)
         3. A maximum number of button presses is reached (currently 10000)
-    '''
+    """
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.seen_urls = set()
-        self.timeout = 30
+        self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
+            '//button[@class="qc-cmp-button"]',
             '//button[text()="Show More"]',
             '//button[text()="Load More"]',
-            '//button[contains(@class, "show-more")]'
+            '//button[contains(@class, "show-more")]',
+            '//button[@phx-track-id="load more"]'
         ]
 
+    def first_load_button_xpath(self):
+        """Find the first load button on the page - there may be more than one."""
+        for button_xpath in self.button_xpaths:
+            try:
+                self.driver.find_element_by_xpath(button_xpath)
+                return button_xpath
+            except NoSuchElementException:
+                pass
+        return None
+
     def process_request(self, request, spider):
-        '''Process a request using the selenium driver if applicable.
+        """Process a request using the selenium driver if applicable.
 
         As the selenium driver is much slower than the the normal scrapy crawl,
         we only do this if we actively identify the page as having a javascript
         load button.
-        '''
+        """
         # Do not use the selenium driver if this is not an index page
         if not spider.is_index_page(request.url):
             return
@@ -50,15 +62,7 @@ class JSLoadButtonMiddleware:
         self.driver.get(request.url)
 
         # Search through button xpaths to see if there is one on the page
-        load_button_xpath = None
-        for button_xpath in self.button_xpaths:
-            try:
-                self.driver.find_element_by_xpath(button_xpath)
-                load_button_xpath = button_xpath
-                break
-            except NoSuchElementException:
-                continue
-        if not load_button_xpath:
+        if not self.first_load_button_xpath():
             return None
 
         # We should only reach this point if we have found a javascript load button
@@ -76,6 +80,7 @@ class JSLoadButtonMiddleware:
                 try:
                     # Look for a load button and store its location so that we
                     # can check when the page is reloaded
+                    load_button_xpath = self.first_load_button_xpath()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
 
@@ -106,8 +111,12 @@ class JSLoadButtonMiddleware:
                     # found element invisible until the page load is finished
                     WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, load_button_xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
-                spider.logger.info('Terminating button clicking since the button no longer exists.')
-                break
+                # If there are still available buttons on the page then repeat
+                if self.first_load_button_xpath():
+                    continue
+                else:
+                    spider.logger.info('Terminating button clicking since there are no more load buttons on the page.')
+                    break
             except TimeoutException:
                 spider.logger.info('Terminating button clicking after exceeding timeout of {} seconds.'.format(self.timeout))
                 break
@@ -117,5 +126,5 @@ class JSLoadButtonMiddleware:
         return HtmlResponse(body=html_str, url=request.url, encoding=request.encoding, request=request)
 
     def spider_closed(self):
-        '''Shutdown the driver when spider is closed'''
+        """Shutdown the driver when spider is closed"""
         self.driver.quit()
