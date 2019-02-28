@@ -33,6 +33,7 @@ class ArticleJsonFileExporter():
         self.exporter.file.close()
 
     def process_item(self, article, spider):
+        spider.logger.info('  preparing to save response to local file')
         self.exporter.export_item(article)
-        spider.logger.info("Successfully crawled: {}".format(article["article_url"]))
+        spider.logger.info("Finished database export for: {}".format(article["article_url"]))
         return article
