@@ -1536,8 +1536,8 @@ time.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: 'section/politics/?page='
-      article_links: '//h3[contains(@class, "headline")]/a'
+      url_must_contain: 'section/politics'
+      article_links: '//h3[@class="headline"]/a'
   article:
     title:
       select_method: 'xpath'
