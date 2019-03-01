@@ -1515,7 +1515,7 @@ thinkprogress.org:
   article:
     title:
       select_method: 'xpath'
-      select_expression: '//meta[@property="og:title"]/@content'
+      select_expression: '//h1[contains(@class, "headline")]/text()'
       match_rule: 'single'
     byline:
       select_method: 'xpath'
