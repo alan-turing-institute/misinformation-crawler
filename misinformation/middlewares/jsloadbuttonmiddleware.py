@@ -1,6 +1,6 @@
 from scrapy.http import HtmlResponse
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException, ElementNotVisibleException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException, ElementNotVisibleException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import visibility_of_element_located
@@ -38,7 +38,7 @@ class JSLoadButtonMiddleware:
             try:
                 self.driver.find_element_by_xpath(button_xpath)
                 return button_xpath
-            except NoSuchElementException:
+            except WebDriverException:
                 pass
         return None
 
@@ -70,6 +70,7 @@ class JSLoadButtonMiddleware:
 
         # Keep track of the number of clicks performed
         n_clicks_performed = 0
+        cached_page_source = None
 
         while True:
             try:
@@ -78,6 +79,9 @@ class JSLoadButtonMiddleware:
                 # TimeoutException that we want to handle in the same way as
                 # other TimeoutExceptions
                 try:
+                    # Cache the page source in case the page crashes
+                    cached_page_source = self.driver.page_source
+
                     # Look for a load button and store its location so that we
                     # can check when the page is reloaded
                     load_button_xpath = self.first_load_button_xpath()
@@ -120,9 +124,15 @@ class JSLoadButtonMiddleware:
             except TimeoutException:
                 spider.logger.info('Terminating button clicking after exceeding timeout of {} seconds.'.format(self.timeout))
                 break
+            except WebDriverException:
+                spider.logger.info('Terminating button clicking after losing connection to the page.')
+                break
 
         # Turn the page into a response
-        html_str = self.driver.page_source.encode(request.encoding)
+        try:
+            html_str = self.driver.page_source.encode(request.encoding)
+        except WebDriverException:
+            html_str = cached_page_source.encode(request.encoding)
         return HtmlResponse(body=html_str, url=request.url, encoding=request.encoding, request=request)
 
     def spider_closed(self):
