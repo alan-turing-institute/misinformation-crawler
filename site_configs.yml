@@ -966,6 +966,32 @@ nationalreview.com:
         - '//aside[contains(@class, "inline-stories")]'
         - '//footer[contains(@class, "inline-author")]'
 
+multichannel.com:
+  site_name: 'multichannel.com'
+  start_url: 'https://www.multichannel.com/news/policy'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/policy$'
+      article_links: '//a[h2[@role="heading"]]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "author-byline")]/a[@rel="author"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="published"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="m-detail--body"]'
+      match_rule: 'single'
+
 nationalvanguard.org:
   site_name: 'nationalvanguard.org'
   start_url: 'http://nationalvanguard.org'
