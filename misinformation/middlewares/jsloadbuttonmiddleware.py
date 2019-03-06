@@ -14,7 +14,7 @@ class JSLoadButtonMiddleware:
 
     Selenium will keep pressing the button until one of the following occurs:
         1. The button disappears (eg. when there are no more articles to load)
-        2. The page takes too long to load (currently 30s)
+        2. The page takes too long to load (currently 60s)
         3. A maximum number of button presses is reached (currently 10000)
     """
     def __init__(self):
@@ -25,6 +25,8 @@ class JSLoadButtonMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
+            '//input[contains(@class, "agree")]',
+            '//button[@name="agree"]',
             '//button[@class="qc-cmp-button"]',
             '//button[text()="Show More"]',
             '//button[text()="Load More"]',
@@ -42,28 +44,31 @@ class JSLoadButtonMiddleware:
                 pass
         return None
 
-    def process_request(self, request, spider):
-        """Process a request using the selenium driver if applicable.
+    def response_contains_button(self, response):
+        """Search for a button in the response."""
+        for button_xpath in self.button_xpaths:
+            if response.xpath(button_xpath):
+                return True
+        return False
+
+    def process_response(self, request, response, spider):
+        """Process the page response using the selenium driver if applicable.
 
         As the selenium driver is much slower than the the normal scrapy crawl,
         we only do this if we actively identify the page as having a javascript
         load button.
         """
-        # Do not use the selenium driver if this is not an index page
-        if not spider.is_index_page(request.url):
-            return
-
         # Do not process the same request URL twice
         if request.url in self.seen_urls:
-            return None
+            return response
         self.seen_urls.add(request.url)
+
+        # Look for a button using xpaths on the scrapy response
+        if not self.response_contains_button(response):
+            return response
 
         # Load the URL using chromedriver
         self.driver.get(request.url)
-
-        # Search through button xpaths to see if there is one on the page
-        if not self.first_load_button_xpath():
-            return None
 
         # We should only reach this point if we have found a javascript load button
         spider.logger.info('Identified a javascript load button on {}.'.format(request.url))
@@ -128,11 +133,15 @@ class JSLoadButtonMiddleware:
                 spider.logger.info('Terminating button clicking after losing connection to the page.')
                 break
 
-        # Turn the page into a response
+        # Get appropriately encoded HTML from the page
         try:
             html_str = self.driver.page_source.encode(request.encoding)
         except WebDriverException:
             html_str = cached_page_source.encode(request.encoding)
+
+        # Add any cookies that we may have collected to the spider so that they
+        # can be used for future requests
+        spider.update_cookies(self.driver.get_cookies())
         return HtmlResponse(body=html_str, url=request.url, encoding=request.encoding, request=request)
 
     def spider_closed(self):
