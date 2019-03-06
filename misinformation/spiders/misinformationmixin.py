@@ -55,12 +55,25 @@ class MisinformationMixin():
         # Compile regexes
         self.url_regexes = dict((k, re.compile(v)) for k, v in self.url_regexes.items())
 
+        # Initialise a cookie jar (list of cookies each of which is a dict)
+        self.cookies = []
+
         # On first glance, this next line seems a bit weird, since
         # MisinformationMixin has no parents. However, this is needed to
         # correctly navigate Python's multiple inheritance structure - what it
         # will actually do is call the next constructor in MRO order for the
         # *derived* class, which will be the appropriate scrapy.Spider class
         super().__init__(*args, **kwargs)
+
+    def update_cookies(self, cookies):
+        if not isinstance(cookies, list):
+            cookies = [cookies]
+        self.cookies.extend(cookies)
+        # Remove duplicates, exploiting that fact that the tuple is hashable
+        # even though the dict is not. The {} are a set comprehension, which
+        # automatically remove duplicates by effectively running set() over the
+        # iterator of tuples.
+        self.cookies = [dict(t) for t in {tuple(d.items()) for d in self.cookies}]
 
     @staticmethod
     def as_list(item_or_list):
@@ -105,17 +118,28 @@ class MisinformationMixin():
         # This is an article if it matches 'require' (or there is not require) and does not match 'reject'
         return required and not rejected
 
+    def _build_request(self, rule, link):
+        """Override the default request builder to add any cookies that we have collected."""
+        request = super()._build_request(rule, link)
+        request.cookies = self.cookies
+        return request
+
     def parse_response(self, response):
-        self.logger.info('Searching for an article at: {}'.format(response.url))
+        # URL may be the result of a redirect. If so, we use the redirected URL
+        if response.request.meta.get('redirect_urls'):
+            resolved_url = response.request.meta.get('redirect_urls')[0]
+        else:
+            resolved_url = response.url
+        self.logger.info('Searching for an article at: {}'.format(resolved_url))
 
         # Always reject the front page of the domain since this will change
         # over time We need this for henrymakow.com as there is no sane URL
         # match rule for identifying articles and the index page parses as one.
-        if urlparse(response.url).path in ['', '/', 'index.html']:
+        if urlparse(resolved_url).path in ['', '/', 'index.html']:
             return
 
         # Check whether we pass the (optional) requirements on the URL format
-        if not self.is_article(response.url):
+        if not self.is_article(resolved_url):
             return
 
         # Check whether we can extract an article from this page
@@ -126,11 +150,11 @@ class MisinformationMixin():
             return
 
         # Save the full response and return parsed article
-        self.logger.info('  found an article at: {}'.format(response.url))
-        self.save_response(response)
+        self.logger.info('  found an article at: {}'.format(resolved_url))
+        self.save_response(response, resolved_url)
         return article
 
-    def save_response(self, response):
+    def save_response(self, response, resolved_url):
         # If the closure flag has been set then stop crawling
         if self.request_closure:
             raise CloseSpider(reason='Ending crawl cleanly after a close request.')
@@ -139,7 +163,7 @@ class MisinformationMixin():
         raw_article['site_name'] = self.config['site_name']
         raw_article['crawl_datetime'] = self.crawl_info['crawl_datetime']
         raw_article['request_url'] = response.request.url
-        raw_article['response_url'] = response.url
+        raw_article['response_url'] = resolved_url
         raw_article['status'] = response.status
         raw_article['body'] = response.text
         self.exporter.export_item(raw_article)

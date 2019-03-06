@@ -25,6 +25,7 @@ class JSLoadButtonMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
+            '//input[contains(@class, "agree")]',
             '//button[@class="qc-cmp-button"]',
             '//button[text()="Show More"]',
             '//button[text()="Load More"]',
@@ -133,6 +134,10 @@ class JSLoadButtonMiddleware:
             html_str = self.driver.page_source.encode(request.encoding)
         except WebDriverException:
             html_str = cached_page_source.encode(request.encoding)
+
+        # Add any cookies that we may have collected to the spider so that they
+        # can be used for future requests
+        spider.update_cookies(self.driver.get_cookies())
         return HtmlResponse(body=html_str, url=request.url, encoding=request.encoding, request=request)
 
     def spider_closed(self):
