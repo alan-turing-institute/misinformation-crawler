@@ -33,7 +33,7 @@ class CloudFlareMiddleware:
         cloudflare_tokens, _ = get_tokens(request.url, user_agent=spider.settings.get('USER_AGENT'))
         spider.logger.info('Obtained CloudFlare tokens for {}, re-scheduling the request'.format(response.url))
 
-        # Add the cookies to the request and continue
+        # Add the cookies to the request and reschedule this request for later
         request.cookies.update(cloudflare_tokens)
         request.priority = 99999
         return request
