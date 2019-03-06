@@ -99,17 +99,6 @@ class MisinformationMixin():
             pass
         return {}
 
-    def is_index_page(self, url):
-        """Check whether this is an index page"""
-        # If no 'index_page*' regexes are defined then this site does not use index pages
-        if not any(['index_page' in re_name for re_name in self.url_regexes]):
-            return False
-        # Check whether we match the 'require' or 'reject' regexes
-        required = self.url_regexes['index_page_require'].search(url) if 'index_page_require' in self.url_regexes else True
-        rejected = self.url_regexes['index_page_reject'].search(url) if 'index_page_reject' in self.url_regexes else False
-        # This is an index page if it matches 'require' (or there is not require) and does not match 'reject'
-        return required and not rejected
-
     def is_article(self, url):
         """Check whether this is an article"""
         # Check whether we match the 'require' or 'reject' regexes
