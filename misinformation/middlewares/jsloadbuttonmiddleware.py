@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import visibility_of_element_located
 from selenium.webdriver.support.wait import WebDriverWait
-from scrapy.exceptions import NotSupported
+
 
 class JSLoadButtonMiddleware:
     """Scrapy middleware to bypass javascript 'load more' buttons using selenium.
