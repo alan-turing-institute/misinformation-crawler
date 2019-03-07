@@ -292,7 +292,7 @@ cnn.com:
   crawl_strategy:
     method: 'scattergun'
     scattergun:
-      url_must_not_contain: '/TRANSCRIPTS/'
+      url_must_not_contain: '/(TRANSCRIPTS|www.cnn.com|videos)/'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/politics/.+/index.html'
     title:
