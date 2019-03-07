@@ -1054,7 +1054,7 @@ newsweek.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/us?page='
+      url_must_contain: '/us'
       article_links: '//h3/a'
   article:
     title:
@@ -1063,7 +1063,7 @@ newsweek.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@itemprop="author"]/a/span[@itemprop="name"]/text()'
+      select_expression: '//span[@itemprop="author"]/a/span[@itemprop="name"]/text()|//span[@itemprop="author"]/span[@itemprop="name"]/text()'
       match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
