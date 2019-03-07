@@ -1538,6 +1538,7 @@ time.com:
     index_page:
       url_must_contain: 'section/politics'
       article_links: '//h3[contains(@class, "headline")]//a'
+  obey_robots_txt: false
   article:
     title:
       select_method: 'xpath'
