@@ -1530,6 +1530,36 @@ thinkprogress.org:
       select_expression: '//div[@class="post__content"]'
       match_rule: 'single'
 
+time.com:
+  site_name: 'time.com'
+  start_url: 'http://time.com/section/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'section/politics'
+      article_links: '//h3[contains(@class, "headline")]//a'
+  obey_robots_txt: false
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="author-text"]/a[@class="bold author-name"]/text()'
+      match_rule: 'concatenate'
+      warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="keyvals"]/@data-content_published_date'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="article-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//p[contains(@class, "author-feedback-text")]'
+
 usasupreme.com:
   site_name: 'usasupreme.com'
   start_url: 'http://www.usasupreme.com/category/politics/'
