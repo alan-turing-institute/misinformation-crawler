@@ -1542,12 +1542,13 @@ time.com:
   article:
     title:
       select_method: 'xpath'
-      select_expression: '//h1[contains(@class, "headline")]/text()'
+      select_expression: '//meta[@property="og:title"]/@content'
       match_rule: 'single'
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="author-text"]/a[@class="bold author-name"]/text()'
-      match_rule: 'single'
+      match_rule: 'concatenate'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//div[@class="keyvals"]/@data-content_published_date'
