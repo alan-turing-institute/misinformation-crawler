@@ -1468,6 +1468,38 @@ scrappleface.com:
       remove_expressions:
         - '//div[contains(@id, "attachment")]'
 
+texastribune.org:
+  site_name: 'texastribune.org'
+  start_url: 'https://www.texastribune.org'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '\?page='
+      article_links: '//h3[@class="headline"]/a'
+  article:
+    url_must_not_contain: 'tribcast-|watch-'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="parsely-author"]/@content'
+      match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="story_body grid_separator--l"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "plugin")]'
+        - '//span[contains(@class, "full_story")]'
+        - '//p[contains(@class, "full_story")]'
+        - '//aside[contains(@class, "plugin")]'
+
 thehill.com:
   site_name: 'thehill.com'
   start_url:
