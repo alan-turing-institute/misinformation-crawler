@@ -1486,6 +1486,7 @@ texastribune.org:
       select_method: 'xpath'
       select_expression: '//meta[@name="parsely-author"]/@content'
       match_rule: 'concatenate'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@property="article:published_time"]/@content'
