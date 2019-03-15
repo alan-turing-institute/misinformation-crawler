@@ -9,7 +9,7 @@ class DelayedRetryMiddleware(RetryMiddleware):
     deliberately introduce a delay to bypass this.
     """
     def __init__(self, settings):
-        self.delay_http_codes = [503, 429]
+        self.delay_http_codes = [429, 503]
         self.delay_increment = 0.1
         self.delay_interval = 0
         self.num_responses = 0
