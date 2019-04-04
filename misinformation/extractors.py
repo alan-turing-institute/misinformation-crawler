@@ -172,7 +172,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     # ... otherwise simply use the default values from parsing the whole page
     else:
         article["byline"] = default_readability_article["byline"]
-        # article["publication_datetime"] = default_readability_article["date"]
+        article["publication_datetime"] = default_readability_article["date"]
         article["content"] = default_readability_article["content"]
         article["plain_content"] = default_readability_article["plain_content"]
         article["plain_text"] = default_readability_article["plain_text"]
