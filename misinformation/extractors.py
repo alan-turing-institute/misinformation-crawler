@@ -133,7 +133,9 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
 
     # Always extract the article elements from the page_html with ReadabiliPy first
     # Then overwite with site config versions which we can eventually remove
-    default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
+    if not config_only:
+        default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
+        article['title'] = default_readability_article['title']
 
     # Look for a set of extraction specifications
     if 'article' in config:
@@ -149,12 +151,11 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article['plain_text'] = custom_readability_article['plain_text']
                 if config_only:
                     article['title'] = custom_readability_article['title']
-                else:
-                    article['title'] = default_readability_article['title']
+
         # Only try to extract other data if the article has identified content
         if 'content' in article:
             # Extract title if ReadabiliPy didn't already
-            if 'title' in config['article'] and article['title'] is None:
+            if 'title' in config['article'] and config_only:
                 article['title'] = extract_element(response, config['article']['title'])
             # Extract byline
             if 'byline' in config['article']:
@@ -170,9 +171,8 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article['publication_datetime'] = iso_string
     # ... otherwise simply use the default values from parsing the whole page
     else:
-        article["title"] = default_readability_article["title"]
         article["byline"] = default_readability_article["byline"]
-        # article["date"] = default_readability_article["date"]
+        # article["publication_datetime"] = default_readability_article["date"]
         article["content"] = default_readability_article["content"]
         article["plain_content"] = default_readability_article["plain_content"]
         article["plain_text"] = default_readability_article["plain_text"]
