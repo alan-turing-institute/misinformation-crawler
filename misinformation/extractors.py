@@ -143,10 +143,11 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article['content'] = custom_readability_article['content']
                 article['plain_content'] = custom_readability_article['plain_content']
                 article['plain_text'] = custom_readability_article['plain_text']
+                article['title'] = custom_readability_article['title']
         # Only try to extract other data if the article has identified content
         if 'content' in article and article['content'] is not None:
-            # Extract title
-            if 'title' in config['article']:
+            # Extract title if ReadabiliPy didn't already
+            if 'title' in config['article'] and article['title'] is None:
                 article['title'] = extract_element(response, config['article']['title'])
             # Extract byline
             if 'byline' in config['article']:
