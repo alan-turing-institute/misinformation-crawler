@@ -119,7 +119,7 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
     return output_selectors
 
 
-def extract_article(response, config, crawl_info=None, content_digests=False, node_indexes=False):
+def extract_article(response, config, crawl_info=None, content_digests=False, node_indexes=False, config_only=False):
     # Create new article and set URL from the response (not the request).
     # The idea here is that this should be the same for the same article,
     # regardless of how it was requested (e.g. aliases, redirects etc).
@@ -130,6 +130,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     # Set default article fields by running readability on full page HTML
     page_spec = xpath_extract_spec("/html", "largest")
     page_html = extract_element(response, page_spec)
+
+    # Always extract the article elements from the page_html with ReadabiliPy first
+    # Then overwite with site config versions which we can eventually remove
+    default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
 
     # Look for a set of extraction specifications
     if 'article' in config:
@@ -143,9 +147,12 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article['content'] = custom_readability_article['content']
                 article['plain_content'] = custom_readability_article['plain_content']
                 article['plain_text'] = custom_readability_article['plain_text']
-                article['title'] = custom_readability_article['title']
+                if config_only:
+                    article['title'] = custom_readability_article['title']
+                else:
+                    article['title'] = default_readability_article['title']
         # Only try to extract other data if the article has identified content
-        if 'content' in article and article['content'] is not None:
+        if 'content' in article:
             # Extract title if ReadabiliPy didn't already
             if 'title' in config['article'] and article['title'] is None:
                 article['title'] = extract_element(response, config['article']['title'])
@@ -163,7 +170,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article['publication_datetime'] = iso_string
     # ... otherwise simply use the default values from parsing the whole page
     else:
-        default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
         article["title"] = default_readability_article["title"]
         article["byline"] = default_readability_article["byline"]
         # article["date"] = default_readability_article["date"]

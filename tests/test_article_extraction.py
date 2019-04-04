@@ -186,7 +186,7 @@ def test_extract_article_custom_title_selector():
     config = yaml.load(config_yaml)
 
     # Test
-    article = extract_article(response, config)
+    article = extract_article(response, config, config_only=True)
     assert article["title"] == expected_article["title"]
 
 
