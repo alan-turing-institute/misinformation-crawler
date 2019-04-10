@@ -133,9 +133,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
 
     # Always extract the article elements from the page_html with ReadabiliPy first
     # Then overwite with site config versions which we can eventually remove
-    if not config_only:
+    if not config_only:  # config_only is only True for a few unit tests
         default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
         article['title'] = default_readability_article['title']
+        article["publication_datetime"] = default_readability_article["date"]
 
     # Look for a set of extraction specifications
     if 'article' in config:
@@ -161,7 +162,7 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
             if 'byline' in config['article']:
                 article['byline'] = extract_element(response, config['article']['byline'])
             # Extract publication_datetime
-            if 'publication_datetime' in config['article']:
+            if 'publication_datetime' in config['article'] and config_only:
                 datetime_string = extract_element(response, config['article']['publication_datetime'])
                 if 'datetime-format' in config['article']['publication_datetime']:
                     dt_format = config['article']['publication_datetime']['datetime-format']
@@ -172,7 +173,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     # ... otherwise simply use the default values from parsing the whole page
     else:
         article["byline"] = default_readability_article["byline"]
-        article["publication_datetime"] = default_readability_article["date"]
         article["content"] = default_readability_article["content"]
         article["plain_content"] = default_readability_article["plain_content"]
         article["plain_text"] = default_readability_article["plain_text"]
