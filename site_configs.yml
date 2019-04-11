@@ -149,6 +149,33 @@ barenakedislam.com:
       remove_expressions:
         - '//div[contains(@class, "sd-social")]'
 
+borowitz-report:
+  site_name: 'borowitz-report'
+  start_url: 'https://www.newyorker.com/humor/borowitz-report'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/borowitz-report/page/'
+      article_links: '//a[@class="Link__link___3dWao  "]'
+  article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="Byline__by___37lv8"]/a[@class="Link__link___3dWao  "]/@title'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//p[@class="ArticleTimestamp__timestamp___1klks "]/text()'
+      match_rule: 'single'
+      datetime-format: 'MMMM D, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="articleBody"]'
+      match_rule: 'single'
+
 breitbart.com:
   site_name: 'breitbart.com'
   start_url: 'https://www.breitbart.com/politics/'
