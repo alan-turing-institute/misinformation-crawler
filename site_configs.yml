@@ -331,6 +331,10 @@ conservativepapers.com:
       select_method: 'xpath'
       select_expression: '//meta[@itemprop="author"]/@content'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entry-content"]'
