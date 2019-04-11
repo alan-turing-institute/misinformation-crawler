@@ -19,7 +19,7 @@ class JSLoadButtonMiddleware:
     """
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.seen_urls = set()
         self.timeout = 60
@@ -32,7 +32,8 @@ class JSLoadButtonMiddleware:
             '//button[text()="Load More"]',
             '//button[contains(@class, "show-more")]',
             '//button[@phx-track-id="load more"]',
-            '//form[@class="gdpr-form"]/input[@class="btn"]'
+            '//form[@class="gdpr-form"]/input[@class="btn"]',
+            '//button[@class="BarrierFailsafe__notToday___2LKVU"]'
         ]
 
     def first_load_button_xpath(self):

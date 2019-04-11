@@ -158,6 +158,7 @@ borowitz-report:
       url_must_contain: '/borowitz-report/page/'
       article_links: '//a[@class="Link__link___3dWao  "]'
   article:
+    url_must_contain: '/humor/borowitz-report/'
     title:
       select_method: 'xpath'
       select_expression: '//meta[@property="og:title"]/@content'
