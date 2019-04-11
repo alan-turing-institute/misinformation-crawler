@@ -289,6 +289,35 @@ conservativehq.com:
       remove_expressions:
         - '//div[contains(@class, "field-field-byline")]'
 
+conservativepapers.com:
+  site_name: 'conservativepapers.com'
+  start_url: 'https://conservativepapers.com'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+  article:
+    url_must_contain: '/news/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:title"]/@content'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+    remove_expressions:
+      - '//div[@style="display: none"]'
+      - '//div[@class="ratingblock "]'
+
 dailycaller.com:
   site_name: 'dailycaller.com'
   start_url: 'https://dailycaller.com/section/politics'
