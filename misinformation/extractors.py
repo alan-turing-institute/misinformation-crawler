@@ -2,8 +2,6 @@ import copy
 import logging
 from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
-from ReadabiliPy.readabilipy.extractors.extract_date import extract_datetime_string
-import re
 
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
@@ -161,15 +159,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
             # Extract byline
             if 'byline' in config['article']:
                 article['byline'] = extract_element(response, config['article']['byline'])
-            # Extract publication_datetime
-            if 'publication_datetime' in config['article'] and config_only:
-                datetime_string = extract_element(response, config['article']['publication_datetime'])
-                if 'datetime-format' in config['article']['publication_datetime']:
-                    dt_format = config['article']['publication_datetime']['datetime-format']
-                    iso_string = extract_datetime_string(datetime_string, dt_format, use_arrow=True)
-                else:
-                    iso_string = extract_datetime_string(datetime_string, use_arrow=True)
-                article['publication_datetime'] = iso_string
     # ... otherwise simply use the default values from parsing the whole page
     else:
         article["byline"] = default_readability_article["byline"]
