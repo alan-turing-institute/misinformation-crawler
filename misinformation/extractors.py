@@ -135,6 +135,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
     article['title'] = default_readability_article['title']
     article["publication_datetime"] = default_readability_article["date"]
+    article["byline"] = default_readability_article["byline"]
+    article["content"] = default_readability_article["content"]
+    article["plain_content"] = default_readability_article["plain_content"]
+    article["plain_text"] = default_readability_article["plain_text"]
 
     # Look for a set of extraction specifications
     if 'article' in config:
@@ -162,12 +166,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 datetime_string = extract_element(response, config['article']['publication_datetime'])
                 if datetime_string:
                     article['publication_datetime'] = standardise_datetime_format(datetime_string)
-    # ... otherwise simply use the default values from parsing the whole page
-    else:
-        article["byline"] = default_readability_article["byline"]
-        article["content"] = default_readability_article["content"]
-        article["plain_content"] = default_readability_article["plain_content"]
-        article["plain_text"] = default_readability_article["plain_text"]
 
     # Extract additional article metadata
     if 'metadata' in config:
