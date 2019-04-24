@@ -186,7 +186,7 @@ def test_extract_article_custom_title_selector():
     config = yaml.load(config_yaml)
 
     # Test
-    article = extract_article(response, config, config_only=True)
+    article = extract_article(response, config)
     assert article["title"] == expected_article["title"]
 
 
@@ -661,11 +661,6 @@ def test_extract_datetime_works_with_multiple_dates():
     config_yaml = """
     site_name: 'example.com'
     article:
-        publication_datetime:
-            select_method: 'xpath'
-            select_expression: '//div[@class="subarticle"]/p/text()'
-            match_rule: 'group'
-            datetime-format: 'MMMM D, YYYY'
         content:
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]'
