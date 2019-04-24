@@ -4,7 +4,6 @@ import os
 import glob
 import pkg_resources
 from misinformation.extractors import extract_article, extract_element, xpath_extract_spec
-# from ReadabiliPy.readabilipy.extractors.extract_date import extract_datetime_string
 from scrapy.http import Request, TextResponse
 import yaml
 
