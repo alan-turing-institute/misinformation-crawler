@@ -4,6 +4,7 @@ from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
 from ReadabiliPy.readabilipy.extractors import standardise_datetime_format
 
+
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
     extract_spec = {
         "select_method": "xpath",
