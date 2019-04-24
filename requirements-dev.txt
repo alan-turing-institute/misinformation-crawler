@@ -9,6 +9,7 @@ pyflakes
 pyodbc
 pytest
 pytest-cov
+python-dateutil
 pyyaml
 regex
 scrapy

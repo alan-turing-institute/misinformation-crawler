@@ -5,6 +5,7 @@ fake-useragent
 html5lib
 iso8601
 pyodbc
+python-dateutil
 pyyaml
 regex
 scrapy
