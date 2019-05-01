@@ -165,7 +165,11 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
             if 'publication_datetime' in config['article']:
                 datetime_string = extract_element(response, config['article']['publication_datetime'])
                 if datetime_string:
-                    article['publication_datetime'] = standardise_datetime_format(datetime_string)
+                    if 'datetime-format' in config['article']['publication_datetime']:
+                        dt_format = config['article']['publication_datetime']['datetime-format']
+                        article['publication_datetime'] = standardise_datetime_format(datetime_string, format=dt_format)
+                    else:
+                        article['publication_datetime'] = standardise_datetime_format(datetime_string)
 
     # Extract additional article metadata
     if 'metadata' in config:
