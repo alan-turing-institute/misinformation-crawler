@@ -660,10 +660,11 @@ def test_extract_datetime_works_with_multiple_dates():
     config_yaml = """
     site_name: 'example.com'
     article:
-        content:
+        publication_datetime:
             select_method: 'xpath'
-            select_expression: '//div[@class="subarticle"]'
-            match_rule: 'single'
+            select_expression: '//div[@class="subarticle"]/p/text()'
+            match_rule: 'first'
+            datetime-format: 'MMMM D, YYYY'
     """
     config = yaml.load(config_yaml)
 

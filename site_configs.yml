@@ -12,6 +12,11 @@ abcnews.go.com:
       select_method: 'xpath'
       select_expression: 'substring-before(substring-after(//script[contains(text(), "tq.byline")], "tq.byline = ''"), "'';")'
       match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="Last-Modified"]/@content'
+      match_rule: 'single'
+      datetime-format: 'YYYY-MM-DD hh:mm:ss'
     content:
       select_method: 'xpath'
       select_expression: '(//div[@class="article-copy"] | //div[@id="listStoryText"])'
@@ -319,6 +324,11 @@ disclose.tv:
       select_method: 'xpath'
       select_expression: '//div[@class="article-author"]/span[contains(@class, "article-author")]/a/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="article-element__meta-item"]'
+      match_rule: 'single'
+      datetime-format: 'MMM DD YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-content"]'
@@ -395,6 +405,10 @@ foxnews.com:
       select_expression: '//div[@class="author-byline"]/span/span/a/text()'
       match-rule: 'concatenate'
       warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="dcterms.created"]/@content'
+      match-rule: 'single'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-body"]'
@@ -457,6 +471,11 @@ henrymakow.com:
       article_links: '//p[not(@class)]/a'
   metadata_source: 'microdata'
   article:
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="text"]/p/text()'
+      match_rule: 'first'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="text-body"]'
@@ -935,6 +954,11 @@ prisonplanet.com:
       select_expression: '//div[@class="subarticle"]/p//strong/text()'
       match_rule: 'first'
       warn_if_missing: False
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="subarticle"]/p/text()'
+      match_rule: 'group'
+      datetime-format: 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]'
@@ -1008,6 +1032,10 @@ rt.com:
       url_must_contain: 'sitemap'
   article:
     url_must_contain: '/usa/'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="published_time_telegram"]/@content'
+      match_rule: 'single'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "article ")]'
@@ -1164,6 +1192,10 @@ time.com:
       select_expression: '//div[@class="author-text"]/a[@class="bold author-name"]/text()'
       match_rule: 'concatenate'
       warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="keyvals"]/@data-content_published_date'
+      match_rule: 'single'
     content:
       select_method: 'xpath'
       select_expression: '//div[@id="article-body"]'
@@ -1203,6 +1235,11 @@ usatoday.com:
       select_method: 'xpath'
       select_expression: '//span[@class="author"]/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="publish-date"]/text()'
+      match_rule: 'single'
+      datetime-format: '[Published] hh:mm A [EST] MMM DD, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-wrapper"]'
@@ -1266,6 +1303,10 @@ weeklyworldnews.com:
     byline:
       select_method: 'xpath'
       select_expression: '//p[@class="entry-byline"]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//p[@class="entry-byline"]//time[@class="entry-date"]/@datetime'
       match_rule: 'single'
     content:
       select_method: 'xpath'
