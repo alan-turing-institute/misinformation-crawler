@@ -287,6 +287,11 @@ dailykos.com:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="timestamp "]/@data-epoch-time'
+      datetime-format: 'unix_milliseconds'
+      match_rule: 'first'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="story-intro story-content"]'
@@ -566,6 +571,11 @@ judicialwatch.org:
       select_method: 'xpath'
       select_expression: '//p[@itemprop="author"]/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//p[@itemprop="datePublished"]/text()'
+      match_rule: 'single'
+      datetime-format: 'MMMM DD, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entrycontent"]'
@@ -912,6 +922,11 @@ patriotnewsdaily.com:
       select_method: 'xpath'
       select_expression: '//div[@class="vcard author"]//a/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="updated"]/text()'
+      match_rule: 'single'
+      datetime-format: 'YYYY-MM-DD'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entry"]'
@@ -1059,6 +1074,11 @@ satirewire.com:
       url_must_contain: '/content1/\?cat=13&paged'
       article_links: '//div[@class="excerpt"]/h2/a[@rel="bookmark"]'
   article:
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-date"]/text()'
+      match_rule: 'single'
+      datetime-format: 'MMM D, YYYY'
     url_must_contain: '/content1/\?p=\d+'
     content:
       select_method: 'xpath'
