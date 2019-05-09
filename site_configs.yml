@@ -143,6 +143,10 @@ cap-news.com:
       select_method: 'xpath'
       select_expression: 'substring-after(//div[@id="sto_graphs"]/p[last()]/text(), "- ")'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:article:published_time"]/@content'
+      match_rule: 'first'
     content:
       select_method: 'xpath'
       select_expression: '//div[@id="sto_graphs"]'
@@ -198,6 +202,11 @@ christianpost.com:
       select_method: 'xpath'
       select_expression: '//div[@class="article-byline"]/span[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-byline"]/time[@class="visually-hidden"]/text()'
+      match_rule: 'single'
+      datetime-format: 'dddd, MMMM DD, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//article[@id="article_content"]'
@@ -268,6 +277,11 @@ dailycaller.com:
       select_method: 'xpath'
       select_expression: 'substring-before(//div[@class="author"]/text(), "|")'
       match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time/text()'
+      match_rule: 'single'
+      datetime-format: 'h:m A MM/DD/YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//article[contains(@class, "section-politics")]/div[contains(@id, "ob-read-more-selector")]'
@@ -504,6 +518,10 @@ huffingtonpost.com:
       select_expression: '//span[contains(@class, "author-card__details__name")]/text()|//div[contains(@class, "wire-byline")]/span/text()|//div[contains(@class, "author-list")]/span/text()'
       match_rule: 'last'
       warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "content-list-component")]'
