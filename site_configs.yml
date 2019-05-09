@@ -63,6 +63,11 @@ aljazeera.com:
       select_expression: '//div[@class="article-heading-author-name"]//a[@rel="author"]/text()'
       match_rule: 'single'
       warn_if_missing: False
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-heading-author-name"]//time[@class="timeagofunction"]/@datetime'
+      match_rule: 'single'
+      datetime-format: 'ddd MMM DD YYYY hh:mm:ss'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-p-wrapper"]'
@@ -812,6 +817,11 @@ nbcnews.com:
       select_expression: '//div[@class="founders-cond f6 lh-none"]/text()'
       match_rule: 'last'
       warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div/time/@datetime'
+      match_rule: 'first'
+      datetime-format: 'ddd MMM D YYYY HH:mm:ss'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "body")]/p[@class=""]'
