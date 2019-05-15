@@ -4,26 +4,13 @@ import pkg_resources
 import pyodbc
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
+from .exceptions import RecoverableDatabaseError
+
 
 logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
 
 
-class DatabaseError(Exception):
-   """Base class for database exceptions"""
-   pass
-
-
-class RecoverableDatabaseError(DatabaseError):
-   """Raised for understood and recoverable errors (eg. duplicate keys)"""
-   pass
-
-
-class NonRecoverableDatabaseError(DatabaseError):
-   """Raised for non-recoverable errors (eg. connection failure)"""
-   pass
-
-
-class DatabaseConnector():
+class Connector():
     def __init__(self):
         self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
         self.engine = sqlalchemy.create_engine("mssql+pyodbc://{user}:{password}@{server}:1433/{database}?driver={driver}".format(

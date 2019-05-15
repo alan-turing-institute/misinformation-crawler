@@ -5,13 +5,12 @@ from scrapy.exceptions import NotConfigured
 import pyodbc
 import hashlib
 from azure.storage.blob import BlockBlobService
-from .databaseconnector import DatabaseConnector, RecoverableDatabaseError, NonRecoverableDatabaseError
-from ..database_models import Webpage
+from ..database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Webpage
 
 import logging
 logging.getLogger("azure.storage.common.storageclient").setLevel(logging.ERROR)
 
-class ArticleBlobStorageExporter(DatabaseConnector):
+class ArticleBlobStorageExporter(Connector):
     def __init__(self):
         super().__init__()
         self.block_blob_service = BlockBlobService(account_name='misinformationcrawls', account_key=self.db_config["blob_storage_key"])
