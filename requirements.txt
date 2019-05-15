@@ -11,4 +11,5 @@ pyyaml
 regex
 scrapy
 selenium
+sqlalchemy
 twisted

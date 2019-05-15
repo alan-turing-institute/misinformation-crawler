@@ -84,6 +84,7 @@ EXTENSIONS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+    'misinformation.pipelines.ArticleBlobStorageExporter': 300,
     'misinformation.pipelines.ArticleJsonFileExporter': 300,
     'misinformation.pipelines.ArticleDatabaseExporter': 300
 }

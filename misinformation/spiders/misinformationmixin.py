@@ -4,7 +4,7 @@ import os
 import re
 import uuid
 from urllib.parse import urlparse
-from w3lib.url import url_query_cleaner
+from w3lib.url import url_query_cleaner, canonicalize_url
 from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
 from misinformation.extractors import extract_article
@@ -119,6 +119,7 @@ class MisinformationMixin():
             resolved_url = response.request.meta.get('redirect_urls')[0]
         else:
             resolved_url = response.url
+        resolved_url = canonicalize_url(resolved_url)
         self.logger.info('Searching for an article at: {}'.format(resolved_url))
 
         # Always reject the front page of the domain since this will change
@@ -132,7 +133,9 @@ class MisinformationMixin():
             return
 
         # Check whether we can extract an article from this page
-        article = extract_article(response, self.config, crawl_info=self.crawl_info,
+        article = extract_article(response, self.config,
+                                  resolved_url=resolved_url,
+                                  crawl_info=self.crawl_info,
                                   content_digests=self.settings['CONTENT_DIGESTS'],
                                   node_indexes=self.settings['NODE_INDEXES'])
         if article['content'] is None:

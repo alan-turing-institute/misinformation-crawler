@@ -197,17 +197,19 @@ def arrow_datetime_extract(date_string, date_format=None):
     return datetime
 
 
-def extract_article(response, config, crawl_info=None, content_digests=False, node_indexes=False):
+def extract_article(response, config, resolved_url=None, crawl_info=None, content_digests=False, node_indexes=False):
     # Create new article and set URL from the response (not the request).
     # The idea here is that this should be the same for the same article,
     # regardless of how it was requested (e.g. aliases, redirects etc).
     article = Article()
     article['site_name'] = config['site_name']
-    article['article_url'] = response.url
+    article['article_url'] = resolved_url if resolved_url else response.url
+    article["request_meta"] = response.request.meta
 
     # Set default article fields by running readability on full page HTML
     page_spec = xpath_extract_spec("/html", "largest")
     page_html = extract_element(response, page_spec)
+    article["page_html"] = page_html
 
     # Always extract the article elements from the page_html with ReadabiliPy first
     # Then overwite with site config versions, if they exist

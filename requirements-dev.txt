@@ -1,3 +1,4 @@
+azure-storage-blob
 arrow
 beautifulsoup4>=4.7.1
 cfscrape
@@ -16,4 +17,5 @@ pyyaml
 regex
 scrapy
 selenium
+sqlalchemy
 twisted

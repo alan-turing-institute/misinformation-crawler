@@ -14,7 +14,7 @@ def main():
                         help='Name of site configuration.')
     parser.add_argument('--max_articles', '-n', type=int, default=0,
                         help='Maximum number of articles to process from each site.')
-    parser.add_argument('--exporter', '-e', default='database', choices=['file', 'database'],
+    parser.add_argument('--exporter', '-e', default='database', choices=['file', 'blob', 'database'],
                         help='Article export method.')
     args = parser.parse_args()
 
