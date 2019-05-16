@@ -663,8 +663,12 @@ def test_extract_datetime_works_with_multiple_dates():
         publication_datetime:
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]/p/text()'
-            match_rule: 'first'
+            match_rule: 'group'
             datetime-format: 'MMMM D, YYYY'
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="subarticle"]'
+            match_rule: 'single'
     """
     config = yaml.load(config_yaml)
 
