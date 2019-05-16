@@ -1,157 +1,118 @@
 from azure.storage.blob import BlockBlobService
-from ..database import Connector, Webpage
-from ..items import Article
+from ..database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
+# from ..items import Article, Webpage
 import datetime
 import json
 from scrapy.http.response.html import HtmlResponse
-from .serialisation import response_from_dict
-from ..extractors import extract_element
+from .serialisation import response_from_warc
+from ..extractors import extract_element, extract_datetime_string
+from ReadabiliPy.readabilipy import parse_to_json
+import logging
+from termcolor import colored
+
 
 class ArticleParser(Connector):
-    def __init__(self):
+
+
+    def __init__(self, content_digests=False, node_indexes=False):
         super().__init__()
         self.block_blob_service = BlockBlobService(account_name="misinformationcrawldata", account_key=self.db_config["blob_storage_key"])
         self.blob_container_name = "raw-crawled-pages"
+        self.content_digests = content_digests
+        self.node_indexes = node_indexes
 
 
     def process_site(self, site_name, config):
 
         entries = self.read_entries(Webpage, site_name=site_name)
-
-        print("Loaded {} pages for {}".format(len(entries), site_name))
-
+        logging.info("Loaded {} pages for {}".format(len(entries), colored(site_name, "green")))
 
         for entry in entries:
-            # Load data from blob storage
-            blob_key = entry.blob_key
-            blob = self.block_blob_service.get_blob_to_text(self.blob_container_name, blob_key)
-            # print(blob.content)
-            # print("blob.content", type(blob.content))
-            # blob_data = json.loads(json.loads(blob.content)) # double decoding needed as we had to convert the scrapy.Item to a dict
-            blob_data = json.loads(blob.content)
-            # print(blob_data)
-            # print("blob_data", type(blob_data))
+            logging.info("Searching for an article at: {}".format(colored(entry.article_url, "green")))
 
-            # Create article with pre-existing information
-            article = Article()
-            article["crawl_id"] = blob_data["crawl_id"]
-            article["crawl_datetime"] = blob_data["crawl_datetime"] #.replace(tzinfo=datetime.timezone.utc).isoformat()
+            # Load WARC data from blob storage
+            blob_key = entry.blob_key
+            blob = self.block_blob_service.get_blob_to_bytes(self.blob_container_name, blob_key)
+            # Create a response from the WARC content
+            response = response_from_warc(blob.content)
+
+            # Initialise an empty article
+            article = {}
+            article["title"] = None
+            article["byline"] = None
+            article["publication_datetime"] = None
+            article["content"] = None
+            article["plain_content"] = None
+            article["plain_text"] = None
+            article["metadata"] = None
+
+            # Insert data from the table entry
             article["site_name"] = entry.site_name
             article["article_url"] = entry.article_url
+            article["crawl_id"] = entry.crawl_id
+            article["crawl_datetime"] = entry.crawl_datetime.replace(tzinfo=datetime.timezone.utc).isoformat()
 
-            # Construct response
-            response = response_from_dict(blob_data)
-            print("response")
-            print(response)
-
-            # First extract the content (or use the default content)
+            # First extract the containing element (or use the whole page)
             try:
                 article_html = extract_element(response, config["article"]["content"])
             except KeyError:
                 article_html = extract_element(response, "/html")
 
-            print("article_html", article_html)
+            # Use this to extract content and text
+            if article_html:
+                readabilipy_article = parse_to_json(article_html, self.content_digests, self.node_indexes, use_readability=False)
+                # article["title"] = readabilipy_article["title"]
+                # article["byline"] = readabilipy_article["byline"]
+                # article["publication_datetime"] = readabilipy_article["publication_datetime"]
+                article["content"] = readabilipy_article["content"]
+                article["plain_content"] = readabilipy_article["plain_content"]
+                article["plain_text"] = json.dumps(readabilipy_article["plain_text"])
+
+                # Try to extract other data if the article has identified content
+                if "content" in article and article["content"]:
+                    # Extract title if in config
+                    if "title" in config["article"]:
+                        article["title"] = extract_element(response, config["article"]["title"])
+                    # Extract byline
+                    if "byline" in config["article"]:
+                        article["byline"] = extract_element(response, config["article"]["byline"])
+                    # Extract publication_datetime
+                    if "publication_datetime" in config["article"]:
+                        datetime_string = extract_element(response, config["article"]["publication_datetime"])
+                        if "datetime-format" in config["article"]["publication_datetime"]:
+                            dt_format = config["article"]["publication_datetime"]["datetime-format"]
+                            iso_string = extract_datetime_string(datetime_string, dt_format)
+                        else:
+                            iso_string = extract_datetime_string(datetime_string)
+                        article["publication_datetime"] = iso_string
+
+            # Extract additional article metadata
+            if "metadata" in config:
+                # Initialise metadata field
+                metadata = dict()
+                # Attempt to extract all metadata fields
+                for fieldname in config["metadata"]:
+                    metadata[fieldname] = extract_element(response, config["metadata"][fieldname])
+                article["metadata"] = json.dumps(metadata)
+
+            # Add article to database
+            if article_html:
+                self.add_to_database(article)
+            logging.info("Finished processing: {}".format(colored(entry.article_url, "green")))
 
 
-            # if "article" in config:
-            #     # Extract article content
-            #     if "content" in config["article"]:
-            #         # Extract article content from specified element if present
-            #         config["article"]["content"]["warn_if_missing"] = False
-            #         article_html = extract_element(response, config["article"]["content"])
-            #         if article_html is not None:
-            #             custom_readability_article = parse_to_json(article_html, content_digests, node_indexes, False)
-            #             article["content"] = custom_readability_article["content"]
-            #             article["plain_content"] = custom_readability_article["plain_content"]
-            #             article["plain_text"] = custom_readability_article["plain_text"]
-            #     # Only try to extract other data if the article has identified content
-            #     if "content" in article and article["content"] is not None:
-            #         # Extract title
-            #         if "title" in config["article"]:
-            #             article["title"] = extract_element(response, config["article"]["title"])
-            #         # Extract byline
-            #         if "byline" in config["article"]:
-            #             article["byline"] = extract_element(response, config["article"]["byline"])
-            #         # Extract publication_datetime
-            #         if "publication_datetime" in config["article"]:
-            #             datetime_string = extract_element(response, config["article"]["publication_datetime"])
-            #             if "datetime-format" in config["article"]["publication_datetime"]:
-            #                 dt_format = config["article"]["publication_datetime"]["datetime-format"]
-            #                 iso_string = extract_datetime_string(datetime_string, dt_format)
-            #             else:
-            #                 iso_string = extract_datetime_string(datetime_string)
-            #             article["publication_datetime"] = iso_string
-            # # ... otherwise simply use the default values from parsing the whole page
-            # else:
-            #     default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
-            #     article["title"] = default_readability_article["title"]
-            #     article["byline"] = default_readability_article["byline"]
-            #     article["content"] = default_readability_article["content"]
-            #     article["plain_content"] = default_readability_article["plain_content"]
-            #     article["plain_text"] = default_readability_article["plain_text"]
+    def add_to_database(self, article):
+        '''Add an article to the database'''
+        logging.info("  starting database export for: {}".format(article["article_url"]))
 
+        # Construct webpage table entry
+        article_data = Article(**article)
 
-            print(article)
-
-
-            # print(type(blob_data["page_html"]), blob_data["page_html"])
-
-
-    # title = scrapy.Field()
-    # byline = scrapy.Field()
-    # publication_datetime = scrapy.Field()
-    # metadata = scrapy.Field()
-    # plain_content = scrapy.Field()
-    # plain_text = scrapy.Field()
-    # content = scrapy.Field()
-
-
-
-
-
-
-    # article["article_url"] = resolved_url if resolved_url else response.url
-    # article["request_meta"] = response.request.meta
-
-    # # Set default article fields by running readability on full page HTML
-    # page_spec = xpath_extract_spec("/html", "largest")
-    # page_html = extract_element(response, page_spec)
-    # article["page_html"] = page_html
-
-
-
-    # # Extract additional article metadata
-    # if "metadata" in config:
-    #     # Initialise metadata field
-    #     article["metadata"] = dict()
-    #     # Attempt to extract all metadata fields
-    #     for fieldname in config["metadata"]:
-    #         article["metadata"][fieldname] = extract_element(response, config["metadata"][fieldname])
-
-    # # Add crawl information if provided
-    # if crawl_info:
-    #     article["crawl_id"] = crawl_info["crawl_id"]
-    #     article["crawl_datetime"] = crawl_info["crawl_datetime"]
-
-    # # Ensure all fields included in article even if no data extracted for them
-    # if "title" not in article:
-    #     article["title"] = None
-    # if "byline" not in article:
-    #     article["byline"] = None
-    # if "publication_datetime" not in article:
-    #     article["publication_datetime"] = None
-    # if "content" not in article:
-    #     article["content"] = None
-    # if "plain_content" not in article:
-    #     article["plain_content"] = None
-    # if "plain_content" not in article:
-    #     article["plain_text"] = None
-    # if "metadata" not in article:
-    #     article["metadata"] = None
-
-    # return article
-
-
-
-
-    #     # s.query(Book).all()
+        # Add webpage entry to database
+        try:
+            self.add_entry(article_data)
+        except RecoverableDatabaseError as err:
+            logging.info(str(err))
+        except NonRecoverableDatabaseError as err:
+            logging.critical(str(err))
+            raise

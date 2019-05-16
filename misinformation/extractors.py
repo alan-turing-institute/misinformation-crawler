@@ -2,7 +2,7 @@ import copy
 import logging
 import arrow
 import pendulum
-from misinformation.items import Article
+# from misinformation.items import Article
 from ReadabiliPy.readabilipy import parse_to_json
 import re
 

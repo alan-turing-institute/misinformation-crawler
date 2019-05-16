@@ -1,8 +1,8 @@
 from .article_parser import ArticleParser
-from .serialisation import response_to_dict, response_from_dict
+from .serialisation import warc_from_response, response_from_warc
 
 __all__ = [
     'ArticleParser',
-    'response_to_dict',
-    'response_from_dict',
+    'warc_from_response',
+    'response_from_warc',
 ]

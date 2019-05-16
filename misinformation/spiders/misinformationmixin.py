@@ -13,7 +13,7 @@ from misinformation.items import CrawlResponse
 # from scrapy.utils.reqser import request_to_dict
 # from scrapy.utils.serialize import ScrapyJSONEncoder
 
-from misinformation.parsers import response_to_dict
+from misinformation.parsers import warc_from_response
 
 
 class MisinformationMixin():
@@ -126,7 +126,7 @@ class MisinformationMixin():
         else:
             resolved_url = response.url
         resolved_url = canonicalize_url(resolved_url)
-        self.logger.info('Searching for an article at: {}'.format(resolved_url))
+        self.logger.info('Searching for a URL match at: {}'.format(resolved_url))
 
         # Always reject the front page of the domain since this will change
         # over time We need this for henrymakow.com as there is no sane URL
@@ -138,18 +138,20 @@ class MisinformationMixin():
         if not self.is_article(resolved_url):
             return
 
+        # response_dict = response_to_dict(response)
+
         # Prepare to serialise the response
-        response_dict = response_to_dict(response)
         crawl_response = CrawlResponse()
         crawl_response["url"] = resolved_url
-        crawl_response["status"] = response_dict["status"]
-        crawl_response["headers"] = response_dict["headers"]
-        crawl_response["text"] = response_dict["text"]
-        crawl_response["request"] = response_dict["request"]
-        crawl_response["flags"] = response_dict["flags"]
         crawl_response["crawl_id"] = self.crawl_info["crawl_id"]
         crawl_response["crawl_datetime"] = self.crawl_info["crawl_datetime"]
         crawl_response["site_name"] = self.config["site_name"]
+        crawl_response["warc_data"] = warc_from_response(response, resolved_url)
+
+        # crawl_response["status"] = response_dict["status"]
+        # crawl_response["text"] = response_dict["text"]
+        # crawl_response["request"] = response_dict["request"]
+        # crawl_response["flags"] = response_dict["flags"]
 
         # Return itemised response
         self.logger.info('  found an article at: {}'.format(resolved_url))
