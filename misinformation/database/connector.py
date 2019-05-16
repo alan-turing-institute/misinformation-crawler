@@ -5,9 +5,19 @@ import pyodbc
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 from .exceptions import RecoverableDatabaseError
+from .models import Webpage
+
+import struct
 
 
 logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
+
+def handle_datetimeoffset(dto_value):
+    # ref: https://github.com/mkleehammer/pyodbc/issues/134#issuecomment-281739794
+    tup = struct.unpack("<6hI2h", dto_value)  # e.g., (2017, 3, 16, 10, 35, 18, 0, -6, 0)
+    tweaked = [tup[i] // 100 if i == 6 else tup[i] for i in range(len(tup))]
+    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:07d} {:+03d}:{:02d}".format(*tweaked)
+
 
 
 class Connector():
@@ -23,7 +33,7 @@ class Connector():
         self.session_factory = sessionmaker(bind=self.engine)
 
 
-    def add_dbentry(self, table_name, entry):
+    def add_entry(self, entry):
         '''Attempt to commit transaction to the database.'''
         try:
             session = self.session_factory()
@@ -34,7 +44,16 @@ class Connector():
         # Check for duplicate key exceptions and report informative log message
         except (pyodbc.IntegrityError, sqlalchemy.exc.IntegrityError) as err:
             if "Violation of UNIQUE KEY constraint" in str(err):
-                raise RecoverableDatabaseError("Refusing to add duplicate entry for: {}".format(entry.article_url))
+                raise RecoverableDatabaseError("  refusing to add duplicate database entry for: {}".format(entry.article_url))
             # Re-raise the exception if it had a different cause
             else:
                 raise
+
+    def read_entries(self, entry_type, site_name=None):
+        session = self.session_factory()
+        if site_name:
+            entries = session.query(entry_type).filter_by(site_name=site_name).all()
+        else:
+            entries = session.query(entry_type).all()
+        session.close()
+        return entries
