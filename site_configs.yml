@@ -1339,6 +1339,33 @@ vox.com:
       select_expression: '//div[@class="c-entry-content"]'
       match_rule: 'single'
 
+washingtontimes.com:
+  site_name: 'washingtontimes.com'
+  start_url: 'https://www.washingtontimes.com/news/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/\?page='
+      article_links: '//h2[@class="article-headline"]/a'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="Author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="source"]/text()'
+      match_rule: 'last'
+      datetime-format: 'dddd, MMMM DD, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="storyareawrapper"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="permission"]'
+        # - '//div/h4[contains(text(), "The Washington Times Comment Policy")]'  # Can we modify this to remove the grey comment box present on each page
+
 weeklyworldnews.com:
   site_name: 'weeklyworldnews.com'
   start_url: 'http://weeklyworldnews.com/category/politics/'
