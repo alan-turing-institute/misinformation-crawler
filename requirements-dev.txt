@@ -10,6 +10,7 @@ pycodestyle
 pyflakes
 pyodbc
 pytest
+pytest-benchmark
 pytest-cov
 pyyaml
 regex

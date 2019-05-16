@@ -209,6 +209,16 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
     page_spec = xpath_extract_spec("/html", "largest")
     page_html = extract_element(response, page_spec)
 
+    # Always extract the article elements from the page_html with ReadabiliPy first
+    # Then overwite with site config versions, if they exist
+    default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
+    article['title'] = default_readability_article['title']
+    article["publication_datetime"] = default_readability_article["date"]
+    article["byline"] = default_readability_article["byline"]
+    article["content"] = default_readability_article["content"]
+    article["plain_content"] = default_readability_article["plain_content"]
+    article["plain_text"] = default_readability_article["plain_text"]
+
     # Look for a set of extraction specifications
     if 'article' in config:
         # Extract article content
@@ -221,9 +231,10 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 article['content'] = custom_readability_article['content']
                 article['plain_content'] = custom_readability_article['plain_content']
                 article['plain_text'] = custom_readability_article['plain_text']
+
         # Only try to extract other data if the article has identified content
         if 'content' in article and article['content'] is not None:
-            # Extract title
+            # Extract title if in config
             if 'title' in config['article']:
                 article['title'] = extract_element(response, config['article']['title'])
             # Extract byline
@@ -238,14 +249,6 @@ def extract_article(response, config, crawl_info=None, content_digests=False, no
                 else:
                     iso_string = extract_datetime_string(datetime_string)
                 article['publication_datetime'] = iso_string
-    # ... otherwise simply use the default values from parsing the whole page
-    else:
-        default_readability_article = parse_to_json(page_html, content_digests, node_indexes, False)
-        article["title"] = default_readability_article["title"]
-        article["byline"] = default_readability_article["byline"]
-        article["content"] = default_readability_article["content"]
-        article["plain_content"] = default_readability_article["plain_content"]
-        article["plain_text"] = default_readability_article["plain_text"]
 
     # Extract additional article metadata
     if 'metadata' in config:
