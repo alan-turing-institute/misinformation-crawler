@@ -1,11 +1,11 @@
 import argparse
+import logging
 import pkg_resources
 import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 from misinformation.spiders import IndexPageSpider, ScattergunSpider, XMLSitemapSpider
-
 
 def main():
     # Parse command line arguments
@@ -20,6 +20,7 @@ def main():
 
     # Set up logging
     configure_logging()
+    logging.getLogger("azure.storage.common.storageclient").setLevel(logging.ERROR)
 
     # Load crawl configuration for site from configuration
     site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"))

@@ -7,13 +7,8 @@ from urllib.parse import urlparse
 from w3lib.url import url_query_cleaner, canonicalize_url
 from scrapy.exceptions import CloseSpider
 from scrapy.exporters import JsonItemExporter
-# from misinformation.extractors import extract_article
 from misinformation.items import CrawlResponse
-
-# from scrapy.utils.reqser import request_to_dict
-# from scrapy.utils.serialize import ScrapyJSONEncoder
-
-from misinformation.parsers import warc_from_response
+from misinformation.warc import warc_from_response
 
 
 class MisinformationMixin():

@@ -1,19 +1,15 @@
-from azure.storage.blob import BlockBlobService
-from ..database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
-# from ..items import Article, Webpage
 import datetime
 import json
-from scrapy.http.response.html import HtmlResponse
-from .serialisation import response_from_warc
-from ..extractors import extract_element, extract_datetime_string
-from ReadabiliPy.readabilipy import parse_to_json
 import logging
 from termcolor import colored
+from azure.storage.blob import BlockBlobService
+from ReadabiliPy.readabilipy import parse_to_json
+from misinformation.extractors import extract_element, extract_datetime_string
+from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
+from .serialisation import response_from_warc
 
 
-class ArticleParser(Connector):
-
-
+class WarcParser(Connector):
     def __init__(self, content_digests=False, node_indexes=False):
         super().__init__()
         self.block_blob_service = BlockBlobService(account_name="misinformationcrawldata", account_key=self.db_config["blob_storage_key"])
@@ -22,12 +18,13 @@ class ArticleParser(Connector):
         self.node_indexes = node_indexes
 
 
-    def process_site(self, site_name, config):
-
+    def process_webpages(self, site_name, config):
+        start_time = datetime.datetime.utcnow()
         entries = self.read_entries(Webpage, site_name=site_name)
-        logging.info("Loaded {} pages for {}".format(len(entries), colored(site_name, "green")))
+        n_pages = len(entries)
+        logging.info("Loaded {} pages for {}".format(n_pages, colored(site_name, "green")))
 
-        for entry in entries:
+        for idx, entry in enumerate(entries, start=1):
             logging.info("Searching for an article at: {}".format(colored(entry.article_url, "green")))
 
             # Load WARC data from blob storage
@@ -36,15 +33,16 @@ class ArticleParser(Connector):
             # Create a response from the WARC content
             response = response_from_warc(blob.content)
 
-            # Initialise an empty article
-            article = {}
-            article["title"] = None
-            article["byline"] = None
-            article["publication_datetime"] = None
-            article["content"] = None
-            article["plain_content"] = None
-            article["plain_text"] = None
-            article["metadata"] = None
+            # Initialise an empty article dictionary
+            article = {
+                "title": None,
+                "byline": None,
+                "publication_datetime": None,
+                "content": None,
+                "plain_content": None,
+                "plain_text": None,
+                "metadata": None,
+            }
 
             # Insert data from the table entry
             article["site_name"] = entry.site_name
@@ -98,14 +96,22 @@ class ArticleParser(Connector):
             # Add article to database
             if article_html:
                 self.add_to_database(article)
-            logging.info("Finished processing: {}".format(colored(entry.article_url, "green")))
+            logging.info("Finished processing {}/{}: {}".format(idx, n_pages, entry.article_url))
+
+        # Print statistics
+        duration = datetime.datetime.utcnow() - start_time
+        logging.info("Processed {} pages in {} => {:.2f} Hz".format(
+            colored(n_pages, "green"),
+            colored(str(duration), "green"),
+            float(n_pages / duration.seconds),
+        ))
 
 
     def add_to_database(self, article):
         '''Add an article to the database'''
         logging.info("  starting database export for: {}".format(article["article_url"]))
 
-        # Construct webpage table entry
+        # Construct Article table entry
         article_data = Article(**article)
 
         # Add webpage entry to database
@@ -116,3 +122,5 @@ class ArticleParser(Connector):
         except NonRecoverableDatabaseError as err:
             logging.critical(str(err))
             raise
+
+        logging.info("  finished database export for: {}".format(article["article_url"]))

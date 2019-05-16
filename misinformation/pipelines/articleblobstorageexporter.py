@@ -1,15 +1,8 @@
 import hashlib
-import json
 import logging
-import pickle
-import pkg_resources
-import pyodbc
-import yaml
 from azure.storage.blob import BlockBlobService
 from scrapy.exceptions import NotConfigured
 from ..database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Webpage
-
-logging.getLogger("azure.storage.common.storageclient").setLevel(logging.ERROR)
 
 
 class ArticleBlobStorageExporter(Connector):
