@@ -117,6 +117,24 @@ barenakedislam.com:
       remove_expressions:
         - '//div[contains(@class, "sd-social")]'
 
+bostonherald.com:
+  site_name: 'bostonherald.com'
+  start_url: 'https://bostonherald.com/news/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h4[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "byline")]//a[@class=" author-name"]/text()'
+      match_rule: 'concatenate'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-body"]'
+      match_rule: 'single'
+
 breitbart.com:
   site_name: 'breitbart.com'
   start_url: 'https://www.breitbart.com/politics/'
