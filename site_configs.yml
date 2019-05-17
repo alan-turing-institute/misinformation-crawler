@@ -1,4 +1,27 @@
 ---  # Spider configurations for each website to be crawled
+10news.com:
+  site_name: '10news.com'
+  start_url: 'https://www.10news.com/news/local-news'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/local-news?00000166-4055-de2e-a1fe-74dd65e3000c-page='
+      article_links: '//div[@class="List-items-item"]/a'
+  article:
+    url_must_contain: '/news/local-news/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//title/text()'
+      match_rule: 'first'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "ArticlePage-authorName")]/a/text()|//div[contains(@class, "ArticlePage-authorName")]/text()'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="RichTextArticleBody-body"]'
+      match_rule: 'single'
+
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
