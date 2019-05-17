@@ -20,7 +20,7 @@ class ArticleBlobStorageExporter(Connector):
         blob_key = hashlib.md5(crawl_response["url"].encode("utf-8")).hexdigest()
 
         # Check whether blob already exists and add it if not
-        if len(list(self.block_blob_service.list_blobs(self.blob_container_name, blob_key))):
+        if list(self.block_blob_service.list_blobs(self.blob_container_name, blob_key)):
             spider.logger.info("  refusing to overwrite file that already exists in blob storage: {}".format(crawl_response["url"]))
         else:
             spider.logger.info("  uploading WARC file for: {}".format(crawl_response["url"]))
@@ -28,11 +28,11 @@ class ArticleBlobStorageExporter(Connector):
 
         # Construct webpage table entry
         webpage_data = Webpage(
-            site_name = crawl_response["site_name"],
-            article_url = crawl_response["url"],
-            crawl_id = crawl_response["crawl_id"],
-            crawl_datetime = crawl_response["crawl_datetime"],
-            blob_key = blob_key,
+            site_name=crawl_response["site_name"],
+            article_url=crawl_response["url"],
+            crawl_id=crawl_response["crawl_id"],
+            crawl_datetime=crawl_response["crawl_datetime"],
+            blob_key=blob_key,
         )
 
         # Add webpage entry to database

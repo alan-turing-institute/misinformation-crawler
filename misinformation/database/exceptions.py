@@ -1,15 +1,10 @@
 class DatabaseError(Exception):
-   """Base class for database exceptions"""
-   pass
+    """Base class for database exceptions"""
 
 
 class NonRecoverableDatabaseError(DatabaseError):
-   """Raised for non-recoverable errors (eg. connection failure)"""
-   pass
+    """Raised for non-recoverable errors (eg. connection failure)"""
 
 
 class RecoverableDatabaseError(DatabaseError):
-   """Raised for understood and recoverable errors (eg. duplicate keys)"""
-   pass
-
-
+    """Raised for understood and recoverable errors (eg. duplicate keys)"""

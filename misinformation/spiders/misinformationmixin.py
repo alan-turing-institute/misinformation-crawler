@@ -118,11 +118,11 @@ class MisinformationMixin():
         # over time We need this for henrymakow.com as there is no sane URL
         # match rule for identifying articles and the index page parses as one.
         if urlparse(resolved_url).path in ["", "/", "index.html"]:
-            return
+            return None
 
         # Check whether we pass the (optional) requirements on the URL format
         if not self.is_article(resolved_url):
-            return
+            return None
 
         # If we get here then we've found an article
         self.logger.info("  found an article at: {}".format(resolved_url))

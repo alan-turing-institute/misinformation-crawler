@@ -26,3 +26,5 @@ script:
   - pyflakes *.py misinformation tests
   # Check PEP8 compliance (ignoring long lines)
   - pycodestyle --statistics --ignore=E501 --count *.py misinformation tests
+  # Run pylint for stricter error checking
+  - pylint misinformation tests

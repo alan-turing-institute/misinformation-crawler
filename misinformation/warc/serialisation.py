@@ -1,33 +1,31 @@
+from io import BytesIO
 from scrapy.http.response.html import HtmlResponse
 from scrapy.http.request import Request
-from io import BytesIO
 from warcio.archiveiterator import ArchiveIterator
 from warcio.statusandheaders import StatusAndHeaders
 from warcio.warcwriter import WARCWriter
 
 
 def request_from_dict(d):
-    r = Request(
-            url=d["url"],
-            method=d["method"],
-            headers=d["headers"],
-            body=d["body"],
-            cookies=d["cookies"],
-            encoding=d["_encoding"],
-        )
+    r = Request(url=d["url"],
+                method=d["method"],
+                headers=d["headers"],
+                body=d["body"],
+                cookies=d["cookies"],
+                encoding=d["_encoding"],
+                )
     return r
 
 
 def response_from_dict(d):
     request = request_from_dict(d["request"])
-    r = HtmlResponse(
-            d["url"],
-            status=d["status"],
-            headers=d["headers"],
-            body=d["body"],
-            request=request,
-            encoding="utf-8",
-        )
+    r = HtmlResponse(d["url"],
+                     status=d["status"],
+                     headers=d["headers"],
+                     body=d["body"],
+                     request=request,
+                     encoding="utf-8",
+                     )
     return r
 
 

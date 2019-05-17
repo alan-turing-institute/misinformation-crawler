@@ -9,12 +9,11 @@ class ArticleJsonFileExporter():
 
     @classmethod
     def from_crawler(cls, crawler):
-        # exporter = crawler.settings['ARTICLE_EXPORTER']
-        # if exporter != 'file':
-        #     # if this isn't specified in settings, the pipeline will be completely disabled
-        #     raise NotConfigured
-        # return cls()
-        raise NotConfigured
+        exporter = crawler.settings['ARTICLE_EXPORTER']
+        if exporter != 'file':
+            # if this isn't specified in settings, the pipeline will be completely disabled
+            raise NotConfigured
+        return cls()
 
     # Initialise pipeline when crawler opened
     def open_spider(self, spider):
@@ -32,6 +31,7 @@ class ArticleJsonFileExporter():
     def close_spider(self, spider):
         self.exporter.finish_exporting()
         self.exporter.file.close()
+        del spider  # supress unused argument warning
 
     def process_item(self, article, spider):
         spider.logger.info('  preparing to save response to local file')

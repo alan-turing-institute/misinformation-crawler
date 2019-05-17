@@ -9,6 +9,7 @@ iso8601
 pendulum
 pycodestyle
 pyflakes
+pylint
 pyodbc
 pytest
 pytest-benchmark

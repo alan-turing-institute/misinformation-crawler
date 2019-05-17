@@ -1,11 +1,12 @@
-import pytest
+import datetime
+import glob
 import json
 import os
-import glob
 import pkg_resources
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
-from scrapy.http import Request, TextResponse
+import pytest
 import yaml
+from scrapy.http import Request, TextResponse
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
 UNIT_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "unit_test_data")
@@ -71,6 +72,11 @@ def article_info_id(param):
 @pytest.fixture(params=article_infos_for_all_sites(SITE_NAMES), ids=article_info_id)
 def article_info(request):
     return request.param
+
+class MockDBEntry():
+    def __init__(self, crawl_id, crawl_datetime):
+        self.crawl_id = crawl_id
+        self.crawl_datetime = datetime.datetime.strptime(crawl_datetime, '%Y-%m-%dT%H:%M:%S.%f%z')
 
 
 # ================= TEST FUNCTIONS =================
@@ -151,10 +157,8 @@ def test_extract_article_default_with_crawl_info():
     config = yaml.load(config_yaml)
 
     # Mock crawl info
-    crawl_info = {
-        "crawl_id": "bdbcf1cf-e4,1f-4c10-9958-4ab1b07e46ae",
-        "crawl_datetime": "2018-10-17T20:25:34.2345+00:00"
-    }
+    crawl_info = MockDBEntry(crawl_id="bdbcf1cf-e4,1f-4c10-9958-4ab1b07e46ae",
+                             crawl_datetime="2018-10-17T20:25:34.234567+00:00")
 
     # Test
     article = extract_article(response, config, crawl_info)
@@ -680,8 +684,8 @@ def test_extract_datetime_works_with_multiple_dates():
         'publication_datetime': "2018-10-22T00:00:00",
         'content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
         'plain_content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
+        'plain_text': [{"text": "October 22, 2018"}, {"text": "Article text here."}, {"text": "May 15, 2006"}],
         'metadata': None,
-        'plain_text': [{'text': 'October 22, 2018'}, {'text': 'Article text here.'}, {'text': 'May 15, 2006'}]
     }
 
     # Test
