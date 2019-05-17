@@ -15,13 +15,16 @@
       match_rule: 'first'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "ArticlePage-authorName")]/a/text()'
-      match_rule: 'first'
+      select_expression: '//div[contains(@class, "ArticlePage-authorName")]//text()'
+      match_rule: 'largest'
       warn_if_missing: False
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="RichTextArticleBody-body"]'
       match_rule: 'single'
+      remove_expressions:
+        - '//span[@class="Enhancement-item"]'
+        - '//div[@class="RichTextArticleBody-body"]/p/b[text()="RELATED: "]'
 
 abcnews.go.com:
   site_name: 'abcnews.go.com'
