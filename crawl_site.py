@@ -25,11 +25,11 @@ def main():
     logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
 
     # Load crawl configuration for site from configuration
-    site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"))
+    site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"), Loader=yaml.FullLoader)
 
     # Retrieve configuration for specified site
     site_config = site_configs[args.site_name]
-    article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"))
+    article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"), Loader=yaml.FullLoader)
     if args.site_name in article_lists:
         site_config["article_list"] = article_lists[args.site_name]
 

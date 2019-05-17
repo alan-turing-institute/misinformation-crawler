@@ -8,7 +8,7 @@ from .exceptions import RecoverableDatabaseError, NonRecoverableDatabaseError
 class Connector():
     def __init__(self):
         # Database connections
-        self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
+        self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"), Loader=yaml.FullLoader)
         self.engine = sqlalchemy.create_engine("mssql+pyodbc://{user}:{password}@{server}:1433/{database}?driver={driver}".format(
             database=self.db_config["database"],
             driver=self.db_config["driver"],

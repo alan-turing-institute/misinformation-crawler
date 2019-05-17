@@ -1,15 +1,11 @@
 azure-storage-blob
 arrow
-beautifulsoup4>=4.7.1
 cfscrape
 datetime
 fake-useragent
-html5lib
-iso8601
 pendulum
 pyodbc
 pyyaml
-regex
 scrapy
 selenium
 sqlalchemy

@@ -15,7 +15,7 @@ def main():
 
     # Load crawl configuration for site from configuration
     spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
-    site_configs = yaml.load(spider_config)
+    site_configs = yaml.load(spider_config, Loader=yaml.FullLoader)
 
     for site_name in site_configs:
         print(site_name)

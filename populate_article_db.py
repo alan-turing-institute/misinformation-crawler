@@ -20,7 +20,7 @@ def main():
 
     # Load crawl configuration for site from configuration
     spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
-    site_configs = yaml.load(spider_config)
+    site_configs = yaml.load(spider_config, Loader=yaml.FullLoader)
 
     # Update crawler settings here as we can't seem to do this when using the
     # custom_settings attribute in the spider initialiser
