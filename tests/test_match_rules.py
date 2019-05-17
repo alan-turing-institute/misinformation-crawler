@@ -1,6 +1,6 @@
-from misinformation.extractors import extract_element, xpath_extract_spec
+import re
 from scrapy.http import Request, TextResponse
-import regex
+from misinformation.extractors import extract_element, xpath_extract_spec
 
 
 def perform_extraction(html, xpath, match_rule):
@@ -16,7 +16,7 @@ def perform_extraction_using_spec(html, extract_spec):
 
 
 def simplify_html(html):
-    html = regex.sub(r"\s+", " ", html)
+    html = re.sub(r"\s+", " ", html)
     return html.replace(" <", "<").replace("> ", ">")
 
 

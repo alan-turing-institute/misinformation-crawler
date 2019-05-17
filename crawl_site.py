@@ -1,4 +1,5 @@
 import argparse
+import logging
 import pkg_resources
 import yaml
 from scrapy.crawler import CrawlerProcess
@@ -14,19 +15,21 @@ def main():
                         help='Name of site configuration.')
     parser.add_argument('--max_articles', '-n', type=int, default=0,
                         help='Maximum number of articles to process from each site.')
-    parser.add_argument('--exporter', '-e', default='database', choices=['file', 'database'],
+    parser.add_argument('--exporter', '-e', default='blob', choices=['file', 'blob'],
                         help='Article export method.')
     args = parser.parse_args()
 
     # Set up logging
     configure_logging()
+    logging.getLogger("azure.storage.common.storageclient").setLevel(logging.ERROR)
+    logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
 
     # Load crawl configuration for site from configuration
-    site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"))
+    site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"), Loader=yaml.FullLoader)
 
     # Retrieve configuration for specified site
     site_config = site_configs[args.site_name]
-    article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"))
+    article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"), Loader=yaml.FullLoader)
     if args.site_name in article_lists:
         site_config["article_list"] = article_lists[args.site_name]
 

@@ -19,7 +19,7 @@ class CloudFlareMiddleware:
         # The CloudFlare page will have jschl_vc and jschl_answer in the text
         cf_text = ('jschl_vc' in response.text and 'jschl_answer' in response.text)
 
-        return (cf_status and cf_headers and cf_text)
+        return cf_status and cf_headers and cf_text
 
     def process_response(self, request, response, spider):
         """If we can identify a CloudFlare check on this page then use cfscrape to get the cookies"""

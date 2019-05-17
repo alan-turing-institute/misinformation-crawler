@@ -1,12 +1,12 @@
 from contextlib import suppress
 from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import Rule
-from scrapy.spiders import CrawlSpider
+from scrapy.spiders import CrawlSpider, Rule
 from .misinformationmixin import MisinformationMixin
 
 
 class IndexPageSpider(MisinformationMixin, CrawlSpider):
     """Crawl spider for websites with lists of articles that are paged and navigable to with HTML links."""
+    name = 'indexpage'
 
     def __init__(self, config, *args, **kwargs):
         # For the index_page strategy we need:
