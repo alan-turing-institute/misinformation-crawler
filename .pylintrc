@@ -64,6 +64,7 @@ disable=invalid-name,
         line-too-long,
         missing-docstring,
         too-few-public-methods,
+        too-many-ancestors,
         too-many-locals,
         too-many-branches,
         redefined-outer-name
