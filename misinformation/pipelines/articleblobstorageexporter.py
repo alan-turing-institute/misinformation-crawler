@@ -37,6 +37,7 @@ class ArticleBlobStorageExporter(Connector):
         # Add webpage entry to database
         try:
             self.add_entry(webpage_data)
+            spider.logger.info("  added database entry for: {}".format(crawl_response["url"]))
         except RecoverableDatabaseError as err:
             spider.logger.info(str(err))
         except NonRecoverableDatabaseError as err:
