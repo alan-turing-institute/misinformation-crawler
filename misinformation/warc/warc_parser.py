@@ -18,8 +18,8 @@ class WarcParser(Connector):
     def process_webpages(self, site_name, config):
         start_time = datetime.datetime.utcnow()
         entries = self.read_entries(Webpage, site_name=site_name)
-        n_pages = len(entries)
-        logging.info("Loaded {} pages for {}".format(colored(n_pages, "blue"), colored(site_name, "blue")))
+        n_pages, n_articles = len(entries), 0
+        logging.info("Loaded {} pages for {}".format(colored(n_pages, "blue"), colored(site_name, "green")))
 
         for idx, entry in enumerate(entries, start=1):
             logging.info("Searching for an article at: {}".format(colored(entry.article_url, "green")))
@@ -93,15 +93,22 @@ class WarcParser(Connector):
             # Add article to database
             if article_html:
                 self.add_to_database(article)
+                n_articles += 1
             logging.info("Finished processing {}/{}: {}".format(idx, n_pages, entry.article_url))
 
         # Print statistics
         duration = datetime.datetime.utcnow() - start_time
-        rate = float(n_pages / duration.seconds) if duration.seconds > 0 else 0
-        logging.info("Processed {} pages in {} => {:.2f} Hz".format(
+        processing_rate = "{:.2f} Hz".format(float(n_pages / duration.seconds) if duration.seconds > 0 else 0)
+        logging.info("Processed {} pages in {} => {}".format(
             colored(n_pages, "blue"),
             colored(duration, "blue"),
-            rate
+            colored(processing_rate, "green"),
+        ))
+        hit_percentage = "{:.2f}%".format(float(100 * n_articles / n_pages) if n_pages > 0 else 0)
+        logging.info("Found articles in {}/{} pages => {}".format(
+            colored(n_articles, "blue"),
+            colored(n_pages, "blue"),
+            colored(hit_percentage, "green"),
         ))
 
 

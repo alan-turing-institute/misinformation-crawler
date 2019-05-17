@@ -86,7 +86,6 @@ EXTENSIONS = {
 ITEM_PIPELINES = {
     'misinformation.pipelines.ArticleBlobStorageExporter': 300,
     'misinformation.pipelines.ArticleJsonFileExporter': 300,
-    'misinformation.pipelines.ArticleDatabaseExporter': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

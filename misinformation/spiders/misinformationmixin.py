@@ -1,12 +1,10 @@
-from contextlib import suppress
 import datetime
-import os
 import re
 import uuid
+from contextlib import suppress
 from urllib.parse import urlparse
 from w3lib.url import url_query_cleaner, canonicalize_url
 from scrapy.exceptions import CloseSpider
-from scrapy.exporters import JsonItemExporter
 from misinformation.items import CrawlResponse
 from misinformation.warc import warc_from_response
 
@@ -35,17 +33,6 @@ class MisinformationMixin():
 
         # Add flag to allow spider to be closed from inside a pipeline
         self.request_closure = False
-
-        # Set up saving of raw responses for articles
-        output_dir = "articles"
-        output_file = "{}_full.txt".format(config["site_name"])
-        # Ensure output directory exists
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
-        output_path = os.path.join(output_dir, output_file)
-        file_handle = open(output_path, "wb")
-        self.exporter = JsonItemExporter(file_handle)
-        self.exporter.start_exporting()
 
         # Optional regexes which test the URL to see if this is an article
         with suppress(KeyError):
@@ -115,6 +102,10 @@ class MisinformationMixin():
         return request
 
     def parse_response(self, response):
+        # If the closure flag has been set then stop crawling
+        if self.request_closure:
+            raise CloseSpider(reason='Ending crawl cleanly after a close request.')
+
         # URL may be the result of a redirect. If so, we use the redirected URL
         if response.request.meta.get("redirect_urls"):
             resolved_url = response.request.meta.get("redirect_urls")[0]
@@ -133,21 +124,17 @@ class MisinformationMixin():
         if not self.is_article(resolved_url):
             return
 
-        # response_dict = response_to_dict(response)
+        # If we get here then we've found an article
+        self.logger.info("  found an article at: {}".format(resolved_url))
 
-        # Prepare to serialise the response
+        # Prepare to return serialised response
         crawl_response = CrawlResponse()
         crawl_response["url"] = resolved_url
         crawl_response["crawl_id"] = self.crawl_info["crawl_id"]
         crawl_response["crawl_datetime"] = self.crawl_info["crawl_datetime"]
         crawl_response["site_name"] = self.config["site_name"]
         crawl_response["warc_data"] = warc_from_response(response, resolved_url)
-
-        # Return itemised response
-        self.logger.info("  found an article at: {}".format(resolved_url))
         return crawl_response
 
     def closed(self, reason):
-        self.exporter.finish_exporting()
-        self.exporter.file.close()
         self.logger.info("Spider closed: {} ({})".format(self.config["site_name"], reason))

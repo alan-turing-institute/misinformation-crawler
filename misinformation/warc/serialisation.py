@@ -57,7 +57,6 @@ def response_from_warc(file_bytes):
         # Load response
         if record.rec_type == "response":
             response_id = record.rec_headers.get_header("WARC-Record-ID")
-            response_headers = dict((k, record.http_headers.get_header(k)) for k in ["date", "content-type", "last-modified", "vary", "accept-encoding"])
             content["url"] = record.rec_headers.get_header("WARC-Target-URI")
             content["status"] = record.http_headers.get_statuscode()
             content["headers"] = dict(record.http_headers.headers)

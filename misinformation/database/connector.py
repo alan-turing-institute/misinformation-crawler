@@ -1,11 +1,8 @@
-import logging
 import yaml
 import pkg_resources
-import pyodbc
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
-from .exceptions import RecoverableDatabaseError
-from .models import Webpage
+from .exceptions import RecoverableDatabaseError, NonRecoverableDatabaseError
 from azure.storage.blob import BlockBlobService
 
 
@@ -35,12 +32,23 @@ class Connector():
             session.close()
             return
         # Check for duplicate key exceptions and report informative log message
-        except (pyodbc.IntegrityError, sqlalchemy.exc.IntegrityError) as err:
+        except sqlalchemy.exc.IntegrityError as err:
             if "Violation of UNIQUE KEY constraint" in str(err):
                 raise RecoverableDatabaseError("  refusing to add duplicate database entry for: {}".format(entry.article_url))
-            # Re-raise the exception if it had a different cause
             else:
-                raise
+                raise  # Re-raise the exception if it had a different cause
+        # Check for database communication failure and report informative log message
+        except sqlalchemy.exc.OperationalError as err:
+            if "Communication link failure" in str(err):
+                raise NonRecoverableDatabaseError("Lost connection with the database. Ending the crawl.")
+            else:
+                raise  # Re-raise the exception if it had a different cause
+        # Check for database size or lost connection exceptions and report informative log message
+        except sqlalchemy.exc.ProgrammingError as err:
+            if "reached its size quota" in str(err):
+                raise NonRecoverableDatabaseError("The database has reached its size quota. Ending the crawl.")
+            else:
+                raise  # Re-raise the exception if it had a different cause
 
     def read_entries(self, entry_type, site_name=None):
         session = self.session_factory()
