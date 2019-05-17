@@ -21,7 +21,6 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
                 # authors of site configs to have to worry about this, so for
                 # absolute expressions (starting with /) we will attempt to
                 # remove each of "<expr>", "/html/<expr>" and "/html/body/<expr>"
-                # # Prefix relative paths with the implicit "/html/body"
                 if expression.startswith('//'):
                     r_xpaths = [expression]
                 else:
@@ -36,8 +35,6 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
 
 def extract_element(response, extract_spec):
     # Extract selector specification
-    # print("extract_spec:", extract_spec)
-    # print(response.text)
     method = extract_spec['select_method']
     select_expression = extract_spec['select_expression']
     remove_expressions = extract_spec.get('remove_expressions', [])
