@@ -31,6 +31,7 @@ class ArticleJsonFileExporter():
     def close_spider(self, spider):
         self.exporter.finish_exporting()
         self.exporter.file.close()
+        del spider  # supress unused argument warning
 
     def process_item(self, article, spider):
         spider.logger.info('  preparing to save response to local file')

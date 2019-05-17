@@ -1,7 +1,6 @@
 from contextlib import suppress
 from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import Rule
-from scrapy.spiders import CrawlSpider
+from scrapy.spiders import CrawlSpider, Rule
 from .misinformationmixin import MisinformationMixin
 
 

@@ -2,7 +2,10 @@
 #
 # See documentation at:
 # http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-from .articledatabaseexporter import ArticleDatabaseExporter
+from .articleblobstorageexporter import ArticleBlobStorageExporter
 from .articlejsonfileexporter import ArticleJsonFileExporter
 
-__all__ = ['ArticleDatabaseExporter', 'ArticleJsonFileExporter']
+__all__ = [
+    'ArticleBlobStorageExporter',
+    'ArticleJsonFileExporter'
+]
