@@ -30,3 +30,7 @@ class XMLSitemapSpider(MisinformationMixin, SitemapSpider):
         # compiled and self._rules will be empty, even though self.rules will
         # have the right rules present.
         super().__init__(config, *args, **kwargs)
+
+    # Suppress abstract-method warning
+    def parse(self, response):
+        pass

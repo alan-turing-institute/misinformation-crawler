@@ -14,7 +14,6 @@ class WarcParser(Connector):
         self.content_digests = content_digests
         self.node_indexes = node_indexes
 
-
     def process_webpages(self, site_name, config):
         start_time = datetime.datetime.utcnow()
         entries = self.read_entries(Webpage, site_name=site_name)
@@ -56,7 +55,6 @@ class WarcParser(Connector):
                      colored(n_pages, "blue"),
                      colored(hit_percentage, "green"),
                      )
-
 
     def add_to_database(self, article):
         '''Add an article to the database'''

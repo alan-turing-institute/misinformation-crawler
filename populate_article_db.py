@@ -5,6 +5,7 @@ import yaml
 from misinformation.warc import WarcParser
 from scrapy.utils.project import get_project_settings
 
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)

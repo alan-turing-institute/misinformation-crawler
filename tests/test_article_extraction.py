@@ -73,6 +73,7 @@ def article_info_id(param):
 def article_info(request):
     return request.param
 
+
 class MockDBEntry():
     def __init__(self, crawl_id, crawl_datetime):
         self.crawl_id = crawl_id

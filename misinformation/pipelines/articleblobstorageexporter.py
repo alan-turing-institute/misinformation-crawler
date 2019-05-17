@@ -12,7 +12,6 @@ class ArticleBlobStorageExporter(Connector):
             raise NotConfigured
         return cls()
 
-
     def process_item(self, crawl_response, spider):
         '''Add an article to blob storage and track it in the database'''
         # Construct blob data and associated key

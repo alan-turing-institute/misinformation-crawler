@@ -21,7 +21,6 @@ class Connector():
         self.block_blob_service = BlockBlobService(account_name='misinformationcrawldata', account_key=self.db_config["blob_storage_key"])
         self.blob_container_name = "warc-files"
 
-
     def add_entry(self, entry):
         '''Attempt to commit transaction to the database.'''
         try:

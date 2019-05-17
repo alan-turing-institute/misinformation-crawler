@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 BaseTableModel = declarative_base()
 
+
 class Webpage(BaseTableModel):
     __tablename__ = 'webpages'
     id = Column(Integer, primary_key=True)
@@ -19,7 +20,7 @@ class Webpage(BaseTableModel):
             self.crawl_id,
             self.crawl_datetime,
             self.blob_key,
-            )
+        )
 
     __repr__ = __str__
 
@@ -52,6 +53,6 @@ class Article(BaseTableModel):
             self.plain_content,
             self.plain_text,
             self._metadata,
-            )
+        )
 
     __repr__ = __str__

@@ -7,6 +7,7 @@ from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 from misinformation.spiders import IndexPageSpider, ScattergunSpider, XMLSitemapSpider
 
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)
