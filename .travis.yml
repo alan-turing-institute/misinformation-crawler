@@ -1,4 +1,5 @@
 sudo: enabled
+dist: xenial
 language: python
 
 # Build matrix
