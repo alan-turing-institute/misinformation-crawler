@@ -327,17 +327,9 @@ conservativepapers.com:
       url_must_contain: '/page/'
   article:
     url_must_contain: '/news/'
-    title:
-      select_method: 'xpath'
-      select_expression: '//meta[@property="og:title"]/@content'
-      match_rule: 'single'
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@itemprop="author"]/@content'
-      match_rule: 'single'
-    publication_datetime:
-      select_method: 'xpath'
-      select_expression: '//meta[@itemprop="datePublished"]/@content'
       match_rule: 'single'
     content:
       select_method: 'xpath'
