@@ -1,5 +1,7 @@
 import datetime
+import json
 import logging
+from contextlib import suppress
 from termcolor import colored
 from misinformation.extractors import extract_article
 from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
@@ -29,6 +31,10 @@ class WarcParser(Connector):
             # Create a response from the WARC content and attempt to extract an article
             response = response_from_warc(blob.content)
             article = extract_article(response, config, entry, self.content_digests, self.node_indexes)
+            with suppress(KeyError):
+                article["plain_text"] = json.dumps(article["plain_text"])
+            with suppress(KeyError):
+                article["metadata"] = json.dumps(article["metadata"])
 
             # Add article to database
             if article["content"]:
