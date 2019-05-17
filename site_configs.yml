@@ -15,7 +15,7 @@
       match_rule: 'first'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "ArticlePage-authorName")]/a/text()|//div[contains(@class, "ArticlePage-authorName")]/text()'
+      select_expression: '//div[contains(@class, "ArticlePage-authorName")]/a/text()'
       match_rule: 'first'
       warn_if_missing: False
     content:
