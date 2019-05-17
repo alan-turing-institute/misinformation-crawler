@@ -17,6 +17,7 @@
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "ArticlePage-authorName")]/a/text()|//div[contains(@class, "ArticlePage-authorName")]/text()'
       match_rule: 'first'
+      warn_if_missing: False
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="RichTextArticleBody-body"]'
