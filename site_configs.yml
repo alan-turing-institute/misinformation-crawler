@@ -5,7 +5,7 @@
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/news/local-news?00000166-4055-de2e-a1fe-74dd65e3000c-page='
+      url_must_contain: 'page='
       article_links: '//div[@class="List-items-item"]/a'
   article:
     url_must_contain: '/news/local-news/'
