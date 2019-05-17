@@ -15,6 +15,7 @@ def main():
     # Set up logging
     logging.basicConfig(format=r"%(asctime)s %(levelname)8s: %(message)s", datefmt=r"%Y-%m-%d %H:%M:%S", level=logging.INFO)
     logging.getLogger("azure.storage.common.storageclient").setLevel(logging.ERROR)
+    logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
 
     # Load crawl configuration for site from configuration
     spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
@@ -35,7 +36,7 @@ def main():
     # Process data for selected sites
     for site_name in site_configs:
         if args.site_name in [site_name, "all"]:
-            parser.process_webpages(site_name, config=site_configs[args.site_name])
+            parser.process_webpages(site_name, config=site_configs[site_name])
 
 
 if __name__ == "__main__":

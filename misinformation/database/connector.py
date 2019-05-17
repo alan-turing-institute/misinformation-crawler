@@ -6,22 +6,12 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 from .exceptions import RecoverableDatabaseError
 from .models import Webpage
-
-import struct
-
-
-logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
-
-def handle_datetimeoffset(dto_value):
-    # ref: https://github.com/mkleehammer/pyodbc/issues/134#issuecomment-281739794
-    tup = struct.unpack("<6hI2h", dto_value)  # e.g., (2017, 3, 16, 10, 35, 18, 0, -6, 0)
-    tweaked = [tup[i] // 100 if i == 6 else tup[i] for i in range(len(tup))]
-    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:07d} {:+03d}:{:02d}".format(*tweaked)
-
+from azure.storage.blob import BlockBlobService
 
 
 class Connector():
     def __init__(self):
+        # Database connections
         self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"))
         self.engine = sqlalchemy.create_engine("mssql+pyodbc://{user}:{password}@{server}:1433/{database}?driver={driver}".format(
             database = self.db_config["database"],
@@ -31,6 +21,9 @@ class Connector():
             user = self.db_config["user"],
         ))
         self.session_factory = sessionmaker(bind=self.engine)
+        # Blob storage
+        self.block_blob_service = BlockBlobService(account_name='misinformationcrawldata', account_key=self.db_config["blob_storage_key"])
+        self.blob_container_name = "warc-files"
 
 
     def add_entry(self, entry):

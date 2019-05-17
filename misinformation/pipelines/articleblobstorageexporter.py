@@ -1,16 +1,9 @@
 import hashlib
-import logging
-from azure.storage.blob import BlockBlobService
 from scrapy.exceptions import NotConfigured
 from ..database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Webpage
 
 
 class ArticleBlobStorageExporter(Connector):
-    def __init__(self):
-        super().__init__()
-        self.block_blob_service = BlockBlobService(account_name='misinformationcrawldata', account_key=self.db_config["blob_storage_key"])
-        self.blob_container_name = "raw-crawled-pages"
-
     @classmethod
     def from_crawler(cls, crawler):
         exporter = crawler.settings['ARTICLE_EXPORTER']

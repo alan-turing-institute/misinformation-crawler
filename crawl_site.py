@@ -21,6 +21,7 @@ def main():
     # Set up logging
     configure_logging()
     logging.getLogger("azure.storage.common.storageclient").setLevel(logging.ERROR)
+    logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
 
     # Load crawl configuration for site from configuration
     site_configs = yaml.load(pkg_resources.resource_string(__name__, "site_configs.yml"))

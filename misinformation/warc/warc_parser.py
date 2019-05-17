@@ -2,7 +2,6 @@ import datetime
 import json
 import logging
 from termcolor import colored
-from azure.storage.blob import BlockBlobService
 from ReadabiliPy.readabilipy import parse_to_json
 from misinformation.extractors import extract_element, extract_datetime_string
 from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
@@ -12,8 +11,6 @@ from .serialisation import response_from_warc
 class WarcParser(Connector):
     def __init__(self, content_digests=False, node_indexes=False):
         super().__init__()
-        self.block_blob_service = BlockBlobService(account_name="misinformationcrawldata", account_key=self.db_config["blob_storage_key"])
-        self.blob_container_name = "raw-crawled-pages"
         self.content_digests = content_digests
         self.node_indexes = node_indexes
 
@@ -22,7 +19,7 @@ class WarcParser(Connector):
         start_time = datetime.datetime.utcnow()
         entries = self.read_entries(Webpage, site_name=site_name)
         n_pages = len(entries)
-        logging.info("Loaded {} pages for {}".format(n_pages, colored(site_name, "green")))
+        logging.info("Loaded {} pages for {}".format(colored(n_pages, "blue"), colored(site_name, "blue")))
 
         for idx, entry in enumerate(entries, start=1):
             logging.info("Searching for an article at: {}".format(colored(entry.article_url, "green")))
@@ -59,9 +56,9 @@ class WarcParser(Connector):
             # Use this to extract content and text
             if article_html:
                 readabilipy_article = parse_to_json(article_html, self.content_digests, self.node_indexes, use_readability=False)
-                # article["title"] = readabilipy_article["title"]
-                # article["byline"] = readabilipy_article["byline"]
-                # article["publication_datetime"] = readabilipy_article["publication_datetime"]
+                article["title"] = readabilipy_article["title"]
+                article["byline"] = readabilipy_article["byline"]
+                article["publication_datetime"] = readabilipy_article["date"]
                 article["content"] = readabilipy_article["content"]
                 article["plain_content"] = readabilipy_article["plain_content"]
                 article["plain_text"] = json.dumps(readabilipy_article["plain_text"])
@@ -100,10 +97,11 @@ class WarcParser(Connector):
 
         # Print statistics
         duration = datetime.datetime.utcnow() - start_time
+        rate = float(n_pages / duration.seconds) if duration.seconds > 0 else 0
         logging.info("Processed {} pages in {} => {:.2f} Hz".format(
-            colored(n_pages, "green"),
-            colored(str(duration), "green"),
-            float(n_pages / duration.seconds),
+            colored(n_pages, "blue"),
+            colored(duration, "blue"),
+            rate
         ))
 
 
