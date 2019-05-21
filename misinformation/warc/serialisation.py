@@ -1,3 +1,4 @@
+import base64
 from io import BytesIO
 from scrapy.http.response.html import HtmlResponse
 from scrapy.http.request import Request
@@ -49,7 +50,6 @@ def warc_from_response(response, resolved_url):
 
 
 def response_from_warc(file_bytes):
-    # with open(file_path, "rb") as f_input:
     content = {}
     for record in ArchiveIterator(BytesIO(file_bytes)):
         # Load response
@@ -72,3 +72,7 @@ def response_from_warc(file_bytes):
                 content["request"]["cookies"] = record.http_headers.get_header("cookie")
     # Build a response and return it
     return response_from_dict(content)
+
+
+def string_from_warc(file_bytes):
+    return base64.encodebytes(file_bytes).decode("utf-8")
