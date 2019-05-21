@@ -1,6 +1,6 @@
 import datetime
 from contextlib import suppress
-from ReadabiliPy.readabilipy import parse_to_json
+from ReadabiliPy.readabilipy import simple_json_from_html_string
 from .extract_element import extract_element
 from .extract_datetime import extract_datetime_string
 
@@ -37,7 +37,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
     page_html = extract_element(response, xpath_extract_spec("/html", "largest"))
 
     # Always extract the article elements from the page_html with ReadabiliPy first
-    default_readability_article = parse_to_json(page_html, content_digests, node_indexes, use_readability=False)
+    default_readability_article = simple_json_from_html_string(page_html, content_digests, node_indexes, use_readability=False)
     article['title'] = default_readability_article['title']
     article["publication_datetime"] = default_readability_article["date"]
     article["byline"] = default_readability_article["byline"]
@@ -49,7 +49,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
     if "article" in config:
         article_html = extract_element(response, config["article"]["content"])
         if article_html:
-            readabilipy_article = parse_to_json(article_html, content_digests, node_indexes, use_readability=False)
+            readabilipy_article = simple_json_from_html_string(article_html, content_digests, node_indexes, use_readability=False)
             article["content"] = readabilipy_article["content"]
             article["plain_content"] = readabilipy_article["plain_content"]
             article["plain_text"] = readabilipy_article["plain_text"]
