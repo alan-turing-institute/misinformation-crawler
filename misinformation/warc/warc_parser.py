@@ -21,7 +21,6 @@ class WarcParser(Connector):
         logging.info("Loaded %s pages for %s", colored(n_pages, "blue"), colored(site_name, "green"))
 
         for idx, entry in enumerate(entries, start=1):
-            if entry.article_url != "https://abcnews.go.com/Politics/TheNote/story?id=4056021": continue
             logging.info("Searching for an article at: %s", colored(entry.article_url, "green"))
 
             # Load WARC data from blob storage
