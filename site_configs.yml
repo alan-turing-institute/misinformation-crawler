@@ -21,9 +21,8 @@
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="RichTextArticleBody-body"]'
-      match_rule: 'single'
+      match_rule: 'largest'
       remove_expressions:
-        - '//span[@class="Enhancement-item"]'
         - '//div[@class="RichTextArticleBody-body"]/p/b[text()="RELATED: "]'
 
 abcnews.go.com:
