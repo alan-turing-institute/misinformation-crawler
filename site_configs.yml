@@ -55,6 +55,35 @@ abcnews.go.com:
         - '//div[contains(@class, "callout")]'
         - '//figure[contains(@class, "e_image")]'
 
+abqjournal.com:
+  site_name: 'abqjournal.com'
+  start_url: 'https://www.abqjournal.com/category/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//div[@class="primary page-post-list"]/ul[@id="post-list"]/li/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: 'substring-before(//meta[@name="author"]/@content, " | Associated Press")'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="published"]/text()'
+      match_rule: 'single'
+      datetime-format: 'dddd, MMMM Do, YYYY [at] h:mmA'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//p[contains(@id, "g-trickster")]'
+        - '//div[contains(@class, "advertisement")]'
+        - '//div[contains(@id, "story-ad-0-skip-target")]'
+        - '//p[text()="___"]'
+        - '//p[contains(text(), "can be reached at")]'
+
 addictinginfo.com:
   site_name: 'addictinginfo.com'
   start_url: 'http://addictinginfo.com/category/news/'
