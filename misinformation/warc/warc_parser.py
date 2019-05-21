@@ -16,12 +16,23 @@ class WarcParser(Connector):
 
     def process_webpages(self, site_name, config):
         start_time = datetime.datetime.utcnow()
-        entries = self.read_entries(Webpage, site_name=site_name)
-        n_pages, n_articles = len(entries), 0
-        logging.info("Loaded %s pages for %s", colored(n_pages, "blue"), colored(site_name, "green"))
+        warcfile_entries = self.read_entries(Webpage, site_name=site_name)
+        article_entries = self.read_entries(Article, site_name=site_name)
+        article_urls = [entry.article_url for entry in article_entries]
 
-        for idx, entry in enumerate(entries, start=1):
+        n_pages, n_skipped, n_articles = 0, 0, 0
+        logging.info("Loaded %s pages for %s", colored(len(warcfile_entries), "blue"), colored(site_name, "green"))
+
+        for idx, entry in enumerate(warcfile_entries, start=1):
+            # Skip over pages that have already been processed
+            if entry.article_url in article_urls:
+                logging.info("Article already extracted, skipping: %s", colored(entry.article_url, "green"))
+                n_skipped += 1
+                continue
+
+            # Start article processing
             logging.info("Searching for an article at: %s", colored(entry.article_url, "green"))
+            n_pages += 1
 
             # Load WARC data from blob storage
             blob_key = entry.blob_key
@@ -53,6 +64,12 @@ class WarcParser(Connector):
         logging.info("Found articles in %s/%s pages => %s",
                      colored(n_articles, "blue"),
                      colored(n_pages, "blue"),
+                     colored(hit_percentage, "green"),
+                     )
+        hit_percentage = "{:.2f}%".format(float(100 * (n_articles + n_skipped) / (n_pages + n_skipped)) if (n_pages + n_skipped) > 0 else 0)
+        logging.info("Including skipped pages, there are articles in %s/%s pages => %s",
+                     colored(n_articles + n_skipped, "blue"),
+                     colored(n_pages + n_skipped, "blue"),
                      colored(hit_percentage, "green"),
                      )
 
