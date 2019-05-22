@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import deferred
 
 BaseTableModel = declarative_base()
 
@@ -29,7 +30,7 @@ class Article(BaseTableModel):
     __tablename__ = 'articles_dev'
     id = Column(Integer, primary_key=True)
     crawl_id = Column(String)
-    crawl_datetime = Column(DateTime)
+    crawl_datetime = deferred(Column(DateTime))  # deferred as access causes a pyodbc crash
     site_name = Column(String)
     article_url = Column(String)
     title = Column(String)
@@ -41,11 +42,11 @@ class Article(BaseTableModel):
     _metadata = Column("metadata", String)
 
     def __str__(self):
-        return "<Webpage(site_name={}, article_url={}, crawl_id={}, crawl_datetime={}, title={}, byline={}, publication_datetime={}, content={}, plain_content={}, plain_text={}, metadata={})>".format(
+        # NB. We cannot return crawl_datetime here as accessing it will cause a pyodbc crash
+        return "<Webpage(site_name={}, article_url={}, crawl_id={}, title={}, byline={}, publication_datetime={}, content={}, plain_content={}, plain_text={}, metadata={})>".format(
             self.site_name,
             self.article_url,
             self.crawl_id,
-            self.crawl_datetime,
             self.title,
             self.byline,
             self.publication_datetime,
