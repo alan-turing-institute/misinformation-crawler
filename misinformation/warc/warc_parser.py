@@ -15,14 +15,17 @@ class WarcParser(Connector):
         self.node_indexes = node_indexes
 
     def process_webpages(self, site_name, config):
+        # Load WARC files
         start_time = datetime.datetime.utcnow()
         logging.info("Loading pages for %s...", colored(site_name, "green"))
         warcfile_entries = self.read_entries(Webpage, site_name=site_name)
+        n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
+
+        # Load existing articles
         article_entries = self.read_entries(Article, site_name=site_name)
         article_urls = [entry.article_url for entry in article_entries]
-
-        n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
-        logging.info("Loaded %s pages for %s", colored(n_warcentries, "blue"), colored(site_name, "green"))
+        duration = datetime.datetime.utcnow() - start_time
+        logging.info("Loaded %s pages in %s", colored(n_warcentries, "blue"), colored(duration, "blue"))
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Skip over pages that have already been processed
