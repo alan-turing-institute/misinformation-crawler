@@ -16,6 +16,7 @@ class WarcParser(Connector):
 
     def process_webpages(self, site_name, config):
         start_time = datetime.datetime.utcnow()
+        logging.info("Loading pages for %s...", colored(site_name, "green"))
         warcfile_entries = self.read_entries(Webpage, site_name=site_name)
         article_entries = self.read_entries(Article, site_name=site_name)
         article_urls = [entry.article_url for entry in article_entries]
