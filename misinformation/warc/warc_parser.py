@@ -20,8 +20,8 @@ class WarcParser(Connector):
         article_entries = self.read_entries(Article, site_name=site_name)
         article_urls = [entry.article_url for entry in article_entries]
 
-        n_pages, n_skipped, n_articles = 0, 0, 0
-        logging.info("Loaded %s pages for %s", colored(len(warcfile_entries), "blue"), colored(site_name, "green"))
+        n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
+        logging.info("Loaded %s pages for %s", colored(n_warcentries, "blue"), colored(site_name, "green"))
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Skip over pages that have already been processed
@@ -50,7 +50,7 @@ class WarcParser(Connector):
             if article["content"]:
                 self.add_to_database(article)
                 n_articles += 1
-            logging.info("Finished processing %s/%s: %s", idx, n_pages, entry.article_url)
+            logging.info("Finished processing %s/%s: %s", idx, n_warcentries, entry.article_url)
 
         # Print statistics
         duration = datetime.datetime.utcnow() - start_time
