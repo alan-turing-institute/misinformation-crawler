@@ -25,7 +25,10 @@ class WarcParser(Connector):
         article_entries = self.read_entries(Article, site_name=site_name)
         article_urls = [entry.article_url for entry in article_entries]
         duration = datetime.datetime.utcnow() - start_time
-        logging.info("Loaded %s pages in %s", colored(n_warcentries, "blue"), colored(duration, "blue"))
+        logging.info("Loaded %s pages in %s",
+                     colored(n_warcentries, "blue"),
+                     colored(duration, "blue"),
+                     )
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Stop if we've reached the processing limit
@@ -35,7 +38,9 @@ class WarcParser(Connector):
 
             # Skip over pages that have already been processed
             if entry.article_url in article_urls:
-                logging.info("Article already extracted, skipping: %s", colored(entry.article_url, "green"))
+                logging.info("Article already extracted, skipping: %s",
+                             colored(entry.article_url, "green"),
+                             )
                 n_skipped += 1
                 continue
 
@@ -63,23 +68,23 @@ class WarcParser(Connector):
 
         # Print statistics
         duration = datetime.datetime.utcnow() - start_time
-        processing_rate = "{:.2f} Hz".format(float(n_pages / duration.seconds) if duration.seconds > 0 else 0)
+        processing_rate = float(n_pages / duration.seconds) if duration.seconds > 0 else 0
         logging.info("Processed %s pages in %s => %s",
                      colored(n_pages, "blue"),
                      colored(duration, "blue"),
-                     colored(processing_rate, "green"),
+                     colored("{:.2f} Hz".format(processing_rate), "green"),
                      )
-        hit_percentage = "{:.2f}%".format(float(100 * n_articles / n_pages) if n_pages > 0 else 0)
+        hit_percentage = float(100 * n_articles / n_pages) if n_pages > 0 else 0
         logging.info("Found articles in %s/%s pages => %s",
                      colored(n_articles, "blue"),
                      colored(n_pages, "blue"),
-                     colored(hit_percentage, "green"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
                      )
-        hit_percentage = "{:.2f}%".format(float(100 * (n_articles + n_skipped) / (n_pages + n_skipped)) if (n_pages + n_skipped) > 0 else 0)
+        hit_percentage = float(100 * (n_articles + n_skipped) / (n_pages + n_skipped)) if (n_pages + n_skipped) > 0 else 0
         logging.info("Including skipped pages, there are articles in %s/%s pages => %s",
                      colored(n_articles + n_skipped, "blue"),
                      colored(n_pages + n_skipped, "blue"),
-                     colored(hit_percentage, "green"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
                      )
 
     def add_to_database(self, article):
