@@ -52,11 +52,4 @@ class Connector():
         else:
             entries = session.query(entry_type).all()
         session.close()
-
-
-
-
-
-
-
         return entries
