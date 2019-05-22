@@ -14,7 +14,7 @@ class WarcParser(Connector):
         self.content_digests = content_digests
         self.node_indexes = node_indexes
 
-    def process_webpages(self, site_name, config):
+    def process_webpages(self, site_name, config, max_articles=-1):
         # Load WARC files
         start_time = datetime.datetime.utcnow()
         logging.info("Loading pages for %s...", colored(site_name, "green"))
@@ -28,6 +28,11 @@ class WarcParser(Connector):
         logging.info("Loaded %s pages in %s", colored(n_warcentries, "blue"), colored(duration, "blue"))
 
         for idx, entry in enumerate(warcfile_entries, start=1):
+            # Stop if we've reached the processing limit
+            if n_articles >= max_articles > 0:
+                logging.info("Reached article processing limit: %s", max_articles)
+                break
+
             # Skip over pages that have already been processed
             if entry.article_url in article_urls:
                 logging.info("Article already extracted, skipping: %s", colored(entry.article_url, "green"))

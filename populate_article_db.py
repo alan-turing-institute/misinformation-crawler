@@ -9,7 +9,7 @@ from scrapy.utils.project import get_project_settings
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=__name__)
-    parser.add_argument('--max-articles', '-n', type=int, default=0, help='Maximum number of articles to process from each site.')
+    parser.add_argument('--max-articles', '-n', type=int, default=-1, help='Maximum number of articles to process from each site.')
     parser.add_argument('--site-name', '-s', default="all", help='Name of site configuration.')
     args = parser.parse_args()
 
@@ -37,7 +37,7 @@ def main():
     # Process data for selected sites
     for site_name in site_configs:
         if args.site_name in [site_name, "all"]:
-            parser.process_webpages(site_name, config=site_configs[site_name])
+            parser.process_webpages(site_name, config=site_configs[site_name], max_articles=args.max_articles)
 
 
 if __name__ == "__main__":
