@@ -71,8 +71,10 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
         # Extract publication_datetime
         with suppress(KeyError):
             datetime_string = extract_element(response, config["article"]["publication_datetime"])
+            iso_string = None
             if "datetime_formats" in config["article"]["publication_datetime"]:
-                datetime_formats = config["article"]["publication_datetime"].get('datetime_formats', [])
+                datetime_formats = config["article"]["publication_datetime"]['datetime_formats']
+                # Only one format should match, so we just use the first one in the list that does
                 for dt_format in datetime_formats:
                     iso_string = extract_datetime_string(datetime_string, dt_format)
                     if iso_string:
