@@ -65,6 +65,7 @@ disable=invalid-name,
         missing-docstring,
         too-few-public-methods,
         too-many-ancestors,
+        too-many-instance-attributes,
         too-many-locals,
         too-many-branches,
         redefined-outer-name

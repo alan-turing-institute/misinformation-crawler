@@ -6,7 +6,6 @@ from .misinformationmixin import MisinformationMixin
 
 class IndexPageSpider(MisinformationMixin, CrawlSpider):
     """Crawl spider for websites with lists of articles that are paged and navigable to with HTML links."""
-    name = 'indexpage'
 
     def __init__(self, config, *args, **kwargs):
         # For the index_page strategy we need:
