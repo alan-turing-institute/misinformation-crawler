@@ -36,8 +36,8 @@ abcnews.go.com:
     url_must_contain: '/Politics/.+/story\?id=\d*'
     byline:
       select_method: 'xpath'
-      select_expression: 'substring-before(substring-after(//script[contains(text(), "tq.byline")], "tq.byline = ''"), "'';")'
-      match_rule: 'first'
+      select_expression: '//ul[@class="authors"]/li/div/a/text()|//ul[@class="authors"]/li/div/text()'
+      match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="timestamp"]/text()'
