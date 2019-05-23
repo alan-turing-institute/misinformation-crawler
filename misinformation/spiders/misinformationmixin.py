@@ -137,8 +137,6 @@ class MisinformationMixin():
                          "{:.2f}%".format(article_percentage),
                          )
 
-
-
         # Prepare to return serialised response
         crawl_response = CrawlResponse()
         crawl_response["url"] = resolved_url
