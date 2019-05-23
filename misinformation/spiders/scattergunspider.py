@@ -6,7 +6,6 @@ from .misinformationmixin import MisinformationMixin
 
 class ScattergunSpider(MisinformationMixin, CrawlSpider):
     """Crawl spider for websites containing articles that can be identified using a known URL format or content element."""
-    name = 'scattergun'
 
     def __init__(self, config, *args, **kwargs):
         # For the scattergun strategy we only need one Rule for following links

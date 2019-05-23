@@ -56,9 +56,8 @@ class MisinformationMixin():
         super().__init__(*args, **kwargs)
 
     def update_cookies(self, cookies):
-        if not isinstance(cookies, list):
-            cookies = [cookies]
-        self.cookies.extend(cookies)
+        """Add cookies to those known about by this spider."""
+        self.cookies.extend(self.as_list(cookies))
         # Remove duplicates, exploiting that fact that the tuple is hashable
         # even though the dict is not. The {} are a set comprehension, which
         # automatically remove duplicates by effectively running set() over the
@@ -104,6 +103,7 @@ class MisinformationMixin():
         return request
 
     def parse_response(self, response):
+        """Parse the HTML response and determine whether it should be saved."""
         # If the closure flag has been set then stop crawling
         if self.request_closure:
             raise CloseSpider(reason='Ending crawl cleanly after a close request.')
@@ -147,4 +147,5 @@ class MisinformationMixin():
         return crawl_response
 
     def closed(self, reason):
+        """Log reason for closure."""
         self.logger.info("Spider closed: {} ({})".format(self.config["site_name"], reason))
