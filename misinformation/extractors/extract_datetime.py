@@ -29,8 +29,7 @@ def extract_datetime_string(date_string, date_format=None, timezone=False):
     if _datetime:
         if timezone:
             return _datetime.format('YYYY-MM-DDTHH:mm:ssZ')
-        else:
-            return _datetime.format('YYYY-MM-DDTHH:mm:ss')
+        return _datetime.format('YYYY-MM-DDTHH:mm:ss')
     return None
 
 
