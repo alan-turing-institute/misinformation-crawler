@@ -5,6 +5,7 @@ from .misinformationmixin import MisinformationMixin
 
 class XMLSitemapSpider(MisinformationMixin, SitemapSpider):
     """Crawl spider for websites with XML sitemaps."""
+    name = 'xmlsitemap'
 
     def __init__(self, config, *args, **kwargs):
         self.sitemap_urls = self.load_start_urls(config)
@@ -29,3 +30,7 @@ class XMLSitemapSpider(MisinformationMixin, SitemapSpider):
         # compiled and self._rules will be empty, even though self.rules will
         # have the right rules present.
         super().__init__(config, *args, **kwargs)
+
+    # Suppress abstract-method warning
+    def parse(self, response):
+        pass

@@ -1,7 +1,19 @@
 sudo: enabled
 dist: xenial
 language: python
-python: 3.6
+
+# Build matrix
+os:
+  - linux
+  - osx
+python:
+  - 3.6
+  - 3.7
+
+# OSX build sometimes has problems getting an up-to-date python installation
+matrix:
+  allow_failures:
+    - os: osx
 
 before_install:
   # Install node.js following instructions from
@@ -12,12 +24,12 @@ before_install:
   # Install ODBC development libraries
   - sudo apt install unixodbc-dev
 
-
 install:
-  # Install node.js dependencies
-  - npm install
-  # Install python dependencies
+  # Install package dependencies
   - pip install -r requirements-dev.txt
+  # Install additional ReadabiliPy dependencies
+  - npm install
+  - pip install -r ReadabiliPy/requirements-dev.txt
 
 script:
   # Run all pytest unit tests
@@ -26,3 +38,5 @@ script:
   - pyflakes *.py misinformation tests
   # Check PEP8 compliance (ignoring long lines)
   - pycodestyle --statistics --ignore=E501 --count *.py misinformation tests
+  # Run pylint for stricter error checking
+  - pylint misinformation tests

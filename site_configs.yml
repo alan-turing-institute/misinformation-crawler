@@ -1,4 +1,30 @@
 ---  # Spider configurations for each website to be crawled
+10news.com:
+  site_name: '10news.com'
+  start_url: 'https://www.10news.com/news/local-news'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'page='
+      article_links: '//div[@class="List-items-item"]/a'
+  article:
+    url_must_contain: '/news/local-news/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//title/text()'
+      match_rule: 'first'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "ArticlePage-authorName")]//text()'
+      match_rule: 'largest'
+      warn_if_missing: False
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="RichTextArticleBody-body"]'
+      match_rule: 'largest'
+      remove_expressions:
+        - '//div[@class="RichTextArticleBody-body"]/p/b[text()="RELATED: "]'
+
 abcnews.go.com:
   site_name: 'abcnews.go.com'
   start_url: 'http://abcnews.go.com/Politics'
@@ -116,6 +142,24 @@ barenakedislam.com:
       match_rule: 'single'
       remove_expressions:
         - '//div[contains(@class, "sd-social")]'
+
+bostonherald.com:
+  site_name: 'bostonherald.com'
+  start_url: 'https://bostonherald.com/news/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h4[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "byline")]//a[@class=" author-name"]/text()'
+      match_rule: 'concatenate'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-body"]'
+      match_rule: 'single'
 
 breitbart.com:
   site_name: 'breitbart.com'
