@@ -129,10 +129,15 @@ class MisinformationMixin():
 
         # If we get here then we've found an article
         self.n_articles += 1
-        self.logger.info("  found an article at: {}".format(resolved_url))
-        article_percentage = float(100 * self.n_articles / self.n_pages if self.n_pages > 0 else 0
-        self.logger.info("  in this session {}/{} pages were articles ({:.2f}%)".format(
-                         self.n_articles, self.n_pages, article_percentage))
+        self.logger.info("  found an article at: %s", resolved_url)
+        article_percentage = float(100 * self.n_articles / self.n_pages) if self.n_pages > 0 else 0
+        self.logger.info("  in this crawl session %s articles have been extracted from %s pages: (%s)",
+                         self.n_articles,
+                         self.n_pages,
+                         "{:.2f}%".format(article_percentage),
+                         )
+
+
 
         # Prepare to return serialised response
         crawl_response = CrawlResponse()
