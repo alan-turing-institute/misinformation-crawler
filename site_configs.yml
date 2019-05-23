@@ -42,7 +42,7 @@ abcnews.go.com:
       select_method: 'xpath'
       select_expression: '//span[@class="timestamp"]/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'MMMM DD, YYYY'
         - 'MMM D, YYYY'
         - 'MMM. D, YYYY'
@@ -96,7 +96,7 @@ aljazeera.com:
       select_method: 'xpath'
       select_expression: '//div[@class="article-heading-author-name"]//time[@class="timeagofunction"]/@datetime'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'ddd MMM DD YYYY hh:mm:ss'
     content:
       select_method: 'xpath'
@@ -259,7 +259,7 @@ christianpost.com:
       select_method: 'xpath'
       select_expression: '//div[@class="article-byline"]/time[@class="visually-hidden"]/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'dddd, MMMM DD, YYYY'
     content:
       select_method: 'xpath'
@@ -311,7 +311,7 @@ conservativehq.com:
       # Stored in comments of the form '<!-- By NAME - DATE -->'
       select_expression: 'substring-after(//*[comment()[contains(., "By")]]/comment(), "-")'
       match_rule: 'first'
-      datetime-formats:
+      datetime_formats:
         - 'DD/MM/YY'
       warn_if_missing: false
     content:
@@ -336,7 +336,7 @@ dailycaller.com:
       select_method: 'xpath'
       select_expression: '//time/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'h:m A MM/DD/YYYY'
     content:
       select_method: 'xpath'
@@ -360,7 +360,7 @@ dailykos.com:
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="timestamp "]/@data-epoch-time'
-      datetime-formats:
+      datetime_formats:
         - 'unix_milliseconds'
       match_rule: 'first'
     content:
@@ -404,7 +404,7 @@ disclose.tv:
       select_method: 'xpath'
       select_expression: '//span[@class="article-element__meta-item"]'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'MMM DD YYYY'
     content:
       select_method: 'xpath'
@@ -552,7 +552,7 @@ henrymakow.com:
       select_method: 'xpath'
       select_expression: '//div[@class="text"]/p/text()'
       match_rule: 'first'
-      datetime-formats:
+      datetime_formats:
         - 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
@@ -652,7 +652,7 @@ judicialwatch.org:
       select_method: 'xpath'
       select_expression: '//p[@itemprop="datePublished"]/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'MMMM DD, YYYY'
     content:
       select_method: 'xpath'
@@ -876,7 +876,7 @@ nbcnews.com:
       select_method: 'xpath'
       select_expression: '//div/time/@datetime'
       match_rule: 'first'
-      datetime-formats:
+      datetime_formats:
         - 'ddd MMM D YYYY HH:mm:ss'
     content:
       select_method: 'xpath'
@@ -1010,7 +1010,7 @@ patriotnewsdaily.com:
       select_method: 'xpath'
       select_expression: '//span[@class="updated"]/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'YYYY-MM-DD'
     content:
       select_method: 'xpath'
@@ -1058,7 +1058,7 @@ prisonplanet.com:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]/p/text()'
       match_rule: 'group'
-      datetime-formats:
+      datetime_formats:
         - 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
@@ -1112,7 +1112,7 @@ redstatewatcher.com:
       select_method: 'xpath'
       select_expression: 'substring-after(//p[@class="text-muted"]/text(), ",")'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'MMMM D, YYYY'
     content:
       select_method: 'xpath'
@@ -1165,7 +1165,7 @@ satirewire.com:
       select_method: 'xpath'
       select_expression: '//span[@class="entry-date"]/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - 'MMM D, YYYY'
     url_must_contain: '/content1/\?p=\d+'
     content:
@@ -1347,7 +1347,7 @@ usatoday.com:
       select_method: 'xpath'
       select_expression: '//div[@class="publish-date"]/text()'
       match_rule: 'single'
-      datetime-formats:
+      datetime_formats:
         - '[Published] hh:mm A [EST] MMM DD, YYYY'
     content:
       select_method: 'xpath'
