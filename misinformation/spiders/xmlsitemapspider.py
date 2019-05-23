@@ -5,7 +5,6 @@ from .misinformationmixin import MisinformationMixin
 
 class XMLSitemapSpider(MisinformationMixin, SitemapSpider):
     """Crawl spider for websites with XML sitemaps."""
-    name = 'xmlsitemap'
 
     def __init__(self, config, *args, **kwargs):
         self.sitemap_urls = self.load_start_urls(config)
