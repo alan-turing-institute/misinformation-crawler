@@ -79,12 +79,11 @@ addictinginfo.com:
 
 aljazeera.com:
   site_name: 'aljazeera.com'
-  start_url: 'https://www.aljazeera.com/news/'
+  start_url: 'https://www.aljazeera.com/sitemap.xml'
   crawl_strategy:
-    method: 'index_page'
-    index_page:
-      url_must_contain: '/news/$'
-      article_links: '//a[h2[@class="topics-sec-item-head"]]'
+    method: 'sitemap'
+    site_map:
+      url_must_contain: 'sitemap'
   article:
     url_must_contain: '/news/\d\d\d\d/\d\d/'
     byline:
@@ -102,8 +101,6 @@ aljazeera.com:
       select_method: 'xpath'
       select_expression: '//div[@class="article-p-wrapper"]'
       match_rule: 'single'
-      # remove_expressions:
-      #   - '//div[contains(@class, "ad-inserter")]'
 
 alternet.org:
   site_name: 'alternet.org'
