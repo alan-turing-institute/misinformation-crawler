@@ -44,7 +44,7 @@ abcnews.go.com:
       match_rule: 'single'
       datetime_formats:
         - 'MMMM DD, YYYY'
-        - 'MMM D, YYYY'
+        - 'MMM D, YYYY, h:mm A'
         - 'MMM. D, YYYY'
     content:
       select_method: 'xpath'
