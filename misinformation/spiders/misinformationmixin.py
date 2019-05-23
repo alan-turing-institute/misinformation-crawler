@@ -18,6 +18,8 @@ class MisinformationMixin():
         # Load config and set spider display name to the name of the class
         self.config = config
         self.name = type(self).__name__
+        self.n_pages = 0
+        self.n_articles = 0
 
         # Set crawl-level metadata
         self.crawl_info = {
@@ -105,6 +107,7 @@ class MisinformationMixin():
         # If the closure flag has been set then stop crawling
         if self.request_closure:
             raise CloseSpider(reason='Ending crawl cleanly after a close request.')
+        self.n_pages += 1
 
         # URL may be the result of a redirect. If so, we use the redirected URL
         if response.request.meta.get("redirect_urls"):
@@ -125,7 +128,11 @@ class MisinformationMixin():
             return None
 
         # If we get here then we've found an article
+        self.n_articles += 1
         self.logger.info("  found an article at: {}".format(resolved_url))
+        article_percentage = float(100 * self.n_articles / self.n_pages if self.n_pages > 0 else 0
+        self.logger.info("  in this session {}/{} pages were articles ({:.2f}%)".format(
+                         self.n_articles, self.n_pages, article_percentage))
 
         # Prepare to return serialised response
         crawl_response = CrawlResponse()

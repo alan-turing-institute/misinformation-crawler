@@ -3,7 +3,6 @@ import logging
 import pkg_resources
 import yaml
 from misinformation.warc import WarcParser
-from scrapy.utils.project import get_project_settings
 
 
 def main():
@@ -22,16 +21,7 @@ def main():
     spider_config = pkg_resources.resource_string(__name__, "site_configs.yml")
     site_configs = yaml.load(spider_config, Loader=yaml.FullLoader)
 
-    # Update crawler settings here as we can't seem to do this when using the
-    # custom_settings attribute in the spider initialiser
-    settings = get_project_settings()
-    # Add custom settings
-    settings.update({
-        'CONTENT_DIGESTS': True,
-        'NODE_INDEXES': True,
-    })
-
-    # Set up the parser
+    # Set up the parser with content digests and node indexes enabled
     parser = WarcParser(content_digests=True, node_indexes=True)
 
     # Process data for selected sites
