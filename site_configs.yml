@@ -1197,7 +1197,7 @@ texastribune.org:
     method: 'index_page'
     index_page:
       url_must_contain: '\?page='
-      article_links: '//h3[@class="headline"]/a'
+      article_links: '//h3[contains(@class, "headline")]/a'
   article:
     url_must_not_contain: 'tribcast-|watch-'
     byline:
