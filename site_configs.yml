@@ -77,6 +77,27 @@ addictinginfo.com:
       remove_expressions:
         - '//div[contains(@class, "ad-inserter")]'
 
+alaskastar.com:
+  site_name: 'alaskastar.com'
+  start_url: 'http://alaskastar.com/top-stories'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'page='
+      article_links: '//h2/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "field-name-field-authors")]/div/div/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "field-type-text-with-summary")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//em[contains(text(), "RELATED: ")]'
+        - '//em[contains(text(), "RELATAED: ")]' # Also remove this incorrect spelling seen in test article-1
+
 aljazeera.com:
   site_name: 'aljazeera.com'
   start_url: 'https://www.aljazeera.com/sitemap.xml'
