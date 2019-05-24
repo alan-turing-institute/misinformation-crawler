@@ -211,7 +211,7 @@ cbsnews.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/latest/us/\d+'
-      article_links: '//a[h3[@class="title"]]'
+      article_links: '//article[contains(@class, "type-article")]/a'
   article:
     byline:
       select_method: 'xpath'
