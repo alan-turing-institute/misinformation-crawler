@@ -761,7 +761,7 @@ mic.com:
     method: 'index_page'
     index_page:
       url_must_not_contain: '/articles/'
-      article_links: '//a[contains(@class, "headline__link")]'
+      article_links: '//div[@class="ip iS ir"]/a'
   article:
     url_must_not_contain: 'mailto:'
     byline:
