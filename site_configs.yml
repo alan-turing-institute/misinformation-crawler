@@ -557,6 +557,34 @@ henrymakow.com:
       match_rule: 'single'
       warn_if_missing: false
 
+hudsonstarobserver.com:
+  site_name: 'hudsonstarobserver.com'
+  start_url: 'https://www.hudsonstarobserver.com/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news'
+      article_links: '//a[@class="article-link"]'
+  article:
+    url_must_contain: '/news/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="node-title"]/text()'
+      match_rule: 'single'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="node-body"]'
+      match_rule: 'concatenate'
+      remove_expressions:
+        - '//p[text()="-----"]'
+        - '//strong[text()="-----"]'
+        - '//*[text()=","]'
+        # - '//div[@class="mobile-ad"]'
+
 huffingtonpost.com:
   site_name: 'huffingtonpost.com'
   additional_domains:
