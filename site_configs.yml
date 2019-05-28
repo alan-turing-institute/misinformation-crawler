@@ -331,6 +331,30 @@ cnn.com:
       remove_expressions:
         - '//div[contains(@class, "read-more")]'
 
+columbian.com:
+  site_name: 'columbian.com'
+  start_url: 'https://www.columbian.com/news/politics/local-politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/politics/local-politics/page/'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="author"]//a[@itemprop="name"]/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="datePublished"]/@content'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DD HH:mm:ss'
+    content:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="articleBody"]'
+      match_rule: 'single'
+
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
