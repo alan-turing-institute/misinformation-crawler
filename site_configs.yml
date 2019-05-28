@@ -411,6 +411,30 @@ disclose.tv:
         - '//div[@class="read-next"]'
         - '//figure[@id="video-preview"]'
 
+drrichswier.com:
+  site_name: 'drrichswier.com'
+  start_url: 'https://drrichswier.com/category/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      article_links: '/h2[@itemprop="headline"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="vcard author"]/span/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="datePublished"]/@datetime'
+      match-rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//a[@data-saferedirecturl]'
+        - '//strong[contains(text(), "RELATED ARTICLES:")]'
+
 empirenews.net:
   site_name: 'empirenews.net'
   start_url: 'http://empirenews.net/category/politics/'
