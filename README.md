@@ -6,8 +6,8 @@ See [main project](https://github.com/alan-turing-institute/misinformation) for 
 ## Prerequisites
 - `chromedriver`
     - needed by Selenium. See [installation instructions](https://selenium-python.readthedocs.io/installation.html)
-- (optional) `node.js`
-    - needed for some `ReadabiliPy` tests but not used in this project. See [installation instructions](https://nodejs.org/en/download/)
+- `node.js`
+    - needed both for some `ReadabiliPy` tests and also to avoid Cloudflare protections. See [installation instructions](https://nodejs.org/en/download/)
 - (optional) Microsoft SQL drivers
     - Needed only if recording the crawl in the Azure database, not if writing output to a local file
     - See sections below on `Using pyodbc on macos` and `How to install Microsoft SQL Server drivers`

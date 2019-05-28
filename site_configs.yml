@@ -169,7 +169,7 @@ breitbart.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/politics/page/'
-      article_links: '//footer[contains(@class,"byline")]//a'
+      article_links: '//article/div/h2/a'
   article:
     byline:
       select_method: 'xpath'
@@ -211,7 +211,7 @@ cbsnews.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/latest/us/\d+'
-      article_links: '//a[h3[@class="title"]]'
+      article_links: '//article[contains(@class, "type-article")]/a'
   article:
     byline:
       select_method: 'xpath'
@@ -761,7 +761,7 @@ mic.com:
     method: 'index_page'
     index_page:
       url_must_not_contain: '/articles/'
-      article_links: '//a[contains(@class, "headline__link")]'
+      article_links: '//div[@class="ip iS ir"]/a'
   article:
     url_must_not_contain: 'mailto:'
     byline:
@@ -1197,7 +1197,7 @@ texastribune.org:
     method: 'index_page'
     index_page:
       url_must_contain: '\?page='
-      article_links: '//h3[@class="headline"]/a'
+      article_links: '//h3[contains(@class, "headline")]/a'
   article:
     url_must_not_contain: 'tribcast-|watch-'
     byline:
@@ -1308,25 +1308,25 @@ time.com:
       remove_expressions:
         - '//p[contains(@class, "author-feedback-text")]'
 
-usasupreme.com:
-  site_name: 'usasupreme.com'
-  start_url: 'http://www.usasupreme.com/category/politics/'
-  crawl_strategy:
-    method: 'index_page'
-    index_page:
-      url_must_contain: '/category/politics/page/'
-      article_links: '//h2[@class="entry-title"]/a'
-  article:
-    byline:
-      select_method: 'xpath'
-      select_expression: '//span[@class="author vcard" and @itemprop="name"]/a/text()'
-      match_rule: 'single'
-    content:
-      select_method: 'xpath'
-      select_expression: '//div[contains(@class, "entry-content")]'
-      match_rule: 'single'
-      remove_expressions:
-        - '//div[contains(@class, "saboxplugin")]'
+# usasupreme.com:
+#   site_name: 'usasupreme.com'
+#   start_url: 'http://www.usasupreme.com/category/politics/'
+#   crawl_strategy:
+#     method: 'index_page'
+#     index_page:
+#       url_must_contain: '/category/politics/page/'
+#       article_links: '//h2[@class="entry-title"]/a'
+#   article:
+#     byline:
+#       select_method: 'xpath'
+#       select_expression: '//span[@class="author vcard" and @itemprop="name"]/a/text()'
+#       match_rule: 'single'
+#     content:
+#       select_method: 'xpath'
+#       select_expression: '//div[contains(@class, "entry-content")]'
+#       match_rule: 'single'
+#       remove_expressions:
+#         - '//div[contains(@class, "saboxplugin")]'
 
 usatoday.com:
   site_name: 'usatoday.com'
