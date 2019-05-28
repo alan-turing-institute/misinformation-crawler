@@ -582,8 +582,6 @@ hudsonstarobserver.com:
       remove_expressions:
         - '//p[text()="-----"]'
         - '//strong[text()="-----"]'
-        - '//*[text()=","]'
-        # - '//div[@class="mobile-ad"]'
 
 huffingtonpost.com:
   site_name: 'huffingtonpost.com'
