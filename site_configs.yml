@@ -295,6 +295,7 @@ columbian.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/news/politics/local-politics/page/'
+      article_links: '//h3/a'
   article:
     url_must_contain: '/news/'
     byline:
