@@ -491,6 +491,24 @@ foxnews.com:
         - '//div[contains(@class, "video-ct")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
 
+gatesofvienna.net:
+  site_name: 'gatesofvienna.net'
+  start_url: 'https://gatesofvienna.net/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h1[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+
 gellerreport.com:
   site_name: 'gellerreport.com'
   start_url: 'http://gellerreport.com/category/atlas-articles/'
