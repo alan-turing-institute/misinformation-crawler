@@ -417,8 +417,10 @@ drrichswier.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      article_links: '/h2[@itemprop="headline"]/a'
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h2[@itemprop="headline"]/a'
   article:
+    url_must_contain: '\d\d\d\d/\d\d/\d\d/'
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="vcard author"]/span/a/text()'
