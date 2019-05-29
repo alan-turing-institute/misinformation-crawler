@@ -775,6 +775,31 @@ mic.com:
       remove_expressions:
         - '//figure[@class="embed"]'
 
+missoulacurrent.com:
+  site_name: 'missoulacurrent.com'
+  start_url: 'https://missoulacurrent.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_not_contain: '/category/government/page/'
+      article_links: '//a[@class="entry-title-link"]'
+  article:
+    url_must_contain: '/government/'
+    byline:
+      select_method: 'xpath'
+      select_expression: 'substring-before(substring-after(//h3/span[@class="red"]/text(), "By "), " (MTN News)")'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "pdfprnt-buttons")]'
+        - '//div[contains(@class, "fluid-width-video-wrapper")]'
+        - '//div[contains(@class, "misso-middle-content")]'
+        - '//div[contains(@class, "misso-in-story-2")]'
+        - '//div[contains(@class, "essb_links")]'
+
 motherjones.com:
   site_name: 'motherjones.com'
   start_url: 'https://www.motherjones.com/politics/'
