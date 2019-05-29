@@ -777,11 +777,11 @@ mic.com:
 
 missoulacurrent.com:
   site_name: 'missoulacurrent.com'
-  start_url: 'https://missoulacurrent.com/'
+  start_url: 'https://missoulacurrent.com/category/government/'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_not_contain: '/category/government/page/'
+      url_must_contain: '/category/government/page/'
       article_links: '//a[@class="entry-title-link"]'
   article:
     url_must_contain: '/government/'
