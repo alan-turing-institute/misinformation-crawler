@@ -84,11 +84,9 @@ class WarcParser(Connector):
             n_pages += 1
 
             # Load WARC data
-            if use_local:
-                # ... from local file
+            if use_local:  # ... from local file
                 warc_data = warc_from_string(entry.warc_data)
-            else:
-                # ... from blob storage
+            else:  # ... from blob storage
                 blob = self.block_blob_service.get_blob_to_bytes(self.blob_container_name, entry.blob_key)
                 warc_data = blob.content
 
