@@ -1361,9 +1361,10 @@ valleytimes-news.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/category/government-and-politics/page/'
+      url_must_contain: '/category/news/'
       article_links: '//div[contains(@class, "story")]/a'
   article:
+    url_must_contain: '\d\d\d\d/\d\d/'
     title:
       select_method: 'xpath'
       select_expression: '//div[@id="article"]/h2/text()'
