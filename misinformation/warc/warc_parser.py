@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from dateutil import parser
 from termcolor import colored
 from misinformation.extractors import extract_article
-from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
+from misinformation.database import Connector, DatabaseError, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
 from .serialisation import response_from_warc, warc_from_string
 
 
@@ -27,7 +27,7 @@ class WarcParser(Connector):
         self.content_digests = content_digests
         self.node_indexes = node_indexes
 
-    def load_local_warcfiles(self, site_name):
+    def read_local_files(self, site_name):
         input_dir = "webpages"
         input_file = "{}_extracted.txt".format(site_name)
         input_path = os.path.join(input_dir, input_file)
@@ -48,17 +48,17 @@ class WarcParser(Connector):
 
         # Load WARC files
         if use_local:
-            warcfile_entries = self.load_local_warcfiles(site_name)
+            warcfile_entries = self.read_local_files(site_name)
         else:
             warcfile_entries = self.read_entries(Webpage, site_name=site_name)
         n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
 
         # Load existing articles
-        if use_local:
+        try:
+            article_entries = self.read_entries(Article.article_url, site_name=site_name)
+            article_urls = [entry[0] for entry in article_entries]
+        except DatabaseError:
             article_urls = []
-        else:
-            article_entries = self.read_entries(Article, site_name=site_name)
-            article_urls = [entry.article_url for entry in article_entries]
         duration = datetime.datetime.utcnow() - start_time
         logging.info("Loaded %s pages in %s",
                      colored(n_warcentries, "blue"),

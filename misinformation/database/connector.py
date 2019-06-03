@@ -38,6 +38,8 @@ class Connector():
         except sqlalchemy.exc.OperationalError as err:
             if "Communication link failure" in str(err):
                 raise NonRecoverableDatabaseError("Lost connection with the database. Ending the crawl.")
+            if "Login timeout expired" in str(err):
+                raise NonRecoverableDatabaseError("Could not login to the database. Ending the crawl.")
             raise  # Re-raise the exception if it had a different cause
         # Check for database size or lost connection exceptions and report informative log message
         except sqlalchemy.exc.ProgrammingError as err:
@@ -45,18 +47,12 @@ class Connector():
                 raise NonRecoverableDatabaseError("The database has reached its size quota. Ending the crawl.")
             raise  # Re-raise the exception if it had a different cause
 
-    def read_entries(self, entry_type, column=None, site_name=None):
+    def read_entries(self, entry_type, site_name=None):
         session = self.session_factory()
-
-        query_list = [entry_type]
-        if column:
-            query_list += column
-        print(query_list)
-
         if site_name:
-            entries = session.query(*query_list).filter_by(site_name=site_name).all()
+            entries = session.query(entry_type).filter_by(site_name=site_name).all()
         else:
-            entries = session.query(*query_list).all()
+            entries = session.query(entry_type).all()
         session.close()
         return entries
 
