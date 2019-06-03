@@ -1,13 +1,11 @@
 from contextlib import suppress
 from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import Rule
-from scrapy.spiders import CrawlSpider
+from scrapy.spiders import CrawlSpider, Rule
 from .misinformationmixin import MisinformationMixin
 
 
 class ScattergunSpider(MisinformationMixin, CrawlSpider):
     """Crawl spider for websites containing articles that can be identified using a known URL format or content element."""
-    name = 'scattergun'
 
     def __init__(self, config, *args, **kwargs):
         # For the scattergun strategy we only need one Rule for following links

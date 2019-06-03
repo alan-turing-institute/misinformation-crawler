@@ -1,9 +1,9 @@
 from scrapy.http import HtmlResponse
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException, ElementNotVisibleException, WebDriverException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException, ElementNotVisibleException, ElementNotInteractableException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.expected_conditions import visibility_of_element_located
+from selenium.webdriver.support.expected_conditions import visibility_of_element_located, element_to_be_clickable
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -82,7 +82,8 @@ class JSLoadButtonMiddleware:
         while True:
             try:
                 # We need a nested try block here, since the WebDriverWait
-                # inside the ElementNotVisibleException can throw a
+                # inside the ElementNotVisibleException or the
+                # ElementNotInteractableException can throw a
                 # TimeoutException that we want to handle in the same way as
                 # other TimeoutExceptions
                 try:
@@ -121,6 +122,10 @@ class JSLoadButtonMiddleware:
                     # This can happen when the page refresh makes a previously
                     # found element invisible until the page load is finished
                     WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, load_button_xpath)))
+                except ElementNotInteractableException:
+                    # This can happen when the page refresh makes an element
+                    # non-clickable for some period
+                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, load_button_xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
                 # If there are still available buttons on the page then repeat
                 if self.first_load_button_xpath():
