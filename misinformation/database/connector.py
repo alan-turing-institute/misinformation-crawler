@@ -58,4 +58,3 @@ class Connector():
             return entries
         except sqlalchemy.exc.OperationalError:
             raise RecoverableDatabaseError("Could not read entries from database.")
-

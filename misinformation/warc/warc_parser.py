@@ -4,21 +4,28 @@ import json
 import logging
 import os
 from contextlib import suppress
-from dataclasses import dataclass
 from dateutil import parser
 from termcolor import colored
 from misinformation.extractors import extract_article
 from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
+from .crawl_file import CrawlFile
 from .serialisation import response_from_warc, warc_from_string
 
 
-@dataclass
-class LocalCrawlResponse:
-    site_name: str
-    article_url: str
-    crawl_id: str
-    crawl_datetime: datetime
-    warc_data: bytes
+def read_local_files(site_name):
+    input_dir = "webpages"
+    input_file = "{}_extracted.txt".format(site_name)
+    input_path = os.path.join(input_dir, input_file)
+    output_crawl_responses = []
+    with open(input_path, "rb") as f_in:
+        raw_data = f_in.readlines()[0].decode("utf-8")
+        data_entries = ast.literal_eval(raw_data)
+        for json_data in data_entries:
+            json_data["article_url"] = json_data.pop("url")
+            json_data["crawl_datetime"] = parser.parse(json_data.pop("crawl_datetime"))
+            response = CrawlFile(**json_data)
+            output_crawl_responses.append(response)
+    return output_crawl_responses
 
 
 class WarcParser(Connector):
@@ -27,28 +34,13 @@ class WarcParser(Connector):
         self.content_digests = content_digests
         self.node_indexes = node_indexes
 
-    def read_local_files(self, site_name):
-        input_dir = "webpages"
-        input_file = "{}_extracted.txt".format(site_name)
-        input_path = os.path.join(input_dir, input_file)
-        output_crawl_responses = []
-        with open(input_path, "rb") as f_in:
-            raw_data = f_in.readlines()[0].decode("utf-8")
-            data_entries = ast.literal_eval(raw_data)
-            for json_data in data_entries:
-                json_data["article_url"] = json_data.pop("url")
-                json_data["crawl_datetime"] = parser.parse(json_data.pop("crawl_datetime"))
-                response = LocalCrawlResponse(**json_data)
-                output_crawl_responses.append(response)
-        return output_crawl_responses
-
     def process_webpages(self, site_name, config, max_articles=-1, use_local=False):
         start_time = datetime.datetime.utcnow()
         logging.info("Loading pages for %s...", colored(site_name, "green"))
 
         # Load WARC files
         if use_local:
-            warcfile_entries = self.read_local_files(site_name)
+            warcfile_entries = read_local_files(site_name)
         else:
             warcfile_entries = self.read_entries(Webpage, site_name=site_name)
         n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
