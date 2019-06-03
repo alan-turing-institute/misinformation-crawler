@@ -74,7 +74,8 @@ abqjournal.com:
       select_method: 'xpath'
       select_expression: '//div[@class="published"]/text()'
       match_rule: 'single'
-      datetime-format: 'dddd, MMMM Do, YYYY [at] h:mmA'
+      datetime_formats:
+        - 'dddd, MMMM Do, YYYY [at] h:mmA'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entry"]'
