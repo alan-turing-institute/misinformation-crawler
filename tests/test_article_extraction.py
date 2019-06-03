@@ -694,7 +694,8 @@ def test_extract_datetime_works_with_multiple_dates():
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]/p/text()'
             match_rule: 'group'
-            datetime-format: 'MMMM D, YYYY'
+            datetime_formats:
+              - 'MMMM D, YYYY'
         content:
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]'
