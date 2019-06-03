@@ -122,6 +122,31 @@ def test_extract_article_for_sites(article_info):
     validate_extract_article(response, config, expected_article)
 
 
+def test_extract_empty_article():
+    # Mock response using expected article data
+    html = "<html></html>"
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        title:
+            select_method: 'xpath'
+            select_expression: '//h1[@class="post-title"]/text()'
+            match_rule: 'single'
+        content:
+            select_method: 'xpath'
+            select_expression: '//p/text()'
+            match_rule: 'first'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test single element extraction
+    expected_content = None
+    validate_extract_element(response, config['article']['content'], expected_content)
+
+
 def test_extract_article_default():
     # Load test file
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
@@ -669,7 +694,8 @@ def test_extract_datetime_works_with_multiple_dates():
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]/p/text()'
             match_rule: 'group'
-            datetime-format: 'MMMM D, YYYY'
+            datetime_formats:
+              - 'MMMM D, YYYY'
         content:
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]'
