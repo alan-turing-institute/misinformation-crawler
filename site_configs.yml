@@ -83,9 +83,10 @@ alaskastar.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: 'page='
+      url_must_contain: 'top-stories\?page='
       article_links: '//h2/a'
   article:
+    url_must_contain: '/\d\d\d\d-\d\d-\d\d/'
     byline:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "field-name-field-authors")]/div/div/a/text()'
