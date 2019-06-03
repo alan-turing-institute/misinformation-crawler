@@ -1423,7 +1423,7 @@ washingtontimes.com:
       match_rule: 'single'
       remove_expressions:
         - '//div[@class="permission"]'
-        # - '//div/h4[contains(text(), "The Washington Times Comment Policy")]'  # Can we modify this to remove the grey comment box present on each page
+        - '//div[h4[contains(text(), "The Washington Times Comment Policy")]]'
 
 weeklyworldnews.com:
   site_name: 'weeklyworldnews.com'
