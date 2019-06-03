@@ -48,11 +48,14 @@ class Connector():
             raise  # Re-raise the exception if it had a different cause
 
     def read_entries(self, entry_type, site_name=None):
-        session = self.session_factory()
-        if site_name:
-            entries = session.query(entry_type).filter_by(site_name=site_name).all()
-        else:
-            entries = session.query(entry_type).all()
-        session.close()
-        return entries
+        try:
+            session = self.session_factory()
+            if site_name:
+                entries = session.query(entry_type).filter_by(site_name=site_name).all()
+            else:
+                entries = session.query(entry_type).all()
+            session.close()
+            return entries
+        except sqlalchemy.exc.OperationalError:
+            raise RecoverableDatabaseError("Could not read entries from database.")
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from dateutil import parser
 from termcolor import colored
 from misinformation.extractors import extract_article
-from misinformation.database import Connector, DatabaseError, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
+from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
 from .serialisation import response_from_warc, warc_from_string
 
 
@@ -57,7 +57,7 @@ class WarcParser(Connector):
         try:
             article_entries = self.read_entries(Article.article_url, site_name=site_name)
             article_urls = [entry[0] for entry in article_entries]
-        except DatabaseError:
+        except RecoverableDatabaseError:
             article_urls = []
         duration = datetime.datetime.utcnow() - start_time
         logging.info("Loaded %s pages in %s",

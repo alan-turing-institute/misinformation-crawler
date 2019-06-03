@@ -1,11 +1,12 @@
 from .connector import Connector
-from .exceptions import NonRecoverableDatabaseError, RecoverableDatabaseError
+from .exceptions import DatabaseError, NonRecoverableDatabaseError, RecoverableDatabaseError
 from .models import Article, Webpage
 
 __all__ = [
-    'Article',
-    'Connector',
-    'NonRecoverableDatabaseError',
-    'RecoverableDatabaseError',
-    'Webpage',
+    "Article",
+    "Connector",
+    "DatabaseError",
+    "NonRecoverableDatabaseError",
+    "RecoverableDatabaseError",
+    "Webpage",
 ]
