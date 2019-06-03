@@ -1415,7 +1415,8 @@ washingtontimes.com:
       select_method: 'xpath'
       select_expression: '//span[@class="source"]/text()'
       match_rule: 'last'
-      datetime-format: 'dddd, MMMM DD, YYYY'
+      datetime_formats:
+        - 'dddd, MMMM DD, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="storyareawrapper"]'
