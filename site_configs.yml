@@ -324,9 +324,9 @@ conservativepapers.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/page/'
+      url_must_contain: '/page/\d/'
   article:
-    url_must_contain: '/news/'
+    url_must_contain: '/news/\d\d\d\d/\d\d/\d\d/'
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@itemprop="author"]/@content'
