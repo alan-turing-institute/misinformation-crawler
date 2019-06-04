@@ -17,7 +17,7 @@ class ArticleJsonFileExporter():
 
     # Initialise pipeline when crawler opened
     def open_spider(self, spider):
-        output_dir = "articles"
+        output_dir = "webpages"
         output_file = "{}_extracted.txt".format(spider.config['site_name'])
         # Ensure output directory exists
         if not os.path.isdir(output_dir):
@@ -33,8 +33,8 @@ class ArticleJsonFileExporter():
         self.exporter.file.close()
         del spider  # supress unused argument warning
 
-    def process_item(self, article, spider):
+    def process_item(self, crawl_response, spider):
         spider.logger.info('  preparing to save response to local file')
-        self.exporter.export_item(article)
-        spider.logger.info("Finished database export for: {}".format(article["url"]))
-        return article
+        self.exporter.export_item(crawl_response)
+        spider.logger.info("Finished processing: {}".format(crawl_response["url"]))
+        return crawl_response
