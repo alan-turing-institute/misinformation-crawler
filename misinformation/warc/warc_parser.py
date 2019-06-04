@@ -1,11 +1,31 @@
+import ast
 import datetime
 import json
 import logging
+import os
 from contextlib import suppress
+from dateutil import parser
 from termcolor import colored
 from misinformation.extractors import extract_article
 from misinformation.database import Connector, RecoverableDatabaseError, NonRecoverableDatabaseError, Article, Webpage
-from .serialisation import response_from_warc
+from .crawl_file import CrawlFile
+from .serialisation import response_from_warc, warc_from_string
+
+
+def read_local_files(site_name):
+    input_dir = "webpages"
+    input_file = "{}_extracted.txt".format(site_name)
+    input_path = os.path.join(input_dir, input_file)
+    output_crawl_responses = []
+    with open(input_path, "rb") as f_in:
+        raw_data = f_in.readlines()[0].decode("utf-8")
+        data_entries = ast.literal_eval(raw_data)
+        for json_data in data_entries:
+            json_data["article_url"] = json_data.pop("url")
+            json_data["crawl_datetime"] = parser.parse(json_data.pop("crawl_datetime"))
+            response = CrawlFile(**json_data)
+            output_crawl_responses.append(response)
+    return output_crawl_responses
 
 
 class WarcParser(Connector):
@@ -14,16 +34,23 @@ class WarcParser(Connector):
         self.content_digests = content_digests
         self.node_indexes = node_indexes
 
-    def process_webpages(self, site_name, config, max_articles=-1):
-        # Load WARC files
+    def process_webpages(self, site_name, config, max_articles=-1, use_local=False):
         start_time = datetime.datetime.utcnow()
         logging.info("Loading pages for %s...", colored(site_name, "green"))
-        warcfile_entries = self.read_entries(Webpage, site_name=site_name)
+
+        # Load WARC files
+        if use_local:
+            warcfile_entries = read_local_files(site_name)
+        else:
+            warcfile_entries = self.read_entries(Webpage, site_name=site_name)
         n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
 
         # Load existing articles
-        article_entries = self.read_entries(Article, site_name=site_name)
-        article_urls = [entry.article_url for entry in article_entries]
+        try:
+            article_entries = self.read_entries(Article.article_url, site_name=site_name)
+            article_urls = [entry[0] for entry in article_entries]
+        except RecoverableDatabaseError:
+            article_urls = []
         duration = datetime.datetime.utcnow() - start_time
         logging.info("Loaded %s pages in %s",
                      colored(n_warcentries, "blue"),
@@ -48,21 +75,24 @@ class WarcParser(Connector):
             logging.info("Searching for an article at: %s", colored(entry.article_url, "green"))
             n_pages += 1
 
-            # Load WARC data from blob storage
-            blob_key = entry.blob_key
-            blob = self.block_blob_service.get_blob_to_bytes(self.blob_container_name, blob_key)
+            # Load WARC data
+            if use_local:  # ... from local file
+                warc_data = warc_from_string(entry.warc_data)
+            else:  # ... from blob storage
+                warc_data = self.get_blob_content(entry.blob_key)
 
             # Create a response from the WARC content and attempt to extract an article
-            response = response_from_warc(blob.content)
+            response = response_from_warc(warc_data)
             article = extract_article(response, config, entry, self.content_digests, self.node_indexes)
             with suppress(KeyError):
                 article["plain_text"] = json.dumps(article["plain_text"])
             with suppress(KeyError):
                 article["metadata"] = json.dumps(article["metadata"])
 
-            # Add article to database
+            # Add article to database unless we're running locally
             if article["content"]:
-                self.add_to_database(article)
+                if not use_local:
+                    self.add_to_database(article)
                 n_articles += 1
             logging.info("Finished processing %s/%s: %s", idx, n_warcentries, entry.article_url)
 
