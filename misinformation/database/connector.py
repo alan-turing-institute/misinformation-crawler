@@ -20,7 +20,7 @@ class Connector():
             try:
                 self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"), Loader=yaml.FullLoader)
             except FileNotFoundError:
-                raise NonRecoverableDatabaseError("Could not load database connection information")
+                raise RecoverableDatabaseError("Could not load database connection information")
         if not self.engine:
             self.engine = sqlalchemy.create_engine("mssql+pyodbc://{user}:{password}@{server}:1433/{database}?driver={driver}".format(
                 database=self.db_config["database"],
