@@ -317,7 +317,10 @@ clickhole.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/tag/news\?startIndex=\d\d'
+      url_must_contain: '/tag/news\?startIndex='
+      article_links: '//article[contains(@class, "js_post_item")]//a[h1]'
+      # article_links: '//article[contains(@class, "js_post_item")]/figure/a'
+      # article_links: '//article[contains(@class, "js_post_item")]//a/h1/parent::a'
   article:
     byline:
       select_method: 'xpath'
