@@ -333,6 +333,7 @@ conservativepapers.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
+<<<<<<< HEAD
       select_expression: '//div[@class="site-content"]'
       match_rule: 'first'
       remove_expressions:
@@ -344,6 +345,13 @@ conservativepapers.com:
         - '//p[contains(text(), "Source material can be found at")]'
         - '//nav'
         - '//header'
+=======
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+    remove_expressions:
+      - '//div[@style="display: none"]'
+      - '//div[@class="ratingblock "]'
+>>>>>>> 87e0d90769f6f903d3dd1cbf788e4e821d2be0b2
 
 dailycaller.com:
   site_name: 'dailycaller.com'
