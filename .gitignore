@@ -8,8 +8,7 @@ blank_site_config.yml
 secrets/
 
 # generated data
-/article_urls/
-/articles/
+/webpages/
 
 # pycharm project files
 .idea/
