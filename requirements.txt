@@ -1,6 +1,7 @@
 azure-storage-blob
 arrow
 cfscrape
+dataclasses
 datetime
 fake-useragent
 pendulum
