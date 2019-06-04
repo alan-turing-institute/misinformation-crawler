@@ -333,11 +333,17 @@ conservativepapers.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="entry-content"]'
-      match_rule: 'single'
-    remove_expressions:
-      - '//div[@style="display: none"]'
-      - '//div[@class="ratingblock "]'
+      select_expression: '//div[@class="site-content"]'
+      match_rule: 'first'
+      remove_expressions:
+        - '//div[@style="display: none"]'
+        - '//div[@class="ratingblock "]'
+        - '//div[@class="yarpp-related"]'
+        - '//div[@class="entry-categories"]'
+        - '//div[@class="comments-area"]'
+        - '//p[contains(text(), "Source material can be found at")]'
+        - '//nav'
+        - '//header'
 
 dailycaller.com:
   site_name: 'dailycaller.com'
