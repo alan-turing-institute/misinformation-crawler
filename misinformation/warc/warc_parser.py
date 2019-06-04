@@ -79,8 +79,7 @@ class WarcParser(Connector):
             if use_local:  # ... from local file
                 warc_data = warc_from_string(entry.warc_data)
             else:  # ... from blob storage
-                blob = self.block_blob_service.get_blob_to_bytes(self.blob_container_name, entry.blob_key)
-                warc_data = blob.content
+                warc_data = self.get_blob_content(entry.blob_key)
 
             # Create a response from the WARC content and attempt to extract an article
             response = response_from_warc(warc_data)
