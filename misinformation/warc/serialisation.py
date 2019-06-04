@@ -76,3 +76,7 @@ def response_from_warc(file_bytes):
 
 def string_from_warc(file_bytes):
     return base64.encodebytes(file_bytes).decode("utf-8")
+
+
+def warc_from_string(file_string):
+    return base64.decodebytes(file_string.encode("utf-8"))
