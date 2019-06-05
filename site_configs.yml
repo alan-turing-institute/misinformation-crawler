@@ -460,6 +460,32 @@ disclose.tv:
         - '//div[@class="read-next"]'
         - '//figure[@id="video-preview"]'
 
+drrichswier.com:
+  site_name: 'drrichswier.com'
+  start_url: 'https://drrichswier.com/category/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h2[@itemprop="headline"]/a'
+  article:
+    url_must_contain: '\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="vcard author"]/span/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="datePublished"]/@datetime'
+      match-rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//a[@data-saferedirecturl]'
+        - '//strong[contains(text(), "RELATED ARTICLES:")]'
+
 empirenews.net:
   site_name: 'empirenews.net'
   start_url: 'http://empirenews.net/category/politics/'
@@ -635,6 +661,24 @@ huffingtonpost.com:
         - '//div[contains(@class, "advertisement-holder")]'
         - '//figure'
         - '//blockquote'
+
+infostormer.com:
+  site_name: 'infostormer.com'
+  start_url: 'https://infostormer.com'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h3[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-author-name"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
 
 infowars.com:
   site_name: 'infowars.com'
@@ -1263,6 +1307,24 @@ texastribune.org:
         - '//span[contains(@class, "full_story")]'
         - '//p[contains(@class, "full_story")]'
         - '//aside[contains(@class, "plugin")]'
+
+thedailysheeple.com:
+  site_name: 'thedailysheeple.com'
+  start_url: 'https://www.thedailysheeple.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//div[contains(@class, "mvp-main-blog-out relative")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[contains(@class, "author-name")]/a[@rel="author"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "theiaPostSlider_preloadedSlide")]'
+      match_rule: 'single'
 
 thehill.com:
   site_name: 'thehill.com'
