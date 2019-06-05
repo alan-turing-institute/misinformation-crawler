@@ -1172,6 +1172,36 @@ pbs.org:
         - '//aside'
         - '//h3'
 
+politico.com:
+  site_name: 'politico.com'
+  start_url: 'https://www.politico.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="byline"]/a/text()'
+      match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DD HH:mm:ss'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "story-text")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "story-intro")]'
+        - '//div[contains(@class, "story-share")]'
+        - '//div[contains(@class, "story-supplement")]'
+        - '//div[contains(@class, "shifty-wrapper")]'
+        - '//aside'
+        - '//p[@class="story-continued"]'
+
 prisonplanet.com:
   site_name: 'prisonplanet.com'
   start_url: 'http://prisonplanet.com/section/featured-stories/'
