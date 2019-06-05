@@ -345,6 +345,7 @@ columbian.com:
       select_method: 'xpath'
       select_expression: '//div[@itemprop="author"]//a[@itemprop="name"]/text() | //span[@itemprop="author"]/text()'
       match_rule: 'concatenate'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@itemprop="datePublished"]/@content'
