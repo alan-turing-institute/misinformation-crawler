@@ -8,39 +8,47 @@ from .exceptions import RecoverableDatabaseError, NonRecoverableDatabaseError
 class Connector():
     def __init__(self, blob_container_name="warc-files"):
         # Database connections
-        self.db_config = None
-        self.engine = None
-        self.session_factory = None
+        self._db_config = None
+        self._engine = None
+        self._session_factory = None
         # Blob storage
-        self.block_blob_service = None
+        self._block_blob_service = None
         self.blob_container_name = blob_container_name
 
-    def open_session(self):
-        if not self.db_config:
+    @property
+    def block_blob_service(self):
+        if not self._block_blob_service:
+            self._block_blob_service = BlockBlobService(account_name="misinformationcrawldata", account_key=self.db_config["blob_storage_key"])
+        return self._block_blob_service
+
+    @property
+    def db_config(self):
+        if not self._db_config:
             try:
-                self.db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"), Loader=yaml.FullLoader)
+                self._db_config = yaml.load(pkg_resources.resource_string(__name__, "../../secrets/db_config.yml"), Loader=yaml.FullLoader)
             except FileNotFoundError:
                 raise RecoverableDatabaseError("Could not load database connection information")
-        if not self.engine:
-            self.engine = sqlalchemy.create_engine("mssql+pyodbc://{user}:{password}@{server}:1433/{database}?driver={driver}".format(
+        return self._db_config
+
+    def open_session(self):
+        if not self._engine:
+            self._engine = sqlalchemy.create_engine("mssql+pyodbc://{user}:{password}@{server}:1433/{database}?driver={driver}".format(
                 database=self.db_config["database"],
                 driver=self.db_config["driver"],
                 password=self.db_config["password"],
                 server=self.db_config["server"],
                 user=self.db_config["user"],
             ))
-        if not self.session_factory:
-            self.session_factory = sqlalchemy.orm.sessionmaker(bind=self.engine)
-        return self.session_factory()
+        if not self._session_factory:
+            self._session_factory = sqlalchemy.orm.sessionmaker(bind=self._engine)
+        return self._session_factory()
 
     def get_blob_content(self, blob_key):
-        if not self.block_blob_service:
-            self.block_blob_service = BlockBlobService(account_name='misinformationcrawldata', account_key=self.db_config["blob_storage_key"])
         blob = self.block_blob_service.get_blob_to_bytes(self.blob_container_name, blob_key)
         return blob.content
 
     def add_entry(self, entry):
-        '''Attempt to commit transaction to the database.'''
+        """Attempt to commit transaction to the database."""
         try:
             session = self.open_session()
             session.add(entry)
