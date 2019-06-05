@@ -396,10 +396,9 @@ dallasobserver.com:
   site_name: 'dallasobserver.com'
   start_url: 'https://www.dallasobserver.com/topic/politics-7019564'
   crawl_strategy:
-    method: 'index_page'
-    index_page:
-      url_must_contain: 'user'
-      article_links: '//headline/a'
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/'
   article:
     url_must_contain: '/news/'
     byline:
