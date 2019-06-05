@@ -392,6 +392,32 @@ dailykos.com:
       select_expression: '//div[@class="story-intro story-content"]'
       match_rule: 'single'
 
+dallasobserver.com:
+  site_name: 'dallasobserver.com'
+  start_url: 'https://www.dallasobserver.com/topic/politics-7019564'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'user'
+      article_links: '//headline/a'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="story-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "rel-stories")]'
+        - '//div[contains(@class, "img-box")]'
+        - '//div[contains(@class, "widget")]'
+        - '//div[contains(@class, "article-footer")]'
+        - '//aside[@class="pullquote"]'
+        - '//ul[@class="topics"]'
+
 davidwolfe.com:
   site_name: 'davidwolfe.com'
   start_url: 'https://www.davidwolfe.com/category/news/'
