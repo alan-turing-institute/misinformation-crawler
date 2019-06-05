@@ -614,6 +614,24 @@ huffingtonpost.com:
         - '//figure'
         - '//blockquote'
 
+infostormer.com:
+  site_name: 'infostormer.com'
+  start_url: 'https://infostormer.com'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h3[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-author-name"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
+
 infowars.com:
   site_name: 'infowars.com'
   start_url: 'http://infowars.com/category/us-news/'
