@@ -192,7 +192,7 @@ buffalonews.com:
     byline:
       select_method: 'xpath'
       select_expression: '//span[contains(@class, "post-author")]/text()'
-      match_rule: 'single'
+      match_rule: 'concatenate'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="the-content"]'
