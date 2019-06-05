@@ -318,6 +318,33 @@ conservativehq.com:
       remove_expressions:
         - '//div[contains(@class, "field-field-byline")]'
 
+conservativepapers.com:
+  site_name: 'conservativepapers.com'
+  start_url: 'https://conservativepapers.com'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/\d/'
+  article:
+    url_must_contain: '/news/\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@itemprop="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="site-content"]'
+      match_rule: 'first'
+      remove_expressions:
+        - '//div[@style="display: none"]'
+        - '//div[@class="ratingblock "]'
+        - '//div[@class="yarpp-related"]'
+        - '//div[@class="entry-categories"]'
+        - '//div[@class="comments-area"]'
+        - '//p[contains(text(), "Source material can be found at")]'
+        - '//nav'
+        - '//header'
+
 dailycaller.com:
   site_name: 'dailycaller.com'
   start_url: 'https://dailycaller.com/section/politics'
@@ -1372,6 +1399,29 @@ usatoday.com:
         - '//h1[@class="title"]'
         - '//div[@class="byline-section"]'
         - '//div[@class="footer-publish-date"]'
+
+valleytimes-news.com:
+  site_name: 'valleytimes-news.com'
+  start_url: 'http://www.valleytimes-news.com/category/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/news/'
+      article_links: '//div[contains(@class, "story")]/a'
+  article:
+    url_must_contain: '\d\d\d\d/\d\d/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//div[@id="article"]/h2/text()'
+      match_rule: 'first'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="author"]/strong/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="story_detail"]'
+      match_rule: 'single'
 
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
