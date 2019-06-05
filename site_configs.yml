@@ -91,6 +91,7 @@ alaskastar.com:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "field-name-field-authors")]/div/div/a/text()'
       match_rule: 'single'
+      warn_if_missing: False
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "field-type-text-with-summary")]'
