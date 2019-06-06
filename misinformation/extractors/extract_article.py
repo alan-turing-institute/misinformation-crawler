@@ -67,7 +67,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
             article["title"] = extract_element(response, config["article"]["title"])
         # Extract byline
         with suppress(KeyError):
-            article["byline"] = extract_element(response, config["article"]["byline"])
+            article["byline"] = extract_element(response, config["article"]["byline"], extract_fn=remove_byline_strings)
         # Extract publication_datetime
         with suppress(KeyError):
             datetime_string = extract_element(response, config["article"]["publication_datetime"])
@@ -93,3 +93,24 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
         article["metadata"] = metadata
 
     return article
+
+
+def remove_byline_strings(byline):
+    """ Remove any of the strings below from a byline string"""
+    remove_strings = [  # Remove these if they are part of a byline
+        "By ",
+        "By"
+    ]
+    for remove_string in remove_strings:
+        byline = byline.replace(remove_string, "")
+
+    delete_strings = [  # Remove these if they are the entire byline
+        " and ",
+        " and",
+        "and ",
+        "and"
+    ]
+
+    if byline in delete_strings:
+        return None
+    return byline

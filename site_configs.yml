@@ -1182,7 +1182,7 @@ politico.com:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//p[@class="byline"]/a/text()'
+      select_expression: '//p[@class="byline"]//text()'
       match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
@@ -1190,6 +1190,7 @@ politico.com:
       match_rule: 'single'
       datetime_formats:
         - 'YYYY-MM-DD HH:mm:ss'
+        - 'YYYY-MM-DDTHH:mm'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "story-text")]'
