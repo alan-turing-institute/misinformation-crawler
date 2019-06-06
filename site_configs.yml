@@ -1326,6 +1326,25 @@ scrappleface.com:
       remove_expressions:
         - '//div[contains(@id, "attachment")]'
 
+talkingpointsmemo.com:
+  site_name: 'talkingpointsmemo.com'
+  start_url: 'https://talkingpointsmemo.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="Article__Byline"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="article-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//blockquote[@class="twitter-tweet"]'
+
 texastribune.org:
   site_name: 'texastribune.org'
   start_url: 'https://www.texastribune.org'
