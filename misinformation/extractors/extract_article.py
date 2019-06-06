@@ -96,21 +96,16 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
 
 
 def remove_byline_strings(byline):
-    """ Remove any of the strings below from a byline string"""
-    remove_strings = [  # Remove these if they are part of a byline
-        "By ",
-        "By"
-    ]
-    for remove_string in remove_strings:
-        byline = byline.replace(remove_string, "")
+    """Simplify bylines by removing attribution words and rejecting bylines without authors"""
+    attributions = ["by ", "By "]
+    no_author_in_byline = ["and", "By"]
 
-    delete_strings = [  # Remove these if they are the entire byline
-        " and ",
-        " and",
-        "and ",
-        "and"
-    ]
+    for attribution in attributions:
+        if byline.startswith(attribution):
+            byline = byline.replace(attribution, "")
+    byline = byline.strip()
 
-    if byline in delete_strings:
-        return None
+    for no_author in no_author_in_byline:
+        if byline == no_author:
+            return None
     return byline
