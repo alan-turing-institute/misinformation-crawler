@@ -1223,10 +1223,12 @@ politico.com:
     scattergun:
       url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
   article:
+    url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
     byline:
       select_method: 'xpath'
       select_expression: '//p[@class="byline"]//text()'
       match_rule: 'concatenate'
+      warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time[@itemprop="datePublished"]/@datetime'
