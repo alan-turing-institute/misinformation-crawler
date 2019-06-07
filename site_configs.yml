@@ -1405,21 +1405,17 @@ scrappleface.com:
 
 talkingpointsmemo.com:
   site_name: 'talkingpointsmemo.com'
-  start_url: 'https://talkingpointsmemo.com/'
+  start_url: 'https://talkingpointsmemo.com/news'
   crawl_strategy:
-    # method: 'index_page'
-    # index_page:
-    #   url_must_contain: '/news/page/'
-    #   article_links: '//a[@class="Archive__PostTitle"]'
-    method: 'scattergun'
-    scattergun:
-      url_must_not_contain: '/prime-beta/'  # requires site membership
-      url_must_contain: '/news/'
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/page/'
+      article_links: '//a[@class="Archive__PostTitle"]'
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="Article__Byline"]/a/text()'
-      match_rule: 'single'
+      select_expression: '//div[@class="Article__Byline"]//text()'
+      match_rule: 'concatenate'
     content:
       select_method: 'xpath'
       select_expression: '//div[@id="article-content"]'
