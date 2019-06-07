@@ -1236,7 +1236,7 @@ politico.com:
         - 'YYYY-MM-DDTHH:mm'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "story-text")]'
+      select_expression: '//*[contains(@class, "story-text")]'
       match_rule: 'single'
       remove_expressions:
         - '//div[contains(@class, "story-intro")]'
@@ -1245,6 +1245,7 @@ politico.com:
         - '//div[contains(@class, "shifty-wrapper")]'
         - '//aside'
         - '//p[@class="story-continued"]'
+        - '//amp-ad'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
