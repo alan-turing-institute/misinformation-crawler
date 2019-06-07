@@ -1009,7 +1009,6 @@ nypost.com:
   article:
     byline:
       select_method: 'xpath'
-      # select_expression: '//p[@class="byline"]//text()/translate(., "By ", "")'  # would be nice if this works but not with lxml it seems
       select_expression: '//p[@class="byline"]//text()'
       match_rule: 'last'
     content:
