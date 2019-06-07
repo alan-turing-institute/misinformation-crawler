@@ -1575,6 +1575,35 @@ valleytimes-news.com:
       select_expression: '//div[@class="story_detail"]'
       match_rule: 'single'
 
+vanityfair.com:
+  site_name: 'vanityfair.com'
+  start_url: 'https://www.vanityfair.com/news/politics'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/\d\d\d\d/\d\d/'
+  article:
+    url_must_contain: '\d\d\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="pubdate"]/@content'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DDTHH:mm:ss'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "article-main")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//header'
+        - '//figure'
+        - '//div[contains(@class, "mvt-variant")]'
+        - '//div[contains(@class, "component-content-footer")]'
+
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
   start_url: 'https://www.veteransnewsreport.com/category/government-and-politics/'
