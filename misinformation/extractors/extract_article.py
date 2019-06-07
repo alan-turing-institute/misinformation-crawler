@@ -67,7 +67,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
             article["title"] = extract_element(response, config["article"]["title"])
         # Extract byline
         with suppress(KeyError):
-            article["byline"] = extract_element(response, config["article"]["byline"])
+            article["byline"] = extract_element(response, config["article"]["byline"], postprocessing_fn=remove_byline_strings)
         # Extract publication_datetime
         with suppress(KeyError):
             datetime_string = extract_element(response, config["article"]["publication_datetime"])
@@ -93,3 +93,19 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
         article["metadata"] = metadata
 
     return article
+
+
+def remove_byline_strings(byline):
+    """Simplify bylines by removing attribution words and rejecting bylines without authors"""
+    attributions = ["by ", "By "]
+    no_author_in_byline = ["and", "By"]
+
+    for attribution in attributions:
+        if byline.startswith(attribution):
+            byline = byline.replace(attribution, "")
+    byline = byline.strip()
+
+    for no_author in no_author_in_byline:
+        if byline == no_author:
+            return None
+    return byline

@@ -33,7 +33,7 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
     return output_selectors
 
 
-def extract_element(response, extract_spec):
+def extract_element(response, extract_spec, postprocessing_fn=None):
     # Extract selector specification
     method = extract_spec['select_method']
     select_expression = extract_spec['select_expression']
@@ -55,6 +55,9 @@ def extract_element(response, extract_spec):
         # Stringify elements then strip leading and trailing whitespace
         elements = elements.extract()
         elements = [item.strip() for item in elements]
+        # Additional processing for each element, if required
+        if postprocessing_fn:
+            elements = [elem for elem in map(postprocessing_fn, elements) if elem]
         # If no elements are found then return None and log a warning.
         num_matches = len(elements)
         if num_matches == 0:
