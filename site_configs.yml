@@ -77,6 +77,29 @@ addictinginfo.com:
       remove_expressions:
         - '//div[contains(@class, "ad-inserter")]'
 
+alaskastar.com:
+  site_name: 'alaskastar.com'
+  start_url: 'http://alaskastar.com/top-stories'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'top-stories\?page='
+      article_links: '//h2/a'
+  article:
+    url_must_contain: '/\d\d\d\d-\d\d-\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "field-name-field-authors")]/div/div/a/text()'
+      match_rule: 'single'
+      warn_if_missing: False
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "field-type-text-with-summary")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//em[contains(text(), "RELATED: ")]'
+        - '//em[contains(text(), "RELATAED: ")]' # Also remove this incorrect spelling seen in test article-1
+
 aljazeera.com:
   site_name: 'aljazeera.com'
   start_url: 'https://www.aljazeera.com/sitemap.xml'
@@ -179,6 +202,26 @@ breitbart.com:
       select_method: 'xpath'
       select_expression: '//div[@class="entry-content"]'
       match_rule: 'single'
+
+buffalonews.com:
+  site_name: 'buffalonews.com'
+  start_url: 'https://buffalonews.com/section/local-news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/local-news/page/'
+      article_links: '//div[@class="headline"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[contains(@class, "post-author")]/text()'
+      match_rule: 'concatenate'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="the-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//blockquote[@class="wp-embedded-content"]'
 
 cap-news.com:
   site_name: 'cap-news.com'
@@ -392,6 +435,53 @@ dailykos.com:
       select_expression: '//div[@class="story-intro story-content"]'
       match_rule: 'single'
 
+dallasobserver.com:
+  site_name: 'dallasobserver.com'
+  start_url: 'https://www.dallasobserver.com/topic/politics-7019564'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="story-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "rel-stories")]'
+        - '//div[contains(@class, "img-box")]'
+        - '//div[contains(@class, "widget")]'
+        - '//div[contains(@class, "article-footer")]'
+        - '//aside[@class="pullquote"]'
+        - '//ul[@class="topics"]'
+
+darkmoon.me:
+  site_name: 'darkmoon.me'
+  start_url: 'https://www.darkmoon.me'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h2[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "ssba-classic-2")]'
+        - '//iframe'
+        - '//span[contains(text(), "VIDEO")]'
+
 davidwolfe.com:
   site_name: 'davidwolfe.com'
   start_url: 'https://www.davidwolfe.com/category/news/'
@@ -437,6 +527,32 @@ disclose.tv:
       remove_expressions:
         - '//div[@class="read-next"]'
         - '//figure[@id="video-preview"]'
+
+drrichswier.com:
+  site_name: 'drrichswier.com'
+  start_url: 'https://drrichswier.com/category/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h2[@itemprop="headline"]/a'
+  article:
+    url_must_contain: '\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="vcard author"]/span/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@itemprop="datePublished"]/@datetime'
+      match-rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//a[@data-saferedirecturl]'
+        - '//strong[contains(text(), "RELATED ARTICLES:")]'
 
 empirenews.net:
   site_name: 'empirenews.net'
@@ -517,6 +633,24 @@ foxnews.com:
       remove_expressions:
         - '//div[contains(@class, "video-ct")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
+
+gatesofvienna.net:
+  site_name: 'gatesofvienna.net'
+  start_url: 'https://gatesofvienna.net/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h1[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
@@ -613,6 +747,24 @@ huffingtonpost.com:
         - '//div[contains(@class, "advertisement-holder")]'
         - '//figure'
         - '//blockquote'
+
+infostormer.com:
+  site_name: 'infostormer.com'
+  start_url: 'https://infostormer.com'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h3[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-author-name"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="td-post-content"]'
+      match_rule: 'single'
 
 infowars.com:
   site_name: 'infowars.com'
@@ -1088,6 +1240,40 @@ pbs.org:
         - '//aside'
         - '//h3'
 
+politico.com:
+  site_name: 'politico.com'
+  start_url: 'https://www.politico.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
+  article:
+    url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="byline"]//text()'
+      match_rule: 'concatenate'
+      warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DD HH:mm:ss'
+        - 'YYYY-MM-DDTHH:mm'
+    content:
+      select_method: 'xpath'
+      select_expression: '//*[contains(@class, "story-text")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "story-intro")]'
+        - '//div[contains(@class, "story-share")]'
+        - '//div[contains(@class, "story-supplement")]'
+        - '//div[contains(@class, "shifty-wrapper")]'
+        - '//aside'
+        - '//p[@class="story-continued"]'
+        - '//amp-ad'
+
 prisonplanet.com:
   site_name: 'prisonplanet.com'
   start_url: 'http://prisonplanet.com/section/featured-stories/'
@@ -1266,6 +1452,24 @@ texastribune.org:
         - '//span[contains(@class, "full_story")]'
         - '//p[contains(@class, "full_story")]'
         - '//aside[contains(@class, "plugin")]'
+
+thedailysheeple.com:
+  site_name: 'thedailysheeple.com'
+  start_url: 'https://www.thedailysheeple.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//div[contains(@class, "mvp-main-blog-out relative")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[contains(@class, "author-name")]/a[@rel="author"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "theiaPostSlider_preloadedSlide")]'
+      match_rule: 'single'
 
 thehill.com:
   site_name: 'thehill.com'
@@ -1471,6 +1675,34 @@ vox.com:
       select_method: 'xpath'
       select_expression: '//div[@class="c-entry-content"]'
       match_rule: 'single'
+
+washingtontimes.com:
+  site_name: 'washingtontimes.com'
+  start_url: 'https://www.washingtontimes.com/news/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/\?page='
+      article_links: '//h2[@class="article-headline"]/a'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="Author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="source"]/text()'
+      match_rule: 'last'
+      datetime_formats:
+        - 'dddd, MMMM DD, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="storyareawrapper"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="permission"]'
+        - '//div[h4[contains(text(), "The Washington Times Comment Policy")]]'
 
 weeklyworldnews.com:
   site_name: 'weeklyworldnews.com'
