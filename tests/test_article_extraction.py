@@ -799,6 +799,6 @@ def test_extract_datetime_byline_mmddyy_with_mdyy_format():
     assert iso_string == expected_iso_string
 
 
-@pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None)])
+@pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None), ("Toby Man / AP News", "Toby Man"), ("Ben Man (BBC)", "Ben Man")])
 def test_remove_byline_strings(byline, expected):
     assert remove_byline_strings(byline) == expected

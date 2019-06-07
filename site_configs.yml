@@ -966,7 +966,7 @@ missoulacurrent.com:
     url_must_contain: '/government/'
     byline:
       select_method: 'xpath'
-      select_expression: 'substring-before(//h3/span[@class="red"]/text(), " (MTN News)")'
+      select_expression: '//h3/span[@class="red"]/text()'
       match_rule: 'single'
     content:
       select_method: 'xpath'
