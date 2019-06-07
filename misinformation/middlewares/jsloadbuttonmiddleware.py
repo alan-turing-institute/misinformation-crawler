@@ -28,6 +28,7 @@ class JSLoadButtonMiddleware:
             '//input[contains(@class, "agree")]',
             '//button[@name="agree"]',
             '//button[@class="qc-cmp-button"]',
+            '//button[@class="btn-more"]',
             '//button[text()="Show More"]',
             '//button[text()="Load More"]',
             '//button[contains(@class, "show-more")]',

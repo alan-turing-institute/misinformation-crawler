@@ -998,6 +998,26 @@ nationalreview.com:
         - '//aside[contains(@class, "inline-stories")]'
         - '//footer[contains(@class, "inline-author")]'
 
+nypost.com:
+  site_name: 'nypost.com'
+  start_url: 'https://nypost.com/news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/page/'
+      article_links: '//h3[contains(@class, "entry-heading")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="byline"]//text()'
+      match_rule: 'last'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "sharedaddy")]'
+
 multichannel.com:
   site_name: 'multichannel.com'
   start_url: 'https://www.multichannel.com/news/policy'
@@ -1628,6 +1648,35 @@ valleytimes-news.com:
       select_method: 'xpath'
       select_expression: '//div[@class="story_detail"]'
       match_rule: 'single'
+
+vanityfair.com:
+  site_name: 'vanityfair.com'
+  start_url: 'https://www.vanityfair.com/news/politics'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/\d\d\d\d/\d\d/'
+  article:
+    url_must_contain: '\d\d\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="pubdate"]/@content'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DDTHH:mm:ss'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "article-main")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//header'
+        - '//figure'
+        - '//div[contains(@class, "mvt-variant")]'
+        - '//div[contains(@class, "component-content-footer")]'
 
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
