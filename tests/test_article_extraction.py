@@ -6,7 +6,7 @@ import pkg_resources
 import pytest
 import yaml
 from scrapy.http import Request, TextResponse
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string, remove_byline_strings
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
 UNIT_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "unit_test_data")
@@ -797,3 +797,8 @@ def test_extract_datetime_byline_mmddyy_with_mdyy_format():
     expected_iso_string = '2018-12-17T00:00:00'
 
     assert iso_string == expected_iso_string
+
+
+@pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None)])
+def test_remove_byline_strings(byline, expected):
+    assert remove_byline_strings(byline) == expected

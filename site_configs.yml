@@ -461,6 +461,31 @@ dailykos.com:
       select_expression: '//div[@class="story-intro story-content"]'
       match_rule: 'single'
 
+dallasobserver.com:
+  site_name: 'dallasobserver.com'
+  start_url: 'https://www.dallasobserver.com/topic/politics-7019564'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="story-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "rel-stories")]'
+        - '//div[contains(@class, "img-box")]'
+        - '//div[contains(@class, "widget")]'
+        - '//div[contains(@class, "article-footer")]'
+        - '//aside[@class="pullquote"]'
+        - '//ul[@class="topics"]'
+
 darkmoon.me:
   site_name: 'darkmoon.me'
   start_url: 'https://www.darkmoon.me'
@@ -634,6 +659,24 @@ foxnews.com:
       remove_expressions:
         - '//div[contains(@class, "video-ct")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
+
+gatesofvienna.net:
+  site_name: 'gatesofvienna.net'
+  start_url: 'https://gatesofvienna.net/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h1[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author vcard"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
 
 gellerreport.com:
   site_name: 'gellerreport.com'
@@ -1197,6 +1240,40 @@ pbs.org:
       remove_expressions:
         - '//aside'
         - '//h3'
+
+politico.com:
+  site_name: 'politico.com'
+  start_url: 'https://www.politico.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
+  article:
+    url_must_contain: '/story/\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="byline"]//text()'
+      match_rule: 'concatenate'
+      warn_if_missing: false
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DD HH:mm:ss'
+        - 'YYYY-MM-DDTHH:mm'
+    content:
+      select_method: 'xpath'
+      select_expression: '//*[contains(@class, "story-text")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "story-intro")]'
+        - '//div[contains(@class, "story-share")]'
+        - '//div[contains(@class, "story-supplement")]'
+        - '//div[contains(@class, "shifty-wrapper")]'
+        - '//aside'
+        - '//p[@class="story-continued"]'
+        - '//amp-ad'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
