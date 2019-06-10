@@ -97,10 +97,10 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
 
 def simplify_extracted_byline(byline):
     """Simplify bylines by removing attribution words, rejecting bylines without authors and removing
-    anything bracketed at the end of the byline or after a forward slash (usually a site name)"""
+    anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
     attributions = ["by ", "By "]
     no_author_here = ["and", "By"]
-    remove_after = ["/", "("]
+    remove_after = ["/", "(", "|"]
 
     for attribution in attributions:
         if byline.startswith(attribution):
