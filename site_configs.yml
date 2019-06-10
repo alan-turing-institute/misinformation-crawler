@@ -397,7 +397,7 @@ dailycaller.com:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/'
     byline:
       select_method: 'xpath'
-      select_expression: 'substring-before(//div[@class="author"]/text(), "|")'
+      select_expression: '//div[@class="author"]/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
