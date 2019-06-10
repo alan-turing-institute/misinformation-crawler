@@ -99,7 +99,7 @@ def remove_byline_strings(byline):
     """Simplify bylines by removing attribution words, rejecting bylines without authors and removing
     anything bracketed at the end of the byline or after a forward slash (usually a site name)"""
     attributions = ["by ", "By "]
-    no_author_in_byline = ["and", "By"]
+    no_author_here = ["and", "By"]
     remove_after = ["/", "("]
 
     for attribution in attributions:
@@ -109,6 +109,6 @@ def remove_byline_strings(byline):
         byline = byline.split(remove_string)[0]
     byline = byline.strip()
 
-    if byline in no_author_in_byline:
+    if byline in no_author_here:
         return None
     return byline
