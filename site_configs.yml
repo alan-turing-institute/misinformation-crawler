@@ -402,13 +402,13 @@ dailycaller.com:
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time/text()'
-      match_rule: 'single'
+      match_rule: 'first'
       datetime_formats:
         - 'h:m A MM/DD/YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//article[contains(@class, "section-politics")]/div[contains(@id, "ob-read-more-selector")]'
-      match_rule: 'single'
+      select_expression: '//div[contains(@id, "ob-read-more-selector")]'
+      match_rule: 'first'
 
 dailykos.com:
   site_name: 'dailykos.com'
