@@ -3,6 +3,7 @@ import datetime
 import json
 import logging
 import os
+from collections import Counter
 from contextlib import suppress
 from dateutil import parser
 from termcolor import colored
@@ -33,8 +34,11 @@ class WarcParser(Connector):
         super().__init__()
         self.content_digests = content_digests
         self.node_indexes = node_indexes
+        self.counts = Counter(pages=0, skipped=0, articles=0, warcentries=0,
+                              no_date=0, no_byline=0, no_title=0)
 
     def process_webpages(self, site_name, config, max_articles=-1, use_local=False):
+        '''Process webpages from a single site'''
         start_time = datetime.datetime.utcnow()
         logging.info("Loading pages for %s...", colored(site_name, "green"))
 
@@ -43,7 +47,7 @@ class WarcParser(Connector):
             warcfile_entries = read_local_files(site_name)
         else:
             warcfile_entries = self.read_entries(Webpage, site_name=site_name)
-        n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
+        self.counts["warcentries"] = len(warcfile_entries)
 
         # Load existing articles
         try:
@@ -53,13 +57,13 @@ class WarcParser(Connector):
             article_urls = []
         duration = datetime.datetime.utcnow() - start_time
         logging.info("Loaded %s pages in %s",
-                     colored(n_warcentries, "blue"),
+                     colored(self.counts["warcentries"], "blue"),
                      colored(duration, "blue"),
                      )
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Stop if we've reached the processing limit
-            if n_articles >= max_articles > 0:
+            if self.counts["articles"] >= max_articles > 0:
                 logging.info("Reached article processing limit: %s", max_articles)
                 break
 
@@ -68,12 +72,12 @@ class WarcParser(Connector):
                 logging.info("Article already extracted, skipping: %s",
                              colored(entry.article_url, "green"),
                              )
-                n_skipped += 1
+                self.counts["skipped"] += 1
                 continue
 
             # Start article processing
             logging.info("Searching for an article at: %s", colored(entry.article_url, "green"))
-            n_pages += 1
+            self.counts["pages"] += 1
 
             # Load WARC data
             if use_local:  # ... from local file
@@ -89,31 +93,69 @@ class WarcParser(Connector):
             with suppress(KeyError):
                 article["metadata"] = json.dumps(article["metadata"])
 
+            # Check for missing fields
+            if not article["publication_datetime"]:
+                self.counts["no_date"] += 1
+            if not article["byline"]:
+                self.counts["no_byline"] += 1
+            if not article["title"]:
+                self.counts["no_title"] += 1
+
             # Add article to database unless we're running locally
             if article["content"]:
                 if not use_local:
                     self.add_to_database(article)
-                n_articles += 1
-            logging.info("Finished processing %s/%s: %s", idx, n_warcentries, entry.article_url)
+                self.counts["articles"] += 1
+            logging.info("Finished processing %s/%s: %s", idx, self.counts["warcentries"], entry.article_url)
 
         # Print statistics
         duration = datetime.datetime.utcnow() - start_time
-        processing_rate = float(n_pages / duration.seconds) if duration.seconds > 0 else 0
+        self.summarise(duration)
+
+    def summarise(self, duration):
+        '''Print summary statistics about this run'''
+        # Processing rate
+        processing_rate = float(self.counts["pages"] / duration.seconds) if duration.seconds > 0 else 0
         logging.info("Processed %s pages in %s => %s",
-                     colored(n_pages, "blue"),
+                     colored(self.counts["pages"], "blue"),
                      colored(duration, "blue"),
                      colored("{:.2f} Hz".format(processing_rate), "green"),
                      )
-        hit_percentage = float(100 * n_articles / n_pages) if n_pages > 0 else 0
+        # Article extraction percentage
+        hit_percentage = float(100 * self.counts["articles"] / self.counts["pages"]) if self.counts["pages"] > 0 else 0
         logging.info("Found articles in %s/%s pages => %s",
-                     colored(n_articles, "blue"),
-                     colored(n_pages, "blue"),
+                     colored(self.counts["articles"], "blue"),
+                     colored(self.counts["pages"], "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
-        hit_percentage = float(100 * (n_articles + n_skipped) / (n_pages + n_skipped)) if (n_pages + n_skipped) > 0 else 0
+        # Date extraction failures
+        hit_percentage = float(100 * self.counts["no_date"] / self.counts["articles"]) if self.counts["articles"] > 0 else 0
+        logging.info("... of these %s/%s had no date => %s",
+                     colored(self.counts["no_date"], "blue"),
+                     colored(self.counts["articles"], "blue"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
+                     )
+        # Byline extraction failures
+        hit_percentage = float(100 * self.counts["no_byline"] / self.counts["articles"]) if self.counts["articles"] > 0 else 0
+        logging.info("... of these %s/%s had no byline => %s",
+                     colored(self.counts["no_byline"], "blue"),
+                     colored(self.counts["articles"], "blue"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
+                     )
+        # Title extraction failures
+        hit_percentage = float(100 * self.counts["no_title"] / self.counts["articles"]) if self.counts["articles"] > 0 else 0
+        logging.info("... of these %s/%s had no title => %s",
+                     colored(self.counts["no_title"], "blue"),
+                     colored(self.counts["articles"], "blue"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
+                     )
+        # Overall article extraction percentage
+        n_articles = self.counts["articles"] + self.counts["skipped"]
+        n_pages = self.counts["pages"] + self.counts["skipped"]
+        hit_percentage = float(100 * n_articles / n_pages) if n_pages > 0 else 0
         logging.info("Including skipped pages, there are articles in %s/%s pages => %s",
-                     colored(n_articles + n_skipped, "blue"),
-                     colored(n_pages + n_skipped, "blue"),
+                     colored(n_articles, "blue"),
+                     colored(n_pages, "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
 

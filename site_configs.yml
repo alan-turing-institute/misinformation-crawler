@@ -422,18 +422,18 @@ dailycaller.com:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/'
     byline:
       select_method: 'xpath'
-      select_expression: 'substring-before(//div[@class="author"]/text(), "|")'
+      select_expression: '//div[@class="author"]/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time/text()'
-      match_rule: 'single'
+      match_rule: 'first'
       datetime_formats:
         - 'h:m A MM/DD/YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//article[contains(@class, "section-politics")]/div[contains(@id, "ob-read-more-selector")]'
-      match_rule: 'single'
+      select_expression: '//div[contains(@id, "ob-read-more-selector")]'
+      match_rule: 'first'
 
 dailykos.com:
   site_name: 'dailykos.com'
@@ -978,6 +978,31 @@ mic.com:
       match_rule: 'single'
       remove_expressions:
         - '//figure[@class="embed"]'
+
+missoulacurrent.com:
+  site_name: 'missoulacurrent.com'
+  start_url: 'https://missoulacurrent.com/category/government/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/government/page/'
+      article_links: '//a[@class="entry-title-link"]'
+  article:
+    url_must_contain: '/government/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//h3/span[@class="red"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "pdfprnt-buttons")]'
+        - '//div[contains(@class, "fluid-width-video-wrapper")]'
+        - '//div[contains(@class, "misso-middle-content")]'
+        - '//div[contains(@class, "misso-in-story-2")]'
+        - '//div[contains(@class, "essb_links")]'
 
 motherjones.com:
   site_name: 'motherjones.com'
