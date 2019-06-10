@@ -343,7 +343,7 @@ columbian.com:
     url_must_contain: '/news/'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@itemprop="author"]//a[@itemprop="name"]/text() | //span[@itemprop="author"]/text() | (//div[@class="col-sm-7"]/p)[1]//text()'
+      select_expression: '//node()[@itemprop="author"]//text() | (//div[@class="col-sm-7"]/p)[1]//text()'
       match_rule: 'first'
     publication_datetime:
       select_method: 'xpath'
