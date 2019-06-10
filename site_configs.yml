@@ -1454,10 +1454,11 @@ nypost.com:
 npr.org:
   site_name: 'npr.org'
   start_url: 'https://www.npr.org/sections/politics/'
+  # obey_robots_txt: false
   crawl_strategy:
     method: 'scattergun'
-    scattergun:
-      url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+    # scattergun:
+      # url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
   article:
     byline:
       select_method: 'xpath'
