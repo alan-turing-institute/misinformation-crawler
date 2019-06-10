@@ -1461,6 +1461,12 @@ talkingpointsmemo.com:
       select_method: 'xpath'
       select_expression: '//div[@class="Article__Byline"]//text()'
       match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="Article__Date"]//text()'
+      match_rule: 'single'
+      datetime_formats:
+        - 'MMMM D, YYYY H:mm A'
     content:
       select_method: 'xpath'
       select_expression: '//div[@id="article-content"]'
