@@ -106,10 +106,9 @@ def remove_byline_strings(byline):
         if byline.startswith(attribution):
             byline = byline.replace(attribution, "")
     for remove_string in remove_after:
-        byline = byline.split(remove_string, 1)[0]
+        byline = byline.split(remove_string)[0]
     byline = byline.strip()
 
-    for no_author in no_author_in_byline:
-        if byline == no_author:
-            return None
+    if byline in no_author_in_byline:
+        return None
     return byline
