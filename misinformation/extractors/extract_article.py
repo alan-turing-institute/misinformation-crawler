@@ -100,14 +100,13 @@ def remove_byline_strings(byline):
     anything bracketed at the end of the byline or after a forward slash (usually a site name)"""
     attributions = ["by ", "By "]
     no_author_in_byline = ["and", "By"]
-    punctuation = ["/", "("]
+    remove_after = ["/", "("]
 
     for attribution in attributions:
         if byline.startswith(attribution):
             byline = byline.replace(attribution, "")
-    for p in punctuation:
-        if p in byline:
-            byline = byline.split(p, 1)[0]
+    for remove_string in remove_after:
+        byline = byline.split(remove_string, 1)[0]
     byline = byline.strip()
 
     for no_author in no_author_in_byline:
