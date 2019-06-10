@@ -3,6 +3,7 @@ import datetime
 import json
 import logging
 import os
+from collections import Counter
 from contextlib import suppress
 from dateutil import parser
 from termcolor import colored
@@ -43,7 +44,9 @@ class WarcParser(Connector):
             warcfile_entries = read_local_files(site_name)
         else:
             warcfile_entries = self.read_entries(Webpage, site_name=site_name)
-        n_pages, n_skipped, n_articles, n_warcentries = 0, 0, 0, len(warcfile_entries)
+        counts = Counter(pages=0, skipped=0, articles=0,
+                         no_date=0, no_byline=0, no_title=0,
+                         warcentries=len(warcfile_entries))
 
         # Load existing articles
         try:
@@ -53,13 +56,13 @@ class WarcParser(Connector):
             article_urls = []
         duration = datetime.datetime.utcnow() - start_time
         logging.info("Loaded %s pages in %s",
-                     colored(n_warcentries, "blue"),
+                     colored(counts["warcentries"], "blue"),
                      colored(duration, "blue"),
                      )
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Stop if we've reached the processing limit
-            if n_articles >= max_articles > 0:
+            if counts["articles"] >= max_articles > 0:
                 logging.info("Reached article processing limit: %s", max_articles)
                 break
 
@@ -68,12 +71,12 @@ class WarcParser(Connector):
                 logging.info("Article already extracted, skipping: %s",
                              colored(entry.article_url, "green"),
                              )
-                n_skipped += 1
+                counts["skipped"] += 1
                 continue
 
             # Start article processing
             logging.info("Searching for an article at: %s", colored(entry.article_url, "green"))
-            n_pages += 1
+            counts["pages"] += 1
 
             # Load WARC data
             if use_local:  # ... from local file
@@ -89,31 +92,63 @@ class WarcParser(Connector):
             with suppress(KeyError):
                 article["metadata"] = json.dumps(article["metadata"])
 
+            # Check for missing fields
+            if not article["publication_datetime"]:
+                counts["no_date"] += 1
+            if not article["byline"]:
+                counts["no_byline"] += 1
+            if not article["title"]:
+                counts["no_title"] += 1
+
             # Add article to database unless we're running locally
             if article["content"]:
                 if not use_local:
                     self.add_to_database(article)
-                n_articles += 1
-            logging.info("Finished processing %s/%s: %s", idx, n_warcentries, entry.article_url)
+                counts["articles"] += 1
+            logging.info("Finished processing %s/%s: %s", idx, counts["warcentries"], entry.article_url)
 
         # Print statistics
         duration = datetime.datetime.utcnow() - start_time
-        processing_rate = float(n_pages / duration.seconds) if duration.seconds > 0 else 0
+        # processing rate
+        processing_rate = float(counts["pages"] / duration.seconds) if duration.seconds > 0 else 0
         logging.info("Processed %s pages in %s => %s",
-                     colored(n_pages, "blue"),
+                     colored(counts["pages"], "blue"),
                      colored(duration, "blue"),
                      colored("{:.2f} Hz".format(processing_rate), "green"),
                      )
-        hit_percentage = float(100 * n_articles / n_pages) if n_pages > 0 else 0
+        # article extraction percentage
+        hit_percentage = float(100 * counts["articles"] / counts["pages"]) if counts["pages"] > 0 else 0
         logging.info("Found articles in %s/%s pages => %s",
-                     colored(n_articles, "blue"),
-                     colored(n_pages, "blue"),
+                     colored(counts["articles"], "blue"),
+                     colored(counts["pages"], "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
-        hit_percentage = float(100 * (n_articles + n_skipped) / (n_pages + n_skipped)) if (n_pages + n_skipped) > 0 else 0
+        # date extraction failures
+        hit_percentage = float(100 * counts["no_date"] / counts["articles"]) if counts["articles"] > 0 else 0
+        logging.info("... of these %s/%s had no date => %s",
+                     colored(counts["no_date"], "blue"),
+                     colored(counts["articles"], "blue"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
+                     )
+        # byline extraction failures
+        hit_percentage = float(100 * counts["no_byline"] / counts["articles"]) if counts["articles"] > 0 else 0
+        logging.info("... of these %s/%s had no byline => %s",
+                     colored(counts["no_byline"], "blue"),
+                     colored(counts["articles"], "blue"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
+                     )
+        # title extraction failures
+        hit_percentage = float(100 * counts["no_title"] / counts["articles"]) if counts["articles"] > 0 else 0
+        logging.info("... of these %s/%s had no title => %s",
+                     colored(counts["no_title"], "blue"),
+                     colored(counts["articles"], "blue"),
+                     colored("{:.2f}%".format(hit_percentage), "green"),
+                     )
+        # overall article extraction percentage
+        hit_percentage = float(100 * (counts["articles"] + counts["skipped"]) / (counts["pages"] + counts["skipped"])) if (counts["pages"] + counts["skipped"]) > 0 else 0
         logging.info("Including skipped pages, there are articles in %s/%s pages => %s",
-                     colored(n_articles + n_skipped, "blue"),
-                     colored(n_pages + n_skipped, "blue"),
+                     colored(counts["articles"] + counts["skipped"], "blue"),
+                     colored(counts["pages"] + counts["skipped"], "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
 
