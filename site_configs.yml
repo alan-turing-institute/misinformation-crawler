@@ -178,6 +178,24 @@ austinchronicle.com:
         - '//div[@class="story-image"]'
         - '//div[@class="caption"]'
 
+apnews.com:
+  site_name: 'apnews.com'
+  start_url: 'https://apnews.com/apf-usnews'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/([A-Za-z0-9])\w{31}'
+      url_must_not_contain: '/gallery/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="byline"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="Article"]'
+      match_rule: 'single'
+
 barenakedislam.com:
   site_name: 'barenakedislam.com'
   start_url: 'https://barenakedislam.com'
