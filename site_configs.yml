@@ -1448,6 +1448,32 @@ scrappleface.com:
       remove_expressions:
         - '//div[contains(@id, "attachment")]'
 
+talkingpointsmemo.com:
+  site_name: 'talkingpointsmemo.com'
+  start_url: 'https://talkingpointsmemo.com/news'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/page/'
+      article_links: '//a[@class="Archive__PostTitle"]'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="Article__Byline"]//text()'
+      match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="Article__Date"]//text()'
+      match_rule: 'single'
+      datetime_formats:
+        - 'MMMM D, YYYY H:mm A'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="article-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//blockquote[@class="twitter-tweet"]'
+
 texastribune.org:
   site_name: 'texastribune.org'
   start_url: 'https://www.texastribune.org'
