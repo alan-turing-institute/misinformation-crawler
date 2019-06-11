@@ -835,6 +835,40 @@ judicialwatch.org:
       select_expression: '//div[@class="entrycontent"]'
       match_rule: 'single'
 
+kansascity.com:
+  site_name: 'kansascity.com'
+  start_url: 'https://www.kansascity.com/news/politics-government/'
+  obey_robots_txt: false
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/politics-government/'
+  article:
+    url_must_contain: '/news/politics-government/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[@class="byline"]/a/text()'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@id="publish_date"]/text()'
+      match_rule: 'first'
+      datetime_formats:
+        - 'MMMM DD, YYYY HH:mm A'
+    content:
+      select_method: 'xpath'
+      select_expression: '//article[@class="story-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//header'
+        - '//figcaption'
+        - '//div[@class="lead-item"]'
+        - '//div[contains(@class, "ad-widget")]'
+        - '//div[contains(@class, "related-stories")]'
+        - '//div[contains(@class, "story-module")]'
+        - '//div[@id="zerg-target"]'
+        - '//div[@id="commenting-container"]'
+
 ladylibertysnews.com:
   site_name: 'ladylibertysnews.com'
   start_url: 'http://ladylibertysnews.com/category/news/'
