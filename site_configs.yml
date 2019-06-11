@@ -182,10 +182,9 @@ apnews.com:
   site_name: 'apnews.com'
   start_url: 'https://apnews.com/apf-usnews'
   crawl_strategy:
-    method: 'scattergun'
-    scattergun:
-      url_must_contain: '/([A-Za-z0-9])\w{31}'
-      url_must_not_contain: '/gallery/'
+    method: 'index_page'
+    index_page:
+      article_links: '//a[@class="headline"]'
   article:
     byline:
       select_method: 'xpath'
