@@ -856,6 +856,27 @@ islamicanews.com:
         - '//div[contains(@id, "relatedposts")]'
         - '//div[@class="shorten_url"]'
 
+jihadwatch.org:
+  site_name: 'jihadwatch.org'
+  start_url: 'https://www.jihadwatch.org'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h2[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-author-name"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//p[contains(text(), "___________________________________")]'
+        - '//div[contains(@class, "sharedaddy")]'
+
 judicialwatch.org:
   site_name: 'judicialwatch.org'
   start_url:
@@ -1426,6 +1447,29 @@ redstatewatcher.com:
         - '//div[@class=""]'
         - '//p[contains(text(), "Submitted by")]'
         - '//p[@class="text-muted"]'
+
+reuters.com:
+  site_name: 'reuters.com'
+  start_url: 'https://www.reuters.com/news/archive/politicsNews'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/archive/politicsNews'
+      article_links: '//div[@class="story-content"]/a'
+  article:
+    url_must_contain: '/article/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:article:author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="StandardArticleBody_body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="Image_container"]'
+        - '//div[@class="Attribution_attribution"]'
+        - '//div[@class="StandardArticleBody_trustBadgeContainer"]'
 
 rt.com:
   site_name: 'rt.com'
