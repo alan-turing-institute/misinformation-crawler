@@ -68,7 +68,7 @@ abqjournal.com:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: 'substring-before(//meta[@name="author"]/@content, " | Associated Press")'
+      select_expression: '//meta[@name="author"]/@content'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
