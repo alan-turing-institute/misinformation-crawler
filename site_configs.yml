@@ -85,8 +85,6 @@ abqjournal.com:
         - '//div[contains(@id, "story-ad-0-skip-target")]'
         - '//div[contains(@id, "author-contact-bottom")]'
         - '//p[contains(@id, "g-trickster")]'
-        - '//p[text()="___"]'
-        - '//p[contains(text(), "can be reached at")]'
         - '//p[@class="wp-caption-text"]'
 
 addictinginfo.com:
