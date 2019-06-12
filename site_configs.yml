@@ -341,6 +341,7 @@ columbian.com:
       article_links: '//h3/a'
   article:
     url_must_contain: '/news/'
+    url_must_not_contain: 'public-meetings-for-week'  # These are not articles
     byline:
       select_method: 'xpath'
       select_expression: '//node()[@itemprop="author"]//text() | (//div[@class="col-sm-7"]/p)[1]//text()'
