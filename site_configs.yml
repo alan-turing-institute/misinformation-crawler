@@ -1381,12 +1381,12 @@ redstatewatcher.com:
 
 reuters.com:
   site_name: 'reuters.com'
-  start_url: 'https://www.reuters.com/politics'
+  start_url: 'https://www.reuters.com/news/archive/politicsNews'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/article/'
-      article_links: '//h2[contains(@class, "FeedItemHeadline_headline")]/a'
+      url_must_contain: '/news/archive/politicsNews'
+      article_links: '//div[@class="story-content"]/a'
   article:
     url_must_contain: '/article/'
     byline:
