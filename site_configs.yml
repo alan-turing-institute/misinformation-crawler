@@ -166,14 +166,16 @@ austinchronicle.com:
       select_expression: '//h4[@class="byline"]//text()'
       match_rule: 'last'
       datetime_formats:
-        - 'hh:mmA, ddd. MMM. DD, YYYY'
-        - 'ddd., MMM DD, YYYY'
+        - 'h:mmA, ddd. MMM. DD, YYYY'
+        - 'h:mmA, ddd. MMM DD, YYYY'
+        - 'ddd., MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//article/div[@class="copy"]'
       match_rule: 'single'
       remove_expressions:
         - '//div[@class="story-image"]'
+        - '//div[@class="caption"]'
 
 barenakedislam.com:
   site_name: 'barenakedislam.com'
