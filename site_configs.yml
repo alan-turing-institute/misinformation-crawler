@@ -72,8 +72,8 @@ abqjournal.com:
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//div[@class="published"]/text()'
-      match_rule: 'single'
+      select_expression: '//header[@class="entry-title"]/section[@class="entry-meta"]/h6//text()'
+      match_rule: 'last'
       datetime_formats:
         - 'dddd, MMMM Do, YYYY [at] h:mmA'
     content:
@@ -81,11 +81,13 @@ abqjournal.com:
       select_expression: '//div[@class="entry"]'
       match_rule: 'single'
       remove_expressions:
-        - '//p[contains(@id, "g-trickster")]'
         - '//div[contains(@class, "advertisement")]'
         - '//div[contains(@id, "story-ad-0-skip-target")]'
+        - '//div[contains(@id, "author-contact-bottom")]'
+        - '//p[contains(@id, "g-trickster")]'
         - '//p[text()="___"]'
         - '//p[contains(text(), "can be reached at")]'
+        - '//p[@class="wp-caption-text"]'
 
 addictinginfo.com:
   site_name: 'addictinginfo.com'
