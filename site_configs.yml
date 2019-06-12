@@ -834,6 +834,27 @@ islamicanews.com:
         - '//div[contains(@id, "relatedposts")]'
         - '//div[@class="shorten_url"]'
 
+jihadwatch.org:
+  site_name: 'jihadwatch.org'
+  start_url: 'https://www.jihadwatch.org'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h2[contains(@class, "entry-title")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="entry-author-name"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//p[contains(text(), "___________________________________")]'
+        - '//div[contains(@class, "sharedaddy")]'
+
 judicialwatch.org:
   site_name: 'judicialwatch.org'
   start_url:
