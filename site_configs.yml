@@ -1458,6 +1458,29 @@ redstatewatcher.com:
         - '//p[contains(text(), "Submitted by")]'
         - '//p[@class="text-muted"]'
 
+reuters.com:
+  site_name: 'reuters.com'
+  start_url: 'https://www.reuters.com/news/archive/politicsNews'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/news/archive/politicsNews'
+      article_links: '//div[@class="story-content"]/a'
+  article:
+    url_must_contain: '/article/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@property="og:article:author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="StandardArticleBody_body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="Image_container"]'
+        - '//div[@class="Attribution_attribution"]'
+        - '//div[@class="StandardArticleBody_trustBadgeContainer"]'
+
 rt.com:
   site_name: 'rt.com'
   start_url: 'https://www.rt.com/sitemap.xml'
