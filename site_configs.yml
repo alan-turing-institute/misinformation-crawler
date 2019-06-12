@@ -169,6 +169,7 @@ austinchronicle.com:
         - 'h:mmA, ddd. MMM. DD, YYYY'
         - 'h:mmA, ddd. MMM DD, YYYY'
         - 'ddd., MMMM D, YYYY'
+        - 'ddd., MMMM  D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//article/div[@class="copy"]'
