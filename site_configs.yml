@@ -379,6 +379,25 @@ columbian.com:
       select_expression: '//span[@itemprop="articleBody"]'
       match_rule: 'single'
 
+columbiamissourian.com:
+  site_name: 'columbiamissourian.com'
+  start_url: 'https://www.columbiamissourian.com/news/local/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'news'
+      article_links: '//h3[@class="tnt-headline"]/a'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'single'
+
 conservativehq.com:
   site_name: 'conservativehq.com'
   start_url: 'http://conservativehq.com/exclusives'
