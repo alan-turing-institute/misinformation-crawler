@@ -744,6 +744,25 @@ foxnews.com:
         - '//div[contains(@class, "video-ct")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
 
+frontpagemag.com:
+  site_name: 'frontpagemag.com'
+  start_url: 'https://www.frontpagemag.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'www.frontpagemag.com'
+      url_must_not_contain: 'www.frontpagemag.com/'
+      article_links: '//article/h2[contains(@class, "field-headline")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-author"]/a/text()'
+      match_rule: 'concatenate'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-body"]'
+      match_rule: 'single'
+
 gatesofvienna.net:
   site_name: 'gatesofvienna.net'
   start_url: 'https://gatesofvienna.net/'
