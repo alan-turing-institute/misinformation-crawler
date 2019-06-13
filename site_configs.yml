@@ -562,6 +562,29 @@ dailykos.com:
       select_expression: '//div[@class="story-intro story-content"]'
       match_rule: 'single'
 
+dailywire.com:
+  site_name: 'dailywire.com'
+  start_url: 'https://www.dailywire.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'dailywire.com'
+      url_must_not_contain: 'dailywire.com/'
+      article_links: '//article/div[contains(@class, "media")]/a'
+  article:
+    url_must_contain: '/news/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="author-information"]/a/text()'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id="powr_1"]'
+        - '//div[contains(@class, "ad-unit")]'
+
 dallasobserver.com:
   site_name: 'dallasobserver.com'
   start_url: 'https://www.dallasobserver.com/topic/politics-7019564'
