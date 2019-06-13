@@ -33,7 +33,8 @@ class JSLoadButtonMiddleware:
             '//button[text()="Load More"]',
             '//button[contains(@class, "show-more")]',
             '//button[@phx-track-id="load more"]',
-            '//form[@class="gdpr-form"]/input[@class="btn"]'
+            '//form[@class="gdpr-form"]/input[@class="btn"]',
+            '//div[contains(@class, "load-btn")]/a',
         ]
 
     def first_load_button_xpath(self):
