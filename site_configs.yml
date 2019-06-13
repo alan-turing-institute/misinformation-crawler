@@ -176,6 +176,38 @@ alternet.org:
         - '//div[contains(@class, "advertisement")]'
         - '//div[@class="post-tags"]'
 
+austinchronicle.com:
+  site_name: 'austinchronicle.com'
+  start_url: 'https://www.austinchronicle.com/news/archives/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page-'
+      article_links: '//a[@class="archive-link"]'
+  article:
+    url_must_contain: '/\d\d\d\d-\d\d-\d\d/'
+    url_must_not_contain: '/civics-101/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//h4[@class="byline"]/a/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//h4[@class="byline"]//text()'
+      match_rule: 'last'
+      datetime_formats:
+        - 'h:mmA, ddd. MMM. DD, YYYY'
+        - 'h:mmA, ddd. MMM DD, YYYY'
+        - 'ddd., MMMM D, YYYY'
+        - 'ddd., MMMM  D, YYYY'
+    content:
+      select_method: 'xpath'
+      select_expression: '//article/div[@class="copy"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="story-image"]'
+        - '//div[@class="caption"]'
+
 barenakedislam.com:
   site_name: 'barenakedislam.com'
   start_url: 'https://barenakedislam.com'
@@ -341,6 +373,28 @@ christianpost.com:
         - '//div[@class="share-icons"]'
         - '//div[@class="article_credit"]'
 
+clickhole.com:
+  site_name: 'clickhole.com'
+  # start_url: 'https://www.clickhole.com/tag/news'
+  start_url: 'https://www.clickhole.com/c/news'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      # url_must_contain: '/tag/news\?startIndex='
+      url_must_contain: '/c/news'
+      article_links: '//article[contains(@class, "js_post_item")]//a[h1]'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "entry-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "ad-container")]'
+        - '//div[contains(@class, "ad-unit")]'
 cnn.com:
   site_name: 'cnn.com'
   start_url: 'https://edition.cnn.com/politics'
