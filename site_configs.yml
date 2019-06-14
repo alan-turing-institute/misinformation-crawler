@@ -1300,6 +1300,27 @@ nytimes.com:
         - '//*[contains(@class, "hidden")]'
         - '//footer'
 
+occupy.com:
+  site_name: 'occupy.com'
+  start_url: 'https://www.occupy.com/read'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/read\?page='
+      article_links: '//li[@class="article"]/h3/a'
+  article:
+    url_must_contain: '/article/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="date-and-author"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-name-body"]'
+      match_rule: 'single'
+      remove_expressions:
+      - '//div[contains(@class, "media")]'
+
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
   start_url: 'http://occupydemocrats.com'
