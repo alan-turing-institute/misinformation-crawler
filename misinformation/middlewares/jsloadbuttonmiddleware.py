@@ -32,6 +32,7 @@ class JSLoadButtonMiddleware:
             '//button[text()="Show More"]',
             '//button[text()="Load More"]',
             '//button[contains(@class, "show-more")]',
+            '//button[contains(@class, "LoadMoreButton")]',
             '//button[@phx-track-id="load more"]',
             '//form[@class="gdpr-form"]/input[@class="btn"]',
             '//div[contains(@class, "load-btn")]/a',
