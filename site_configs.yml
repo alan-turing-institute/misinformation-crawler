@@ -1720,6 +1720,25 @@ thenation.com:
         - '//aside[contains(@class, "ad")]'
         - '//aside[contains(@class, "current-issue")]'
 
+thespoof.com:
+  site_name: 'thespoof.com'
+  start_url: 'https://www.thespoof.com/spoof-news/us/144659/israelis-argue-about-how-tall-president-trump-is'
+  crawl_strategy:
+    crawl_strategy:
+      method: 'scattergun'
+      scattergun:
+        url_must_contain: '/spoof-news/'
+        url_must_not_contain: '/rss/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="writtenby"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@id, "articlebody")]'
+      match_rule: 'single'
+
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
