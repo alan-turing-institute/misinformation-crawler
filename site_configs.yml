@@ -1722,7 +1722,7 @@ thenation.com:
 
 thespoof.com:
   site_name: 'thespoof.com'
-  start_url: 'https://www.thespoof.com/spoof-news/us/144659/israelis-argue-about-how-tall-president-trump-is'
+  start_url: 'https://www.thespoof.com/'
   crawl_strategy:
     method: 'scattergun'
     scattergun:
