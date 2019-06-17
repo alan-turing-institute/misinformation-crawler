@@ -1905,6 +1905,24 @@ vox.com:
       select_expression: '//div[@class="c-entry-content"]'
       match_rule: 'single'
 
+washingtonexaminer.com:
+  site_name: 'washingtonexaminer.com'
+  start_url: 'https://www.washingtonexaminer.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/[a-z]+\-'  # include only hyphenated pages to avoid category pages like /congress
+      url_must_not_contain: '/white-house'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="ArticlePage-authorName"]/a[@class="Link"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="RichTextArticleBody"]'
+      match_rule: 'single'
+
 washingtontimes.com:
   site_name: 'washingtontimes.com'
   start_url: 'https://www.washingtontimes.com/news/politics/'
