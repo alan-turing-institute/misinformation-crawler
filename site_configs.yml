@@ -1742,6 +1742,23 @@ thenation.com:
         - '//aside[contains(@class, "ad")]'
         - '//aside[contains(@class, "current-issue")]'
 
+thespoof.com:
+  site_name: 'thespoof.com'
+  start_url: 'https://www.thespoof.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/[0-9]{6}/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="writtenby"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@id, "articlebody")]'
+      match_rule: 'single'
+
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
