@@ -25,6 +25,7 @@ class JSLoadButtonMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
+            '//a[@class="load-more"]',
             '//input[contains(@class, "agree")]',
             '//button[@name="agree"]',
             '//button[@class="qc-cmp-button"]',
@@ -35,6 +36,7 @@ class JSLoadButtonMiddleware:
             '//button[@phx-track-id="load more"]',
             '//form[@class="gdpr-form"]/input[@class="btn"]',
             '//div[contains(@class, "load-btn")]/a',
+            '//ul[contains(@class, "pager-load-more")]/li/a',
         ]
 
     def first_load_button_xpath(self):
