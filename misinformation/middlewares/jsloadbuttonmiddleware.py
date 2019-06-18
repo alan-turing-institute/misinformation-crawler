@@ -25,6 +25,7 @@ class JSLoadButtonMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
+            '//a[@class="load-more"]',
             '//input[contains(@class, "agree")]',
             '//button[@name="agree"]',
             '//button[@class="qc-cmp-button"]',
