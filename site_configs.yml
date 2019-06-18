@@ -858,6 +858,28 @@ huffingtonpost.com:
         - '//figure'
         - '//blockquote'
 
+humortimes.com:
+  site_name: 'humortimes.com'
+  start_url: 'https://www.humortimes.com/topics/faux-news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/topics/faux-news/page/'
+      article_links: '//h2[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author-name"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id="ts-fab-below"]'
+        - '//div[contains(@class, "addtoany_content")]'
+        - '//figure'
+
 infostormer.com:
   site_name: 'infostormer.com'
   start_url: 'https://infostormer.com'
