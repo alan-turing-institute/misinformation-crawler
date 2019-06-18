@@ -685,6 +685,36 @@ empirenews.net:
         - '//div[@id="top_share_widget"]'
         - '//node()[text()[normalize-space()="comments" or normalize-space()="Comments"]]'
 
+eutimes.net:
+  site_name: 'eutimes.net'
+  start_url: 'https://www.eutimes.net/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/\d\d\d\d/\d\d/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//a[@rel="author"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//iframe'
+        - '//span[@data-pin-log="button_pinit_bookmarklet"]'
+        - '//span[@class="IN-widget"]'
+        - '//a[@href="https://www.reddit.com/submit"]'
+        - '//a[@class="twitter-share-button"]'
+        - '//div[contains(@class, "gdrts-rating-block")]'
+        - '//div[@class="tags"]'
+        - '//div[@class="heateor_sss_sharing_container heateor_sss_horizontal_sharing"]'
+        - '//h3[text()="RELATED ARTICLES"]'
+        - '//a[@rel="bookmark"]'
+        - '//p/a[text()="Source"]'
+        - '//div[@id="M1849ScriptRootC344441"]'
+
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
