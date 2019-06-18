@@ -877,6 +877,28 @@ huffingtonpost.com:
         - '//figure'
         - '//blockquote'
 
+humortimes.com:
+  site_name: 'humortimes.com'
+  start_url: 'https://www.humortimes.com/topics/faux-news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/topics/faux-news/page/'
+      article_links: '//h2[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author-name"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id="ts-fab-below"]'
+        - '//div[contains(@class, "addtoany_content")]'
+        - '//figure'
+
 infostormer.com:
   site_name: 'infostormer.com'
   start_url: 'https://infostormer.com'
@@ -1081,6 +1103,28 @@ madworldnews.com:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "entry-content")]/p'
       match_rule: 'group'
+
+mediaite.com:
+  site_name: 'mediaite.com'
+  start_url: 'https://www.mediaite.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'mediaite.com/page/'
+      article_links: '//h3/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="o-dateline__author"]/a/text() | //div[@class="dateline"]/a/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="date"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="post-body"]'
+      match_rule: 'single'
 
 mic.com:
   site_name: 'mic.com'
@@ -1318,6 +1362,27 @@ nytimes.com:
         - '//figure[@itemprop="associatedMedia"]'
         - '//*[contains(@class, "hidden")]'
         - '//footer'
+
+occupy.com:
+  site_name: 'occupy.com'
+  start_url: 'https://www.occupy.com/read'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/read\?page='
+      article_links: '//li[@class="article"]/h3/a'
+  article:
+    url_must_contain: '/article/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="date-and-author"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-name-body"]'
+      match_rule: 'single'
+      remove_expressions:
+      - '//div[contains(@class, "media")]'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -1738,6 +1803,23 @@ thenation.com:
         - '//aside[contains(@class, "email-signup-module")]'
         - '//aside[contains(@class, "ad")]'
         - '//aside[contains(@class, "current-issue")]'
+
+thespoof.com:
+  site_name: 'thespoof.com'
+  start_url: 'https://www.thespoof.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/[0-9]{6}/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="writtenby"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@id, "articlebody")]'
+      match_rule: 'single'
 
 thinkprogress.org:
   site_name: 'thinkprogress.org'
