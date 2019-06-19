@@ -1883,6 +1883,30 @@ texastribune.org:
         - '//p[contains(@class, "full_story")]'
         - '//aside[contains(@class, "plugin")]'
 
+theblaze.com:
+  site_name: 'theblaze.com'
+  # start_url: 'https://www.theblaze.com/news/'
+  start_url: 'https://www.theblaze.com'
+  crawl_strategy:
+    # method: 'index_page'
+    # index_page:
+    #   url_must_contain: 'www.theblaze.com/news/'
+    #   article_links: '//h1/a'
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/news/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="sailthru.author"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="body-description"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//p[contains(@class, "shortcode-media")]'
+
 thedailysheeple.com:
   site_name: 'thedailysheeple.com'
   start_url: 'https://www.thedailysheeple.com/'
