@@ -628,6 +628,34 @@ davidwolfe.com:
       select_expression: '//section[@itemprop="articleBody"]'
       match_rule: 'single'
 
+denverpost.com:
+  site_name: 'denverpost.com'
+  start_url: 'https://www.denverpost.com/news/colorado/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'www.denverpost.com/news/colorado/'
+      url_must_not_contain: 'www.denverpost.com/news/colorado/page/'  # These pages exist but no "next" button to reach them, click button with JSLoadButtonMiddleware instead
+      article_links: '//a[@class="article-title"]'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="byline"]/a/text() | //span[@class="author"]/a/text()'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="article-body"] | //div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "dfp-ad")]'
+        - '//div[contains(@data-spmark, "title")]'
+        - '//div[contains(@class, "comments-area")]'
+        - '//div[@class="yarpp-related"]'
+        - '//figure'
+        - '//aside'
+        - '//footer'
+
 disclose.tv:
   site_name: 'disclose.tv'
   start_url: 'https://www.disclose.tv/d/politics'
@@ -702,6 +730,38 @@ empirenews.net:
         - '//div[@id="top_share_widget"]'
         - '//node()[text()[normalize-space()="comments" or normalize-space()="Comments"]]'
 
+eutimes.net:
+  site_name: 'eutimes.net'
+  start_url: 'https://www.eutimes.net/category/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/category/politics/page/'
+      article_links: '//h2/a'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//a[@rel="author"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//iframe'
+        - '//span[@data-pin-log="button_pinit_bookmarklet"]'
+        - '//span[@class="IN-widget"]'
+        - '//a[@href="https://www.reddit.com/submit"]'
+        - '//a[@class="twitter-share-button"]'
+        - '//div[contains(@class, "gdrts-rating-block")]'
+        - '//div[@class="tags"]'
+        - '//div[@class="heateor_sss_sharing_container heateor_sss_horizontal_sharing"]'
+        - '//h3[text()="RELATED ARTICLES"]'
+        - '//a[@rel="bookmark"]'
+        - '//p/a[text()="Source"]'
+        - '//div[@id="M1849ScriptRootC344441"]'
+
 eyeopening.info:
   site_name: 'eyeopening.info'
   start_url: 'http://eyeopening.info/category/politics/'
@@ -760,6 +820,25 @@ foxnews.com:
       remove_expressions:
         - '//div[contains(@class, "video-ct")]'
         - '//a[@href="https://www.foxnews.com/apps-products"]'
+
+frontpagemag.com:
+  site_name: 'frontpagemag.com'
+  start_url: 'https://www.frontpagemag.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'www.frontpagemag.com'
+      url_must_not_contain: 'www.frontpagemag.com/'
+      article_links: '//article/h2[contains(@class, "field-headline")]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-author"]/a/text()'
+      match_rule: 'concatenate'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-body"]'
+      match_rule: 'single'
 
 gatesofvienna.net:
   site_name: 'gatesofvienna.net'
@@ -874,6 +953,28 @@ huffingtonpost.com:
         - '//div[contains(@class, "advertisement-holder")]'
         - '//figure'
         - '//blockquote'
+
+humortimes.com:
+  site_name: 'humortimes.com'
+  start_url: 'https://www.humortimes.com/topics/faux-news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/topics/faux-news/page/'
+      article_links: '//h2[@class="entry-title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="author-name"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="entry-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@id="ts-fab-below"]'
+        - '//div[contains(@class, "addtoany_content")]'
+        - '//figure'
 
 infostormer.com:
   site_name: 'infostormer.com'
@@ -1079,6 +1180,28 @@ madworldnews.com:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "entry-content")]/p'
       match_rule: 'group'
+
+mediaite.com:
+  site_name: 'mediaite.com'
+  start_url: 'https://www.mediaite.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'mediaite.com/page/'
+      article_links: '//h3/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//span[@class="o-dateline__author"]/a/text() | //div[@class="dateline"]/a/text()'
+      match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="date"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="post-body"]'
+      match_rule: 'single'
 
 mic.com:
   site_name: 'mic.com'
@@ -1316,6 +1439,27 @@ nytimes.com:
         - '//figure[@itemprop="associatedMedia"]'
         - '//*[contains(@class, "hidden")]'
         - '//footer'
+
+occupy.com:
+  site_name: 'occupy.com'
+  start_url: 'https://www.occupy.com/read'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/read\?page='
+      article_links: '//li[@class="article"]/h3/a'
+  article:
+    url_must_contain: '/article/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="date-and-author"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="field-name-body"]'
+      match_rule: 'single'
+      remove_expressions:
+      - '//div[contains(@class, "media")]'
 
 occupydemocrats.com:
   site_name: 'occupydemocrats.com'
@@ -1737,6 +1881,43 @@ thenation.com:
         - '//aside[contains(@class, "ad")]'
         - '//aside[contains(@class, "current-issue")]'
 
+thesheridanpress.com:
+  site_name: 'thesheridanpress.com'
+  start_url: 'https://thesheridanpress.com/news/local-news/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'thesheridanpress.com/news/local-news/'
+      article_links: '//h4/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//a[@rel="author"]/text()'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="post-content"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "fusion-flexslider")]'
+
+thespoof.com:
+  site_name: 'thespoof.com'
+  start_url: 'https://www.thespoof.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/[0-9]{6}/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@id="writtenby"]/a/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@id, "articlebody")]'
+      match_rule: 'single'
+
 thinkprogress.org:
   site_name: 'thinkprogress.org'
   start_url: 'http://thinkprogress.org'
@@ -1920,6 +2101,25 @@ vox.com:
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="c-entry-content"]'
+      match_rule: 'single'
+
+washingtonexaminer.com:
+  site_name: 'washingtonexaminer.com'
+  start_url: 'https://www.washingtonexaminer.com/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'page='
+      article_links: '//a[@class="Link"]'
+  article:
+    url_must_not_contain: '/author/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//div[@class="ArticlePage-authorName"]/node()[@class="Link"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="RichTextArticleBody"]'
       match_rule: 'single'
 
 washingtontimes.com:
