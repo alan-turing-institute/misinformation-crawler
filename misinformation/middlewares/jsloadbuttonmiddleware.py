@@ -53,7 +53,8 @@ class JSLoadButtonMiddleware:
 
     def response_contains_button(self, response):
         """Search for a button in the response."""
-        for button_xpath, click_method in self.button_xpaths:
+        for xpath_with_interact_method in self.button_xpaths:
+            button_xpath = xpath_with_interact_method[0]
             if response.xpath(button_xpath):
                 return True
         return False
