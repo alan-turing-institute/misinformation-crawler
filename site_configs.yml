@@ -1806,7 +1806,7 @@ sputniknews.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@itemprop="description"] | //div[@itemprop="articleBody"]'
+      select_expression: '//div[@itemprop="articleBody"]'
       match_rule: 'group'
       remove_expressions:
         - '//div[contains(@class, "b-inject")]'
