@@ -1971,6 +1971,25 @@ thesheridanpress.com:
       remove_expressions:
         - '//div[contains(@class, "fusion-flexslider")]'
 
+theonion.com:
+  site_name: 'theonion.com'
+  # start_url: 'https://www.theonion.com/'
+  start_url: 'https://politics.theonion.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/\?startTime='
+      article_links: '//a[h1]'
+  article:
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "post-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "ad-container")]'
+        - '//div[contains(@class, "instream-native-video")]'
+        - '//figure'
+
 thespoof.com:
   site_name: 'thespoof.com'
   start_url: 'https://www.thespoof.com/'
