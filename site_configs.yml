@@ -1663,6 +1663,27 @@ realnewsrightnow.com:
         - '//div[contains(@class, "author-information")]'
         - '//footer[contains(@class, "article-tags")]'
 
+redstate.com:
+  site_name: 'redstate.com'
+  start_url: 'https://www.redstate.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'first'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[contains(@class, "below-content")]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[@class="tagbox"]'
+        - '//div[@class="small-card-bottom"]'
+
 redstatewatcher.com:
   site_name: 'redstatewatcher.com'
   start_url: 'http://redstatewatcher.com/news.asp'
@@ -1880,6 +1901,32 @@ thehill.com:
       match_rule: 'single'
       remove_expressions:
         - '//span[@class="rollover-block"]'
+
+theintercept.com:
+  site_name: 'theintercept.com'
+  start_url: 'https://theintercept.com/'
+  crawl_strategy:
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//a[@rel="author"]/span/text()'
+      match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//span[@class="PostByline-date"]/span/text()'
+      match_rule: 'single'
+      datetime_formats:
+        - 'MMMM D YYYY, h:mm'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@class="PostContent"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "img-wrap")]'
+        - '//div[contains(@class, "Newsletter-shortcode-container")]'
 
 thenation.com:
   site_name: 'thenation.com'
