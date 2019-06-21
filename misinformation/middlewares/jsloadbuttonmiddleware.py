@@ -109,6 +109,7 @@ class JSLoadButtonMiddleware:
                     if interact_method == 'Return':
                         load_button.send_keys(Keys.RETURN)
                     if interact_method == 'Click':
+                        self.driver.execute_script("window.scrollTo({x},{y})".format(**button_location))
                         load_button.click()
 
                     # Track the number of clicks that we've performed
