@@ -1807,6 +1807,31 @@ scrappleface.com:
       remove_expressions:
         - '//div[contains(@id, "attachment")]'
 
+sputniknews.com:
+  site_name: 'sputniknews.com'
+  start_url: 'https://sputniknews.com/archive/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'sputniknews.com/archive/$'
+      article_links: '//h2[@class="b-plainlist__title"]/a'
+  article:
+    url_must_contain: '/\d\d\d\d\d\d\d\d'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content'
+      match_rule: 'single'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time[@itemprop="dateCreated"]/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'group'
+      remove_expressions:
+        - '//div[contains(@class, "b-inject")]'
+
 talkingpointsmemo.com:
   site_name: 'talkingpointsmemo.com'
   start_url: 'https://talkingpointsmemo.com/news'
