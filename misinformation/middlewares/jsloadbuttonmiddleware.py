@@ -26,6 +26,7 @@ class JSLoadButtonMiddleware:
         self.max_button_clicks = 10000
         self.button_xpaths = [
             ('//a[@class="load-more"]', 'Return'),
+            ('//a[contains(@class, "m-more")]', 'Return'),
             ('//input[contains(@class, "agree")]', 'Return'),
             ('//button[@name="agree"]', 'Return'),
             ('//button[@class="qc-cmp-button"]', 'Return'),
