@@ -1883,7 +1883,7 @@ thehill.com:
 
 theintercept.com:
   site_name: 'theintercept.com'
-  start_url:
+  start_url: 'https://theintercept.com/'
   crawl_strategy:
     method: 'scattergun'
     scattergun:
