@@ -1845,8 +1845,7 @@ thedailybeast.com:
     index_page:
       url_must_contain: 'thedailybeast.com/category/politics$'
       url_must_not_contain: '/author/'
-      # article_links: '//a[contains(@class, "LatestCard__link")]'
-      article_links: '//a'
+      article_links: '//a[contains(@class, "GridStory__title-link")]'
   article:
     url_must_not_contain: '/author/'
     byline:
