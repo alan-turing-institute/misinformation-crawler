@@ -1885,16 +1885,12 @@ texastribune.org:
 
 theblaze.com:
   site_name: 'theblaze.com'
-  # start_url: 'https://www.theblaze.com/news/'
-  start_url: 'https://www.theblaze.com'
+  start_url: 'https://www.theblaze.com/news/'
   crawl_strategy:
-    # method: 'index_page'
-    # index_page:
-    #   url_must_contain: 'www.theblaze.com/news/'
-    #   article_links: '//h1/a'
-    method: 'scattergun'
-    scattergun:
-      url_must_contain: '/news/'
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'www.theblaze.com/news/$'
+      article_links: '//h1/a'
   article:
     byline:
       select_method: 'xpath'
