@@ -1839,25 +1839,16 @@ texastribune.org:
 
 thedailybeast.com:
   site_name: 'thedailybeast.com'
-  # start_url: 'https://www.thedailybeast.com/category/politics'
-  start_url: 'https://www.thedailybeast.com'
-  # start_url: 'https://www.thedailybeast.com/sitemap'
+  start_url: 'https://www.thedailybeast.com/category/politics'
   crawl_strategy:
-
-    method: 'scattergun'
-    scattergun:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'thedailybeast.com/category/politics$'
       url_must_not_contain: '/author/'
-      # url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
-    # method: 'index_page'
-    # index_page:
-    #   url_must_contain: 'thedailybeast.com/category/politics'
-    #   url_must_not_contain: 'thedailybeast.com/author'
-    #   article_links: '//a[contains(@class, "LatestCard__link")][h2]'
-
-      # url_must_contain: 'thedailybeast.com/sitemap/\d\d\d\d/[0-9]/article'
-      # article_links: '//a[@class="SitemapMonthPage__headline-link"]'
-
+      # article_links: '//a[contains(@class, "LatestCard__link")]'
+      article_links: '//a'
   article:
+    url_must_not_contain: '/author/'
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@name="authors"]/@content'
