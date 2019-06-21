@@ -43,10 +43,10 @@ class JSLoadButtonMiddleware:
 
     def first_load_button_xpath(self):
         """Find the first load button on the page - there may be more than one."""
-        for button_xpath, click_method in self.button_xpaths:
+        for button_xpath, interact_method in self.button_xpaths:
             try:
                 self.driver.find_element_by_xpath(button_xpath)
-                return (button_xpath, click_method)
+                return (button_xpath, interact_method)
             except WebDriverException:
                 pass
         return None
@@ -98,7 +98,7 @@ class JSLoadButtonMiddleware:
 
                     # Look for a load button and store its location so that we
                     # can check when the page is reloaded
-                    load_button_xpath, click_method = self.first_load_button_xpath()
+                    load_button_xpath, interact_method = self.first_load_button_xpath()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
 
@@ -106,9 +106,9 @@ class JSLoadButtonMiddleware:
                     # when the button is not currently visible in the viewport.
                     # The other option is to scroll the window before clicking,
                     # but that seems messier.
-                    if click_method == 'Return':
+                    if interact_method == 'Return':
                         load_button.send_keys(Keys.RETURN)
-                    if click_method == 'Click':
+                    if interact_method == 'Click':
                         load_button.click()
 
                     # Track the number of clicks that we've performed
