@@ -1860,17 +1860,12 @@ talkingpointsmemo.com:
 
 tampabay.com:
   site_name: 'tampabay.com'
-  # start_url: 'https://www.tampabay.com/florida-politics/'
-  start_url: 'https://www.tampabay.com'
+  start_url: 'https://www.tampabay.com/florida-politics/'
   crawl_strategy:
-    # method: 'index_page'
-    # index_page:
-    #   url_must_contain: 'www.tampabay.com/florida-politics/'
-    #   article_links: '//a[h4]'
-    method: 'scattergun'
-    scattergun:
-      url_must_contain: '/florida-politics/'
-      url_must_not_contain: '/florida-politics/buzz/$'
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'www.tampabay.com/florida-politics/$'
+      article_links: '//a[h4]'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
     byline:
