@@ -1871,7 +1871,7 @@ tampabay.com:
     title:
       select_method: 'xpath'
       select_expression: '//title/text()'
-      match_rule: 'single'
+      match_rule: 'first'
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@name="author"]/@content | //meta[@property="authors"]/@content'
@@ -1879,7 +1879,7 @@ tampabay.com:
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time/@datetime | //meta[@property="article:published_time"]/@content'
-      match_rule: 'single'
+      match_rule: 'first'
       datetime_formats:
         - 'YYYY-MM-DDTHH:mm:ss'
     content:
