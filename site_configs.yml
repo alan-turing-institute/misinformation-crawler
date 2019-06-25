@@ -1868,6 +1868,10 @@ tampabay.com:
       article_links: '//a[h4]'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//title/text()'
+      match_rule: 'single'
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@name="author"]/@content'

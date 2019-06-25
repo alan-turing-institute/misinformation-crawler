@@ -64,7 +64,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
     if "content" in article and article["content"]:
         # Extract title if in config
         with suppress(KeyError):
-            article["title"] = extract_element(response, config["article"]["title"])
+            article["title"] = extract_element(response, config["article"]["title"], postprocessing_fn=simplify_extracted_title)
         # Extract byline
         with suppress(KeyError):
             article["byline"] = extract_element(response, config["article"]["byline"], postprocessing_fn=simplify_extracted_byline)
@@ -112,3 +112,13 @@ def simplify_extracted_byline(byline):
     if byline in no_author_here:
         return None
     return byline
+
+def simplify_extracted_title(title):
+    """Simplify titles by removing anything after a vertical bar (usually a site name)"""
+    remove_after = ["|"]  # Add to this list if needed
+
+    for remove_string in remove_after:
+        title = title.split(remove_string)[0]
+    title = title.strip()
+
+    return title
