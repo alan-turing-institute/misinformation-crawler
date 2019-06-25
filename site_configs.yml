@@ -1874,11 +1874,17 @@ tampabay.com:
       match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//meta[@name="author"]/@content'
+      select_expression: '//meta[@name="author"]/@content | //meta[@property="authors"]/@content'
       match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time/@datetime | //meta[@property="article:published_time"]/@content'
+      match_rule: 'single'
+      datetime_formats:
+        - 'YYYY-MM-DDTHH:mm:ss'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@id="article-content"]'
+      select_expression: '//div[@id="article-content"] | //div[@id="articleBody"]'
       match_rule: 'single'
 
 texastribune.org:
