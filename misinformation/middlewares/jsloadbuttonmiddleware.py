@@ -106,7 +106,8 @@ class JSLoadButtonMiddleware:
                     # Sending a keypress of 'Return' to the button works even
                     # when the button is not currently visible in the viewport.
                     # The other option is to scroll the window before clicking,
-                    # but that seems messier.
+                    # which we do for certain button xpaths that wont work with
+                    # keypress 'Return'. See self.button_xpaths
                     if interact_method == 'Return':
                         load_button.send_keys(Keys.RETURN)
                     if interact_method == 'Click':
