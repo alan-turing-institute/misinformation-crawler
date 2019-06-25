@@ -13,10 +13,14 @@ class JSLoadButtonMiddleware:
 
     Javascript load buttons are identified by searching for XPath patterns.
 
-    Selenium will keep pressing the button until one of the following occurs:
+    Selenium will keep pressing (hitting Return or clicking) the button until one of the following occurs:
         1. The button disappears (eg. when there are no more articles to load)
         2. The page takes too long to load (currently 60s)
         3. A maximum number of button presses is reached (currently 10000)
+
+    For button xpaths with a specific lower number of clicks specified in self.button_xpaths
+    than the maximum, these will get pressed that many times on the homepage before we look for
+    other buttons that need to be pressed self.max_button_clicks times
     """
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
@@ -91,15 +95,24 @@ class JSLoadButtonMiddleware:
         cached_page_source = None
 
         for button_xpath, interact_method, interact_number in self.button_xpaths:
+            # Iterate through buttons with a specific number of clicks to be performed
             if interact_number < self.max_button_clicks:
                 for x in range(interact_number):
-                    temp_button = self.driver.find_element_by_xpath(button_xpath)
-                    if interact_method == 'Return':
-                        temp_button.send_keys(Keys.RETURN)
-                    if interact_method == 'Click':
-                        actions = ActionChains(self.driver)
-                        actions.move_to_element(temp_button).perform()
-                        temp_button.click()
+                    try:
+                        temp_button = self.driver.find_element_by_xpath(button_xpath)
+                        # Sending a keypress of 'Return' to the button works even
+                        # when the button is not currently visible in the viewport.
+                        # The other option is to scroll the window before clicking,
+                        # which we do for certain button xpaths that wont work with
+                        # keypress 'Return'. See self.button_xpaths
+                        if interact_method == 'Return':
+                            temp_button.send_keys(Keys.RETURN)
+                        if interact_method == 'Click':
+                            actions = ActionChains(self.driver)
+                            actions.move_to_element(temp_button).perform()
+                            temp_button.click()
+                    except NoSuchElementException:
+                        pass
 
         while True:
             try:
@@ -127,7 +140,7 @@ class JSLoadButtonMiddleware:
                         load_button.send_keys(Keys.RETURN)
                     if interact_method == 'Click':
                         actions = ActionChains(self.driver)
-                        actions.move_to_element(load_button).perform()  # TODO: test with theblaze too
+                        actions.move_to_element(load_button).perform()
                         load_button.click()
 
                     # Track the number of clicks that we've performed
