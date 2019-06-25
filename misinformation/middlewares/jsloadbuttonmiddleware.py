@@ -25,35 +25,37 @@ class JSLoadButtonMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
-            '//a[@class="load-more"]',
-            '//a[contains(@class, "m-more")]',
-            '//input[contains(@class, "agree")]',
-            '//button[@name="agree"]',
-            '//button[@class="qc-cmp-button"]',
-            '//button[@class="btn-more"]',
-            '//button[text()="Show More"]',
-            '//button[text()="Load More"]',
-            '//button[contains(@class, "show-more")]',
-            '//button[@phx-track-id="load more"]',
-            '//form[@class="gdpr-form"]/input[@class="btn"]',
-            '//div[contains(@class, "load-btn")]/a',
-            '//ul[contains(@class, "pager-load-more")]/li/a',
-            '//a[text()="Show More"]'
+            ('//a[@class="load-more"]', 'Return'),
+            ('//a[contains(@class, "m-more")]', 'Return'),
+            ('//input[contains(@class, "agree")]', 'Return'),
+            ('//button[@name="agree"]', 'Return'),
+            ('//button[@class="qc-cmp-button"]', 'Return'),
+            ('//button[@class="btn-more"]', 'Return'),
+            ('//button[text()="Show More"]', 'Return'),
+            ('//button[text()="Load More"]', 'Return'),
+            ('//button[contains(@class, "show-more")]', 'Return'),
+            ('//button[@phx-track-id="load more"]', 'Return'),
+            ('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
+            ('//div[contains(@class, "load-btn")]/a', 'Return'),
+            ('//div[contains(@class, "button-load-more")]', 'Click'),
+            ('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
+            ('//a[text()="Show More"]', 'Return')
         ]
 
     def first_load_button_xpath(self):
         """Find the first load button on the page - there may be more than one."""
-        for button_xpath in self.button_xpaths:
+        for button_xpath, interact_method in self.button_xpaths:
             try:
                 self.driver.find_element_by_xpath(button_xpath)
-                return button_xpath
+                return (button_xpath, interact_method)
             except WebDriverException:
                 pass
         return None
 
     def response_contains_button(self, response):
         """Search for a button in the response."""
-        for button_xpath in self.button_xpaths:
+        for xpath_with_interact_method in self.button_xpaths:
+            button_xpath = xpath_with_interact_method[0]
             if response.xpath(button_xpath):
                 return True
         return False
@@ -97,15 +99,20 @@ class JSLoadButtonMiddleware:
 
                     # Look for a load button and store its location so that we
                     # can check when the page is reloaded
-                    load_button_xpath = self.first_load_button_xpath()
+                    load_button_xpath, interact_method = self.first_load_button_xpath()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
 
                     # Sending a keypress of 'Return' to the button works even
                     # when the button is not currently visible in the viewport.
                     # The other option is to scroll the window before clicking,
-                    # but that seems messier.
-                    load_button.send_keys(Keys.RETURN)
+                    # which we do for certain button xpaths that wont work with
+                    # keypress 'Return'. See self.button_xpaths
+                    if interact_method == 'Return':
+                        load_button.send_keys(Keys.RETURN)
+                    if interact_method == 'Click':
+                        self.driver.execute_script("window.scrollTo({x},{y})".format(**button_location))
+                        load_button.click()
 
                     # Track the number of clicks that we've performed
                     n_clicks_performed += 1
