@@ -803,6 +803,7 @@ def test_extract_datetime_byline_mmddyy_with_mdyy_format():
 def test_simplify_extracted_byline(byline, expected):
     assert simplify_extracted_byline(byline) == expected
 
+
 @pytest.mark.parametrize("title, expected", [("Title | News site", "Title"), ("Title", "Title")])
 def test_simplify_extracted_title(title, expected):
     assert simplify_extracted_title(title) == expected

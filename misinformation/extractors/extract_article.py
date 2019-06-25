@@ -113,6 +113,7 @@ def simplify_extracted_byline(byline):
         return None
     return byline
 
+
 def simplify_extracted_title(title):
     """Simplify titles by removing anything after a vertical bar (usually a site name)"""
     remove_after = ["|"]  # Add to this list if needed
