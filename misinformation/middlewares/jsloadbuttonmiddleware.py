@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import visibility_of_element_located, element_to_be_clickable
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class JSLoadButtonMiddleware:
@@ -25,37 +26,40 @@ class JSLoadButtonMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.button_xpaths = [
-            ('//a[@class="load-more"]', 'Return'),
-            ('//a[contains(@class, "m-more")]', 'Return'),
-            ('//input[contains(@class, "agree")]', 'Return'),
-            ('//button[@name="agree"]', 'Return'),
-            ('//button[@class="qc-cmp-button"]', 'Return'),
-            ('//button[@class="btn-more"]', 'Return'),
-            ('//button[text()="Show More"]', 'Return'),
-            ('//button[text()="Load More"]', 'Return'),
-            ('//button[contains(@class, "show-more")]', 'Return'),
-            ('//button[@phx-track-id="load more"]', 'Return'),
-            ('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
-            ('//div[contains(@class, "load-btn")]/a', 'Return'),
-            ('//div[contains(@class, "button-load-more")]', 'Click'),
-            ('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
-            ('//a[text()="Show More"]', 'Return')
+            ('//a[@class="load-more"]', 'Return', self.max_button_clicks),
+            ('//a[contains(@class, "m-more")]', 'Return', self.max_button_clicks),
+            ('//input[contains(@class, "agree")]', 'Return', self.max_button_clicks),
+            ('//button[@name="agree"]', 'Return', self.max_button_clicks),
+            ('//button[@class="qc-cmp-button"]', 'Return', self.max_button_clicks),
+            ('//button[@class="btn-more"]', 'Return', self.max_button_clicks),
+            ('//button[text()="Show More"]', 'Return', self.max_button_clicks),
+            ('//button[text()="Load More"]', 'Return', self.max_button_clicks),
+            ('//button[contains(@class, "show-more")]', 'Return', self.max_button_clicks),
+            ('//button[contains(@class, "gdpr-modal-close")]', 'Return', 2),
+            ('//button[@phx-track-id="load more"]', 'Return', self.max_button_clicks),
+            ('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return', self.max_button_clicks),
+            ('//div[contains(@class, "load-btn")]/a', 'Return', self.max_button_clicks),
+            ('//div[contains(@class, "button-load-more")]', 'Click', self.max_button_clicks),
+            ('//div[contains(@class, "pb-loadmore")]', 'Click', self.max_button_clicks),
+            ('//ul[contains(@class, "pager-load-more")]/li/a', 'Return', self.max_button_clicks),
+            ('//a[text()="Show More"]', 'Return', self.max_button_clicks)
         ]
 
     def first_load_button_xpath(self):
         """Find the first load button on the page - there may be more than one."""
-        for button_xpath, interact_method in self.button_xpaths:
-            try:
-                self.driver.find_element_by_xpath(button_xpath)
-                return (button_xpath, interact_method)
-            except WebDriverException:
-                pass
+        for button_xpath, interact_method, interact_number in self.button_xpaths:
+            if interact_number == self.max_button_clicks:  # Load more buttons should be set to the max_button_clicks
+                try:
+                    self.driver.find_element_by_xpath(button_xpath)
+                    return (button_xpath, interact_method, interact_number)
+                except WebDriverException:
+                    pass
         return None
 
     def response_contains_button(self, response):
         """Search for a button in the response."""
-        for xpath_with_interact_method in self.button_xpaths:
-            button_xpath = xpath_with_interact_method[0]
+        for xpath_info in self.button_xpaths:
+            button_xpath = xpath_info[0]
             if response.xpath(button_xpath):
                 return True
         return False
@@ -86,6 +90,17 @@ class JSLoadButtonMiddleware:
         n_clicks_performed = 0
         cached_page_source = None
 
+        for button_xpath, interact_method, interact_number in self.button_xpaths:
+            if interact_number < self.max_button_clicks:
+                for x in range(interact_number):
+                    temp_button = self.driver.find_element_by_xpath(button_xpath)
+                    if interact_method == 'Return':
+                        temp_button.send_keys(Keys.RETURN)
+                    if interact_method == 'Click':
+                        actions = ActionChains(self.driver)
+                        actions.move_to_element(temp_button).perform()
+                        temp_button.click()
+
         while True:
             try:
                 # We need a nested try block here, since the WebDriverWait
@@ -99,7 +114,7 @@ class JSLoadButtonMiddleware:
 
                     # Look for a load button and store its location so that we
                     # can check when the page is reloaded
-                    load_button_xpath, interact_method = self.first_load_button_xpath()
+                    load_button_xpath, interact_method, interact_number = self.first_load_button_xpath()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
 
@@ -111,7 +126,8 @@ class JSLoadButtonMiddleware:
                     if interact_method == 'Return':
                         load_button.send_keys(Keys.RETURN)
                     if interact_method == 'Click':
-                        self.driver.execute_script("window.scrollTo({x},{y})".format(**button_location))
+                        actions = ActionChains(self.driver)
+                        actions.move_to_element(load_button).perform()  # TODO: test with theblaze too
                         load_button.click()
 
                     # Track the number of clicks that we've performed
@@ -119,7 +135,7 @@ class JSLoadButtonMiddleware:
                     spider.logger.info('Clicked the load button once ({} times in total).'.format(n_clicks_performed))
 
                     # Terminate if we're at the maximum number of clicks
-                    if n_clicks_performed >= self.max_button_clicks > 0:
+                    if n_clicks_performed >= interact_number > 0:
                         spider.logger.info('Finished loading more articles after clicking button {} times.'.format(n_clicks_performed))
                         break
 
