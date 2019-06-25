@@ -31,7 +31,7 @@ def main():
     site_config = site_configs[args.site_name]
     article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"), Loader=yaml.FullLoader)
     if args.site_name in article_lists:
-        site_config["article_list"] = article_lists[args.site_name]
+        site_config["article_override_list"] = article_lists[args.site_name]
 
     # Update crawler settings here as we can't seem to do this when using the
     # custom_settings attribute in the spider initialiser
