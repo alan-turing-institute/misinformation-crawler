@@ -51,15 +51,16 @@ class JSLoadButtonMiddleware:
             ('//a[text()="Show More"]', 'Return')
         ]
 
-    def first_load_button_xpath(self):  # TODO: rename function
-        """Find the first load button on the page - there may be more than one."""
+    def get_load_button_xpath_and_interaction_method(self):
+        """Find the first load button on the page - there may be more than one.
+            Return the interact_method method paired with that xpath"""
         for button_xpath, interact_method in self.load_button_xpaths:
             try:
                 self.driver.find_element_by_xpath(button_xpath)
-                return (button_xpath, interact_method)
+                return button_xpath, interact_method
             except WebDriverException:
                 pass
-        return None, None  # TODO: None return must match number of things otherwise returned
+        return None, None
 
     def response_contains_button(self, response):
         """Search for a button in the response."""
@@ -70,6 +71,7 @@ class JSLoadButtonMiddleware:
         return False
 
     def press_form_buttons(self):
+        """Press any form buttons on the page the designated number of times."""
         for button_xpath, interact_method, interact_number in self.form_button_xpaths:
             # Iterate through buttons with a specific number of clicks to be performed
             for x in range(interact_number):
@@ -129,8 +131,9 @@ class JSLoadButtonMiddleware:
                     cached_page_source = self.driver.page_source
 
                     # Look for a load button and store its location so that we
-                    # can check when the page is reloaded
-                    load_button_xpath, interact_method = self.first_load_button_xpath()
+                    # can check when the page is reloaded, the interact_method
+                    # of click or return is paired to the xpath (the button type)
+                    load_button_xpath, interact_method = self.get_load_button_xpath_and_interaction_method()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
 
@@ -171,8 +174,8 @@ class JSLoadButtonMiddleware:
                     # non-clickable for some period
                     WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, load_button_xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
-                # If there are still available buttons on the page then repeat
-                if self.first_load_button_xpath():
+                # If there are still available load buttons on the page then repeat
+                if self.get_load_button_xpath_and_interaction_method()[0]:
                     continue
                 else:
                     spider.logger.info('Terminating button clicking since there are no more load buttons on the page.')
