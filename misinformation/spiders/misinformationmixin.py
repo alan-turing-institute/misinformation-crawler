@@ -73,8 +73,12 @@ class MisinformationMixin():
     @staticmethod
     def load_start_urls(config):
         start_urls = MisinformationMixin.as_list(config["start_url"])
-        start_urls += config.get("article_list", [])
+        start_urls += MisinformationMixin.article_override_list(config)
         return start_urls
+
+    @staticmethod
+    def article_override_list(config):
+        return config.get("article_override_list", [])
 
     @staticmethod
     def common_link_kwargs(config):
@@ -101,6 +105,11 @@ class MisinformationMixin():
         request = super()._build_request(rule, link)
         request.cookies = self.cookies
         return request
+
+    def parse_article_override_list(self, response):
+        """Check pages against the override list of URLs and parse them if they are on it."""
+        if response.url in self.article_override_list(self.config):
+            self.parse_response(response)
 
     def parse_response(self, response):
         """Parse the HTML response and determine whether it should be saved."""

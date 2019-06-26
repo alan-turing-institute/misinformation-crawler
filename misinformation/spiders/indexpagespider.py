@@ -47,8 +47,11 @@ class IndexPageSpider(MisinformationMixin, CrawlSpider):
                                           **link_kwargs),
                             callback='parse_response')
 
+        # Ensure that we process all article overrides
+        article_override_rule = Rule(LinkExtractor(canonicalize=True, unique=True), callback='parse_article_override_list')
+
         # Use both rules
-        self.rules = (index_page_rule, article_rule)
+        self.rules = (index_page_rule, article_rule, article_override_rule)
 
         # Load starting URLs
         self.start_urls = self.load_start_urls(config)
