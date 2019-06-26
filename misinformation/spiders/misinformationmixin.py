@@ -76,8 +76,7 @@ class MisinformationMixin():
 
     @staticmethod
     def load_start_urls(config):
-        start_urls = MisinformationMixin.as_list(config["start_url"])
-        return start_urls
+        return MisinformationMixin.as_list(config["start_url"])
 
     @staticmethod
     def common_link_kwargs(config):
@@ -151,10 +150,12 @@ class MisinformationMixin():
 
     def start_requests(self):
         """Process article overrides first, then delegate to the per-spider function."""
-        for url in self.article_overrides:
-            self.logger.debug("Processing article override: %s", url)
-            yield Request(url, callback=self.parse_response)
-        return super().start_requests()
+        def yield_overrides():
+            for url in self.article_overrides:
+                self.logger.debug("Processing article override: %s", url)
+                yield Request(url, callback=self.parse_response)
+        yield from yield_overrides()
+        yield from super().start_requests()
 
     def closed(self, reason):
         """Log reason for closure."""
