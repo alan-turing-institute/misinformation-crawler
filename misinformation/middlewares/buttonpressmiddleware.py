@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-class JSLoadButtonMiddleware:
+class ButtonPressMiddleware:
     """Scrapy middleware to bypass javascript 'load more' buttons using selenium.
 
     Javascript load buttons are identified by searching for XPath patterns.
