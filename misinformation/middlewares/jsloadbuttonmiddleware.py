@@ -70,26 +70,32 @@ class JSLoadButtonMiddleware:
                 return True
         return False
 
+    def press_button(self, button, interact_method):
+        """Navigate to and click a button"""
+        # Sending a keypress of 'Return' to the button works even
+        # when the button is not currently visible in the viewport.
+        # The other option is to scroll the window before clicking,
+        # which we do for certain button xpaths that wont work with
+        # keypress 'Return'. See self.load_button_xpaths
+        if interact_method == 'Return':
+            button.send_keys(Keys.RETURN)
+        if interact_method == 'Click':
+            actions = ActionChains(self.driver)
+            actions.move_to_element(button).perform()
+            button.click()
+
     def press_form_buttons(self):
         """Press any form buttons on the page the designated number of times."""
         for button_xpath, interact_method, interact_number in self.form_button_xpaths:
             # Iterate through buttons with a specific number of clicks to be performed
-            for x in range(interact_number):
+            x = 0
+            while x < interact_number:
                 try:
-                    temp_button = self.driver.find_element_by_xpath(button_xpath)
-                    # Sending a keypress of 'Return' to the button works even
-                    # when the button is not currently visible in the viewport.
-                    # The other option is to scroll the window before clicking,
-                    # which we do for certain button xpaths that wont work with
-                    # keypress 'Return'. See self.form_button_xpaths
-                    if interact_method == 'Return':
-                        temp_button.send_keys(Keys.RETURN)
-                    if interact_method == 'Click':
-                        actions = ActionChains(self.driver)
-                        actions.move_to_element(temp_button).perform()
-                        temp_button.click()
+                    form_button = self.driver.find_element_by_xpath(button_xpath)
+                    self.press_button(form_button, interact_method)
                 except NoSuchElementException:
                     pass
+                x += 1
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
@@ -131,23 +137,12 @@ class JSLoadButtonMiddleware:
                     cached_page_source = self.driver.page_source
 
                     # Look for a load button and store its location so that we
-                    # can check when the page is reloaded, the interact_method
+                    # can check when the page is reloaded. The interact_method
                     # of click or return is paired to the xpath (the button type)
                     load_button_xpath, interact_method = self.get_load_button_xpath_and_interaction_method()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
-
-                    # Sending a keypress of 'Return' to the button works even
-                    # when the button is not currently visible in the viewport.
-                    # The other option is to scroll the window before clicking,
-                    # which we do for certain button xpaths that wont work with
-                    # keypress 'Return'. See self.load_button_xpaths
-                    if interact_method == 'Return':
-                        load_button.send_keys(Keys.RETURN)
-                    if interact_method == 'Click':
-                        actions = ActionChains(self.driver)
-                        actions.move_to_element(load_button).perform()
-                        load_button.click()
+                    self.press_button(load_button, interact_method)
 
                     # Track the number of clicks that we've performed
                     n_clicks_performed += 1
