@@ -9,18 +9,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 class ButtonPressMiddleware:
-    """Scrapy middleware to bypass javascript 'load more' buttons using selenium.
+    """Scrapy middleware to bypass 'load more' and form buttons using selenium.
 
-    Javascript load buttons are identified by searching for XPath patterns.
+    Buttons are identified by searching for XPath patterns.
 
-    Selenium will keep pressing (hitting Return or clicking) the button until one of the following occurs:
+    Selenium will press each form button encountered a set number of times specified by self.form_button_xpaths
+
+    Selenium will then keep pressing any load button present until one of the following occurs:
         1. The button disappears (eg. when there are no more articles to load)
         2. The page takes too long to load (currently 60s)
         3. A maximum number of button presses is reached (currently 10000)
-
-    For button xpaths with a specific lower number of clicks specified in self.load_button_xpaths
-    than the maximum, these will get pressed that many times on the homepage before we look for
-    other buttons that need to be pressed self.max_button_clicks times
     """
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
