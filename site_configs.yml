@@ -2070,6 +2070,27 @@ thinkprogress.org:
       select_expression: '//div[@class="post__content"]'
       match_rule: 'single'
 
+threepercenternation.com:
+  site_name: 'threepercenternation.com'
+  start_url: 'http://threepercenternation.com/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/page/'
+      article_links: '//h3[@itemprop="headline"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//a[@class="vw-post-author__name"]/text()'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@itemprop="articleBody"]'
+      match_rule: 'first'
+      remove_expressions:
+        - '//div[contains(@class, "vw-post-navigation")]'
+        - '//div[contains(text(), "Loading...")]'
+
 time.com:
   site_name: 'time.com'
   start_url: 'http://time.com/section/politics'
