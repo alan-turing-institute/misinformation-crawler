@@ -25,8 +25,11 @@ class ScattergunSpider(MisinformationMixin, CrawlSpider):
                                        **link_kwargs),
                          follow=True, callback='parse_response')
 
+        # Ensure that we process all article overrides
+        article_override_rule = Rule(LinkExtractor(canonicalize=True, unique=True), callback='parse_article_override_list')
+
         # Add link following rule
-        self.rules = (link_rule, )
+        self.rules = (link_rule, article_override_rule)
 
         # Load starting URLs
         self.start_urls = self.load_start_urls(config)

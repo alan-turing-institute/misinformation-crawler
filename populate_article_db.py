@@ -11,7 +11,6 @@ def main():
     parser.add_argument("--max-articles", "-n", type=int, default=-1, help="Maximum number of articles to process from each site.")
     parser.add_argument("--site-name", "-s", default="all", help="Name of site configuration.")
     parser.add_argument("--local", action="store_true", help="Use local file as input and do not write output")
-
     args = parser.parse_args()
 
     # Set up logging
