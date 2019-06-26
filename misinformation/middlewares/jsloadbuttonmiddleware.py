@@ -18,7 +18,7 @@ class JSLoadButtonMiddleware:
         2. The page takes too long to load (currently 60s)
         3. A maximum number of button presses is reached (currently 10000)
 
-    For button xpaths with a specific lower number of clicks specified in self.button_xpaths
+    For button xpaths with a specific lower number of clicks specified in self.load_button_xpaths
     than the maximum, these will get pressed that many times on the homepage before we look for
     other buttons that need to be pressed self.max_button_clicks times
     """
@@ -29,44 +29,65 @@ class JSLoadButtonMiddleware:
         self.seen_urls = set()
         self.timeout = 60
         self.max_button_clicks = 10000
-        self.button_xpaths = [
-            ('//a[@class="load-more"]', 'Return', self.max_button_clicks),
-            ('//a[contains(@class, "m-more")]', 'Return', self.max_button_clicks),
-            ('//input[contains(@class, "agree")]', 'Return', self.max_button_clicks),
-            ('//button[@name="agree"]', 'Return', self.max_button_clicks),
-            ('//button[@class="qc-cmp-button"]', 'Return', self.max_button_clicks),
-            ('//button[@class="btn-more"]', 'Return', self.max_button_clicks),
-            ('//button[text()="Show More"]', 'Return', self.max_button_clicks),
-            ('//button[text()="Load More"]', 'Return', self.max_button_clicks),
-            ('//button[contains(@class, "show-more")]', 'Return', self.max_button_clicks),
+        self.form_button_xpaths = [
             ('//button[contains(@class, "gdpr-modal-close")]', 'Return', 2),
-            ('//button[@phx-track-id="load more"]', 'Return', self.max_button_clicks),
-            ('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return', self.max_button_clicks),
-            ('//div[contains(@class, "load-btn")]/a', 'Return', self.max_button_clicks),
-            ('//div[contains(@class, "button-load-more")]', 'Click', self.max_button_clicks),
-            ('//div[contains(@class, "pb-loadmore")]', 'Click', self.max_button_clicks),
-            ('//ul[contains(@class, "pager-load-more")]/li/a', 'Return', self.max_button_clicks),
-            ('//a[text()="Show More"]', 'Return', self.max_button_clicks)
+        ]
+        self.load_button_xpaths = [
+            ('//a[@class="load-more"]', 'Return'),
+            ('//a[contains(@class, "m-more")]', 'Return'),
+            ('//input[contains(@class, "agree")]', 'Return'),
+            ('//button[@name="agree"]', 'Return'),
+            ('//button[@class="qc-cmp-button"]', 'Return'),
+            ('//button[@class="btn-more"]', 'Return'),
+            ('//button[text()="Show More"]', 'Return'),
+            ('//button[text()="Load More"]', 'Return'),
+            ('//button[contains(@class, "show-more")]', 'Return'),
+            ('//button[@phx-track-id="load more"]', 'Return'),
+            ('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
+            ('//div[contains(@class, "load-btn")]/a', 'Return'),
+            ('//div[contains(@class, "button-load-more")]', 'Click'),
+            ('//div[contains(@class, "pb-loadmore")]', 'Click'),
+            ('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
+            ('//a[text()="Show More"]', 'Return')
         ]
 
-    def first_load_button_xpath(self):
+    def first_load_button_xpath(self):  # TODO: rename function
         """Find the first load button on the page - there may be more than one."""
-        for button_xpath, interact_method, interact_number in self.button_xpaths:
-            if interact_number == self.max_button_clicks:  # Load more buttons should be set to the max_button_clicks
-                try:
-                    self.driver.find_element_by_xpath(button_xpath)
-                    return (button_xpath, interact_method, interact_number)
-                except WebDriverException:
-                    pass
-        return None
+        for button_xpath, interact_method in self.load_button_xpaths:
+            try:
+                self.driver.find_element_by_xpath(button_xpath)
+                return (button_xpath, interact_method)
+            except WebDriverException:
+                pass
+        return None, None  # TODO: None return must match number of things otherwise returned
 
     def response_contains_button(self, response):
         """Search for a button in the response."""
-        for xpath_info in self.button_xpaths:
+        for xpath_info in self.load_button_xpaths:
             button_xpath = xpath_info[0]
             if response.xpath(button_xpath):
                 return True
         return False
+
+    def press_form_buttons(self):
+        for button_xpath, interact_method, interact_number in self.form_button_xpaths:
+            # Iterate through buttons with a specific number of clicks to be performed
+            for x in range(interact_number):
+                try:
+                    temp_button = self.driver.find_element_by_xpath(button_xpath)
+                    # Sending a keypress of 'Return' to the button works even
+                    # when the button is not currently visible in the viewport.
+                    # The other option is to scroll the window before clicking,
+                    # which we do for certain button xpaths that wont work with
+                    # keypress 'Return'. See self.form_button_xpaths
+                    if interact_method == 'Return':
+                        temp_button.send_keys(Keys.RETURN)
+                    if interact_method == 'Click':
+                        actions = ActionChains(self.driver)
+                        actions.move_to_element(temp_button).perform()
+                        temp_button.click()
+                except NoSuchElementException:
+                    pass
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
@@ -94,25 +115,7 @@ class JSLoadButtonMiddleware:
         n_clicks_performed = 0
         cached_page_source = None
 
-        for button_xpath, interact_method, interact_number in self.button_xpaths:
-            # Iterate through buttons with a specific number of clicks to be performed
-            if interact_number < self.max_button_clicks:
-                for x in range(interact_number):
-                    try:
-                        temp_button = self.driver.find_element_by_xpath(button_xpath)
-                        # Sending a keypress of 'Return' to the button works even
-                        # when the button is not currently visible in the viewport.
-                        # The other option is to scroll the window before clicking,
-                        # which we do for certain button xpaths that wont work with
-                        # keypress 'Return'. See self.button_xpaths
-                        if interact_method == 'Return':
-                            temp_button.send_keys(Keys.RETURN)
-                        if interact_method == 'Click':
-                            actions = ActionChains(self.driver)
-                            actions.move_to_element(temp_button).perform()
-                            temp_button.click()
-                    except NoSuchElementException:
-                        pass
+        self.press_form_buttons()
 
         while True:
             try:
@@ -127,7 +130,7 @@ class JSLoadButtonMiddleware:
 
                     # Look for a load button and store its location so that we
                     # can check when the page is reloaded
-                    load_button_xpath, interact_method, interact_number = self.first_load_button_xpath()
+                    load_button_xpath, interact_method = self.first_load_button_xpath()
                     load_button = self.driver.find_element_by_xpath(load_button_xpath)
                     button_location = load_button.location
 
@@ -135,7 +138,7 @@ class JSLoadButtonMiddleware:
                     # when the button is not currently visible in the viewport.
                     # The other option is to scroll the window before clicking,
                     # which we do for certain button xpaths that wont work with
-                    # keypress 'Return'. See self.button_xpaths
+                    # keypress 'Return'. See self.load_button_xpaths
                     if interact_method == 'Return':
                         load_button.send_keys(Keys.RETURN)
                     if interact_method == 'Click':
@@ -148,7 +151,7 @@ class JSLoadButtonMiddleware:
                     spider.logger.info('Clicked the load button once ({} times in total).'.format(n_clicks_performed))
 
                     # Terminate if we're at the maximum number of clicks
-                    if n_clicks_performed >= interact_number > 0:
+                    if n_clicks_performed >= self.max_button_clicks > 0:
                         spider.logger.info('Finished loading more articles after clicking button {} times.'.format(n_clicks_performed))
                         break
 
