@@ -1491,7 +1491,7 @@ occupydemocrats.com:
     method: 'index_page'
     index_page:
       url_must_contain: 'page/'
-      article_links: '//h3[@itemprop="headline"]/a'
+      article_links: '//div[@class="post-title"]/h6/a'
   metadata_source: 'microdata'
   article:
     byline:
