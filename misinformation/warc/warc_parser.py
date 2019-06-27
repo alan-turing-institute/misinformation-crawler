@@ -36,7 +36,7 @@ class WarcParser(Connector):
         self.node_indexes = node_indexes
         self.counts = None
 
-    def load_warcfiles(self, site_name, max_entries, use_local)
+    def load_warcfiles(self, site_name, max_entries, use_local):
         '''Load WARC files'''
         start_time = datetime.datetime.utcnow()
         if use_local:
@@ -51,7 +51,7 @@ class WarcParser(Connector):
                      )
         return warcfile_entries
 
-    def load_existing_articles(self, site_name, max_entries)
+    def load_existing_articles(self, site_name, max_entries):
         '''Load existing articles'''
         start_time = datetime.datetime.utcnow()
         try:
