@@ -17,6 +17,12 @@ def extract_datetime_string(date_string, date_format=None, timezone=False):
         if re.search(r"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\s[+-]\d{4}", date_string):
             date_string = date_string.replace(" -", "-").replace(" +", "+").replace(" ", "T")
 
+    # Date strings with a shortened version of a month name followed by a dot need to be
+    # in the correct format to be parsed correctly
+    if date_string:
+        if 'Sept.' in date_string:
+            date_string = date_string.replace('Sept.', 'Sep.')
+
     # First try pendulum as it seems to have fewer bugs
     # Source: http://blog.eustace.io/please-stop-using-arrow.html
     _datetime = pendulum_datetime_extract(date_string, date_format)
