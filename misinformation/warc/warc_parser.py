@@ -36,6 +36,36 @@ class WarcParser(Connector):
         self.node_indexes = node_indexes
         self.counts = None
 
+    def load_warcfiles(self, site_name, max_entries, use_local)
+        '''Load WARC files'''
+        start_time = datetime.datetime.utcnow()
+        if use_local:
+            warcfile_entries = read_local_files(site_name)
+        else:
+            warcfile_entries = self.read_entries(Webpage, max_entries=max_entries, site_name=site_name)
+        self.counts["warcentries"] = len(warcfile_entries)
+        duration = datetime.datetime.utcnow() - start_time
+        logging.info("Loaded %s crawled pages in %s",
+                     colored(self.counts["warcentries"], "blue"),
+                     colored(duration, "blue"),
+                     )
+        return warcfile_entries
+
+    def load_existing_articles(self, site_name, max_entries)
+        '''Load existing articles'''
+        start_time = datetime.datetime.utcnow()
+        try:
+            article_entries = self.read_entries(Article.article_url, max_entries=max_entries, site_name=site_name)
+            article_urls = [entry[0] for entry in article_entries]
+        except RecoverableDatabaseError:
+            article_urls = []
+        duration = datetime.datetime.utcnow() - start_time
+        logging.info("Loaded %s existing articles in %s",
+                     colored(len(article_urls), "blue"),
+                     colored(duration, "blue"),
+                     )
+        return article_urls
+
     def process_webpages(self, site_name, config, max_articles=-1, use_local=False):
         '''Process webpages from a single site'''
         start_time = datetime.datetime.utcnow()
@@ -49,28 +79,10 @@ class WarcParser(Connector):
         max_entries = 50 * max_articles if max_articles > 0 else None
 
         # Load WARC files
-        if use_local:
-            warcfile_entries = read_local_files(site_name)
-        else:
-            warcfile_entries = self.read_entries(Webpage, max_entries=max_entries, site_name=site_name)
-        self.counts["warcentries"] = len(warcfile_entries)
-        duration = datetime.datetime.utcnow() - start_time
-        logging.info("Loaded %s crawled pages in %s",
-                     colored(self.counts["warcentries"], "blue"),
-                     colored(duration, "blue"),
-                     )
+        warcfile_entries = self.load_warcfiles(site_name, max_entries, use_local)
 
         # Load existing articles
-        try:
-            article_entries = self.read_entries(Article.article_url, max_entries=max_entries, site_name=site_name)
-            article_urls = [entry[0] for entry in article_entries]
-        except RecoverableDatabaseError:
-            article_urls = []
-        duration = datetime.datetime.utcnow() - start_time - duration
-        logging.info("Loaded %s existing articles in %s",
-                     colored(len(article_urls), "blue"),
-                     colored(duration, "blue"),
-                     )
+        article_urls = self.load_existing_articles(site_name, max_entries)
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Stop if we've reached the processing limit
