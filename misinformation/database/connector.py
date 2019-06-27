@@ -73,13 +73,19 @@ class Connector():
                 raise NonRecoverableDatabaseError("The database has reached its size quota. Ending the crawl.")
             raise  # Re-raise the exception if it had a different cause
 
-    def read_entries(self, entry_type, site_name=None):
+    def read_entries(self, entry_type, max_entries=None, site_name=None):
         try:
             session = self.open_session()
             if site_name:
-                entries = session.query(entry_type).filter_by(site_name=site_name).all()
+                if max_entries:
+                    entries = session.query(entry_type).filter_by(site_name=site_name).limit(max_entries).all()
+                else:
+                    entries = session.query(entry_type).filter_by(site_name=site_name).all()
             else:
-                entries = session.query(entry_type).all()
+                if max_entries:
+                    entries = session.query(entry_type).limit(max_entries).all()
+                else:
+                    entries = session.query(entry_type).all()
             session.close()
             return entries
         except sqlalchemy.exc.OperationalError:
