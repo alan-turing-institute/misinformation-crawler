@@ -8,6 +8,32 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
 
+class PressableButton:
+    """Button class with attributes required by the ButtonPressMiddleware"""
+    def __init__(self, xpath, interact_method):
+            self.xpath = xpath
+            self.interact_method = interact_method
+
+    def get_button(self, driver):
+        """Use a webdriver to get an interactable button specified by the xpath"""
+        self.button = driver.find_element_by_xpath(self.xpath)
+
+    def press_button(self, driver):
+        """Navigate to and press a button, using a webdriver"""
+        # Sending a keypress of 'Return' to the button works even
+        # when the button is not currently visible in the viewport.
+        # The other option is to scroll the window before clicking,
+        # which we do for certain button xpaths that wont work with
+        # keypress 'Return'. See self.load_button_xpaths
+        self.get_button(driver)
+        if self.interact_method == 'Return':
+            self.button.send_keys(Keys.RETURN)
+        if self.interact_method == 'Click':
+            actions = ActionChains(driver)
+            actions.move_to_element(self.button).perform()
+            self.button.click()
+
+
 class ButtonPressMiddleware:
     """Scrapy middleware to bypass 'load more' and form buttons using selenium.
 
@@ -27,70 +53,54 @@ class ButtonPressMiddleware:
         self.seen_urls = set()
         self.timeout = 60
         self.max_button_clicks = 10000
-        self.form_button_xpaths = [
-            ('//button[contains(@class, "gdpr-modal-close")]', 'Return', 2),
+        self.form_buttons = [
+            PressableButton('//button[contains(@class, "gdpr-modal-close")]', 'Return'),
         ]
-        self.load_button_xpaths = [
-            ('//a[@class="load-more"]', 'Return'),
-            ('//a[contains(@class, "m-more")]', 'Return'),
-            ('//input[contains(@class, "agree")]', 'Return'),
-            ('//button[@name="agree"]', 'Return'),
-            ('//button[@class="qc-cmp-button"]', 'Return'),
-            ('//button[@class="btn-more"]', 'Return'),
-            ('//button[text()="Show More"]', 'Return'),
-            ('//button[text()="Load More"]', 'Return'),
-            ('//button[contains(@class, "show-more")]', 'Return'),
-            ('//button[@phx-track-id="load more"]', 'Return'),
-            ('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
-            ('//div[contains(@class, "load-btn")]/a', 'Return'),
-            ('//div[contains(@class, "button-load-more")]', 'Click'),
-            ('//div[contains(@class, "pb-loadmore")]', 'Click'),
-            ('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
-            ('//a[text()="Show More"]', 'Return')
+        self.load_buttons = [
+            PressableButton('//a[@class="load-more"]', 'Return'),
+            PressableButton('//a[contains(@class, "m-more")]', 'Return'),
+            PressableButton('//input[contains(@class, "agree")]', 'Return'),
+            PressableButton('//button[@name="agree"]', 'Return'),
+            PressableButton('//button[@class="qc-cmp-button"]', 'Return'),
+            PressableButton('//button[@class="btn-more"]', 'Return'),
+            PressableButton('//button[text()="Show More"]', 'Return'),
+            PressableButton('//button[text()="Load More"]', 'Return'),
+            PressableButton('//button[contains(@class, "show-more")]', 'Return'),
+            PressableButton('//button[@phx-track-id="load more"]', 'Return'),
+            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
+            PressableButton('//div[contains(@class, "load-btn")]/a', 'Return'),
+            PressableButton('//div[contains(@class, "button-load-more")]', 'Click'),
+            PressableButton('//div[contains(@class, "pb-loadmore")]', 'Click'),
+            PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
+            PressableButton('//a[text()="Show More"]', 'Return')
         ]
 
-    def get_load_button_xpath_and_interaction_method(self):
-        """Find the first load button on the page - there may be more than one.
-            Return the interact_method method paired with that xpath"""
-        for button_xpath, interact_method in self.load_button_xpaths:
+    def get_first_load_button(self):
+        """Find the first load button on the page - there may be more than one."""
+        for button in self.load_buttons:
             try:
-                self.driver.find_element_by_xpath(button_xpath)
-                return button_xpath, interact_method
+                # self.driver.find_element_by_xpath(button.xpath)
+                button.get_button(self.driver)
+                return button
             except WebDriverException:
                 pass
-        return None, None
+        return None
 
     def response_contains_button(self, response):
         """Search for a button in the response."""
-        for xpath_info in self.load_button_xpaths:
-            button_xpath = xpath_info[0]
-            if response.xpath(button_xpath):
+        for button in self.load_buttons:
+            if response.xpath(button.xpath):
                 return True
         return False
 
-    def press_button(self, button, interact_method):
-        """Navigate to and click a button"""
-        # Sending a keypress of 'Return' to the button works even
-        # when the button is not currently visible in the viewport.
-        # The other option is to scroll the window before clicking,
-        # which we do for certain button xpaths that wont work with
-        # keypress 'Return'. See self.load_button_xpaths
-        if interact_method == 'Return':
-            button.send_keys(Keys.RETURN)
-        if interact_method == 'Click':
-            actions = ActionChains(self.driver)
-            actions.move_to_element(button).perform()
-            button.click()
-
     def press_form_buttons(self):
         """Press any form buttons on the page the designated number of times."""
-        for button_xpath, interact_method, interact_number in self.form_button_xpaths:
+        for button in self.form_buttons:
             # Iterate through buttons with a specific number of clicks to be performed
             x = 0
-            while x < interact_number:
+            while x < 2:  # TODO: change this
                 try:
-                    form_button = self.driver.find_element_by_xpath(button_xpath)
-                    self.press_button(form_button, interact_method)
+                    button.press_button(self.driver)
                 except NoSuchElementException:
                     pass
                 x += 1
@@ -134,13 +144,11 @@ class ButtonPressMiddleware:
                     # Cache the page source in case the page crashes
                     cached_page_source = self.driver.page_source
 
-                    # Look for a load button and store its location so that we
-                    # can check when the page is reloaded. The interact_method
-                    # of click or return is paired to the xpath (the button type)
-                    load_button_xpath, interact_method = self.get_load_button_xpath_and_interaction_method()
-                    load_button = self.driver.find_element_by_xpath(load_button_xpath)
-                    button_location = load_button.location
-                    self.press_button(load_button, interact_method)
+                    # Look for and press a load button and store its location so that we
+                    # can check when the page is reloaded
+                    load_button = self.get_first_load_button()
+                    load_button.press_button(self.driver)
+                    button_location = load_button.button.location
 
                     # Track the number of clicks that we've performed
                     n_clicks_performed += 1
@@ -156,19 +164,19 @@ class ButtonPressMiddleware:
                     # NB. the default poll frequency is 0.5s so if we want
                     # short timeouts this needs to be changed in the
                     # WebDriverWait constructor
-                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != load_button.location)
+                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != load_button.button.location)
 
                 except ElementNotVisibleException:
                     # This can happen when the page refresh makes a previously
                     # found element invisible until the page load is finished
-                    WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, load_button_xpath)))
+                    WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, load_button.xpath)))
                 except ElementNotInteractableException:
                     # This can happen when the page refresh makes an element
                     # non-clickable for some period
-                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, load_button_xpath)))
+                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, load_button.xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
                 # If there are still available load buttons on the page then repeat
-                if self.get_load_button_xpath_and_interaction_method()[0]:
+                if self.get_first_load_button():
                     continue
                 else:
                     spider.logger.info('Terminating button clicking since there are no more load buttons on the page.')
