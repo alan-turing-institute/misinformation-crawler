@@ -79,31 +79,27 @@ class ButtonPressMiddleware:
         """Find the first load button on the page - there may be more than one."""
         for button in self.load_buttons:
             try:
-                # self.driver.find_element_by_xpath(button.xpath)
                 button.get_button(self.driver)
                 return button
             except WebDriverException:
                 pass
         return None
 
-    def response_contains_button(self, response):
-        """Search for a button in the response."""
+    def response_contains_load_button(self, response):
+        """Search for a load button in the response."""
         for button in self.load_buttons:
             if response.xpath(button.xpath):
                 return True
         return False
 
-    def press_form_buttons(self):
+    def press_form_buttons(self, response):
         """Press any form buttons on the page the designated number of times."""
         for button in self.form_buttons:
-            # Iterate through buttons with a specific number of clicks to be performed
-            x = 0
-            while x < 2:  # TODO: change this
+            while True:
                 try:
                     button.press_button(self.driver)
-                except NoSuchElementException:
-                    pass
-                x += 1
+                except (NoSuchElementException, ElementNotInteractableException):
+                    break
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
@@ -118,7 +114,7 @@ class ButtonPressMiddleware:
         self.seen_urls.add(request.url)
 
         # Look for a button using xpaths on the scrapy response
-        if not self.response_contains_button(response):
+        if not self.response_contains_load_button(response):
             return response
 
         # Load the URL using chromedriver
@@ -131,7 +127,7 @@ class ButtonPressMiddleware:
         n_clicks_performed = 0
         cached_page_source = None
 
-        self.press_form_buttons()
+        self.press_form_buttons(response)
 
         while True:
             try:
