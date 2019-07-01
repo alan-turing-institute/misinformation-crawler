@@ -21,15 +21,15 @@ class PressableButton:
 
     def press_button(self, driver):
         """Navigate to and press a button, using a webdriver"""
-        # Sending a keypress of 'Return' to the button works even
-        # when the button is not currently visible in the viewport.
-        # The other option is to scroll the window before clicking,
-        # which we do for certain button xpaths that wont work with
-        # keypress 'Return'. See self.load_button_xpaths
         self.get_button(driver)
         if self.interact_method == 'Return':
+            # Interact by sending a keypress of 'Return' to the button. 
+            # This works even when the button is not currently visible in the viewport.
             self.button.send_keys(Keys.RETURN)
         if self.interact_method == 'Click':
+            # Interact by moving to the element and then clicking.
+            # This is more fragile, so we only use it for those button
+            # xpaths that will not accept keypress 'Return'.
             actions = ActionChains(driver)
             actions.move_to_element(self.button).perform()
             self.button.click()
@@ -88,7 +88,7 @@ class ButtonPressMiddleware:
 
     def response_contains_a_button(self, response):
         """Check if any there are any load or form buttons in the response."""
-        for button in [item for sublist in [self.load_buttons, self.form_buttons] for item in sublist]:
+        for button in (self.load_buttons + self.form_buttons):
             if response.xpath(button.xpath):
                 return True
         return False
