@@ -2191,6 +2191,7 @@ vanityfair.com:
     method: 'scattergun'
     scattergun:
       url_must_contain: '/news/\d\d\d\d/\d\d/'
+    use_shallow_crawlers: True
   article:
     url_must_contain: '\d\d\d\d/\d\d/'
     byline:

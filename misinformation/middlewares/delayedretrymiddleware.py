@@ -10,6 +10,7 @@ class DelayedRetryMiddleware(RetryMiddleware):
     """
     def __init__(self, settings):
         self.delay_http_codes = [429, 503]
+        self.terminate_http_codes = [402]
         self.delay_increment = 0.1
         self.delay_interval = 0
         self.num_responses = 0
@@ -17,7 +18,10 @@ class DelayedRetryMiddleware(RetryMiddleware):
         super().__init__(settings)
 
     def process_response(self, request, response, spider):
-        # If we hit a service unavailable error then increase the delay
+        # If we hit a 'payment required' error then fail here
+        if response.status in self.terminate_http_codes:
+            spider.request_closure = True
+        # If we hit a 'service unavailable' error then increase the delay
         if response.status in self.delay_http_codes:
             self.delay_interval += self.delay_increment
             spider.logger.info(
