@@ -15,13 +15,13 @@ class PressableButton:
         self.interact_method = interact_method
         self.button = None
 
-    def get_button(self, driver):
+    def find_if_exists(self, driver):
         """Use a webdriver to get an interactable button specified by the xpath"""
         self.button = driver.find_element_by_xpath(self.xpath)
-
+        
     def press_button(self, driver):
         """Navigate to and press a button, using a webdriver"""
-        self.get_button(driver)
+        self.find_if_exists(driver)
         if self.interact_method == 'Return':
             # Interact by sending a keypress of 'Return' to the button. 
             # This works even when the button is not currently visible in the viewport.
@@ -76,11 +76,11 @@ class ButtonPressMiddleware:
             PressableButton('//a[text()="Show More"]', 'Return'),
         ]
 
-    def get_first_button_to_press(self, button_list):
-        """Find the first button on the page from a list of PressableButton objects"""
+    def get_next_available_button(self, button_list):
+        """Find the next button on the page from a list of PressableButton objects"""
         for button in button_list:
             try:
-                button.get_button(self.driver)
+                button.find_if_exists(self.driver)
                 return button
             except WebDriverException:
                 pass
@@ -155,7 +155,7 @@ class ButtonPressMiddleware:
                     WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, button_to_press.xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
                 # If there are still available buttons from the list on the page then repeat
-                if self.get_first_button_to_press(button_list):
+                if self.get_next_available_button(button_list):
                     continue
                 else:
                     spider.logger.info('Terminating button clicking since there are no more {} buttons on the page.'.format(button_type))
@@ -201,7 +201,7 @@ class ButtonPressMiddleware:
 
         # Get the cached page source in case the page crashes
         if self.response_contains_load_button(response):
-            cached_page_source = self.perform_button_pressing(self.get_first_button_to_press(self.load_buttons), self.load_buttons, spider)
+            cached_page_source = self.perform_button_pressing(self.get_next_available_button(self.load_buttons), self.load_buttons, spider)
         else:
             cached_page_source = self.driver.page_source
 
