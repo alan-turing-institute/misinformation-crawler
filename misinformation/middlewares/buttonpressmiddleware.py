@@ -18,12 +18,12 @@ class PressableButton:
     def find_if_exists(self, driver):
         """Use a webdriver to get an interactable button specified by the xpath"""
         self.button = driver.find_element_by_xpath(self.xpath)
-        
+
     def press_button(self, driver):
         """Navigate to and press a button, using a webdriver"""
         self.find_if_exists(driver)
         if self.interact_method == 'Return':
-            # Interact by sending a keypress of 'Return' to the button. 
+            # Interact by sending a keypress of 'Return' to the button.
             # This works even when the button is not currently visible in the viewport.
             self.button.send_keys(Keys.RETURN)
         if self.interact_method == 'Click':
