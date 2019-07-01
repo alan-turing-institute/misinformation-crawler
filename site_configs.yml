@@ -1228,23 +1228,20 @@ mic.com:
   site_name: 'mic.com'
   start_url: 'https://mic.com/'
   crawl_strategy:
-    strip_query_strings: True
-    method: 'index_page'
-    index_page:
-      url_must_not_contain: '/articles/'
-      article_links: '//div[@class="ip iS ir"]/a'
+    method: 'scattergun'
+    scattergun:
+      url_must_contain: '(/p/|/articles/)'
   article:
-    url_must_not_contain: 'mailto:'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[contains(@itemprop, "author")]//span[@itemprop="name"]/@data-byline-name'
+      select_expression: '//node()[@class="gN"]/text()'
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "article-page-body")]/article'
+      select_expression: '//div[@class="gh gg"]'
       match_rule: 'single'
       remove_expressions:
-        - '//figure[@class="embed"]'
+        - '//figure'
 
 missoulacurrent.com:
   site_name: 'missoulacurrent.com'
