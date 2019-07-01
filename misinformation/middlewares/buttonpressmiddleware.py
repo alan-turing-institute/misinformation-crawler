@@ -54,36 +54,43 @@ class ButtonPressMiddleware:
         self.timeout = 60
         self.max_button_clicks = 10000
         self.form_buttons = [
+            PressableButton('//input[contains(@class, "agree")]', 'Return'),
+            PressableButton('//button[@name="agree"]', 'Return'),
+            PressableButton('//button[@class="qc-cmp-button"]', 'Return'),
+            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
             PressableButton('//button[contains(@class, "gdpr-modal-close")]', 'Return'),
         ]
         self.load_buttons = [
             PressableButton('//a[@class="load-more"]', 'Return'),
             PressableButton('//a[contains(@class, "m-more")]', 'Return'),
-            PressableButton('//input[contains(@class, "agree")]', 'Return'),
-            PressableButton('//button[@name="agree"]', 'Return'),
-            PressableButton('//button[@class="qc-cmp-button"]', 'Return'),
             PressableButton('//button[@class="btn-more"]', 'Return'),
             PressableButton('//button[text()="Show More"]', 'Return'),
             PressableButton('//button[text()="Load More"]', 'Return'),
             PressableButton('//button[contains(@class, "show-more")]', 'Return'),
             PressableButton('//button[@phx-track-id="load more"]', 'Return'),
-            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
             PressableButton('//div[contains(@class, "load-btn")]/a', 'Return'),
             PressableButton('//div[contains(@class, "button-load-more")]', 'Click'),
             PressableButton('//div[contains(@class, "pb-loadmore")]', 'Click'),
             PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
-            PressableButton('//a[text()="Show More"]', 'Return')
+            PressableButton('//a[text()="Show More"]', 'Return'),
         ]
 
-    def get_first_load_button(self):
+    def get_first_button_to_press(self, button_list):
         """Find the first load button on the page - there may be more than one."""
-        for button in self.load_buttons:
+        for button in button_list:
             try:
                 button.get_button(self.driver)
                 return button
             except WebDriverException:
                 pass
         return None
+
+    def response_contains_a_button(self, response):
+        """Search for a load button or form button in the response."""
+        for button in [item for sublist in [self.load_buttons, self.form_buttons] for item in sublist]:
+            if response.xpath(button.xpath):
+                return True
+        return False
 
     def response_contains_load_button(self, response):
         """Search for a load button in the response."""
@@ -92,14 +99,78 @@ class ButtonPressMiddleware:
                 return True
         return False
 
-    def press_form_buttons(self, response):
-        """Press any form buttons on the page the designated number of times."""
-        for button in self.form_buttons:
-            while True:
+    def perform_button_pressing(self, button_to_press, button_list, spider, button_type='load'):
+        """Press a button as many times as we want, catch exceptions and log info to spider"""
+        n_clicks_performed = 0
+        cached_page_source = None
+        while True:
+            try:
+                # We need a nested try block here, since the WebDriverWait
+                # inside the ElementNotVisibleException or the
+                # ElementNotInteractableException can throw a
+                # TimeoutException that we want to handle in the same way as
+                # other TimeoutExceptions
                 try:
-                    button.press_button(self.driver)
-                except (NoSuchElementException, ElementNotInteractableException):
+                    # Cache the page source in case the page crashes
+                    cached_page_source = self.driver.page_source
+
+                    # Press a button
+                    if button_type == 'load':
+                        button_to_press.press_button(self.driver)
+                    if button_type == 'form':
+                        try:
+                            button_to_press.press_button(self.driver)
+                        except (NoSuchElementException, ElementNotInteractableException):
+                            break
+                    # Store the button location so that we can check when the page is reloaded
+                    button_location = button_to_press.button.location
+
+                    # Track the number of clicks that we've performed
+                    n_clicks_performed += 1
+                    spider.logger.info('Clicked a load or form button once ({} times in total).'.format(n_clicks_performed))
+
+                    # Terminate if we're at the maximum number of clicks
+                    # We should only get that far for load buttons
+                    if n_clicks_performed >= self.max_button_clicks > 0 and button_type == 'load':
+                        spider.logger.info('Finished loading more articles after clicking button {} times.'.format(n_clicks_performed))
+                        break
+
+                    # Wait until the page has been refreshed. We test for this
+                    # by checking whether the button has moved location.
+                    # NB. the default poll frequency is 0.5s so if we want
+                    # short timeouts this needs to be changed in the
+                    # WebDriverWait constructor
+                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != button_to_press.button.location)
+
+                except ElementNotVisibleException:
+                    print(button_to_press.xpath, "ElementNotVisibleException")
+                    # This can happen when the page refresh makes a previously
+                    # found element invisible until the page load is finished
+                    WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, button_to_press.xpath)))
+                except ElementNotInteractableException:
+                    # This can happen when the page refresh makes an element
+                    # non-clickable for some period
+                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, button_to_press.xpath)))
+            except (NoSuchElementException, StaleElementReferenceException):
+                # If there are still available buttons from the list on the page then repeat
+                if self.get_first_button_to_press(button_list):
+                    continue
+                else:
+                    spider.logger.info('Terminating button clicking since there are no more {} buttons on the page.'.format(button_type))
                     break
+            except TimeoutException:
+                spider.logger.info('Terminating button clicking after exceeding timeout of {} seconds.'.format(self.timeout))
+                break
+            except WebDriverException:
+                spider.logger.info('Terminating button clicking after losing connection to the page.')
+                break
+
+        return cached_page_source
+
+    def press_form_buttons(self, response, spider):
+        """Press any form buttons on the page until the form dissapears"""
+        for button in self.form_buttons:
+            self.perform_button_pressing(button, self.form_buttons, spider, button_type='form')
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
@@ -113,76 +184,23 @@ class ButtonPressMiddleware:
             return response
         self.seen_urls.add(request.url)
 
-        # Look for a button using xpaths on the scrapy response
-        if not self.response_contains_load_button(response):
+        # Look for a load button or form button using xpaths on the scrapy response
+        if not self.response_contains_a_button(response):
             return response
 
         # Load the URL using chromedriver
         self.driver.get(request.url)
 
-        # We should only reach this point if we have found a javascript load button
+        # We should only reach this point if we have found a javascript button
         spider.logger.info('Identified a javascript load button on {}.'.format(request.url))
 
-        # Keep track of the number of clicks performed
-        n_clicks_performed = 0
-        cached_page_source = None
+        # Press any form buttons needed to access the home page of the site
+        self.press_form_buttons(response, spider)
 
-        self.press_form_buttons(response)
-
-        while True:
-            try:
-                # We need a nested try block here, since the WebDriverWait
-                # inside the ElementNotVisibleException or the
-                # ElementNotInteractableException can throw a
-                # TimeoutException that we want to handle in the same way as
-                # other TimeoutExceptions
-                try:
-                    # Cache the page source in case the page crashes
-                    cached_page_source = self.driver.page_source
-
-                    # Look for and press a load button and store its location so that we
-                    # can check when the page is reloaded
-                    load_button = self.get_first_load_button()
-                    load_button.press_button(self.driver)
-                    button_location = load_button.button.location
-
-                    # Track the number of clicks that we've performed
-                    n_clicks_performed += 1
-                    spider.logger.info('Clicked the load button once ({} times in total).'.format(n_clicks_performed))
-
-                    # Terminate if we're at the maximum number of clicks
-                    if n_clicks_performed >= self.max_button_clicks > 0:
-                        spider.logger.info('Finished loading more articles after clicking button {} times.'.format(n_clicks_performed))
-                        break
-
-                    # Wait until the page has been refreshed. We test for this
-                    # by checking whether the load button has moved location.
-                    # NB. the default poll frequency is 0.5s so if we want
-                    # short timeouts this needs to be changed in the
-                    # WebDriverWait constructor
-                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != load_button.button.location)
-
-                except ElementNotVisibleException:
-                    # This can happen when the page refresh makes a previously
-                    # found element invisible until the page load is finished
-                    WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, load_button.xpath)))
-                except ElementNotInteractableException:
-                    # This can happen when the page refresh makes an element
-                    # non-clickable for some period
-                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, load_button.xpath)))
-            except (NoSuchElementException, StaleElementReferenceException):
-                # If there are still available load buttons on the page then repeat
-                if self.get_first_load_button():
-                    continue
-                else:
-                    spider.logger.info('Terminating button clicking since there are no more load buttons on the page.')
-                    break
-            except TimeoutException:
-                spider.logger.info('Terminating button clicking after exceeding timeout of {} seconds.'.format(self.timeout))
-                break
-            except WebDriverException:
-                spider.logger.info('Terminating button clicking after losing connection to the page.')
-                break
+        if self.response_contains_load_button(response):
+            cached_page_source = self.perform_button_pressing(self.get_first_button_to_press(self.load_buttons), self.load_buttons, spider)
+        else:
+            cached_page_source = self.driver.page_source
 
         # Get appropriately encoded HTML from the page
         try:
