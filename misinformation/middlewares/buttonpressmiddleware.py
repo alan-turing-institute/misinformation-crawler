@@ -58,6 +58,7 @@ class ButtonPressMiddleware:
             PressableButton('//input[contains(@class, "agree")]', 'Return'),
             PressableButton('//button[@name="agree"]', 'Return'),
             PressableButton('//button[@class="qc-cmp-button"]', 'Return'),
+            PressableButton('//button[@data-click="close"]', 'Return'),
             PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
             PressableButton('//button[contains(@class, "gdpr-modal-close")]', 'Return'),
         ]
