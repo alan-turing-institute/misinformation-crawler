@@ -11,8 +11,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 class PressableButton:
     """Button class with attributes required by the ButtonPressMiddleware"""
     def __init__(self, xpath, interact_method):
-            self.xpath = xpath
-            self.interact_method = interact_method
+        self.xpath = xpath
+        self.interact_method = interact_method
+        self.button = None
 
     def get_button(self, driver):
         """Use a webdriver to get an interactable button specified by the xpath"""
@@ -39,7 +40,7 @@ class ButtonPressMiddleware:
 
     Buttons are identified by searching for XPath patterns.
 
-    Selenium will press each form button encountered a set number of times specified by self.form_button_xpaths
+    Selenium will first press each form button encountered.
 
     Selenium will then keep pressing any load button present until one of the following occurs:
         1. The button disappears (eg. when there are no more articles to load)
@@ -76,7 +77,7 @@ class ButtonPressMiddleware:
         ]
 
     def get_first_button_to_press(self, button_list):
-        """Find the first load button on the page - there may be more than one."""
+        """Find the first button on the page from a list of PressableButton objects"""
         for button in button_list:
             try:
                 button.get_button(self.driver)
@@ -86,14 +87,14 @@ class ButtonPressMiddleware:
         return None
 
     def response_contains_a_button(self, response):
-        """Search for a load button or form button in the response."""
+        """Check if any there are any load or form buttons in the response."""
         for button in [item for sublist in [self.load_buttons, self.form_buttons] for item in sublist]:
             if response.xpath(button.xpath):
                 return True
         return False
 
     def response_contains_load_button(self, response):
-        """Search for a load button in the response."""
+        """Check if any there are any load buttons in the response."""
         for button in self.load_buttons:
             if response.xpath(button.xpath):
                 return True
@@ -120,6 +121,7 @@ class ButtonPressMiddleware:
                     if button_type == 'form':
                         try:
                             button_to_press.press_button(self.driver)
+                        # Stop trying to click a form button when it no longer exists
                         except (NoSuchElementException, ElementNotInteractableException):
                             break
                     # Store the button location so that we can check when the page is reloaded
@@ -167,7 +169,7 @@ class ButtonPressMiddleware:
 
         return cached_page_source
 
-    def press_form_buttons(self, response, spider):
+    def press_form_buttons(self, spider):
         """Press any form buttons on the page until the form dissapears"""
         for button in self.form_buttons:
             self.perform_button_pressing(button, self.form_buttons, spider, button_type='form')
@@ -195,8 +197,9 @@ class ButtonPressMiddleware:
         spider.logger.info('Identified a javascript load button on {}.'.format(request.url))
 
         # Press any form buttons needed to access the home page of the site
-        self.press_form_buttons(response, spider)
+        self.press_form_buttons(spider)
 
+        # Get the cached page source in case the page crashes
         if self.response_contains_load_button(response):
             cached_page_source = self.perform_button_pressing(self.get_first_button_to_press(self.load_buttons), self.load_buttons, spider)
         else:
