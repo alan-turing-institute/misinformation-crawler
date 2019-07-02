@@ -810,7 +810,8 @@ def test_extract_datetime_byline_mmddyy_with_mdyy_format():
     ("Feb.17, 2010", "MMM.DD, YYYY", "2010-02-17T00:00:00"),
     ("Jan., 27, 2010", "MMM., DD, YYYY", "2010-01-27T00:00:00"),
     ("July 2010", "MMMM YYYY", "2010-07-01T00:00:00"),
-    ("2012-12-16", "YYYY-MM-DD", "2012-12-16T00:00:00")
+    ("2012-12-16", "YYYY-MM-DD", "2012-12-16T00:00:00"),
+    ("July 8 ,2013", "MMMM D ,YYYY", "2013-07-08T00:00:00")
 ])
 def test_extract_datetime_abcnews_variants(datetime_string, format_string, expected_iso_string):
     assert extract_datetime_string(datetime_string, format_string) == expected_iso_string
