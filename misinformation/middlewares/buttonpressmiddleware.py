@@ -93,7 +93,7 @@ class ButtonPressMiddleware:
 
     def response_contains_a_button(self, response):
         """Check if any there are any load or form buttons in the response."""
-        for button in (self.load_buttons + self.form_buttons):
+        for button in self.load_buttons + self.form_buttons:
             if response.xpath(button.xpath):
                 return True
         return False
@@ -210,7 +210,7 @@ class ButtonPressMiddleware:
             for button in self.load_buttons:
                 for _ in range(self.max_button_clicks):
                     if button.find_if_exists(self.driver):
-                         page_source = self.press_load_button(button, spider)
+                        page_source = self.press_load_button(button, spider)
 
         html_str = page_source.encode(request.encoding)
 
