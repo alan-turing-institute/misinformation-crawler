@@ -3,7 +3,7 @@ import arrow
 import pendulum
 
 
-def extract_datetime_string(date_string, date_format=None, timezone=False):
+def extract_datetime_string(date_string, date_format=None, timezone=False, simplified_formats=False):
     # Replace lower-case AM and PM with upper-case equivalents since pendulum
     # can only interpret upper-case
     if date_string:
@@ -20,7 +20,14 @@ def extract_datetime_string(date_string, date_format=None, timezone=False):
     # Date strings with a shortened version of a month name followed by a dot need to be
     # in the correct format to be parsed correctly
     if date_string:
-        date_string = date_string.replace('Sept.', 'Sep.')
+        for character_following_shortened_month in [',', '.', ' ']:
+            date_string = date_string.replace('Sept' + character_following_shortened_month, 'Sep' + character_following_shortened_month)
+
+    # Some sites have a large number of possible formats, in the site configs
+    # which we reduce by removing characters from the date_string
+    if simplified_formats:
+        for separator_character in [',', '.', ' ']:
+            date_string = date_string.replace(separator_character, '')
 
     # First try pendulum as it seems to have fewer bugs
     # Source: http://blog.eustace.io/please-stop-using-arrow.html
