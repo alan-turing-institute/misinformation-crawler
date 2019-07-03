@@ -19,10 +19,8 @@ class PressableButton:
         """Use a webdriver to get an interactable button specified by the xpath"""
         try:
             self.button = driver.find_element_by_xpath(self.xpath)
-            print("found button for ", self.xpath)
             return True
         except NoSuchElementException:
-            print("no button for ", self.xpath)
             return False
 
     def press_button(self, driver):
@@ -55,11 +53,11 @@ class ButtonPressMiddleware:
     """
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.seen_urls = set()
         self.timeout = 60
-        self.max_button_clicks = 3
+        self.max_button_clicks = 10000
         self.form_buttons = [
             PressableButton('//input[contains(@class, "agree")]', 'Return'),
             PressableButton('//button[@name="agree"]', 'Return'),
@@ -130,7 +128,7 @@ class ButtonPressMiddleware:
 
                     # Track the number of clicks that we've performed
                     n_clicks_performed += 1
-                    spider.logger.info('Clicked a load button once ({} times in total).'.format(n_clicks_performed))
+                    spider.logger.info('Clicked a load button ({}) once ({} times in total).'.format(button.xpath, n_clicks_performed))
 
                     # Terminate if we're at the maximum number of clicks
                     if n_clicks_performed >= self.max_button_clicks > 0:
@@ -145,7 +143,6 @@ class ButtonPressMiddleware:
                     WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != button.button.location)
 
                 except ElementNotVisibleException:
-                    # print(button.xpath, "ElementNotVisibleException")
                     # This can happen when the page refresh makes a previously
                     # found element invisible until the page load is finished
                     WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, button.xpath)))
@@ -154,11 +151,7 @@ class ButtonPressMiddleware:
                     # non-clickable for some period
                     WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, button.xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
-                # If there are still available buttons from the list on the page then repeat
-                # if self.get_next_available_button(button_list):
-                #     continue
-                # else:
-                spider.logger.info('Terminating button clicking since there are no more {} buttons on the page.'.format(button_type))
+                spider.logger.info('Terminating button clicking since there are no more load buttons on the page.')
                 break
             except TimeoutException:
                 spider.logger.info('Terminating button clicking after exceeding timeout of {} seconds.'.format(self.timeout))
@@ -175,19 +168,14 @@ class ButtonPressMiddleware:
 
     def press_form_buttons(self, spider):
         """Press any form buttons on the page until the form dissapears"""
-        print("into form buton pressing")
         for button in self.form_buttons:
-            # while True:
-            print("into for loop of form buttons")
-            if button.find_if_exists(self.driver):
+            while button.find_if_exists(self.driver):
                 try:
-                    print("trying button for", button.xpath)
                     button.press_button(self.driver)
+                    spider.logger.info('Clicked a form button ({}).'.format(button.xpath))
                 # Stop trying to click a form button when it no longer exists
                 except (NoSuchElementException, ElementNotInteractableException):
-                    print("Not interactable button for", button.xpath)
                     break
-                 # wait for a short time?
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
@@ -210,7 +198,7 @@ class ButtonPressMiddleware:
 
         # We should only reach this point if we have found a javascript button
         spider.logger.info('Identified a javascript load button on {}.'.format(request.url))
-        print("everything before form button pressing")
+
         # Press any form buttons needed to access the home page of the site
         self.press_form_buttons(spider)
 
@@ -220,17 +208,10 @@ class ButtonPressMiddleware:
         # Press all the load buttons so we get the max no. of articles
         if self.response_contains_load_button(response):
             for button in self.load_buttons:
-                if button.find_if_exists(self.driver):
-                     page_source = press_load_button
-                     # wait for a short time?
+                for _ in range(self.max_button_clicks):
+                    if button.find_if_exists(self.driver):
+                         page_source = self.press_load_button(button, spider)
 
-        # if self.response_contains_load_button(response):
-        #     cached_page_source = self.press_load_button(self.get_next_available_button(self.load_buttons), self.load_buttons, spider)
-
-        # Get appropriately encoded HTML from the page
-        # try:
-        #     html_str = self.driver.page_source.encode(request.encoding)
-        # except WebDriverException:
         html_str = page_source.encode(request.encoding)
 
         # Add any cookies that we may have collected to the spider so that they
