@@ -6,7 +6,8 @@ import pkg_resources
 import pytest
 import yaml
 from scrapy.http import Request, TextResponse
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string, simplify_extracted_byline
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
+from misinformation.extractors.extract_article import simplify_extracted_byline, simplify_extracted_title
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
 UNIT_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "unit_test_data")
@@ -799,6 +800,28 @@ def test_extract_datetime_byline_mmddyy_with_mdyy_format():
     assert iso_string == expected_iso_string
 
 
+@pytest.mark.parametrize("datetime_string, format_string, expected_iso_string", [
+    ("PHOENIX, Ariz. — Oct 13, 2018, 6:42 PM ET", "MMM D, YYYY, h:mm A", "2018-10-13T18:42:00"),
+    ("WASHINGTON, May 25, 2010 --", "MMMM DD, YYYY", "2010-05-25T00:00:00"),
+    ("KABUL, Afghanistan, Aug. 31, 2009", "MMM. D, YYYY", "2009-08-31T00:00:00"),
+    ("ANCHORAGE, ALASKA, July 7, 2009", "MMMM D, YYYY", "2009-07-07T00:00:00"),
+    ("Feb 6, 2011", "MMM D, YYYY", "2011-02-06T00:00:00"),
+    ("WASHINGTON, April 19 , 2011", "MMMM DD , YYYY", "2011-04-19T00:00:00"),
+    ("Sept. 15, 2009", "MMM. DD, YYYY", "2009-09-15T00:00:00"),
+    ("Feb.17, 2010", "MMM.DD, YYYY", "2010-02-17T00:00:00"),
+    ("Jan., 27, 2010", "MMM., DD, YYYY", "2010-01-27T00:00:00"),
+    ("July 2010", "MMMM YYYY", "2010-07-01T00:00:00"),
+    ("2012-12-16", "YYYY-MM-DD", "2012-12-16T00:00:00")
+])
+def test_extract_datetime_abcnews_variants(datetime_string, format_string, expected_iso_string):
+    assert extract_datetime_string(datetime_string, format_string) == expected_iso_string
+
+
 @pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None), ("Toby Man / AP News", "Toby Man"), ("Ben Man (BBC)", "Ben Man")])
 def test_simplify_extracted_byline(byline, expected):
     assert simplify_extracted_byline(byline) == expected
+
+
+@pytest.mark.parametrize("title, expected", [("Title | News site", "Title"), ("Title", "Title")])
+def test_simplify_extracted_title(title, expected):
+    assert simplify_extracted_title(title) == expected

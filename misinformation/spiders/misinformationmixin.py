@@ -5,6 +5,7 @@ from contextlib import suppress
 from urllib.parse import urlparse
 from w3lib.url import url_query_cleaner, canonicalize_url
 from scrapy.exceptions import CloseSpider
+from scrapy.http import Request
 from misinformation.items import CrawlResponse
 from misinformation.warc import warc_from_response
 
@@ -26,6 +27,9 @@ class MisinformationMixin():
             "crawl_id": str(uuid.uuid4()),
             "crawl_datetime": datetime.datetime.utcnow().replace(microsecond=0).replace(tzinfo=datetime.timezone.utc).isoformat()
         }
+
+        # Set up list of override URLs to process before starting the crawl
+        self.article_overrides = config.get("article_override_list", [])
 
         # Parse domain from start URL(s) and then restrict crawl to follow only
         # links in this domain plus additional (optional) user-specifed domains
@@ -72,9 +76,7 @@ class MisinformationMixin():
 
     @staticmethod
     def load_start_urls(config):
-        start_urls = MisinformationMixin.as_list(config["start_url"])
-        start_urls += config.get("article_list", [])
-        return start_urls
+        return MisinformationMixin.as_list(config["start_url"])
 
     @staticmethod
     def common_link_kwargs(config):
@@ -114,7 +116,7 @@ class MisinformationMixin():
             resolved_url = response.request.meta.get("redirect_urls")[0]
         else:
             resolved_url = response.url
-        resolved_url = canonicalize_url(resolved_url)
+        resolved_url = canonicalize_url(resolved_url, keep_blank_values=False)
         self.logger.info("Searching for a URL match at: {}".format(resolved_url))
 
         # Always reject the front page of the domain since this will change
@@ -145,6 +147,15 @@ class MisinformationMixin():
         crawl_response["site_name"] = self.config["site_name"]
         crawl_response["warc_data"] = warc_from_response(response, resolved_url)
         return crawl_response
+
+    def start_requests(self):
+        """Process article overrides first, then delegate to the per-spider function."""
+        def yield_overrides():
+            for url in self.article_overrides:
+                self.logger.debug("Processing article override: %s", url)
+                yield Request(url, callback=self.parse_response)
+        yield from yield_overrides()
+        yield from super().start_requests()
 
     def closed(self, reason):
         """Log reason for closure."""

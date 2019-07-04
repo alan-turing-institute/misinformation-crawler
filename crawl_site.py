@@ -29,9 +29,9 @@ def main():
 
     # Retrieve configuration for specified site
     site_config = site_configs[args.site_name]
-    article_lists = yaml.load(pkg_resources.resource_string(__name__, "article_lists.yml"), Loader=yaml.FullLoader)
-    if args.site_name in article_lists:
-        site_config["article_list"] = article_lists[args.site_name]
+    article_override_lists = yaml.load(pkg_resources.resource_string(__name__, "article_override_lists.yml"), Loader=yaml.FullLoader)
+    if args.site_name in article_override_lists:
+        site_config["article_override_list"] = article_override_lists[args.site_name]
 
     # Update crawler settings here as we can't seem to do this when using the
     # custom_settings attribute in the spider initialiser
@@ -48,6 +48,17 @@ def main():
         settings.update({
             'CLOSESPIDER_ITEMCOUNT': args.max_articles
         })
+
+    # For sites with a maximum per-crawler limit, use lots of shallow crawlers
+    # which will self-terminate when they hit a 402 error
+    if "use_shallow_crawlers" in site_configs[args.site_name]["crawl_strategy"]:
+        if site_configs[args.site_name]["crawl_strategy"]["use_shallow_crawlers"]:
+            n_requests = 1000
+            if args.max_articles > 0:
+                n_requests = min(n_requests, 10 * args.max_articles)
+            settings.update({
+                'CONCURRENT_REQUESTS': n_requests
+            })
 
     # Set up a crawler process
     process = CrawlerProcess(settings)

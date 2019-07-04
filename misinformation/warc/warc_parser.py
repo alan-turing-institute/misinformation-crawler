@@ -34,32 +34,55 @@ class WarcParser(Connector):
         super().__init__()
         self.content_digests = content_digests
         self.node_indexes = node_indexes
-        self.counts = Counter(pages=0, skipped=0, articles=0, warcentries=0,
-                              no_date=0, no_byline=0, no_title=0)
+        self.counts = None
+
+    def load_warcfiles(self, site_name, max_entries, use_local):
+        '''Load WARC files'''
+        start_time = datetime.datetime.utcnow()
+        if use_local:
+            warcfile_entries = read_local_files(site_name)
+        else:
+            warcfile_entries = self.read_entries(Webpage, max_entries=max_entries, site_name=site_name)
+        self.counts["warcentries"] = len(warcfile_entries)
+        duration = datetime.datetime.utcnow() - start_time
+        logging.info("Loaded %s crawled pages in %s",
+                     colored(self.counts["warcentries"], "blue"),
+                     colored(duration, "blue"),
+                     )
+        return warcfile_entries
+
+    def load_existing_articles(self, site_name, max_entries):
+        '''Load existing articles'''
+        start_time = datetime.datetime.utcnow()
+        try:
+            article_entries = self.read_entries(Article.article_url, max_entries=max_entries, site_name=site_name)
+            article_urls = [entry[0] for entry in article_entries]
+        except RecoverableDatabaseError:
+            article_urls = []
+        duration = datetime.datetime.utcnow() - start_time
+        logging.info("Loaded %s existing articles in %s",
+                     colored(len(article_urls), "blue"),
+                     colored(duration, "blue"),
+                     )
+        return article_urls
 
     def process_webpages(self, site_name, config, max_articles=-1, use_local=False):
         '''Process webpages from a single site'''
         start_time = datetime.datetime.utcnow()
         logging.info("Loading pages for %s...", colored(site_name, "green"))
 
+        # Reset counts
+        self.counts = Counter(pages=0, skipped=0, articles=0, warcentries=0,
+                              no_date=0, no_byline=0, no_title=0)
+
+        # Speed up retrieval by setting a maximum number of entries to retrieve from the tables
+        max_entries = 10 * max_articles if max_articles > 0 else None
+
         # Load WARC files
-        if use_local:
-            warcfile_entries = read_local_files(site_name)
-        else:
-            warcfile_entries = self.read_entries(Webpage, site_name=site_name)
-        self.counts["warcentries"] = len(warcfile_entries)
+        warcfile_entries = self.load_warcfiles(site_name, max_entries, use_local)
 
         # Load existing articles
-        try:
-            article_entries = self.read_entries(Article.article_url, site_name=site_name)
-            article_urls = [entry[0] for entry in article_entries]
-        except RecoverableDatabaseError:
-            article_urls = []
-        duration = datetime.datetime.utcnow() - start_time
-        logging.info("Loaded %s pages in %s",
-                     colored(self.counts["warcentries"], "blue"),
-                     colored(duration, "blue"),
-                     )
+        article_urls = self.load_existing_articles(site_name, max_entries)
 
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Stop if we've reached the processing limit
@@ -93,19 +116,18 @@ class WarcParser(Connector):
             with suppress(KeyError):
                 article["metadata"] = json.dumps(article["metadata"])
 
-            # Check for missing fields
-            if not article["publication_datetime"]:
-                self.counts["no_date"] += 1
-            if not article["byline"]:
-                self.counts["no_byline"] += 1
-            if not article["title"]:
-                self.counts["no_title"] += 1
-
             # Add article to database unless we're running locally
             if article["content"]:
                 if not use_local:
                     self.add_to_database(article)
                 self.counts["articles"] += 1
+                # Check for missing fields in these articles
+                if not article["publication_datetime"]:
+                    self.counts["no_date"] += 1
+                if not article["byline"]:
+                    self.counts["no_byline"] += 1
+                if not article["title"]:
+                    self.counts["no_title"] += 1
             logging.info("Finished processing %s/%s: %s", idx, self.counts["warcentries"], entry.article_url)
 
         # Print statistics
