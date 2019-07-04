@@ -47,12 +47,14 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
 
     # Next overwite with site config versions, if they exist
     if "article" in config:
+        # Attempt to extract article HTML, using a blank entry if nothing can be extracted
         article_html = extract_element(response, config["article"]["content"])
-        if article_html:
-            readabilipy_article = simple_json_from_html_string(article_html, content_digests, node_indexes, use_readability=False)
-            article["content"] = readabilipy_article["content"]
-            article["plain_content"] = readabilipy_article["plain_content"]
-            article["plain_text"] = readabilipy_article["plain_text"]
+        if not article_html:
+            article_html = ""
+        readabilipy_article = simple_json_from_html_string(article_html, content_digests, node_indexes, use_readability=False)
+        article["content"] = readabilipy_article["content"]
+        article["plain_content"] = readabilipy_article["plain_content"]
+        article["plain_text"] = readabilipy_article["plain_text"]
 
     # Check whether we extracted an empty article and reject if so
     if article["content"] == "<div></div>":
