@@ -21,7 +21,8 @@ class PressableButton:
             self.button = driver.find_element_by_xpath(self.xpath)
             return True
         except NoSuchElementException:
-            return False
+            pass
+        return False
 
     def press_button(self, driver):
         """Navigate to and press a button, using a webdriver"""
