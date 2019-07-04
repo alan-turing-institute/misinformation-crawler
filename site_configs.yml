@@ -1862,6 +1862,35 @@ talkingpointsmemo.com:
       remove_expressions:
         - '//blockquote[@class="twitter-tweet"]'
 
+tampabay.com:
+  site_name: 'tampabay.com'
+  start_url: 'https://www.tampabay.com/florida-politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'www.tampabay.com/florida-politics/$'
+      article_links: '//a[h4]'
+  article:
+    url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
+    title:
+      select_method: 'xpath'
+      select_expression: '//title/text()'
+      match_rule: 'first'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="author"]/@content | //meta[@property="authors"]/@content'
+      match_rule: 'concatenate'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//time/@datetime | //meta[@property="article:published_time"]/@content'
+      match_rule: 'first'
+      datetime_formats:
+        - 'YYYY-MM-DDTHH:mm:ss'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="article-content"] | //div[@id="articleBody"]'
+      match_rule: 'single'
+
 texastribune.org:
   site_name: 'texastribune.org'
   start_url: 'https://www.texastribune.org'
