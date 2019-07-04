@@ -6,7 +6,8 @@ import pkg_resources
 import pytest
 import yaml
 from scrapy.http import Request, TextResponse
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string, simplify_extracted_byline
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
+from misinformation.extractors.extract_article import simplify_extracted_byline, simplify_extracted_title
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
 UNIT_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "unit_test_data")
@@ -819,3 +820,8 @@ def test_extract_datetime_abcnews_variants(datetime_string, format_string, expec
 @pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None), ("Toby Man / AP News", "Toby Man"), ("Ben Man (BBC)", "Ben Man")])
 def test_simplify_extracted_byline(byline, expected):
     assert simplify_extracted_byline(byline) == expected
+
+
+@pytest.mark.parametrize("title, expected", [("Title | News site", "Title"), ("Title", "Title")])
+def test_simplify_extracted_title(title, expected):
+    assert simplify_extracted_title(title) == expected

@@ -6,10 +6,10 @@ https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 """
 from .cloudflaremiddleware import CloudFlareMiddleware
 from .delayedretrymiddleware import DelayedRetryMiddleware
-from .jsloadbuttonmiddleware import JSLoadButtonMiddleware
+from .buttonpressmiddleware import ButtonPressMiddleware
 
 __all__ = [
     "CloudFlareMiddleware",
     "DelayedRetryMiddleware",
-    "JSLoadButtonMiddleware",
+    "ButtonPressMiddleware",
 ]
