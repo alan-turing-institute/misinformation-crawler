@@ -1,10 +1,14 @@
+# Ignore the extract_article.py file I made in repo root for testing
+extract_article.py
+
+# Ignore blank site config template
+blank_site_config.yml
 
 # Secrets folder containing sensitive data
-secrets/*.yaml
+secrets/*
 
 # generated data
-/article_urls/
-/articles/
+/webpages/
 
 # pycharm project files
 .idea/
@@ -114,3 +118,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Temp files
+.DS_Store

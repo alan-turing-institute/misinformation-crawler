@@ -1,26 +1,21 @@
-import arrow
-import pytest
+import datetime
+import glob
 import json
 import os
-import glob
 import pkg_resources
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
-from scrapy.http import Request,  TextResponse
+import pytest
 import yaml
+from scrapy.http import Request, TextResponse
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
+from misinformation.extractors.extract_article import simplify_extracted_byline, simplify_extracted_title
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
 UNIT_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "unit_test_data")
 SITE_CONFIG_FILE = pkg_resources.resource_string("misinformation", "../site_configs.yml")
 
 # Load site-specific spider configurations
-SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE)
-SITE_NAMES = [
-    "addictinginfo.com"
-    ,"conservativehq.com"
-    # ,"empirenews.net"
-    # ,"federalistpress.com"
-    # ,"gellerreport.com"
-]
+SITE_CONFIGS = yaml.load(SITE_CONFIG_FILE, Loader=yaml.FullLoader)
+SITE_NAMES = sorted(SITE_CONFIGS.keys())
 
 
 # ================= HELPER FUNCTIONS =================
@@ -48,12 +43,11 @@ def article_from_json_file(json_filepath):
 
 def article_stems_for_site(site_name):
     # Find all HTML files in site test data directory
-    print(os.path.join(SITE_TEST_DATA_DIR, site_name))
     html_file_paths = glob.glob(os.path.join(SITE_TEST_DATA_DIR, site_name, '*.html'))
     article_stems = []
     for html_file_path in html_file_paths:
-        path, file = os.path.split(html_file_path)
-        article_stems.append(file.split('_')[0])
+        _, _file = os.path.split(html_file_path)
+        article_stems.append(_file.split('_')[0])
     # Fail fixture set up if no test sites found for site
     assert article_stems != [], "No HTML test files found for site '{site}'".format(site=site_name)
     return article_stems
@@ -81,10 +75,17 @@ def article_info(request):
     return request.param
 
 
+class MockDBEntry():
+    def __init__(self, crawl_id, crawl_datetime):
+        self.crawl_id = crawl_id
+        self.crawl_datetime = datetime.datetime.strptime(crawl_datetime, '%Y-%m-%dT%H:%M:%S.%f%z')
+
+
 # ================= TEST FUNCTIONS =================
 def validate_extract_element(html, extract_spec, expected):
     actual = extract_element(html, extract_spec)
-    assert actual == expected
+    # Ignore whitespace differences
+    assert actual == expected or ''.join(actual.split()) == ''.join(expected.split())
 
 
 def validate_extract_article(response, config, expected):
@@ -108,7 +109,6 @@ def test_extract_article_for_sites(article_info):
 
     # Define test file locations
     article_stem = article_info['article_stem']
-    print("\nTesting {site}: {article}".format(site=site_name, article=article_stem))
     data_dir = os.path.join(SITE_TEST_DATA_DIR, site_name)
     html_filename = article_stem + '_article.html'
     json_filename = article_stem + '_extracted_data.json'
@@ -123,6 +123,31 @@ def test_extract_article_for_sites(article_info):
     validate_extract_article(response, config, expected_article)
 
 
+def test_extract_empty_article():
+    # Mock response using expected article data
+    html = "<html></html>"
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        title:
+            select_method: 'xpath'
+            select_expression: '//h1[@class="post-title"]/text()'
+            match_rule: 'single'
+        content:
+            select_method: 'xpath'
+            select_expression: '//p/text()'
+            match_rule: 'first'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test single element extraction
+    expected_content = None
+    validate_extract_element(response, config['article']['content'], expected_content)
+
+
 def test_extract_article_default():
     # Load test file
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
@@ -135,16 +160,8 @@ def test_extract_article_default():
     config_yaml = """
         site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
-        follow_url_path: 'page/'
-        article_url_xpath: '//h2[@class="entry-title"]/a'
-        article:
-            publication_datetime:
-                select-method: 'xpath'
-                select-expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
-                match-rule: 'single'
-
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config)
@@ -156,24 +173,19 @@ def test_extract_article_default_with_crawl_info():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_with_crawl_info.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_with_crawl_info.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
     config_yaml = """
         site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
-        follow_url_path: 'page/'
-        article_url_xpath: '//h2[@class="entry-title"]/a'
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Mock crawl info
-    crawl_info = {
-        "crawl_id": "bdbcf1cf-e4,1f-4c10-9958-4ab1b07e46ae",
-        "crawl_datetime": "2018-10-17T20:25:34.2345+00:00"
-    }
+    crawl_info = MockDBEntry(crawl_id="bdbcf1cf-e4,1f-4c10-9958-4ab1b07e46ae",
+                             crawl_datetime="2018-10-17T20:25:34.234567+0000")
 
     # Test
     article = extract_article(response, config, crawl_info)
@@ -185,27 +197,27 @@ def test_extract_article_custom_title_selector():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_custom_title_selector.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_title_selector.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
     config_yaml = """
         site_name: 'example.com'
-        article_element: 'div'
-        article_class: 'post-content'
         article:
             title:
-                select-method: 'xpath'
-                select-expression: '//p[@id="test-custom-title"]/text()'
-                match-rule: 'single'
-
+                select_method: 'xpath'
+                select_expression: '//p[@id="test-custom-title"]/text()'
+                match_rule: 'single'
+            content:
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config)
-    assert article == expected_article
+    assert article["title"] == expected_article["title"]
 
 
 def test_extract_article_custom_byline_selector():
@@ -213,27 +225,27 @@ def test_extract_article_custom_byline_selector():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_custom_byline_selector.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_byline_selector.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
     config_yaml = """
         site_name: 'example.com'
-        article_element: 'div'
-        article_class: 'post-content'
         article:
             byline:
-                select-method: 'xpath'
-                select-expression: '//p[@id="test-custom-byline"]/text()'
-                match-rule: 'single'
-
+                select_method: 'xpath'
+                select_expression: '//p[@id="test-custom-byline"]/text()'
+                match_rule: 'single'
+            content:
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config)
-    assert article == expected_article
+    assert article["byline"] == expected_article["byline"]
 
 
 def test_extract_article_custom_content_selector():
@@ -241,27 +253,53 @@ def test_extract_article_custom_content_selector():
     html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
     response = response_from_html_file(html_filepath)
     # Load expected article data
-    article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
-        "addictinginfo.com-1_extracted_data_default_custom_content_selector.json")
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_content_selector.json")
     expected_article = article_from_json_file(article_filepath)
 
     # Mock config
     config_yaml = """
         site_name: 'example.com'
-        article_element: 'div'
-        article_class: 'post-content'
         article:
             content:
-                select-method: 'xpath'
-                select-expression: '//div[@class="entry entry-content"]'
-                match-rule: 'single'
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
 
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config)
-    assert article == expected_article
+    assert article["content"] == expected_article["content"]
+
+
+def test_extract_article_custom_publication_datetime_selector():
+    # Load test file
+    html_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_article.html")
+    response = response_from_html_file(html_filepath)
+    # Load expected article data
+    article_filepath = os.path.join(UNIT_TEST_DATA_DIR, "addictinginfo.com-1_extracted_data_default_custom_publication_datetime_selector.json")
+    expected_article = article_from_json_file(article_filepath)
+
+    # Mock config
+    config_yaml = """
+        site_name: 'example.com'
+        start_url: 'http://addictinginfo.com/category/news/'
+        article:
+            publication_datetime:
+                select_method: 'xpath'
+                select_expression: '//time[contains(concat(" ", normalize-space(@class), " "), " entry-date ")]/@datetime'
+                match_rule: 'single'
+            content:
+                select_method: 'xpath'
+                select_expression: '//div[@class="entry entry-content"]'
+                match_rule: 'single'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test
+    article = extract_article(response, config)
+    assert article["publication_datetime"] == expected_article["publication_datetime"]
 
 
 def test_extract_article_default_content_digests():
@@ -276,10 +314,8 @@ def test_extract_article_default_content_digests():
     config_yaml = """
         site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
-        follow_url_path: 'page/'
-        article_url_xpath: '//h2[@class="entry-title"]/a'
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config, content_digests=True)
@@ -298,10 +334,8 @@ def test_extract_article_default_node_indexes():
     config_yaml = """
         site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
-        follow_url_path: 'page/'
-        article_url_xpath: '//h2[@class="entry-title"]/a'
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config, node_indexes=True)
@@ -316,15 +350,12 @@ def test_extract_article_default_content_digests_node_indexes():
     article_filepath = os.path.join(UNIT_TEST_DATA_DIR,
                                     "addictinginfo.com-1_extracted_data_default_content_digests_node_indexes.json")
     expected_article = article_from_json_file(article_filepath)
-
     # Mock config
     config_yaml = """
         site_name: 'example.com'
         start_url: 'http://addictinginfo.com/category/news/'
-        follow_url_path: 'page/'
-        article_url_xpath: '//h2[@class="entry-title"]/a'
     """
-    config = yaml.load(config_yaml)
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test
     article = extract_article(response, config, content_digests=True, node_indexes=True)
@@ -345,34 +376,38 @@ def test_extract_element():
             </div>
         </div>
     </body>
-</html>"""
+    </html>"""
     response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
 
     # Mock config
     config_yaml = """
     site_name: 'example.com'
-    article_element: 'div'
-    article_class: 'post-content'
     article:
         title:
-            select-method: 'xpath'
-            select-expression: '//h1[@class="post-title"]/text()'
-            match-rule: 'single'
+            select_method: 'xpath'
+            select_expression: '//h1[@class="post-title"]/text()'
+            match_rule: 'single'
+        grouped-paragraphs:
+            select_method: 'xpath'
+            select_expression: '//p'
+            match_rule: 'group'
         paragraphs:
-            select-method: 'xpath'
-            select-expression: '//p/text()'
-            match-rule: 'all'
+            select_method: 'xpath'
+            select_expression: '//p/text()'
+            match_rule: 'all'
         first-paragraph:
-            select-method: 'xpath'
-            select-expression: '//p/text()'
-            match-rule: 'first'
-
-"""
-    config = yaml.load(config_yaml)
+            select_method: 'xpath'
+            select_expression: '//p/text()'
+            match_rule: 'first'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     # Test single element extraction
     expected_title = "Article title"
     validate_extract_element(response, config['article']['title'], expected_title)
+    # Test group element extraction
+    expected_paragraphs = "<div><p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p></div>"
+    validate_extract_element(response, config['article']['grouped-paragraphs'], expected_paragraphs)
     # Test all element extraction
     expected_paragraphs = ["Paragraph 1", "Paragraph 2", "Paragraph 3"]
     validate_extract_element(response, config['article']['paragraphs'], expected_paragraphs)
@@ -381,12 +416,210 @@ def test_extract_element():
     validate_extract_element(response, config['article']['first-paragraph'], expected_first_paragraph)
 
 
+def test_remove_single_expression():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="social">
+                <p>Twitter</p>
+                <p>Facebook</p>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '//div[@class="social"]'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
+def test_remove_nested_expressions():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="social">
+                <div class="social">
+                    <p>Twitter</p>
+                    <p>Facebook</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '//div[@class="social"]'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
+def test_remove_multiple_nested_expressions():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="bad">
+                <div class="social">
+                    <p>Twitter</p>
+                </div>
+                <div class="social">
+                    <div class="bad">
+                        <p>Facebook</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '//div[@class="social"]'
+                - '//div[@class="bad"]'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
+def test_remove_by_relative_path():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+            <div class="social">
+                <p>Twitter</p>
+                <p>Facebook</p>
+            </div>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="post-content"]'
+            match_rule: 'first'
+            remove_expressions:
+                - '/div/div[@class="social"]'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    # Test content extraction with removal
+    expected_html = """
+        <div class="post-content">
+            <h1 class="post-title">Article title</h1>
+            <div class="post-content">
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+                <p>Paragraph 3</p>
+            </div>
+        </div>"""
+    validate_extract_element(response, config['article']['content'], expected_html)
+
+
 def test_xpath_extract_spec_default():
     expression = '//div[@class="content"]/a/text()'
     expected_extract_spec = {
-        "select-method": "xpath",
-        "select-expression": expression,
-        "match-rule": "single"
+        "select_method": "xpath",
+        "select_expression": expression,
+        "match_rule": "single",
+        "warn_if_missing": True
     }
     extract_spec = xpath_extract_spec(expression)
     assert extract_spec == expected_extract_spec
@@ -396,9 +629,10 @@ def test_xpath_extract_spec_with_match_rule():
     expression = '//div[@class="content"]/a/text()'
     match_rule = "all"
     expected_extract_spec = {
-        "select-method": "xpath",
-        "select-expression": expression,
-        "match-rule": match_rule
+        "select_method": "xpath",
+        "select_expression": expression,
+        "match_rule": match_rule,
+        "warn_if_missing": True
     }
     extract_spec = xpath_extract_spec(expression, match_rule)
     assert extract_spec == expected_extract_spec
@@ -413,17 +647,14 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
             No article here.
         </div>
     </body>
-</html>"""
+    </html>"""
     response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
 
     # Mock config
     config_yaml = """
     site_name: 'example.com'
-    article_element: 'div'
-    article_class: 'post-content'
-
-"""
-    config = yaml.load(config_yaml)
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
 
     expected_article = {
         'site_name': "example.com",
@@ -431,10 +662,58 @@ def test_extract_article_with_no_data_has_all_fields_present_but_null():
         'title': None,
         'byline': None,
         'publication_datetime': None,
-        'content': None,
-        'plain_content': None,
-        'plain_text': None,
+        'content': "<div>No article here.</div>",
+        'plain_content': "<div>No article here.</div>",
+        'plain_text': [{'text': 'No article here.'}],
         'metadata': None
+    }
+
+    # Test
+    article = extract_article(response, config)
+    assert article == expected_article
+
+
+def test_extract_datetime_works_with_multiple_dates():
+    # Mock response using expected article data
+    html = """<html>
+    <head></head>
+    <body>
+        <div class="subarticle">
+            <p>October 22, 2018</p>
+            <p>Article text here.</p>
+            <p>May 15, 2006</p>
+        </div>
+    </body>
+    </html>"""
+    response = TextResponse(url="http://example.com", body=html, encoding="utf-8")
+
+    # Mock config
+    config_yaml = """
+    site_name: 'example.com'
+    article:
+        publication_datetime:
+            select_method: 'xpath'
+            select_expression: '//div[@class="subarticle"]/p/text()'
+            match_rule: 'group'
+            datetime_formats:
+              - 'MMMM D, YYYY'
+        content:
+            select_method: 'xpath'
+            select_expression: '//div[@class="subarticle"]'
+            match_rule: 'single'
+    """
+    config = yaml.load(config_yaml, Loader=yaml.FullLoader)
+
+    expected_article = {
+        'site_name': 'example.com',
+        'article_url': 'http://example.com',
+        'title': None,
+        'byline': None,
+        'publication_datetime': "2018-10-22T00:00:00",
+        'content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
+        'plain_content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
+        'plain_text': [{"text": "October 22, 2018"}, {"text": "Article text here."}, {"text": "May 15, 2006"}],
+        'metadata': None,
     }
 
     # Test
@@ -519,3 +798,30 @@ def test_extract_datetime_byline_mmddyy_with_mdyy_format():
     expected_iso_string = '2018-12-17T00:00:00'
 
     assert iso_string == expected_iso_string
+
+
+@pytest.mark.parametrize("datetime_string, format_string, expected_iso_string", [
+    ("PHOENIX, Ariz. — Oct 13, 2018, 6:42 PM ET", "MMM D, YYYY, h:mm A", "2018-10-13T18:42:00"),
+    ("WASHINGTON, May 25, 2010 --", "MMMM DD, YYYY", "2010-05-25T00:00:00"),
+    ("KABUL, Afghanistan, Aug. 31, 2009", "MMM. D, YYYY", "2009-08-31T00:00:00"),
+    ("ANCHORAGE, ALASKA, July 7, 2009", "MMMM D, YYYY", "2009-07-07T00:00:00"),
+    ("Feb 6, 2011", "MMM D, YYYY", "2011-02-06T00:00:00"),
+    ("WASHINGTON, April 19 , 2011", "MMMM DD , YYYY", "2011-04-19T00:00:00"),
+    ("Sept. 15, 2009", "MMM. DD, YYYY", "2009-09-15T00:00:00"),
+    ("Feb.17, 2010", "MMM.DD, YYYY", "2010-02-17T00:00:00"),
+    ("Jan., 27, 2010", "MMM., DD, YYYY", "2010-01-27T00:00:00"),
+    ("July 2010", "MMMM YYYY", "2010-07-01T00:00:00"),
+    ("2012-12-16", "YYYY-MM-DD", "2012-12-16T00:00:00")
+])
+def test_extract_datetime_abcnews_variants(datetime_string, format_string, expected_iso_string):
+    assert extract_datetime_string(datetime_string, format_string) == expected_iso_string
+
+
+@pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None), ("Toby Man / AP News", "Toby Man"), ("Ben Man (BBC)", "Ben Man")])
+def test_simplify_extracted_byline(byline, expected):
+    assert simplify_extracted_byline(byline) == expected
+
+
+@pytest.mark.parametrize("title, expected", [("Title | News site", "Title"), ("Title", "Title")])
+def test_simplify_extracted_title(title, expected):
+    assert simplify_extracted_title(title) == expected

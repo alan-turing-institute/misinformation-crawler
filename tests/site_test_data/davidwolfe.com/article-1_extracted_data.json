@@ -1,13 +1,26 @@
 {
-  "crawl_id": "7675990b-c332-4745-9dce-590d358155e6",
-  "crawl_date": "2018-10-17T20:25:34.2345+00:00",
-  "site_name": "davidwolfe.com",
-  "article_url": "http://davidwolfe.com.com/article-1_article.html",
-  "title": "David Avocado Wolfe Exposes Scientism: Responds to Yvette D’Entremont’s SciFi Babe’s Slander, Poor Research",
-  "byline": "davidwolfe",
-  "publication_datetime": "2018-09-18T23:57:28+00:00",
-  "modified_date": "2018-07-05",
-  "plain_text": "",
-  "structured_text": "",
-  "metadata": {}
+    "site_name":"davidwolfe.com",
+    "article_url": "https://www.davidwolfe.com/alcohol-linked-7-types-of-cancer/",
+    "title": "Students Demonstrate The Dangers Of Wi-Fi Radiation With Ingenious Cress Seeds Experiment",
+    "byline": "DavidWolfe.com",
+    "publication_datetime": "2017-11-12T20:19:54",
+    "plain_content": "<div><section itemprop=\"articleBody\"><p>In this current internet age where everyone from children to pensioners habitually keep their cell phones within arms length, are we all at risk of damaging our health?</p><p>Few likely know—or even care–for the known dangers of radiation contamination by constantly being within close proximity of our cell phones...but what about Wi-Fi?</p><p>Curious to understand the effects technology was having on their ability to pay attention in school, 5 high school classmates conducted an experiment for their biology class.</p><p>9th grade student Lea Nielsen expressed, “We all think we have experienced difficulty concentrating in school, if we had slept with the phone next to our head, and sometimes also experienced having difficulty sleeping.”</p><p>The girls decided to conduct a 12 day experiment to test the effects of Wi-Fi radiation by placing routers—“which emit the same type of radiation as a regular cellphone“—next to growing cress seeds.</p><p>According to Of The Box, the students used a simple yet revealing experimental design in which they:</p><p>“...took 400 cress seeds and placed them in 12 trays. Then, they placed 6 trays in 2 separate rooms at the same temperature. They gave the same amount of water and sun to all the trays for 12 days.</p><p>“However, 6 of the trays were put next to two [Wi-Fi] routers. Such routers broadcast the same type of radiation as an ordinary mobile.</p><p>“After 12 days what the result spoke was clear: cress seeds next to the router did not grow, and some of them were even mutated or dead.”</p><p>The results have amazed researchers from England, Holland and Sweden, with academics exclaiming their praise for the students.</p><p>Professor of the Stockholm Karolinska Institute Olle Johansson declared:</p><p>“The girls stayed within the scope of their knowledge, skilfully implemented and developed a very elegant experiment. The wealth of detail and accuracy is exemplary, choosing cress was very intelligent, and I could go on.</p><p>“I sincerely hope that they spend their future professional life in researching, because I definitely think they have a natural aptitude for it. Personally, I would love to see these people in my team!”</p><p>Student Lea concluded, “None of us sleep with the mobile next to the bed anymore. Either the phone is put far away, or it is put in another room. And the computer is always off.”</p><p>WATCH: “Easy to Conduct Experiment PROVES Wi-Fi Harmful to Organic Life”:</p><p>Source(s): Of The Box Shared</p></section></div>",
+    "plain_text": [
+        {"text": "In this current internet age where everyone from children to pensioners habitually keep their cell phones within arms length, are we all at risk of damaging our health?"},
+        {"text": "Few likely know—or even care–for the known dangers of radiation contamination by constantly being within close proximity of our cell phones...but what about Wi-Fi?"},
+        {"text": "Curious to understand the effects technology was having on their ability to pay attention in school, 5 high school classmates conducted an experiment for their biology class."},
+        {"text": "9th grade student Lea Nielsen expressed, “We all think we have experienced difficulty concentrating in school, if we had slept with the phone next to our head, and sometimes also experienced having difficulty sleeping.”"},
+        {"text": "The girls decided to conduct a 12 day experiment to test the effects of Wi-Fi radiation by placing routers—“which emit the same type of radiation as a regular cellphone“—next to growing cress seeds."},
+        {"text": "According to Of The Box, the students used a simple yet revealing experimental design in which they:"},
+        {"text": "“...took 400 cress seeds and placed them in 12 trays. Then, they placed 6 trays in 2 separate rooms at the same temperature. They gave the same amount of water and sun to all the trays for 12 days."},
+        {"text": "“However, 6 of the trays were put next to two [Wi-Fi] routers. Such routers broadcast the same type of radiation as an ordinary mobile."},
+        {"text": "“After 12 days what the result spoke was clear: cress seeds next to the router did not grow, and some of them were even mutated or dead.”"},
+        {"text": "The results have amazed researchers from England, Holland and Sweden, with academics exclaiming their praise for the students."},
+        {"text": "Professor of the Stockholm Karolinska Institute Olle Johansson declared:"},
+        {"text": "“The girls stayed within the scope of their knowledge, skilfully implemented and developed a very elegant experiment. The wealth of detail and accuracy is exemplary, choosing cress was very intelligent, and I could go on."},
+        {"text": "“I sincerely hope that they spend their future professional life in researching, because I definitely think they have a natural aptitude for it. Personally, I would love to see these people in my team!”"},
+        {"text": "Student Lea concluded, “None of us sleep with the mobile next to the bed anymore. Either the phone is put far away, or it is put in another room. And the computer is always off.”"},
+        {"text": "WATCH: “Easy to Conduct Experiment PROVES Wi-Fi Harmful to Organic Life”:"},
+        {"text": "Source(s): Of The Box Shared"}
+    ]
 }

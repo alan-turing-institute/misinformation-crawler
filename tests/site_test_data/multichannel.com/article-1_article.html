@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html id="phx-wrapper" lang="en-us">
+
+<head>
+	<style type="text/css">
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak {
+			display: none !important;
+		}
+	</style>
+	<script>var appCacheBuster = "v=2019-02-27-002459-fcdccda-012776";</script>
+	<script>window.Promise||document.write('<script src="/.bootscripts/polyfills/promise.min.js?' + appCacheBuster + '"></s'+'cript>');</script>
+	<script>window.fetch||document.write('<script src="/.bootscripts/polyfills/fetch.min.js?' + appCacheBuster + '"></s'+'cript>');</script>
+	<script>Object.assign||document.write('<script src="/.bootscripts/polyfills/assign.min.js?' + appCacheBuster + '"></s'+'cript>');</script>
+	<script>(typeof window.Element.prototype.closest === 'function')||document.write('<script src="/.bootscripts/polyfills/element-closest.min.js?' + appCacheBuster + '"></s'+'cript>');</script>
+	<script>(window.customElements&&window.customElements.define&&window.customElements.get&&window.customElements.whenDefined)||document.write('<script src="/.bootscripts/polyfills/webcomponents.min.js?' + appCacheBuster + '"></s'+'cript>');</script>
+	<script>(String.prototype.endsWith||String.prototype.startsWith)||document.write('<script src="/.bootscripts/polyfills/string.min.js?' + appCacheBuster + '"></s'+'cript>');</script>
+	<script>"use strict";if(typeof IntersectionObserver==="undefined"||"IntersectionObserver"in window&&"IntersectionObserverEntry"in window&&!("isIntersecting"in window.IntersectionObserverEntry.prototype)){document.write("<script src=\"/.bootscripts/polyfills/intersectionobserver.min.js?"+appCacheBuster+"\"></s"+"cript>")}</script>
+	<script>"use strict";(function(){if(typeof window.CustomEvent==="function")return false;function CustomEvent(event,params){params=params||{bubbles:false,cancelable:false,detail:undefined};var evt=document.createEvent("CustomEvent");evt.initCustomEvent(event,params.bubbles,params.cancelable,params.detail);return evt}CustomEvent.prototype=window.Event.prototype;window.CustomEvent=CustomEvent})();</script>
+	<script>(function(siteProductionDomain, useCMP) {"use strict";function _toConsumableArray(arr){return _arrayWithoutHoles(arr)||_iterableToArray(arr)||_nonIterableSpread()}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function _iterableToArray(iter){if(Symbol.iterator in Object(iter)||Object.prototype.toString.call(iter)==="[object Arguments]")return Array.from(iter)}function _arrayWithoutHoles(arr){if(Array.isArray(arr)){for(var i=0,arr2=new Array(arr.length);i<arr.length;i++){arr2[i]=arr[i]}return arr2}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function")}}function _defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor)}}function _createClass(Constructor,protoProps,staticProps){if(protoProps)_defineProperties(Constructor.prototype,protoProps);if(staticProps)_defineProperties(Constructor,staticProps);return Constructor}var VENDOR_CONSENT_COOKIE_NAME="euconsent";var RANGE_ENCODING=1;var CONSENT_STRING_VERSION=1;var SHARED_FIELD_MAP=[{name:"cookieVersion",type:"int",numBits:6},{name:"created",type:"date",numBits:36},{name:"lastUpdated",type:"date",numBits:36},{name:"cmpId",type:"int",numBits:12},{name:"cmpVersion",type:"int",numBits:12},{name:"consentScreen",type:"int",numBits:6},{name:"consentLanguage",type:"6bitchar",numBits:12},{name:"vendorListVersion",type:"int",numBits:12}];var VENDOR_FIELD_MAP={fields:[].concat(SHARED_FIELD_MAP,[{name:"purposeIdBitString",type:"bits",numBits:24},{name:"maxVendorId",type:"int",numBits:16},{name:"encodingType",type:"int",numBits:1},{name:"defaultConsent",type:"bool",numBits:1},{name:"numEntries",type:"int",numBits:12},{name:"vendorRangeList",type:"list",listCount:function listCount(decodedObject){return decodedObject.numEntries},validator:function validator(decodedObject){return decodedObject.encodingType===RANGE_ENCODING},fields:[{name:"isRange",type:"bool",numBits:1},{name:"startVendorId",type:"int",numBits:16},{name:"endVendorId",type:"int",numBits:16,validator:function validator(decodedObject){return decodedObject.isRange}}]}])};var PUBLISHER_CONSENT_COOKIE_NAME="eupubconsent";var PUBLISHER_FIELD_MAP={fields:[].concat(SHARED_FIELD_MAP,[{name:"publisherPurposeVersion",type:"int",numBits:12},{name:"standardPurposeIdBitString",type:"bits",numBits:24},{name:"numCustomPurposes",type:"int",numBits:6},{name:"customPurposeIdBitString",type:"bits",numBits:function numBits(decodedObject){return decodedObject.numCustomPurposes}}])};var SIX_BIT_ASCII_OFFSET=65;var endpointTimeout=2000;var GdprStatus=function(){_createClass(GdprStatus,[{key:"VENDOR_IDS",get:function get(){return{indexexchange:10,sovrn:13,oath:25,appnexus:32,rhythmone:36,skimbit:46,rubicon:52,"33across":58,sift:69,pubmatic:76,comscore:77,criteo:91,teads:132,spotx:165,revcontent:203,adobe:264,nielsen:373,clicksco:493}}},{key:"PURPOSE_IDS",get:function get(){return{storage:1,personalization:2,advertising:3,content:4,measurement:5}}}]);function GdprStatus(){var _this=this;_classCallCheck(this,GdprStatus);this.decoder=new CmpCookieDecoder;var resolveApplicable,rejectApplicable;this.applicablePromise=new Promise(function(resolve,reject){var detectionTimeout=setTimeout(function(){reject("Timeout")},endpointTimeout);resolveApplicable=function resolveApplicable(result){clearTimeout(detectionTimeout);if(result){_this._applyClass()}resolve(result)};rejectApplicable=function rejectApplicable(err){clearTimeout(detectionTimeout);reject(err)}});var resolveMavenUid,rejectMavenUid;this.mavenUidPromise=new Promise(function(resolve,reject){var detectionTimeout=setTimeout(function(){reject("Timeout")},endpointTimeout);resolveMavenUid=function resolveMavenUid(uid){clearTimeout(detectionTimeout);resolve(uid)};rejectMavenUid=function rejectMavenUid(err){clearTimeout(detectionTimeout);reject(err)}});fetch("https://uid.mavencoalition.io/",{credentials:"include"}).then(function(response){if(response.status===403){resolveApplicable(true);resolveMavenUid(null)}else if(response.status===200){response.json().then(function(payload){resolveApplicable(false);resolveMavenUid(payload.uid)})}else{throw new Error("invalid UID service response")}}).catch(function(err){console.error(err);rejectMavenUid(err);rejectApplicable(err)})}_createClass(GdprStatus,[{key:"_applyClass",value:function _applyClass(){var cls="is-gdpr-applicable";if(document.body){document.body.classList.add(cls)}else{document.addEventListener("DOMContentLoaded",this._applyClass.bind(this))}}},{key:"isApplicable",value:function isApplicable(){if(window.location.hash&&window.location.hash==="#assumeGdprApplicable"&&window.location.hostname!==this._siteProductionDomain){this._applyClass();return Promise.resolve(true)}return this.applicablePromise}},{key:"isApplicableSafe",value:function isApplicableSafe(){return this.isApplicable().catch(function(err){console.error(err);return true})}},{key:"getMavenUid",value:function getMavenUid(){return this.mavenUidPromise}},{key:"getMavenUidSafe",value:function getMavenUidSafe(){return this.getMavenUid().catch(function(err){console.error(err);return null})}},{key:"isConsentSet",value:function isConsentSet(){if(!this._useCMP){return false}return!!this.decoder.readCookie(VENDOR_CONSENT_COOKIE_NAME)||!!this.decoder.readCookie(PUBLISHER_CONSENT_COOKIE_NAME)}},{key:"waitForConsentValue",value:function waitForConsentValue(){var _this2=this;if(!this._useCMP){return Promise.resolve()}if(!this._consentSetPromise){this._consentSetPromise=new Promise(function(resolve,reject){if(_this2.isConsentSet()){resolve(true);return}function setCallback(){if(window.phxConsentManagement){window.phxConsentManagement.setConsentUiCallback(function(){resolve(true)});return true}return false}if(!setCallback()){window.setTimeout(function(){if(!setCallback()){reject("phxConsentManagement was not resolved in time.")}},1000)}})}return this._consentSetPromise}},{key:"isConsentGivenForPublisherPurpose",value:function isConsentGivenForPublisherPurpose(purposeId){if(!this._useCMP){return Promise.resolve(false)}return this.getPublisherConsentValues().then(function(publisherValues){return publisherValues&&(publisherValues.selectedPurposeIds.has(purposeId)||publisherValues.selectedCustomPurposeIds.has(purposeId))})}},{key:"isConsentGivenForVendorPurpose",value:function isConsentGivenForVendorPurpose(purposeId){if(!this._useCMP){return Promise.resolve(false)}return Promise.all([this.getVendorConsentValues(),this.getPublisherConsentValues()]).then(function(values){var vendorValues=values[0];var publisherValues=values[1];return vendorValues&&vendorValues.selectedPurposeIds.has(purposeId)&&publisherValues&&(publisherValues.selectedPurposeIds.has(purposeId)||publisherValues.selectedCustomPurposeIds.has(purposeId))})}},{key:"isConsentGivenForVendor",value:function isConsentGivenForVendor(vendorId){if(!this._useCMP){return Promise.resolve(false)}return this.getVendorConsentValues().then(function(consentValues){return consentValues&&consentValues.selectedVendorIds.has(vendorId)})}},{key:"getVendorConsentValues",value:function getVendorConsentValues(){var cookie=this.decoder.readCookie(VENDOR_CONSENT_COOKIE_NAME);return Promise.resolve(cookie&&this.decoder.decodeVendorConsentData(cookie))}},{key:"getPublisherConsentValues",value:function getPublisherConsentValues(){var cookie=this.decoder.readCookie(PUBLISHER_CONSENT_COOKIE_NAME);return Promise.resolve(cookie&&this.decoder.decodePublisherConsentData(cookie))}},{key:"siteProductionDomain",set:function set(siteProductionDomain){this._siteProductionDomain=siteProductionDomain}},{key:"useCMP",set:function set(state){this._useCMP=state}}]);return GdprStatus}();var CmpCookieDecoder=function(){function CmpCookieDecoder(){_classCallCheck(this,CmpCookieDecoder)}_createClass(CmpCookieDecoder,[{key:"_decodeBitsToInt",value:function _decodeBitsToInt(bitString,start,length){return parseInt(bitString.substr(start,length),2)}},{key:"_decodeBitsToDate",value:function _decodeBitsToDate(bitString,start,length){return new Date(this._decodeBitsToInt(bitString,start,length)*100)}},{key:"_decodeBitsToBool",value:function _decodeBitsToBool(bitString,start){return parseInt(bitString.substr(start,1),2)===1}},{key:"_decode6BitCharacters",value:function _decode6BitCharacters(bitString,start,length){var decoded="";var decodeStart=start;while(decodeStart<start+length){decoded+=String.fromCharCode(SIX_BIT_ASCII_OFFSET+this._decodeBitsToInt(bitString,decodeStart,6));decodeStart+=6}return decoded}},{key:"_decodeField",value:function _decodeField(_ref){var _this3=this;var input=_ref.input,output=_ref.output,startPosition=_ref.startPosition,field=_ref.field;var type=field.type,numBits=field.numBits,listCount=field.listCount,validator=field.validator;if(typeof validator==="function"){if(!validator(output)){return{newPosition:startPosition}}}var bitCount=typeof numBits==="function"?numBits(output):numBits;var listEntryCount=typeof listCount==="function"?listCount(output):typeof listCount==="number"?listCount:0;switch(type){case"int":return{fieldValue:this._decodeBitsToInt(input,startPosition,bitCount)};case"bool":return{fieldValue:this._decodeBitsToBool(input,startPosition)};case"date":return{fieldValue:this._decodeBitsToDate(input,startPosition,bitCount)};case"bits":return{fieldValue:input.substr(startPosition,bitCount)};case"6bitchar":return{fieldValue:this._decode6BitCharacters(input,startPosition,bitCount)};case"list":return new Array(listEntryCount).fill().reduce(function(acc){var _this3$_decodeFields=_this3._decodeFields({input:input,fields:field.fields,startPosition:acc.newPosition}),decodedObject=_this3$_decodeFields.decodedObject,newPosition=_this3$_decodeFields.newPosition;return{fieldValue:[].concat(_toConsumableArray(acc.fieldValue),[decodedObject]),newPosition:newPosition}},{fieldValue:[],newPosition:startPosition});default:return{};}}},{key:"_decodeFields",value:function _decodeFields(_ref2){var _this4=this;var input=_ref2.input,fields=_ref2.fields,_ref2$startPosition=_ref2.startPosition,startPosition=_ref2$startPosition===void 0?0:_ref2$startPosition;var position=startPosition;var decodedObject=fields.reduce(function(acc,field){var name=field.name,numBits=field.numBits;var _this4$_decodeField=_this4._decodeField({input:input,output:acc,startPosition:position,field:field}),fieldValue=_this4$_decodeField.fieldValue,newPosition=_this4$_decodeField.newPosition;if(fieldValue!==undefined){acc[name]=fieldValue}if(newPosition!==undefined){position=newPosition}else if(typeof numBits==="number"){position+=numBits}return acc},{});return{decodedObject:decodedObject,newPosition:position}}},{key:"_decodeCookieValue",value:function _decodeCookieValue(cookieValue,definitionMap){var unsafe=cookieValue.replace(/-/g,"+").replace(/_/g,"/")+"==".substring(0,3*cookieValue.length%4);var bytes=window.atob(unsafe);var inputBits="";for(var i=0;i<bytes.length;i++){var bitString=bytes.charCodeAt(i).toString(2);inputBits+=bitString.padStart(8,"0")}var _this$_decodeFields=this._decodeFields({input:inputBits,fields:definitionMap.fields}),decodedObject=_this$_decodeFields.decodedObject;return decodedObject}},{key:"_decodePublisherCookieValue",value:function _decodePublisherCookieValue(cookieValue){return this._decodeCookieValue(cookieValue,PUBLISHER_FIELD_MAP)}},{key:"_decodeVendorCookieValue",value:function _decodeVendorCookieValue(cookieValue){return this._decodeCookieValue(cookieValue,VENDOR_FIELD_MAP)}},{key:"_decodeBitsToIds",value:function _decodeBitsToIds(bitString){return bitString.split("").reduce(function(acc,bit,index){if(bit==="1"){acc.add(index+1)}return acc},new Set)}},{key:"decodePublisherConsentData",value:function decodePublisherConsentData(cookieValue){var _this$_decodePublishe=this._decodePublisherCookieValue(cookieValue),cookieVersion=_this$_decodePublishe.cookieVersion,cmpId=_this$_decodePublishe.cmpId,vendorListVersion=_this$_decodePublishe.vendorListVersion,publisherPurposeVersion=_this$_decodePublishe.publisherPurposeVersion,created=_this$_decodePublishe.created,lastUpdated=_this$_decodePublishe.lastUpdated,standardPurposeIdBitString=_this$_decodePublishe.standardPurposeIdBitString,customPurposeIdBitString=_this$_decodePublishe.customPurposeIdBitString;if(cookieVersion!==CONSENT_STRING_VERSION){throw new Error("Unsupported cookie version detected")}return{cookieVersion:cookieVersion,cmpId:cmpId,vendorListVersion:vendorListVersion,publisherPurposeVersion:publisherPurposeVersion,created:created,lastUpdated:lastUpdated,selectedPurposeIds:this._decodeBitsToIds(standardPurposeIdBitString),selectedCustomPurposeIds:this._decodeBitsToIds(customPurposeIdBitString)}}},{key:"decodeVendorConsentData",value:function decodeVendorConsentData(cookieValue){var _this$_decodeVendorCo=this._decodeVendorCookieValue(cookieValue),cookieVersion=_this$_decodeVendorCo.cookieVersion,cmpId=_this$_decodeVendorCo.cmpId,cmpVersion=_this$_decodeVendorCo.cmpVersion,consentScreen=_this$_decodeVendorCo.consentScreen,consentLanguage=_this$_decodeVendorCo.consentLanguage,vendorListVersion=_this$_decodeVendorCo.vendorListVersion,purposeIdBitString=_this$_decodeVendorCo.purposeIdBitString,maxVendorId=_this$_decodeVendorCo.maxVendorId,created=_this$_decodeVendorCo.created,lastUpdated=_this$_decodeVendorCo.lastUpdated,defaultConsent=_this$_decodeVendorCo.defaultConsent,encodingType=_this$_decodeVendorCo.encodingType,numEntries=_this$_decodeVendorCo.numEntries,vendorRangeList=_this$_decodeVendorCo.vendorRangeList;if(cookieVersion!==CONSENT_STRING_VERSION){throw new Error("Unsupported cookie version detected")}var cookieData={cookieVersion:cookieVersion,cmpId:cmpId,cmpVersion:cmpVersion,consentScreen:consentScreen,consentLanguage:consentLanguage,vendorListVersion:vendorListVersion,encodingType:encodingType,numEntries:numEntries,selectedPurposeIds:this._decodeBitsToIds(purposeIdBitString),maxVendorId:maxVendorId,created:created,lastUpdated:lastUpdated};if(encodingType===RANGE_ENCODING){var idMap=vendorRangeList.reduce(function(acc,_ref3){var isRange=_ref3.isRange,startVendorId=_ref3.startVendorId,endVendorId=_ref3.endVendorId;var lastVendorId=isRange?endVendorId:startVendorId;for(var i=startVendorId;i<=lastVendorId;i++){acc[i]=true}return acc},{});cookieData.selectedVendorIds=new Set;for(var i=0;i<=maxVendorId;i++){if(defaultConsent&&!idMap[i]||!defaultConsent&&idMap[i]){cookieData.selectedVendorIds.add(i)}}}else{throw new Error("Unsupported vendor encoding")}return cookieData}},{key:"readCookie",value:function readCookie(name){var value="; ".concat(document.cookie);var parts=value.split("; ".concat(name,"="));if(parts.length===2){return parts.pop().split(";").shift()}}}]);return CmpCookieDecoder}();window.GdprStatus=new GdprStatus;window.GdprStatus.siteProductionDomain = siteProductionDomain;
+window.GdprStatus.useCMP = useCMP;
+})('www.multichannel.com', true);</script>
+	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+</script>
+	<script>window.googleAnalyticsConfig = {"trackers":[{"name":"_tempestTracker","id":"UA-1778701-17","cookieDomain":"www.multichannel.com","sendEvents":true,"customDimensionMap":{"pageType":1,"parentSectionName":2,"authorName":3,"publicationQuarter":4,"channelName":11,"subscriptionStatus":12,"sectionPath":13,"eeaStatus":14,"trackedRichTermNames":16}},{"name":"_siteTracker","id":"UA-2342357-27","cookieDomain":"www.multichannel.com","sendEvents":true,"customDimensionMap":{"subscriptionStatus":null,"trackedRichTermNames":null,"sectionPath":null,"publicationQuarter":null,"authorName":7,"pageType":null,"channelName":null,"parentSectionName":null}}],"initialModel":{"title":"SOTU Is Light on Broadband Infrastructure","pageType":"Article Page","sectionPath":"News > Policy","parentSectionName":"News","authorName":"John  Eggerton","publicationQuarter":"2019Q1","trackedRichTermNames":"","path":"/news/sotu-is-light-on-broadband-infrastructure","subscriptionStatus":"Unsubscribed","channelName":"Web"},"experimentId":null} || {trackers: []};
+Promise.all([window.GdprStatus.isApplicableSafe(), window.GdprStatus.getMavenUidSafe()]).then(function(results) {
+   var isApplicable = results[0];
+   var mavenUid = results[1];
+  (function (googleAnalyticsConfig) {"use strict";var experimentVariant=null;if(googleAnalyticsConfig.forceVariant){experimentVariant=googleAnalyticsConfig.forceVariant}else if(window.cxApi){experimentVariant=cxApi.chooseVariation(googleAnalyticsConfig.experimentid)}window.phxExperimentVariant=experimentVariant;googleAnalyticsConfig.sendPageView=function(model){model.experimentVariant=experimentVariant;model.subscriptionStatus=window.TempestIdentity&&window.TempestIdentity.benefits.premiumExperience?"Premium":"Unsubscribed";for(var i=0;i<googleAnalyticsConfig.trackers.length;i++){var tracker=googleAnalyticsConfig.trackers[i];if(tracker.experimentOnly&&!experimentVariant){continue}var config={};var prefix="";if(tracker.name){config.name=tracker.name;prefix=tracker.name+"."}if(tracker.cookieDomain){config.cookieDomain=tracker.cookieDomain}if(tracker.sampleRate){config.sampleRate=tracker.sampleRate}model.eeaStatus=isApplicable?"1":"0";if(isApplicable){config.storage="none";config.storeGac=false}ga("create",tracker.id,config);if(isApplicable){ga(prefix+"set","displayFeaturesTask",null)}if(tracker.name==="_tempestTracker"&&mavenUid){ga(prefix+"set","userId",mavenUid)}ga(prefix+"set","page",model.path);ga(prefix+"set","title",model.title);ga(prefix+"set","anonymizeIp",true);var cd=tracker.customDimensionMap;for(var k in cd){if(!cd[k]||!cd.hasOwnProperty(k)){continue}var val=model[k];if(val!==undefined&&val!==null){ga(prefix+"set","dimension"+cd[k],""+val)}}ga(prefix+"send","pageview",model.path)}};var model=googleAnalyticsConfig.initialModel;model.positionInSession="initial";googleAnalyticsConfig.sendPageView(model);window._gaSent=true;  })(window.googleAnalyticsConfig);
+});</script>
+	<script>"use strict";(function(){var pageLoadPromises=[];window.getTimedOutPageLoadPromise=function(timeoutMs){if(document.readyState==="complete"){return Promise.resolve(true)}else{var pageLoadPromise=new Promise(function(resolve,reject){window.addEventListener("load",function(){resolve(true)});pageLoadPromises.push(setTimeout(function(){resolve(true)},timeoutMs||0))});return pageLoadPromise}};window.addEventListener("load",function(){for(var i in pageLoadPromises){window.clearTimeout(pageLoadPromises[i])}})})();</script>
+	<script>"use strict";function _typeof(obj){if(typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"){_typeof=function _typeof(obj){return typeof obj}}else{_typeof=function _typeof(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj}}return _typeof(obj)}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function")}}function _defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor)}}function _createClass(Constructor,protoProps,staticProps){if(protoProps)_defineProperties(Constructor.prototype,protoProps);if(staticProps)_defineProperties(Constructor,staticProps);return Constructor}function _possibleConstructorReturn(self,call){if(call&&(_typeof(call)==="object"||typeof call==="function")){return call}return _assertThisInitialized(self)}function _assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called")}return self}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function")}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)_setPrototypeOf(subClass,superClass)}function _wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map:undefined;_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function")}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper)}function Wrapper(){return _construct(Class,arguments,_getPrototypeOf(this).constructor)}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return _setPrototypeOf(Wrapper,Class)};return _wrapNativeSuper(Class)}function isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Date.prototype.toString.call(Reflect.construct(Date,[],function(){}));return true}catch(e){return false}}function _construct(Parent,args,Class){if(isNativeReflectConstruct()){_construct=Reflect.construct}else{_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor;if(Class)_setPrototypeOf(instance,Class.prototype);return instance}}return _construct.apply(null,arguments)}function _isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1}function _setPrototypeOf(o,p){_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o};return _setPrototypeOf(o,p)}function _getPrototypeOf(o){_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o)};return _getPrototypeOf(o)}var DELAY_TIMEOUT=30000;var PhoenixScript=function(_HTMLElement){_inherits(PhoenixScript,_HTMLElement);function PhoenixScript(){_classCallCheck(this,PhoenixScript);return _possibleConstructorReturn(this,_getPrototypeOf(PhoenixScript).apply(this,arguments))}_createClass(PhoenixScript,[{key:"connectedCallback",value:function connectedCallback(){this.delayLoad=this.hasAttribute("delay-load");this.blockPremium=this.hasAttribute("block-premium");this.blockGdprApplicable=this.hasAttribute("block-on-gdpr-applicable");this.waitForApp=this.hasAttribute("wait-for-app");this.templateId=this.getAttribute("script-id");this.scriptSrc=this.getAttribute("src");if(!this.templateId&&!this.scriptSrc){throw new Error("script-id or src is required")}if(this.templateId&&this.scriptSrc){throw new Error("script-id and src are mutually exclusive")}this.consentVendorId=parseInt(this.getAttribute("block-on-gdpr-vendor-consent"),10);this.consentPurposeId=parseInt(this.getAttribute("block-on-gdpr-purpose-consent"),10);this.blockGdprConsent=this.consentVendorId||this.consentPurposeId;this._handleWaitForPromises()}},{key:"_whenPageLoaded",value:function _whenPageLoaded(timeoutMs){var _this=this;if(document.readyState==="complete"){return Promise.resolve()}else{if(!this.delayLoadTimeouts){this.delayLoadTimeouts=[]}window.addEventListener("load",function(){for(var i in _this.delayLoadTimeouts){window.clearTimeout(_this.delayLoadTimeouts[i])}});return new Promise(function(resolve,reject){window.addEventListener("load",resolve);_this.delayLoadTimeouts.push(setTimeout(resolve,timeoutMs||0))})}}},{key:"_whenAppLoaded",value:function _whenAppLoaded(){if(window._angularAppLoaded===true){return Promise.resolve()}else{return new Promise(function(resolve,reject){window.addEventListener("angularAppLoaded",resolve)})}}},{key:"_handleWaitForPromises",value:function _handleWaitForPromises(){var _this2=this;var promises=[];if(this.delayLoad){promises.push(this._whenPageLoaded(DELAY_TIMEOUT))}if(this.waitForApp){promises.push(this._whenAppLoaded())}if(this.blockPremium){if(!window.phxConfigQueue){throw new Error("config object is necessary to check premium")}promises.push(new Promise(function(resolve,reject){window.phxConfigQueue.push(function(){if(this.user.hasPremium()){reject()}else{resolve()}})}))}var gdpr=window.GdprStatus;if(this.blockGdprApplicable){if(!gdpr){throw new Error("window.GdprStatus is required")}promises.push(new Promise(function(resolve,reject){gdpr.isApplicable().then(function(isApplicable){if(!isApplicable){resolve()}else{reject()}})}))}if(this.blockGdprConsent){if(!gdpr){throw new Error("window.GdprStatus is required")}promises.push(new Promise(function(resolve,reject){return gdpr.isApplicable().then(function(isApplicable){if(isApplicable){gdpr.waitForConsentValue().then(function(){var promises=[];if(_this2.consentVendorId){promises.push(gdpr.isConsentGivenForVendorPurpose(_this2.consentPurposeId));promises.push(gdpr.isConsentGivenForVendor(_this2.consentVendorId))}else{promises.push(gdpr.isConsentGivenForPublisherPurpose(_this2.consentPurposeId));promises.push(Promise.resolve(true))}Promise.all(promises).then(function(values){if(values[0]&&values[1]){resolve()}else{reject()}})})}else{resolve()}})}))}Promise.all(promises).then(function(){_this2._inject()}).catch(function(){})}},{key:"_inject",value:function _inject(){var script=document.createElement("script");if(this.scriptSrc){script.src=this.scriptSrc}else if(this.templateId){var template=document.getElementById(this.templateId);if(!template){throw new Error("template not found for "+this.templateId)}script.innerHTML=template.innerHTML;template.parentElement.removeChild(template)}this.appendChild(script)}}]);return PhoenixScript}(_wrapNativeSuper(HTMLElement));window.customElements.define("phoenix-script",PhoenixScript);</script>
+	<script>(function(d) {
+    var config = {
+        kitId: "zuq8rsx",
+        scriptTimeout: 3000,
+        async: true,
+        active: function (){
+            var fontLoaded = new Event('typekitFontLoaded');
+            d.dispatchEvent(fontLoaded);
+        }
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,'')+' wf-inactive';},config.scriptTimeout),tk=d.createElement('script'),f=false,s=d.getElementsByTagName('script')[0],a;h.className+=' wf-loading';tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!='complete'&&a!='loaded')return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+})(document);
+</script>
+	<link rel="stylesheet" href="/site/styles/main.min.css?config=published&amp;cv=451413869c225175eeb2633015aeb507&amp;v=2019-02-27-002459-fcdccda-012776">
+	<script>(function () {
+    var givenQs = '&' + window.location.search.substr(1) + '&';
+    var newQs = givenQs.replace(/&(bt_email|vero_id)=[^&]+&/, '&REDACTED=REDACTED&');
+    if (newQs !== givenQs) {
+        console.warn('We have redacted a personal information argument in the query string');
+        var newUrl = window.location.pathname + '?' + newQs.substr(1, newQs.length - 2);
+        window.history.replaceState({}, '', newUrl);
+    }
+})();
+</script>
+	<script src="https://embed.tempestpremium.com/api.js?site=www.multichannel.com"></script>
+	<script>var phxConfigQueue = window.phxConfigQueue || [];
+</script>
+	<script async src="/.bootscripts/config.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+	<script>phxConfigQueue.push(function () {
+    this.features.init({"alt-demo-data":false,"quotes-revamp":true,"use-consent-management":true,"use-amp-consent":true});
+});</script>
+	<script>'use strict';
+var phxBeaconQueue = window.phxBeaconQueue || [];
+</script>
+	<script async src="/.bootscripts/beacon.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+	<script>(function(consentConfig) {"use strict";function consentChoice(list,vendorConsents,publisherConsents){var ACCEPTED_ALL=0,REJECTED_ALL=1,CUSTOM=2,CODES=["accept_all","reject_all","accept_custom"];function _check(keys,consents){if(keys.some(function(key){return consents[key]})){if(keys.some(function(key){return!consents[key]})){return CUSTOM}else{return ACCEPTED_ALL}}else{return REJECTED_ALL}}var vendor=_check(list.vendors.map(function(v){return v.id}),vendorConsents.vendorConsents),vendorPurpose=_check(list.purposes.map(function(p){return p.id}),vendorConsents.purposeConsents),publisherPurpose=_check([1,2,3],publisherConsents.standardPurposeConsents);if(vendor===publisherPurpose&&vendor===vendorPurpose){return CODES[vendor]}else{return CODES[2]}}function consentUiCallback(param){if(param.reason==="ui-closed"){window.__cmp("getPublisherConsents",null,function(publisherConsents,success){if(success){window.__cmp("getVendorConsents",null,function(vendorConsents,success){if(success){window.__cmp("getVendorList",null,function(vendorList,success){if(success){var choice=consentChoice(vendorList,vendorConsents,publisherConsents);ga("_tempestTracker.send","event","CMP",choice)}})}})}})}}function setConsentUiCallback(callback){window.__cmp("setConsentUiCallback",callback)}function displayUi(){ga("_tempestTracker.send","event","CMP","subsequent_display");setConsentUiCallback(consentUiCallback);window.__cmp("displayConsentUi")}function initConsentManagement(consentConfig){return window.GdprStatus.isApplicable().then(function(isApplicable){if(!isApplicable){return}var elem=document.createElement("script");elem.src="https://quantcast.mgr.consensu.org/v8/cmp.js";document.head.appendChild(elem);var gdprAppliesGlobally=true;function addFrame(){if(!window.frames["__cmpLocator"]){if(document.body){var body=document.body,iframe=document.createElement("iframe");iframe.style="display:none";iframe.name="__cmpLocator";body.appendChild(iframe)}else{setTimeout(addFrame,5)}}}addFrame();function cmpMsgHandler(event){var msgIsString=typeof event.data==="string";var json;if(msgIsString){json=event.data.indexOf("__cmpCall")!==-1?JSON.parse(event.data):{}}else{json=event.data}if(json.__cmpCall){var i=json.__cmpCall;window.__cmp(i.command,i.parameter,function(retValue,success){var returnMsg={__cmpReturn:{returnValue:retValue,success:success,callId:i.callId}};event.source.postMessage(msgIsString?JSON.stringify(returnMsg):returnMsg,"*")})}}window.__cmp=function(c){var b=arguments;if(!b.length){return window.__cmp.a}else if(b[0]==="ping"){b[2]({gdprAppliesGlobally:gdprAppliesGlobally,cmpLoaded:false},true)}else if(c==="__cmp"){return false}else{if(typeof window.__cmp.a==="undefined"){window.__cmp.a=[]}window.__cmp.a.push([].slice.apply(b))}};window.__cmp.gdprAppliesGlobally=gdprAppliesGlobally;window.__cmp.msgHandler=cmpMsgHandler;if(window.addEventListener){window.addEventListener("message",cmpMsgHandler,false)}else{window.attachEvent("onmessage",cmpMsgHandler)}if(document.cookie.indexOf("eupubconsent=")===-1){ga("_tempestTracker.send","event","CMP","initial_display")}window.__cmp("setConsentUiCallback",consentUiCallback);window.__cmp("init",{Language:consentConfig.language,"Initial Screen Title Text":consentConfig.localizedPhrases.primaryHeadline,"Initial Screen Body Text":consentConfig.localizedPhrases.mainBodyText,"Initial Screen Accept Button Text":consentConfig.localizedPhrases.acceptButton,"Initial Screen Purpose Link Text":consentConfig.localizedPhrases.settingsButton,"Purpose Screen Title Text":consentConfig.localizedPhrases.settingsHeadline,"Purpose Screen Body Text":consentConfig.localizedPhrases.settingsBodyText,"Vendor Screen Title Text":consentConfig.localizedPhrases.settingsHeadline,"Vendor Screen Body Text":consentConfig.localizedPhrases.settingsBodyText,"Vendor Screen Accept All Button Text":"Accept all","Vendor Screen Reject All Button Text":"Reject all","Publisher Name":"Say Media","Publisher Purpose IDs":[1,2,3,4,5],"Publisher Purpose Legitimate Interest IDs":[4,5],"Consent Scope":"service","Publisher Logo":consentConfig.logo,"Display UI":"always","Publisher Vendor List URL":window.location.origin+"/.well-known/pubvendors.json","Display Persistent Consent Link":false,"No Option":false})})}window.phxConsentManagement={_consentChoice:consentChoice,displayUi:displayUi,init:initConsentManagement,setConsentUiCallback:setConsentUiCallback};window.phxConsentManagement.init(consentConfig);
+})({"name":"Multichannel","logo":"https://www.multichannel.com/.image/cs_srgb%2Cq_auto:good/MTU0MTYxMjQ3MzA5Mjc2NTI2/navbar.svg","language":"en","localizedPhrases":{"primaryHeadline":"About Your Privacy","mainBodyText":"When you visit our site, we use services provided by Tempest, a product of Say Media, Inc., for content delivery and ad selection, including personalised digital ads. Say Media and its partners use technology such as cookies to customise your site experience, analyse website traffic, deliver content, and measure the effectiveness of advertisements across the websites and mobile services provided by Say Media. By continuing to use this site, you consent to the use of cookies unless you have disabled them. To learn more about cookies and how to disable them, view our <a href='https://www.saymedia.com/cookiepolicy' target='_blank'>Cookie Policy<\/a>.<br><br>Additionally, this site is supported by interest-based advertising. By clicking \"I Agree\" on this screen you agree that Say Media and its partners may process your personal data for the purposes of information storage and access; personalisation; ad selection, delivery, and reporting; content selection, delivery and reporting; and measurement. Please see the <a href='https://www.saymedia.com/privacy' target='_blank'>Say Media Platform Privacy Policy<\/a> for more information about our use of data and your rights.<br><br>If you do not choose to consent, or if you would like more information about the data we and our partners collect and how we use the data we collect, click \"More Information\". You can always manage your settings or withdraw consent from the \"Privacy Settings\" link in the menu on this site.","acceptButton":"I AGREE","settingsButton":"More Information","settingsHeadline":"Manage Your Preferences","settingsBodyText":"You can set your consent preferences and determine how you want your data to be used based on the purposes below. You may set your preferences for us independently from those of third-party partners. Each purpose has a description so that you know how we and partners use your data."}});</script>
+	<script>"use strict";var pbjs=pbjs||{};pbjs.que=pbjs.que||[];function initPrebidJS(){var _this=this;phxAdAuctionQueue.push(function(){_this.enable("prebid",window.pbjs)})}</script>
+	<script async src="/runtime/alpha.js?v=2019-02-27-002459-fcdccda-012776" onload="initPrebidJS"></script>
+	<script>var phxAdAuctionQueue = window.phxAdAuctionQueue || [];
+</script>
+	<script async src="/runtime/beta.js?v=2019-02-27-002459-fcdccda-012776"></script>
+	<script>(function(adAuctionConfig){"use strict";window.GdprStatus.isApplicable().then(function(isApplicable){adAuctionConfig.gdprIsApplicable=isApplicable;phxAdAuctionQueue.push(function(){this.startAuction(adAuctionConfig)})});})({"beacons":{"targetingParams":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/targetingparams","paramSeparators":{"ksg":":","terms":";"},"exclude":{"ag":true,"in":true,"pt":true,"et":true,"gd":true}},"demoUsage":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/demousage","paramSeparators":{"krux":","},"raw":{"krux":true}},"bannerShown":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/bannershown"},"prebidAuctionEnded":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/prebidauctionended"}},"siteProductionDomain":"www.multichannel.com","slots":[{"config":{"sizes":[[320,50],[320,100],[300,250]]},"model":{"zone":"header","index":0,"isOutstream":false},"sizes":[{"width":320,"height":50},{"width":320,"height":100},{"width":300,"height":250}],"screenSizes":["A"],"slotModel":{"zone":"header","index":0,"isOutstream":false},"id":"ad-30e89e00dd6640b3854543d7ef1ef809","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[970,250],[970,90],[728,90]]},"model":{"zone":"header","index":0,"isOutstream":false},"sizes":[{"width":970,"height":250},{"width":970,"height":90},{"width":728,"height":90}],"screenSizes":["C","D"],"slotModel":{"zone":"header","index":0,"isOutstream":false},"id":"ad-014058af8adc4576bf731bfdee49202a","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[728,90]]},"model":{"zone":"header","index":0,"isOutstream":false},"sizes":[{"width":728,"height":90}],"screenSizes":["B"],"slotModel":{"zone":"header","index":0,"isOutstream":false},"id":"ad-8d50457386a84d34bcf4fd5883033a9d","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[320,60],[320,50],[300,50]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomA"}],"screenSizes":["A"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-6035ca595ecb4765a76ad14d1b33576d","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[900,65],[970,90],[728,90]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomC"}],"screenSizes":["C"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-99470d66d2a0445b805699035a87fc3d","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[768,66],[728,90]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomB"}],"screenSizes":["B"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-c6aa0074383d4ad594ab0f2b1c702ed5","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,600],[300,250],[160,600]]},"model":{"zone":"atf_sidebar","index":0,"isOutstream":false},"sizes":[{"width":300,"height":600},{"width":300,"height":250},{"width":160,"height":600}],"screenSizes":["C"],"slotModel":{"zone":"atf_sidebar","index":0,"isOutstream":false},"id":"ad-5d05d10a4f8448368ce61a61bbf1cdf8","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250]]},"model":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250}],"screenSizes":["A"],"slotModel":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"standard"},"id":"ad-956d967f661b4d13b8809680bb567544","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250],[728,90],"fluid"]},"model":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"sizes":[{"width":300,"height":250},{"width":728,"height":90},{"name":"fluid"}],"screenSizes":["C","D"],"slotModel":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"id":"ad-66a23f2f314f43538480ea33e0df0146","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250],[728,90],"fluid"]},"model":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"sizes":[{"width":300,"height":250},{"width":728,"height":90},{"name":"fluid"}],"screenSizes":["B"],"slotModel":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"id":"ad-8198cbfc8363436797e824b7ca0753da","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250]]},"model":{"zone":"in_content","index":"1","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250}],"screenSizes":["A"],"slotModel":{"zone":"in_content","index":"1","isOutstream":false,"nativeCardType":"standard"},"id":"ad-2c2ace252a8b4c04bba942661939271c","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250],"fluid"]},"model":{"zone":"below_content_card","index":"0","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250},{"name":"fluid"}],"screenSizes":["C"],"slotModel":{"zone":"below_content_card","index":"0","isOutstream":false,"nativeCardType":"standard"},"id":"ad-46d48285a097460797d4d51276d11cf7","adUnitPath":"/88059007/www.multichannel.com/news/policy"}],"units":{"A":[{"code":"ad-30e89e00dd6640b3854543d7ef1ef809","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[320,50]]}},"bids":[{"bidder":"ix","params":{"siteId":"188469","size":[320,50]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115384","zoneId":"543632"}},{"bidder":"appnexus","params":{"placementId":"13439929","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Mobile_320x50_1@320x50"}},{"bidder":"rhythmone","params":{"placementId":"73783"}},{"bidder":"aol","params":{"placement":"4126091","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"header"}}]},{"code":"ad-6035ca595ecb4765a76ad14d1b33576d","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[320,50]]}},"bids":[{"bidder":"ix","params":{"siteId":"188954","size":[320,50]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115384","zoneId":"575246"}},{"bidder":"appnexus","params":{"placementId":"13439932","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Mobile_320x50_FixedBottom@320x50"}},{"bidder":"rhythmone","params":{"placementId":"73783"}},{"bidder":"aol","params":{"placement":"4414905","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"fixed_bottom"}},{"bidder":"33across","params":{"siteId":"dzU9Y66bKr6l45aKlId8sQ","productId":"siab"}}]},{"code":"ad-956d967f661b4d13b8809680bb567544","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[300,250]]}},"bids":[{"bidder":"ix","params":{"siteId":"188470","size":[300,250]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115384","zoneId":"543632"}},{"bidder":"appnexus","params":{"placementId":"13439930","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Mobile_300x250_1@300x250"}},{"bidder":"rhythmone","params":{"placementId":"73783"}},{"bidder":"aol","params":{"placement":"4126090","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"in_content_0"}}]},{"code":"ad-2c2ace252a8b4c04bba942661939271c","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[300,250]]}},"bids":[{"bidder":"ix","params":{"siteId":"188951","size":[300,250]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115384","zoneId":"577680"}},{"bidder":"appnexus","params":{"placementId":"13439931","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Mobile_300x250_2@300x250"}},{"bidder":"rhythmone","params":{"placementId":"73783"}},{"bidder":"aol","params":{"placement":"4414906","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"in_content_1"}}]}],"B":[{"code":"ad-8d50457386a84d34bcf4fd5883033a9d","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[728,90]]}},"bids":[{"bidder":"ix","params":{"siteId":"188466","size":[728,90]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"543624"}},{"bidder":"appnexus","params":{"placementId":"13439923","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_728x90_1@728x90"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4126088","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"header"}}]},{"code":"ad-c6aa0074383d4ad594ab0f2b1c702ed5","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[728,90]]}},"bids":[{"bidder":"ix","params":{"siteId":"188953","size":[728,90]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"575244"}},{"bidder":"appnexus","params":{"placementId":"13439928","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_728x90_FixedBottom@728x90"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4414902","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"fixed_bottom"}},{"bidder":"33across","params":{"siteId":"dzU9Y66bKr6l45aKlId8sQ","productId":"siab"}}]},{"code":"ad-8198cbfc8363436797e824b7ca0753da","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[300,250]]}},"bids":[{"bidder":"ix","params":{"siteId":"188467","size":[300,250]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"543624"}},{"bidder":"appnexus","params":{"placementId":"13439926","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_300x250_1@300x250"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4126089","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"in_content_0"}}]}],"C":[{"code":"ad-014058af8adc4576bf731bfdee49202a","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[728,90]]}},"bids":[{"bidder":"ix","params":{"siteId":"188466","size":[728,90]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"543624"}},{"bidder":"appnexus","params":{"placementId":"13439923","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_728x90_1@728x90"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4126088","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"header"}}]},{"code":"ad-99470d66d2a0445b805699035a87fc3d","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[728,90]]}},"bids":[{"bidder":"ix","params":{"siteId":"188953","size":[728,90]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"575244"}},{"bidder":"appnexus","params":{"placementId":"13439928","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_728x90_FixedBottom@728x90"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4414902","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"fixed_bottom"}},{"bidder":"33across","params":{"siteId":"dzU9Y66bKr6l45aKlId8sQ","productId":"siab"}}]},{"code":"ad-5d05d10a4f8448368ce61a61bbf1cdf8","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[300,600]]}},"bids":[{"bidder":"ix","params":{"siteId":"188952","size":[300,600]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"775896"}},{"bidder":"appnexus","params":{"placementId":"13439924","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_300x600_2@300x600"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4414903","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"atf_sidebar"}},{"bidder":"33across","params":{"siteId":"dzU9Y66bKr6l45aKlId8sQ","productId":"siab"}}]},{"code":"ad-66a23f2f314f43538480ea33e0df0146","adUnitPath":"/88059007/www.multichannel.com/news/policy","mediaTypes":{"banner":{"sizes":[[300,250]]}},"bids":[{"bidder":"ix","params":{"siteId":"188467","size":[300,250]}},{"bidder":"rubicon","params":{"accountId":"10348","siteId":"115380","zoneId":"543624"}},{"bidder":"appnexus","params":{"placementId":"13439926","allowSmallerSizes":true}},{"bidder":"pubmatic","params":{"publisherId":"156229","adSlot":"Prebid_Group1_Desktop_300x250_1@300x250"}},{"bidder":"rhythmone","params":{"placementId":"73782"}},{"bidder":"aol","params":{"placement":"4126089","network":"9892.1"}},{"bidder":"sortable","params":{"siteId":"multichannel.com","tagId":"in_content_0"}}]}]},"unitVendorConfig":{},"timeout":1300,"pbjsConfig":{"sortable":{"siteId":"multichannel.com"}}});</script>
+	<script>window.phxPageTarget = {config: {"global":{"config":{"networkId":"88059007","adUnitPathTemplates":[{"type":"simple","key":"hostname"},{"type":"simple","key":"section"}],"beacons":{"targetingParams":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/targetingparams","paramSeparators":{"ksg":":","terms":";"},"exclude":{"ag":true,"in":true,"pt":true,"et":true,"gd":true}},"demoUsage":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/demousage","paramSeparators":{"krux":","},"raw":{"krux":true}},"bannerShown":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/bannershown"},"prebidAuctionEnded":{"beaconUrl":"https://beacon-streamer.saymedia.com/beacon/prebidauctionended"}},"customTargetingTemplates":{"adindex":{"type":"simple","key":"index"},"adzone":{"type":"simple","key":"zone"},"adzoneindex":{"type":"simple","key":"zoneIndex"},"amznbid":{"type":"simple","key":"amznbid"},"amzniid":{"type":"simple","key":"amzniid"},"amznp":{"type":"simple","key":"amznp"},"amznsz":{"type":"simple","key":"amznsz"},"hb_adid":{"type":"simple","key":"prebidAdId"},"hb_bidder":{"type":"simple","key":"prebidWinner"},"hb_pb":{"type":"simple","key":"prebidPriceBucket"},"hb_pbd":{"type":"simple","key":"prebidPriceBucketDollar"},"hb_size":{"type":"simple","key":"prebidAdSize"},"position":{"type":"simple","key":"positionTarget"},"rid":{"type":"simple","key":"rid"},"siteadzoneindex":{"type":"simple","key":"siteZoneIndex"},"sponlineitemid":{"type":"simple","key":"sponsorLineItemId"},"native_card_type":{"type":"simple","key":"nativeCardType"}},"customTargetingPageTemplates":{"ag":{"type":"simple","key":"ag"},"channel":{"type":"simple","key":"channelCode"},"env":{"type":"simple","key":"env"},"et":{"type":"simple","key":"et"},"gd":{"type":"simple","key":"gd"},"in":{"type":"simple","key":"in"},"ksg":{"type":"simple","key":"ksg"},"kuid":{"type":"simple","key":"kuid"},"lang":{"type":"simple","key":"languageCode"},"pagetype":{"type":"simple","key":"pageType"},"path":{"type":"simple","key":"path"},"pt":{"type":"simple","key":"pt"},"referrer":{"type":"simple","key":"referrer"},"terms":{"type":"simple","key":"terms"}},"specialSizes":{"0":"fluid","1":"fluid","2":"fluid","3":"fluid","4":"fluid","320x60":"fixedBottomA","320x50":"fixedBottomA","300x50":"fixedBottomA","768x66":"fixedBottomB","728x90":"fixedBottomC","900x65":"fixedBottomC","970x90":"fixedBottomC","1x2":"siteSkin","640x360":"outstream"}},"baseModel":{"hostname":"www.multichannel.com","path":"/news/sotu-is-light-on-broadband-infrastructure","channelCode":"web","languageCode":"en","pageType":"article","section":["news","policy"],"terms":["TV white spaces","Donald Trump","SOTU","broadband","infrastructure"],"env":"prod"}},"sizedSlots":[{"config":{"sizes":[[320,50],[320,100],[300,250]]},"model":{"zone":"header","index":0,"isOutstream":false},"sizes":[{"width":320,"height":50},{"width":320,"height":100},{"width":300,"height":250}],"screenSizes":["A"],"slotModel":{"zone":"header","index":0,"isOutstream":false},"id":"ad-30e89e00dd6640b3854543d7ef1ef809","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[970,250],[970,90],[728,90]]},"model":{"zone":"header","index":0,"isOutstream":false},"sizes":[{"width":970,"height":250},{"width":970,"height":90},{"width":728,"height":90}],"screenSizes":["C","D"],"slotModel":{"zone":"header","index":0,"isOutstream":false},"id":"ad-014058af8adc4576bf731bfdee49202a","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[728,90]]},"model":{"zone":"header","index":0,"isOutstream":false},"sizes":[{"width":728,"height":90}],"screenSizes":["B"],"slotModel":{"zone":"header","index":0,"isOutstream":false},"id":"ad-8d50457386a84d34bcf4fd5883033a9d","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[320,60],[320,50],[300,50]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomA"}],"screenSizes":["A"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-6035ca595ecb4765a76ad14d1b33576d","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[900,65],[970,90],[728,90]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomC"}],"screenSizes":["C"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-99470d66d2a0445b805699035a87fc3d","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[768,66],[728,90]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomB"}],"screenSizes":["B"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-c6aa0074383d4ad594ab0f2b1c702ed5","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,600],[300,250],[160,600]]},"model":{"zone":"atf_sidebar","index":0,"isOutstream":false},"sizes":[{"width":300,"height":600},{"width":300,"height":250},{"width":160,"height":600}],"screenSizes":["C"],"slotModel":{"zone":"atf_sidebar","index":0,"isOutstream":false},"id":"ad-5d05d10a4f8448368ce61a61bbf1cdf8","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250]]},"model":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250}],"screenSizes":["A"],"slotModel":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"standard"},"id":"ad-956d967f661b4d13b8809680bb567544","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250],[728,90],"fluid"]},"model":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"sizes":[{"width":300,"height":250},{"width":728,"height":90},{"name":"fluid"}],"screenSizes":["C","D"],"slotModel":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"id":"ad-66a23f2f314f43538480ea33e0df0146","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250],[728,90],"fluid"]},"model":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"sizes":[{"width":300,"height":250},{"width":728,"height":90},{"name":"fluid"}],"screenSizes":["B"],"slotModel":{"zone":"in_content","index":"0","isOutstream":false,"nativeCardType":"list"},"id":"ad-8198cbfc8363436797e824b7ca0753da","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250]]},"model":{"zone":"in_content","index":"1","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250}],"screenSizes":["A"],"slotModel":{"zone":"in_content","index":"1","isOutstream":false,"nativeCardType":"standard"},"id":"ad-2c2ace252a8b4c04bba942661939271c","adUnitPath":"/88059007/www.multichannel.com/news/policy"},{"config":{"sizes":[[300,250],"fluid"]},"model":{"zone":"below_content_card","index":"0","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250},{"name":"fluid"}],"screenSizes":["C"],"slotModel":{"zone":"below_content_card","index":"0","isOutstream":false,"nativeCardType":"standard"},"id":"ad-46d48285a097460797d4d51276d11cf7","adUnitPath":"/88059007/www.multichannel.com/news/policy"}],"outOfPageSlots":[{"config":{},"model":{"zone":"interstitial","index":0,"isOutstream":false},"screenSizes":null,"slotModel":{"zone":"interstitial","index":0,"isOutstream":false},"id":"ad-71a8e071642a46a0a922a4ff9974066f","adUnitPath":"/88059007/www.multichannel.com/news/policy"}]}};</script>
+	<script>var phxAdvertisingQueue = window.phxAdvertisingQueue || [];
+var phxAdServerQueue = window.phxAdServerQueue || [];
+var phxDemographicsQueue = window.phxDemographicsQueue || [];
+</script>
+	<script async src="/runtime/gamma.js?v=2019-02-27-002459-fcdccda-012776"></script>
+	<script>var googletag = googletag || {};googletag.cmd = googletag.cmd || [];</script>
+	<script defer src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+	<script defer src="/runtime/delta.js?v=2019-02-27-002459-fcdccda-012776"></script>
+	<script>phxDemographicsQueue.push(function () {
+    this.init({"addressableDemographics":{"CA":{"55plus":false,"21plus":false,"45plus":false,"f":false,"21-49":false,"25-34":true,"55-64":false,"m":true,"18plus":true,"65plus":false,"18-24":false,"45-54":false,"25plus":false,"25-54":false,"25-44":false,"35plus":false,"35-54":false,"35-44":false,"18-34":false},"GB":{"55plus":false,"all":false,"45plus":false,"gbp50k":true,"18-24":false,"45-54":false,"25-44":false,"55-64":false,"25-54":false,"21plus":false,"35-44":false,"18plus":true,"65plus":false,"25plus":false,"gbp70k":true,"21-49":false,"25-34":true,"18-34":false,"35plus":false,"35-54":false,"f":false,"m":true},"US":{"55plus":false,"all":false,"45plus":false,"usd150k":true,"18-24":false,"45-54":false,"25-44":false,"55-64":false,"25-54":false,"21plus":false,"35-44":false,"18plus":true,"asia":false,"65plus":false,"hisp":false,"25plus":false,"usd75k":true,"usd100k":true,"21-49":false,"25-34":true,"18-34":false,"35plus":false,"35-54":false,"afam":false,"f":false,"m":true}}});
+});
+</script>
+	<script>if (window.phxPageTarget) {
+    phxAdvertisingQueue.push(function () {
+        this.beginPage(window.phxPageTarget.config);
+    });
+}</script>
+	<script>(function() {
+    window._comscore = window._comscore || [];
+    var comscoreTag = {
+        c1: '2',
+        c2: '27019031',
+    };
+    var campaignId = '';
+    var siteUrl = '';
+    if (campaignId || siteUrl) {
+        comscoreTag.c3 = campaignId;
+        comscoreTag.c4 = siteUrl ? encodeURIComponent(siteUrl) : '';
+    }
+    window._comscore.push(comscoreTag);
+})();</script>
+	<script>(function() {
+    var _load = function () {
+        var s = document.createElement("script"), el = document.getElementsByTagName("script")[0];
+        s.src = "https://sb.scorecardresearch.com/beacon.js";
+        el.parentNode.insertBefore(s, el);
+    };
+    var gdpr = window.GdprStatus;
+    gdpr.isApplicable().then(function (isApplicable) {
+        if (isApplicable) {
+            //- This causes the Comscore script to delay until consent state
+            //- is known; the rest of the code above is benign in the event that
+            //- consent has not been given.
+            gdpr.waitForConsentValue().then(function () {
+                Promise.all([
+                    gdpr.isConsentGivenForVendorPurpose(GdprStatus.PURPOSE_IDS.measurement),
+                    gdpr.isConsentGivenForVendor(GdprStatus.VENDOR_IDS.comscore),
+                ]).then(function(values) {
+                    if (values[0] && values[1]) {
+                        _load();
+                    }
+                });
+            });
+        } else {
+            _load();
+        }
+    });
+})();</script>
+	<base href="/">
+	<meta charset="utf-8">
+	<meta name="referrer" content="unsafe-url">
+	<meta http-equiv="cleartype" content="on">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="no">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="apple-touch-icon" href="/site/images/apple-touch-icon.png?v=2019-02-27-002459-fcdccda-012776">
+	<link rel="apple-touch-icon" sizes="57x57" href="/site/images/apple-touch-icon-57x57-precomposed.png?v=2019-02-27-002459-fcdccda-012776">
+	<link rel="apple-touch-icon" sizes="72x72" href="/site/images/apple-touch-icon-72x72-precomposed.png?v=2019-02-27-002459-fcdccda-012776">
+	<link rel="apple-touch-icon" sizes="114x114" href="/site/images/apple-touch-icon-114x114-precomposed.png?v=2019-02-27-002459-fcdccda-012776">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="address=no">
+	<meta name="google-site-verification" content="Niax094BRYiL-daz8FHeHclHNBYXIRmS50B5lfuJSgc">
+	<meta name="generator" content="Tempest - www.saymedia.com">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+	<meta name="pinterest" content="nohover">
+	<link rel="alternate" type="application/rss+xml" title="Multichannel - Main - RSS feed" href="https://www.multichannel.com/.rss/full/">
+	<link rel="amphtml" href="/.amp/news/sotu-is-light-on-broadband-infrastructure">
+	<title>SOTU Is Light on Broadband Infrastructure - Multichannel</title>
+	<link rel="canonical" href="https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure">
+	<meta property="author" content="John  Eggerton">
+	<meta name="description" content="In communications circles, the State of the Union address was as notable for what was not in it as for what was.">
+	<meta name="keywords" content="TV white spaces,News,Donald Trump,SOTU,Policy,broadband,infrastructure">
+	<meta name="section" content="News">
+	<meta name="sub-section" content="Policy">
+	<meta name="pagetype" content="article">
+	<meta name="robots" content="noodp">
+	<meta name="item-id" content="ci023ed9a70000252e">
+	<meta name="published" content="2019-02-06T13:18:31Z">
+	<meta name="modified" content="2019-02-07T03:18:27Z">
+	<meta name="dcterms.rightsHolder" content="Future Publishing Limited Quay House, The Ambury, Bath BA1 1UA. All rights reserved. England and Wales company registration number 2008885.">
+	<meta name="dcterms.dateCopyrighted" content="2019">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:url" content="https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure">
+	<meta name="twitter:image" content="https://www.multichannel.com/.image/t_share/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg">
+	<meta name="twitter:description" content="Makes no mention of need for broadband buildout, race to 5G or closing digital divide">
+	<meta name="twitter:domain" content="www.multichannel.com">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure">
+	<meta property="og:title" content="SOTU Is Light on Broadband Infrastructure">
+	<meta property="og:description" content="Makes no mention of need for broadband buildout, race to 5G or closing digital divide">
+	<meta property="og:image" content="https://www.multichannel.com/.image/t_share/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg">
+	<meta property="og:site_name" content="Multichannel">
+	<meta name="pinterest-rich-pin" content="true">
+	<meta name="apple-mobile-web-app-title" content="Multichannel">
+	<meta name="parsely-title" content="SOTU Is Light on Broadband Infrastructure - Multichannel">
+	<meta name="parsely-link" content="https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure">
+	<meta name="parsely-image-url" content="https://www.multichannel.com/.image/c_fill%2Ccs_srgb%2Cfl_progressive%2Ch_400%2Cq_auto:good%2Cw_620/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg">
+	<meta name="parsely-post-id" content="ci023ed9a70000252e">
+	<meta name="parsely-pub-date" content="2019-02-06T13:18:31Z">
+	<meta name="parsely-section" content="News">
+	<meta name="parsely-author" content="John  Eggerton">
+	<meta name="parsely-tags" content="TV white spaces,News,Donald Trump,SOTU,Policy,broadband,infrastructure">
+	<meta name="phx:content-item-id" content="ci023ed9a70000252e">
+	<meta name="phx:content-object-type" content="ContentArticle">
+</head>
+
+<body class="mm-alt-demo-data-enabled mm-quotes-revamp-enabled mm-use-consent-management-enabled mm-use-amp-consent-enabled is-subscription-enabled" phx-page-manager>
+	<phoenix-page>
+		<phoenix-style href="/site/styles/print.min.css?v=2019-02-27-002459-fcdccda-012776" media="print" delay-load></phoenix-style>
+		<script>"use strict";if(window.TempestIdentity&&window.TempestIdentity.benefits){if(window.TempestIdentity.benefits.premiumExperience){document.body.classList.add("is-ad-free")}if(window.TempestIdentity.benefits.exclusiveContent){document.body.classList.add("is-eligible-for-exclusive-content")}}</script>
+		<div id="lyra-wrapper">
+			<phoenix-overlay class="m-off-canvas" overlay-name="offcanvas" aria-hidden="true" role="navigation" ng-cloak>
+				<phoenix-notifier event-name="phoenix:overlay" events="click mousewheel scroll touchmove DOMMouseScroll">
+					<div class="m-off-canvas--overlay"></div>
+				</phoenix-notifier>
+				<div class="m-off-canvas--menu">
+					<phoenix-notifier event-name="phoenix:overlay"><button class="m-off-canvas--close m-off-canvas--toggle m-icon-button" aria-label="Close Menu" type="button">
+							<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_close">
+								<phoenix-icon-fallback class="m-svg" icon="ico_close"><svg>
+										<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_close"></use>
+									</svg></phoenix-icon-fallback>
+							</phoenix-icon-fallback>
+						</button></phoenix-notifier>
+					<div class="m-vertical-nav m-off-canvas--scroller-no-footer">
+						<div class="m-off-canvas--header">
+							<form class="m-off-canvas--search" role="form" action="/search" method="GET"><input class="m-off-canvas--search-input" aria-label="Search" placeholder="Search" name="query"><button class="m-off-canvas--search-button m-icon-button" aria-label="Submit Search" type="submit">
+									<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_search">
+										<phoenix-icon-fallback class="m-svg" icon="ico_search"><svg>
+												<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_search"></use>
+											</svg></phoenix-icon-fallback>
+									</phoenix-icon-fallback>
+								</button></form>
+						</div>
+						<div class="m-off-canvas--scroll-wrapper">
+							<nav role="navigation">
+								<phoenix-accordion class="m-accordion is-inverted" id="offcanvas-accordion">
+									<ul>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-0" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/news" title="News">News</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-1" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/blog" title="Blogs">Blogs</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-2" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/events" title="Events">Events</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-3" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/slideshows" title="Slideshows">Slideshows</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-4" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/news/technology" title="Technology">Technology</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-5" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/video" title="Video">Video</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-6" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/pr-feed" title="PR Feed">PR Feed</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-7" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/needtoknow" title="Need to Know">Need to Know</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-8" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="/resources" title="Resources">Resources</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-9" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="https://www.b2bmediaportal.com/nbmedia/subscribe.aspx?b=MCN&amp;key=nbmcn" target="_blank" title="Newsletter">Newsletter</a></div>
+											</phoenix-accordion-item>
+										</li>
+										<li>
+											<phoenix-accordion-item class="m-accordion--item" id="offcanvas-10" accordion-id="offcanvas-accordion">
+												<div class="m-accordion--item-heading"><a class="m-accordion--item-heading-link" href="https://www.b2bmediaportal.com/nbm2/subscribe.aspx?f=MCN&amp;pageid=1" target="_blank" title="Subscribe">Subscribe</a></div>
+											</phoenix-accordion-item>
+										</li>
+									</ul>
+								</phoenix-accordion>
+								<ul class="m-off-canvas--nav-secondary m-vertical-nav--menu m-vertical-nav-secondary" phx-track-id="Nav List">
+									<li phx-track-id="Item"><a href="/page/about-us" phx-track-event phx-track-id="Name"><em>About Us</em></a></li>
+									<li phx-track-id="Item"><a href="/page/contact-us" phx-track-event phx-track-id="Name"><em>Contact Us</em></a></li>
+									<li phx-track-id="Item"><a href="/page/advertise" phx-track-event phx-track-id="Name"><em>Advertise</em></a></li>
+									<li phx-track-id="Item"><a href="https://www.futureplc.com/privacy-policy/" target="blank" phx-track-event phx-track-id="Name"><em>Privacy Policy</em></a></li>
+									<li phx-track-id="Item"><a href="https://www.futureplc.com/terms-conditions/" target="blank" phx-track-event phx-track-id="Name"><em>Terms of Use</em></a></li>
+									<li phx-track-id="Item"><a href="https://www.futureplc.com/cookies-policy/" target="blank" phx-track-event phx-track-id="Name"><em>Ad Choices</em></a></li>
+									<li phx-track-id="Item"><a href="https://www.b2bmediaportal.com/nbm2/subscribe.aspx?f=MCN&amp;pageid=1" target="blank" phx-track-event phx-track-id="Name"><em>Subscribe</em></a></li>
+									<li phx-track-id="Item"><a href="https://www.multichannel.com/.rss/full/" phx-track-event phx-track-id="Name"><em>RSS</em></a></li>
+									<li phx-track-id="Item"><a href="https://www.saymedia.com/privacy" target="_blank" phx-track-event phx-track-id="Name"><em>Platform Privacy</em></a></li>
+									<li class="is-gdpr-only" phx-track-id="Item"><a href="javascript:window.phxConsentManagement.displayUi()" phx-track-event phx-track-id="Name"><em>Privacy Settings</em></a></li>
+								</ul>
+							</nav>
+							<ul class="m-off-canvas--social-links">
+								<li><a class="m-icon-button m-off-canvas--social-link" aria-label="facebook" href="https://www.facebook.com/MultichannelNewsMagazine" target="_blank">
+										<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_facebook"><svg>
+												<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_facebook"></use>
+											</svg></phoenix-icon-fallback>
+									</a></li>
+								<li><a class="m-icon-button m-off-canvas--social-link" aria-label="twitter" href="https://twitter.com/MultiNews" target="_blank">
+										<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_twitter"><svg>
+												<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_twitter"></use>
+											</svg></phoenix-icon-fallback>
+									</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</phoenix-overlay>
+			<phx-smart-nav></phx-smart-nav>
+			<div class="m-page-wrapper">
+				<div>
+					<div class="m-header-ad not-size-a not-size-c not-size-d" data-class-rules="[]" data-ad-group="header-0">
+						<div class="m-header-ad--slot is-placeholder not-size-a not-size-c not-size-d">
+							<div id="ad-8d50457386a84d34bcf4fd5883033a9d"></div>
+						</div>
+					</div>
+					<div class="m-header-ad not-size-a not-size-b" data-class-rules="[]" data-ad-group="header-0">
+						<div class="m-header-ad--slot is-placeholder not-size-a not-size-b">
+							<div id="ad-014058af8adc4576bf731bfdee49202a"></div><span class="bt-uid-tg" uid="5ae8a99794-168" style="display: none !important"></span>
+						</div>
+					</div>
+				</div>
+				<nav class="m-site-nav l-sticky-navbar" phx-nav-sticky>
+					<phoenix-notifier class="m-header--menu m-site-nav--menu-toggler" event-name="phoenix:overlay" event-value="offcanvas"><button class="m-off-canvas--toggle m-icon-button" aria-label="Menu" phx-track-event phx-track-id="offcanvas">
+							<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_hamburger"><svg>
+									<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_hamburger"></use>
+								</svg></phoenix-icon-fallback>
+						</button></phoenix-notifier>
+					<ul class="m-header--main-nav m-site-nav--main">
+						<li class="m-header--logo-list-item m-site-nav--logo"><a class="m-header--navbar-logo" phx-track-event phx-track-id="logo" href="/"><img src="https://www.multichannel.com/.image/cs_srgb%2Cq_auto:good/MTU0MTYxMjQ3MzA5Mjc2NTI2/navbar.svg" alt="Logo"></a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/news" ng-click="clickHandler($event)" target="" phx-track-event>News</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/blog" ng-click="clickHandler($event)" target="" phx-track-event>Blogs</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/events" ng-click="clickHandler($event)" target="" phx-track-event>Events</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/slideshows" ng-click="clickHandler($event)" target="" phx-track-event>Slideshows</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/news/technology" ng-click="clickHandler($event)" target="" phx-track-event>Technology</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/video" ng-click="clickHandler($event)" target="" phx-track-event>Video</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/pr-feed" ng-click="clickHandler($event)" target="" phx-track-event>PR Feed</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/needtoknow" ng-click="clickHandler($event)" target="" phx-track-event>Need to Know</a></li>
+						<li class="m-header--main-link " phx-track-id="section"><a href="/resources" ng-click="clickHandler($event)" target="" phx-track-event>Resources</a></li>
+						<li class="m-header--main-link m-navbar--menu-link-external " phx-track-id="section"><a href="https://www.b2bmediaportal.com/nbmedia/subscribe.aspx?b=MCN&amp;key=nbmcn" ng-click="clickHandler($event)" target="_blank" phx-track-event>Newsletter</a></li>
+						<li class="m-header--main-link m-navbar--menu-link-external " phx-track-id="section"><a href="https://www.b2bmediaportal.com/nbm2/subscribe.aspx?f=MCN&amp;pageid=1" ng-click="clickHandler($event)" target="_blank" phx-track-event>Subscribe</a></li>
+					</ul>
+					<div class="m-header--search-group m-site-nav--search-group">
+						<div class="m-header--search"><a class="m-icon-button" aria-label="Search" href="/search" title="Search" phx-track-event phx-track-id="search">
+								<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_search"><svg>
+										<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_search"></use>
+									</svg></phoenix-icon-fallback>
+							</a></div>
+						<div class="m-header--user m-site-nav--user" ng-cloak ng-if="user" phx-nav><a href="#" ng-click="toggleUserMenu()"><span class="m-user--subscribe" ng-if="!user.isAuthenticated">Join</span><img class="m-user--image" ng-if="user.isAuthenticated" ng-src="{{user.profile.avatar}}" alt=""></a></div>
+					</div>
+				</nav>
+				<div class="m-advertisement-off-canvas--pusher">
+					<header class="m-header mm-header-standard  mm-header-left m-content-detail" phx-track-id="header">
+						<section>
+							<ul class="m-header--social-nav">
+								<li class="m-header--link m-header--social-facebook" phx-track-id="social"><a aria-label="facebook" href="https://www.facebook.com/MultichannelNewsMagazine" target="_blank" phx-track-event phx-track-id="facebook-follow">
+										<phoenix-icon-fallback class="m-svg" icon="ico_facebook"><svg>
+												<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_facebook"></use>
+											</svg></phoenix-icon-fallback>
+									</a></li>
+								<li class="m-header--link m-header--social-twitter" phx-track-id="social"><a aria-label="twitter" href="https://twitter.com/MultiNews" target="_blank" phx-track-event phx-track-id="twitter-follow">
+										<phoenix-icon-fallback class="m-svg" icon="ico_twitter"><svg>
+												<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_twitter"></use>
+											</svg></phoenix-icon-fallback>
+									</a></li>
+							</ul>
+							<ul class="m-header--tertiary-nav"></ul>
+							<div class="m-header--main"><a class="m-header--logo mm-has-svg" style="background-image: url(https://www.multichannel.com/.image/cs_srgb%2Cq_auto:good/MTU0MTYwMTc2MjUxODA3MDg2/small.svg)" href="/" aria-label="Multichannel" phx-track-id="logo" phx-track-event></a>
+								<phoenix-import class="m-header--coverlines-container" src="/.api/coverlines" phx-track-id="coverline"></phoenix-import>
+							</div>
+						</section>
+						<nav class="m-site-nav m-header--navbar mm-protected-nav">
+							<phoenix-notifier class="m-header--menu m-site-nav--menu-toggler" event-name="phoenix:overlay" event-value="offcanvas"><button class="m-off-canvas--toggle m-icon-button" aria-label="Menu" phx-track-event phx-track-id="offcanvas">
+									<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_hamburger"><svg>
+											<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_hamburger"></use>
+										</svg></phoenix-icon-fallback>
+								</button></phoenix-notifier>
+							<ul class="m-header--main-nav m-site-nav--main">
+								<li class="m-header--logo-list-item m-site-nav--logo"><a class="m-header--navbar-logo" phx-track-event phx-track-id="logo" href="/"><img src="https://www.multichannel.com/.image/cs_srgb%2Cq_auto:good/MTU0MTYxMjQ3MzA5Mjc2NTI2/navbar.svg" alt="Logo"></a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/news" ng-click="clickHandler($event)" target="" phx-track-event>News</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/blog" ng-click="clickHandler($event)" target="" phx-track-event>Blogs</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/events" ng-click="clickHandler($event)" target="" phx-track-event>Events</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/slideshows" ng-click="clickHandler($event)" target="" phx-track-event>Slideshows</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/news/technology" ng-click="clickHandler($event)" target="" phx-track-event>Technology</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/video" ng-click="clickHandler($event)" target="" phx-track-event>Video</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/pr-feed" ng-click="clickHandler($event)" target="" phx-track-event>PR Feed</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/needtoknow" ng-click="clickHandler($event)" target="" phx-track-event>Need to Know</a></li>
+								<li class="m-header--main-link " phx-track-id="section"><a href="/resources" ng-click="clickHandler($event)" target="" phx-track-event>Resources</a></li>
+								<li class="m-header--main-link m-navbar--menu-link-external " phx-track-id="section"><a href="https://www.b2bmediaportal.com/nbmedia/subscribe.aspx?b=MCN&amp;key=nbmcn" ng-click="clickHandler($event)" target="_blank" phx-track-event>Newsletter</a></li>
+								<li class="m-header--main-link m-navbar--menu-link-external " phx-track-id="section"><a href="https://www.b2bmediaportal.com/nbm2/subscribe.aspx?f=MCN&amp;pageid=1" ng-click="clickHandler($event)" target="_blank" phx-track-event>Subscribe</a></li>
+							</ul>
+							<div class="m-header--search-group m-site-nav--search-group">
+								<div class="m-header--search"><a class="m-icon-button" aria-label="Search" href="/search" title="Search" phx-track-event phx-track-id="search">
+										<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_search"><svg>
+												<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_search"></use>
+											</svg></phoenix-icon-fallback>
+									</a></div>
+								<div class="m-header--user m-site-nav--user" ng-cloak ng-if="user" phx-nav><a href="#" ng-click="toggleUserMenu()"><span class="m-user--subscribe" ng-if="!user.isAuthenticated">Join</span><img class="m-user--image" ng-if="user.isAuthenticated" ng-src="{{user.profile.avatar}}" alt=""></a></div>
+							</div>
+						</nav>
+					</header>
+					<section class="m-page-container trackable click">
+						<phx-user-menu user="user" site-config="config" show-menu="showUserMenu"></phx-user-menu>
+						<div class="m-advertisement--skin-container"></div>
+						<div class="m-page m-detail mm-detail mm-feature" ng-class="pageClasses">
+							<script type="application/json" id="pageItemData">
+								{
+									"id": "ci023ed9a70000252e",
+									"isDetailPage": true,
+									"objectType": "ContentArticle",
+									"originalPublicationTimestamp": "2019-02-06T13:18:31Z",
+									"path": "/news/sotu-is-light-on-broadband-infrastructure",
+									"publicationTimestamp": "2019-02-06T13:18:31Z",
+									"title": "SOTU Is Light on Broadband Infrastructure",
+									"viewProperties": {
+										"analyticsModel": {
+											"title": "SOTU Is Light on Broadband Infrastructure",
+											"pageType": "Article Page",
+											"sectionPath": "News > Policy",
+											"parentSectionName": "News",
+											"authorName": "John  Eggerton",
+											"publicationQuarter": "2019Q1",
+											"trackedRichTermNames": ""
+										}
+									},
+									"associatedRichTerms": [{
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T17:41:35Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"id": "ci0223583cf00e2452",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "TV white spaces",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:terms",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-09T17:41:35Z",
+										"disqusId": "1ca53d79-23c1-11e8-b928-025c01576b86",
+										"alternateUrls": ["/articles-taging/tv-white-spaces"],
+										"originalPublicationTimestamp": "2018-03-09T17:41:35Z",
+										"createdTimestamp": "2018-03-09T17:41:35Z",
+										"versionId": "1",
+										"path": "/tag/tv-white-spaces",
+										"isWorkInProgress": false,
+										"slug": "tv-white-spaces",
+										"displayName": "TV white spaces",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "TV white spaces",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:articles-tagging:terms:20346",
+										"statusCode": "complete"
+									}, {
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T02:10:02Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"id": "ci02234a97a00326fb",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "News",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:sections",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-29T17:28:07Z",
+										"disqusId": "f9bdf452-233e-11e8-b8df-025c01576b86",
+										"originalPublicationTimestamp": "2018-03-09T02:10:02Z",
+										"createdTimestamp": "2018-03-29T17:28:07Z",
+										"versionId": "4",
+										"path": "/news",
+										"isWorkInProgress": false,
+										"slug": "news",
+										"displayName": "News",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "news",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:news:sections:news",
+										"statusCode": "complete"
+									}, {
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T02:10:03Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"id": "ci02234a97b00826fb",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "Donald Trump",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:terms",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-09T02:10:03Z",
+										"disqusId": "fa684aaa-233e-11e8-b8df-025c01576b86",
+										"alternateUrls": ["/articles-taging/donald-trump"],
+										"originalPublicationTimestamp": "2018-03-09T02:10:03Z",
+										"createdTimestamp": "2018-03-09T02:10:03Z",
+										"versionId": "1",
+										"path": "/tag/donald-trump",
+										"isWorkInProgress": false,
+										"slug": "donald-trump",
+										"displayName": "Donald Trump",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "Donald Trump",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:articles-tagging:terms:9468",
+										"statusCode": "complete"
+									}, {
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T17:30:20Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"id": "ci02235812c0042452",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "SOTU",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:terms",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-09T17:30:20Z",
+										"disqusId": "89a97c1e-23bf-11e8-824f-025355a05e82",
+										"alternateUrls": ["/articles-taging/sotu"],
+										"originalPublicationTimestamp": "2018-03-09T17:30:20Z",
+										"createdTimestamp": "2018-03-09T17:30:20Z",
+										"versionId": "1",
+										"path": "/tag/sotu",
+										"isWorkInProgress": false,
+										"slug": "sotu",
+										"displayName": "SOTU",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "SOTU",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:articles-tagging:terms:6871",
+										"statusCode": "complete"
+									}, {
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T02:10:23Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"metaDescription": "",
+										"id": "ci02234a98f00126fb",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "Policy",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:sections",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-09T02:10:23Z",
+										"disqusId": "065e6531-233f-11e8-b8df-025c01576b86",
+										"parentId": "ci02234a97a00326fb",
+										"alternateUrls": ["/news/policy"],
+										"originalPublicationTimestamp": "2018-03-09T02:10:23Z",
+										"createdTimestamp": "2018-03-09T02:10:23Z",
+										"versionId": "1",
+										"path": "/news/policy",
+										"isWorkInProgress": false,
+										"slug": "policy",
+										"displayName": "Policy",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "Policy",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:news:sections:19",
+										"statusCode": "complete"
+									}, {
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T02:10:03Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"id": "ci02234a97b00626fb",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "broadband",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:terms",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-09T02:10:03Z",
+										"disqusId": "fa684aa8-233e-11e8-b8df-025c01576b86",
+										"alternateUrls": ["/taxonomy/term/157"],
+										"originalPublicationTimestamp": "2018-03-09T02:10:03Z",
+										"createdTimestamp": "2018-03-09T02:10:03Z",
+										"versionId": "1",
+										"path": "/tag/157",
+										"isWorkInProgress": false,
+										"slug": "157",
+										"displayName": "broadband",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "broadband",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:articles-tagging:terms:157",
+										"statusCode": "complete"
+									}, {
+										"isInstantArticle": false,
+										"publicationTimestamp": "2018-03-09T17:33:29Z",
+										"createdPrincipalId": "up01f1001d200027e0",
+										"isExcludedFromPublishedStreams": false,
+										"commentsEnabled": true,
+										"id": "ci0223581e90132452",
+										"objectType": "ContentRichTerm",
+										"isNoindex": false,
+										"title": "infrastructure",
+										"authoringStatusCode": "complete",
+										"vocabularyId": "cs0214b2670000245d:terms",
+										"editedByPrincipalId": "up01f1001d200027e0",
+										"editedTimestamp": "2018-03-09T17:33:29Z",
+										"disqusId": "faad655e-23bf-11e8-b923-025c01576b86",
+										"alternateUrls": ["/articles-taging/infrastructure"],
+										"originalPublicationTimestamp": "2018-03-09T17:33:29Z",
+										"createdTimestamp": "2018-03-09T17:33:29Z",
+										"versionId": "1",
+										"path": "/tag/infrastructure",
+										"isWorkInProgress": false,
+										"slug": "infrastructure",
+										"displayName": "infrastructure",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"metaTitle": "infrastructure",
+										"affiliatesEnabled": true,
+										"primarySiteId": "cs0214b2670000245d",
+										"migrationId": "Term:articles-tagging:terms:8916",
+										"statusCode": "complete"
+									}],
+									"commentsEnabled": true,
+									"dek": "Makes no mention of need for broadband buildout, race to 5G or closing digital divide",
+									"disqusId": "4528af87-2a11-11e9-b10f-0299430ebb74",
+									"isCanvas": true,
+									"metaDescription": "In communications circles, the State of the Union address was as notable for what was not in it as for what was.",
+									"primaryImage": {
+										"createdPrincipalId": "up023c62c72000258f",
+										"height": 2000,
+										"cloudinaryVersionId": 1549509388,
+										"attribution": {
+											"sourceName": "Official White House Photo by Shealah Craighead"
+										},
+										"id": "ci023ee5f8e000267d",
+										"objectType": "ContentPhoto",
+										"title": "2019-SOTU-Donald-Trump-1",
+										"primaryPhotoId": "ci023ee5f8e000267d",
+										"width": 3000,
+										"hasFaces": true,
+										"publicId": "MTYxODE5NDkyODk5MzY2NTI1",
+										"format": "jpg",
+										"createdTimestamp": "2019-02-07T03:16:30Z",
+										"primaryContentSiteId": "cs0214b2670000245d",
+										"bytes": 966107,
+										"primarySiteId": "cs0214b2670000245d"
+									},
+									"primaryImageId": "ci023ee5f8e000267d",
+									"primarySectionIds": ["ci02234a97a00326fb", "ci02234a98f00126fb"],
+									"promoTitle": "SOTU Is Light on Broadband Infrastructure",
+									"sectionIds": [
+										["ci02234a97a00326fb", "ci02234a98f00126fb"]
+									],
+									"slug": "sotu-is-light-on-broadband-infrastructure",
+									"teaser": "Makes no mention of need for broadband buildout, race to 5G or closing digital divide",
+									"hasGallery": false
+								}
+							</script>
+							<section class="m-sub-navigation m-component-stack mm-component-stack--is-stacked">
+								<div class="m-sub-navigation--container">
+									<phoenix-breadcrumbs class="m-sub-navigation--items m-breadcrumbs" id="subnav">
+										<phoenix-notifier event-name="phoenix:breadcrumbs:toggle" event-value="subnav" events="click"><button class="m-breadcrumbs--expand-button m-icon-button mm-icon-button--small-icon is-hidden" aria-label="{{isCollapsed ? 'Expand Breadcrumbs' : 'Collapse Breadcrumbs'}}">
+												<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_angle_double_right"><svg>
+														<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_angle_double_right"></use>
+													</svg></phoenix-icon-fallback>
+											</button></phoenix-notifier>
+										<phoenix-breadcrumbs-container class="m-breadcrumbs--container">
+											<ul class="m-breadcrumbs--items">
+												<li class="m-breadcrumbs--item" phoenix-breadcrumbs-item><a class="m-breadcrumbs--link m-sub-navigation--link" phx-track-event href="/">Home</a>
+													<phoenix-icon-fallback class="m-svg m-breadcrumbs--divider" icon="ico_angle_right" aria-hidden="true"><svg>
+															<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_angle_right"></use>
+														</svg></phoenix-icon-fallback>
+												</li>
+												<li class="m-breadcrumbs--item" phoenix-breadcrumbs-item><a class="m-breadcrumbs--link m-sub-navigation--link" phx-track-event href="/news" title="News">News</a>
+													<phoenix-icon-fallback class="m-svg m-breadcrumbs--divider" icon="ico_angle_right" aria-hidden="true"><svg>
+															<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_angle_right"></use>
+														</svg></phoenix-icon-fallback>
+												</li>
+												<li class="m-breadcrumbs--item" phoenix-breadcrumbs-item><a class="m-breadcrumbs--link m-sub-navigation--link" phx-track-event href="/news/policy" title="Policy">Policy</a>
+													<phoenix-icon-fallback class="m-svg m-breadcrumbs--divider" icon="ico_angle_right" aria-hidden="true"><svg>
+															<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_angle_right"></use>
+														</svg></phoenix-icon-fallback>
+												</li>
+											</ul>
+										</phoenix-breadcrumbs-container>
+									</phoenix-breadcrumbs>
+								</div>
+								<phoenix-drop-down-panel class="m-sub-navigation--items m-sub-navigation--pushdown" id="panel-ci02234a97a00326fb" drop-down-id="ci02234a97a00326fb" hidden>
+									<ul>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/accenture" phx-track-event title="Accenture">Accenture</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/advanced-advertising" phx-track-event title="Advanced Advertising">Advanced Advertising</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/audience-measurement" phx-track-event title="Audience Measurement">Audience Measurement</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/cable-tv-conventions" phx-track-event title="Cable TV Conventions">Cable TV Conventions</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/content" phx-track-event title="Content">Content</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/distribution" phx-track-event title="Distribution">Distribution</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/finance" phx-track-event title="Finance">Finance</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/mcn-events" phx-track-event title="MCN Events">MCN Events</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/marketing" phx-track-event title="Marketing">Marketing</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/nab-show" phx-track-event title="NAB Show">NAB Show</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/newbay-plus" phx-track-event title="NewBay Plus">NewBay Plus</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/news-networks" phx-track-event title="News">News</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/news-articles" phx-track-event title="News Articles">News Articles</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/next-tv" phx-track-event title="Next TV">Next TV</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/products" phx-track-event title="PRODUCTS">PRODUCTS</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/people" phx-track-event title="People">People</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/platforms" phx-track-event title="Platforms">Platforms</a></li>
+										<li class="m-sub-navigation--pushdown-item is-selected"><a class="m-sub-navigation--link" href="/news/policy" phx-track-event title="Policy">Policy</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/rights-insights" phx-track-event title="Rights Insights">Rights Insights</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/rights-insights-0" phx-track-event title="Rights Insights">Rights Insights</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/rightside-perspectives" phx-track-event title="Rightside Perspectives">Rightside Perspectives</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/sponsored" phx-track-event title="Sponsored">Sponsored</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/tv-everywhere" phx-track-event title="TV Everywhere">TV Everywhere</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/technology" phx-track-event title="Technology">Technology</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/verizon-perspectives" phx-track-event title="Verizon Perspectives">Verizon Perspectives</a></li>
+									</ul>
+								</phoenix-drop-down-panel>
+								<phoenix-drop-down-panel class="m-sub-navigation--items m-sub-navigation--pushdown" id="panel-ci02234a98f00126fb" drop-down-id="ci02234a98f00126fb" hidden>
+									<ul>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/policy/congress" phx-track-event title="Congress">Congress</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/policy/courts" phx-track-event title="Courts">Courts</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/policy/fcc" phx-track-event title="FCC">FCC</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/policy/national-regulation" phx-track-event title="National Regulation">National Regulation</a></li>
+										<li class="m-sub-navigation--pushdown-item"><a class="m-sub-navigation--link" href="/news/policy/state-lawsfranchising" phx-track-event title="State Laws/Franchising">State Laws/Franchising</a></li>
+									</ul>
+								</phoenix-drop-down-panel>
+							</section>
+							<section class="m-component-detail">
+								<article class="m-story l-content-well mm-feature">
+									<div itemscope itemtype="http://schema.org/Article">
+										<meta itemprop="inLanguage" content="en">
+										<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+											<meta itemprop="url" content="https://www.multichannel.com/.image/t_share/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg">
+											<meta itemprop="width" content="1200">
+											<meta itemprop="height" content="800">
+										</div>
+										<meta itemprop="description" content="In communications circles, the State of the Union address was as notable for what was not in it as for what was.">
+										<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="Future plc">
+											<meta itemprop="url" content="http://www.futureplc.com/">
+										</div>
+										<meta itemprop="dateModified" content="2019-02-06T22:18:27-05:00">
+										<link itemprop="mainEntityOfPage" href="https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure">
+										<header class="m-detail-header mm-detail-header--featured">
+											<div class="m-detail-header--container">
+												<phoenix-picture>
+													<picture class="is-waiting-to-load">
+														<source type="image/webp" media="(min-width: 1921px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_266:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_2560/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 2560w,https://www.multichannel.com/.image/ar_266:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_5120/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 5120w">
+														<source media="(min-width: 1921px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_266:100%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_2560/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 2560w,https://www.multichannel.com/.image/ar_266:100%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_5120/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 5120w">
+														<source type="image/webp" media="(min-width: 1281px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_233:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_1920/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 1920w,https://www.multichannel.com/.image/ar_233:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_3840/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 3840w">
+														<source media="(min-width: 1281px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_233:100%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_1920/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 1920w,https://www.multichannel.com/.image/ar_233:100%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_3840/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 3840w">
+														<source type="image/webp" media="(min-width: 961px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_215:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_1280/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 1280w,https://www.multichannel.com/.image/ar_215:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_2560/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 2560w">
+														<source media="(min-width: 961px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_215:100%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_1280/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 1280w,https://www.multichannel.com/.image/ar_215:100%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_2560/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 2560w">
+														<source type="image/webp" media="(min-width: 675px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 768w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 960w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_1536/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 1536w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_1920/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 1920w">
+														<source media="(min-width: 675px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 768w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 960w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_1536/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 1536w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_1920/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 1920w">
+														<source type="image/webp" media="(max-width: 674px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_375/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 375w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_675/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 675w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_750/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 750w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_1350/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.webp 1350w">
+														<source media="(max-width: 674px)" sizes="100vw" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_375/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 375w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_675/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 675w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_750/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 750w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_1350/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg 1350w"><img class="m-detail-header--feature-image" alt="SOTU Is Light on Broadband Infrastructure" decoding="async" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg"></picture>
+													<div class="m-detail-header--aspect-ratio-wrapper">
+														<div class="m-detail-header--aspect-ratio-pusher"></div>
+													</div>
+												</phoenix-picture>
+												<div class="m-detail-header--content">
+													<h1 class="m-detail-header--title" itemprop="headline">SOTU Is Light on Broadband Infrastructure</h1>
+													<div class="m-detail-header--dek">Makes no mention of need for broadband buildout, race to 5G or closing digital divide</div>
+													<div class="m-detail-header--meta">
+														<dl><dt>Author:</dt>
+															<dd class="m-detail-header--meta-item" itemprop="author"><a class="m-detail-header--meta-author" href="/author/jeggerton" phx-track-event phx-track-id="Author Name" rel="author">John Eggerton</a></dd><dt>Publish date:</dt>
+															<dd class="m-detail-header--meta-item">
+																<phoenix-timeago locale="en-us"><time itemprop="datePublished" datetime="2019-02-06T08:18:31-05:00" title="2019-02-06T13:18:31Z">Feb 6, 2019</time></phoenix-timeago>
+															</dd>
+														</dl>
+													</div>
+												</div>
+											</div>
+											<p class="m-detail-header--image-meta"><span class="m-detail-header--image-attribution">Official White House Photo by Shealah Craighead</span></p>
+										</header>
+										<div class="m-detail--contents">
+											<section class="l-grid lm-grid--detail lm-grid--with-right-rail" itemprop="articleBody">
+												<div class="l-grid--content-body">
+													<div class="m-detail--abstract">Makes no mention of need for broadband buildout, race to 5G or closing digital divide</div>
+													<section class="m-social mm-social--below-header">
+														<ul>
+															<li class="m-social--facebook"><a class="m-icon-button m-social--button" aria-label="facebook" onclick="window.open('https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.multichannel.com%2Fnews%2Fsotu-is-light-on-broadband-infrastructure', 'socialSharefacebook', 'width=500,height=500');return false;" phx-track-event phx-track-id="Link facebook" phx-adobe-track-id="Facebook">
+																	<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_facebook"><svg>
+																			<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_facebook"></use>
+																		</svg></phoenix-icon-fallback>
+																</a></li>
+															<li class="m-social--twitter"><a class="m-icon-button m-social--button" aria-label="twitter" onclick="window.open('https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.multichannel.com%2Fnews%2Fsotu-is-light-on-broadband-infrastructure', 'socialSharetwitter', 'width=500,height=500');return false;" phx-track-event phx-track-id="Link twitter" phx-adobe-track-id="Twitter">
+																	<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_twitter"><svg>
+																			<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_twitter"></use>
+																		</svg></phoenix-icon-fallback>
+																</a></li>
+															<li class="m-social--pinterest"><a class="m-icon-button m-social--button" aria-label="pinterest" onclick="window.open('http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.multichannel.com%2Fnews%2Fsotu-is-light-on-broadband-infrastructure&amp;media=https%3A%2F%2Fwww.multichannel.com%2F.image%2Ft_share%2FMTYxODE5NDkyODk5MzY2NTI1%2F2019-sotu-donald-trump-1.jpg&amp;description=SOTU%20Is%20Light%20on%20Broadband%20Infrastructure.%20Makes%20no%20mention%20of%20need%20for%20broadband%20buildout%2C%20race%20to%205G%20or%20closing%20digital%20divide', 'socialSharepinterest', 'width=500,height=500');return false;" phx-track-event phx-track-id="Link pinterest" phx-adobe-track-id="Pinterest">
+																	<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_pinterest"><svg>
+																			<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_pinterest"></use>
+																		</svg></phoenix-icon-fallback>
+																</a></li>
+														</ul>
+													</section>
+													<div class="m-detail--sponsor"></div>
+													<div class="m-detail--body">
+														<!-- tml-version="2" -->
+														<p>In communications circles, the State of the Union address was as notable for what was not in it as for what was.</p>
+														<aside class="m-in-content-ad-row l-inline not-size-b not-size-c not-size-d" phx-inline-ad-layout="ad-30e89e00dd6640b3854543d7ef1ef809">
+															<div class="m-header-ad not-size-b not-size-c not-size-d" data-class-rules="[]" data-ad-group="header-0">
+																<div class="m-header-ad--slot is-placeholder not-size-b not-size-c not-size-d">
+																	<div id="ad-30e89e00dd6640b3854543d7ef1ef809"></div>
+																</div>
+															</div>
+														</aside>
+														<p>Notable for its absence was any specific mention of broadband infrastructure or the race to 5G, which the President has said is one the U.S. should win, and the rural broadband buildout the President <a href="https://www.broadcastingcable.com/news/president-well-spend-great-deal-rural-broadband-171743" phx-track-event target="_blank">staked out as a priority last January.</a></p>
+														<p>There was a passing reference to the need for repairing crumbling infrastructure, but that was clearly about roads and bridges rather than broadband, which is about building new plant, nor repairing it, and a mention of investing in a cutting-edge future.</p>
+														<p>&quot;Both parties should be able to unite for a great rebuilding of America&apos;s crumbling infrastructure,&quot; the President said. &quot;I know that Congress is eager to pass an infrastructure bill &#x2014; and I am eager to work with you on legislation to deliver new and important infrastructure investment, including investments in the cutting-edge industries of the future. This is not an option. This is a necessity.&quot;</p>
+														<aside class="m-in-content-ad-row l-inline not-size-b not-size-c not-size-d" phx-inline-ad-layout="ad-956d967f661b4d13b8809680bb567544">
+															<div class="m-in-content-ad not-size-b not-size-c not-size-d" data-class-rules="[{&quot;sizes&quot;:[&quot;0x0&quot;],&quot;classes&quot;:[&quot;m-advertisement--fluid-card&quot;]}]" data-ad-group="in_content-0">
+																<div class="m-in-content-ad--slot is-placeholder not-size-b not-size-c not-size-d">
+																	<div id="ad-956d967f661b4d13b8809680bb567544"></div>
+																</div>
+															</div>
+														</aside>
+														<p>USTelecom did take that opportunity to get specific about what infrastructure was not an option, tweeting: </p>
+														<div>
+															<figure class="m-embed m-embed--twitter l-inline">
+																<phoenix-twitter-embed class="m-custom-element" tweet-url="https://twitter.com/USTelecom/status/1092981534431330309"></phoenix-twitter-embed>
+															</figure>
+														</div>
+														<aside class="m-in-content-ad-row l-inline not-size-a not-size-b" phx-inline-ad-layout="ad-66a23f2f314f43538480ea33e0df0146">
+															<div class="m-in-content-ad not-size-a not-size-b" data-class-rules="[{&quot;sizes&quot;:[&quot;970x250&quot;],&quot;classes&quot;:[&quot;is-970x250&quot;]},{&quot;sizes&quot;:[&quot;728x90&quot;],&quot;classes&quot;:[&quot;is-728x90&quot;]},{&quot;sizes&quot;:[&quot;0x0&quot;],&quot;classes&quot;:[&quot;m-advertisement--fluid-card&quot;]}]" data-ad-group="in_content-0">
+																<div class="m-in-content-ad--slot is-placeholder not-size-a not-size-b">
+																	<div id="ad-66a23f2f314f43538480ea33e0df0146"></div>
+																</div>
+															</div>
+														</aside>
+														<aside class="m-in-content-ad-row l-inline not-size-a not-size-c not-size-d" phx-inline-ad-layout="ad-8198cbfc8363436797e824b7ca0753da">
+															<div class="m-in-content-ad not-size-a not-size-c not-size-d" data-class-rules="[{&quot;sizes&quot;:[&quot;728x90&quot;],&quot;classes&quot;:[&quot;is-728x90&quot;]},{&quot;sizes&quot;:[&quot;0x0&quot;],&quot;classes&quot;:[&quot;m-advertisement--fluid-card&quot;]}]" data-ad-group="in_content-0">
+																<div class="m-in-content-ad--slot is-placeholder not-size-a not-size-c not-size-d">
+																	<div id="ad-8198cbfc8363436797e824b7ca0753da"></div>
+																</div>
+															</div>
+														</aside>
+														<p>But Connect Americans Now, which advocates for getting affordable broadband to rural areas by 2022, including using broadcast TV spectrum to do so, saw it as a missed opportunity.</p>
+														<p>&#x201C;Bridging the rural broadband gap represents a rare opportunity for bipartisan cooperation,&quot; it said following the speech. &quot;We are disappointed President Trump did not raise this critical issue that impacts millions of rural Americans every day in this evening&#x2019;s State of the Union Address. Bringing broadband access to rural America remains an opportunity for Democrats and Republicans to work together toward a common goal. An initial non-controversial step in this mission would be removing the regulatory barriers limiting investments in TV white spaces technology, and we hope the Federal Communications Commission will work quickly to deliver results to the American people.&#x201D;</p>
+														<aside class="m-in-content-ad-row l-inline not-size-b not-size-c not-size-d" phx-inline-ad-layout="ad-2c2ace252a8b4c04bba942661939271c">
+															<div class="m-in-content-ad not-size-b not-size-c not-size-d" data-class-rules="[{&quot;sizes&quot;:[&quot;0x0&quot;],&quot;classes&quot;:[&quot;m-advertisement--fluid-card&quot;]}]" data-ad-group="in_content-1">
+																<div class="m-in-content-ad--slot is-placeholder not-size-b not-size-c not-size-d">
+																	<div id="ad-2c2ace252a8b4c04bba942661939271c"></div>
+																</div>
+															</div>
+														</aside>
+													</div>
+													<div class="m-detail--blockthrough-ads"><span class="bt-uid-tg" uid="5ae8a9beef-168" style="display: none !important"></span></div>
+													<div class="m-detail--sponsor"></div>
+													<footer class="m-detail--footer">
+														<div class="m-detail--meta">
+															<dl><dt class="m-detail--label">Tags</dt><dt>terms:</dt>
+																<dd class="m-detail--keywords" itemprop="keywords"><a href="/tag/tv-white-spaces">TV white spaces</a><a href="/tag/donald-trump">Donald Trump</a><a href="/tag/sotu">SOTU</a><a href="/tag/157">broadband</a><a href="/tag/infrastructure">infrastructure</a></dd>
+															</dl>
+														</div>
+														<aside class="m-detail--author-box">
+															<div class="m-detail--author-content">
+																<div class="m-detail--author-byline">
+																	<div class="m-detail--author-byline-label">By</div> <a href="/author/jeggerton" phx-track-event phx-track-id="Author Name" rel="author">John Eggerton</a>
+																</div>
+															</div>
+														</aside>
+														<section class="m-social mm-social--below-content">
+															<ul>
+																<li class="m-social--facebook"><a class="m-icon-button m-social--button" aria-label="facebook" onclick="window.open('https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.multichannel.com%2Fnews%2Fsotu-is-light-on-broadband-infrastructure', 'socialSharefacebook', 'width=500,height=500');return false;" phx-track-event phx-track-id="Link facebook" phx-adobe-track-id="Facebook">
+																		<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_facebook"><svg>
+																				<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_facebook"></use>
+																			</svg></phoenix-icon-fallback>
+																	</a></li>
+																<li class="m-social--twitter"><a class="m-icon-button m-social--button" aria-label="twitter" onclick="window.open('https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.multichannel.com%2Fnews%2Fsotu-is-light-on-broadband-infrastructure', 'socialSharetwitter', 'width=500,height=500');return false;" phx-track-event phx-track-id="Link twitter" phx-adobe-track-id="Twitter">
+																		<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_twitter"><svg>
+																				<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_twitter"></use>
+																			</svg></phoenix-icon-fallback>
+																	</a></li>
+																<li class="m-social--pinterest"><a class="m-icon-button m-social--button" aria-label="pinterest" onclick="window.open('http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.multichannel.com%2Fnews%2Fsotu-is-light-on-broadband-infrastructure&amp;media=https%3A%2F%2Fwww.multichannel.com%2F.image%2Ft_share%2FMTYxODE5NDkyODk5MzY2NTI1%2F2019-sotu-donald-trump-1.jpg&amp;description=SOTU%20Is%20Light%20on%20Broadband%20Infrastructure.%20Makes%20no%20mention%20of%20need%20for%20broadband%20buildout%2C%20race%20to%205G%20or%20closing%20digital%20divide', 'socialSharepinterest', 'width=500,height=500');return false;" phx-track-event phx-track-id="Link pinterest" phx-adobe-track-id="Pinterest">
+																		<phoenix-icon-fallback class="m-svg m-icon-button--icon" icon="ico_pinterest"><svg>
+																				<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_pinterest"></use>
+																			</svg></phoenix-icon-fallback>
+																	</a></li>
+															</ul>
+														</section>
+													</footer>
+												</div>
+												<div class="m-aside-rail l-grid--rail">
+													<aside class="m-aside-rail--atf-ad"><span class="bt-uid-tg" uid="5ae8a9a25b-168" style="display: none !important"></span>
+														<phoenix-ad class="m-ad not-size-a not-size-b m-sidebar-ad--slot" config='{"adHtml":"","adReloaderDelay":30,"maxAdReloads":25,"adReloaderSizeCodes":["300x600","300x250","160x600","1x1"],"bonusConfig":null,"classRules":[{"sizes":["300x600","300x250","160x600"],"classes":["m-sponsor--adjacency"]}],"localizedPhrases":{"advertisement_legend":"ADVERTISEMENT","outstream_clickout":"Visit Website","outstream_thanks":"Thanks for watching!"},"overrideOutstreamScript":false,"moduleClass":"m-sidebar-ad","slotId":"ad-5d05d10a4f8448368ce61a61bbf1cdf8","visClasses":["not-size-a","not-size-b"],"extraClasses":null,"zone":"atf_sidebar","adGroup":"atf_sidebar-0","slotConfig":{"config":{"sizes":[[300,600],[300,250],[160,600]]},"model":{"zone":"atf_sidebar","index":0,"isOutstream":false},"sizes":[{"width":300,"height":600},{"width":300,"height":250},{"width":160,"height":600}],"screenSizes":["C"],"slotModel":{"zone":"atf_sidebar","index":0,"isOutstream":false},"id":"ad-5d05d10a4f8448368ce61a61bbf1cdf8","adUnitPath":"/88059007/www.multichannel.com/news/policy"},"showBlockthrough":true,"blockthroughTag":"5ae8a9a25b-168"}'
+														 auto-reload track-visibility></phoenix-ad>
+													</aside>
+												</div>
+											</section>
+										</div>
+										<aside class="l-content-recommendation" id="phxtags-belowcontent" phx-track-id="BelowContent"></aside>
+									</div>
+								</article>
+							</section><a name="comments"></a>
+							<section class="m-comments m-component-stack mm-component-stack--is-stacked">
+								<div class="m-comments--content l-content-well">
+									<phoenix-disqus-thread shortname="Multichannel" thread-identifier="4528af87-2a11-11e9-b10f-0299430ebb74" thread-title="SOTU Is Light on Broadband Infrastructure - by John  Eggerton" thread-url="https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure"></phoenix-disqus-thread>
+								</div>
+							</section>
+							<section class="m-tile-hub m-component-stack mm-component-stack--is-stacked mm-component-stack--has-header">
+								<div class="m-component-header m-component-stack--header">
+									<div class="m-component-header--container mm-component-header--size-extra-small">
+										<h1 class="m-component-header--image" role="heading"><img src="https://www.multichannel.com/.image/cs_srgb%2Cq_auto:good/MTU0MTYwOTMwMjg3MDAyOTkw/section_header_art_xtrasmall_relatedarticles.svg" alt="Related"></h1>
+									</div>
+								</div>
+								<section class="m-card-group-container" data-group-size="9" data-first-group-size="9">
+									<section class="m-card-group">
+										<div class="m-card-group--content l-grid lm-grid--density-standard lm-grid--standard-cards">
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/trump-signs-executive-order-speed-infrastructure-environmental-reviews-410388">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/trump-signs-executive-order-speed-infrastructure-environmental-reviews-410388" title="Trump Signs Executive Order to Speed Infrastructure Environmental Reviews">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzNzM0Mzc0MDE2NzYz/whitehouseresizedjpg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="WhiteHouseRESIZED.jpg"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/distribution" phx-track-event phx-track-id="Label">Distribution</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/trump-signs-executive-order-speed-infrastructure-environmental-reviews-410388">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">Trump Signs Executive Order to Speed Infrastructure Environmental Reviews</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">Could help with broadband buildouts</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/trump-signals-15-trillion-infrastructure-investment-417828">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/trump-signals-15-trillion-infrastructure-investment-417828" title="Trump Signals $1.5 Trillion Infrastructure 'Investment'   ">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzNzM0MzcyMzEyODI3/trumpsotupng.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="trumpsotu.png"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/policy" phx-track-event phx-track-id="Label">Policy</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/trump-signals-15-trillion-infrastructure-investment-417828">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">Trump Signals $1.5 Trillion Infrastructure 'Investment' </h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">Broadband is part of massive undertaking</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/trump-forms-infrastructure-advisory-council-414099">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/trump-forms-infrastructure-advisory-council-414099" title="Trump Forms Infrastructure Advisory Council">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzNjkzODQyMTYzNDUx/trumpapprenticeresizedjpg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="TrumpApprenticeRESIZED.jpg"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/policy" phx-track-event phx-track-id="Label">Policy</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/trump-forms-infrastructure-advisory-council-414099">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">Trump Forms Infrastructure Advisory Council</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">Broadband is among targeted sectors</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item not-size-a not-size-b m-ad-card--grid-item" data-cards-before="3">
+												<div class="m-ad-card--outer-container">
+													<div class="m-ad-card--inner-container">
+														<phoenix-ad class="m-ad not-size-a not-size-b m-in-card-ad--slot" config='{"adHtml":"","adReloaderDelay":0,"maxAdReloads":5,"adReloaderSizeCodes":null,"bonusConfig":null,"classRules":[{"dimensions":["0x0"],"classes":["m-advertisement--fluid-card","m-advertisement--fluid-standard-card"]}],"localizedPhrases":{"advertisement_legend":"ADVERTISEMENT","outstream_clickout":"Visit Website","outstream_thanks":"Thanks for watching!"},"overrideOutstreamScript":false,"moduleClass":"m-in-card-ad","slotId":"ad-46d48285a097460797d4d51276d11cf7","visClasses":["not-size-a","not-size-b"],"extraClasses":null,"zone":"below_content_card","adGroup":"below_content_card-0","slotConfig":{"config":{"sizes":[[300,250],"fluid"]},"model":{"zone":"below_content_card","index":"0","isOutstream":false,"nativeCardType":"standard"},"sizes":[{"width":300,"height":250},{"name":"fluid"}],"screenSizes":["C"],"slotModel":{"zone":"below_content_card","index":"0","isOutstream":false,"nativeCardType":"standard"},"id":"ad-46d48285a097460797d4d51276d11cf7","adUnitPath":"/88059007/www.multichannel.com/news/policy"},"showBlockthrough":true}'></phoenix-ad>
+													</div>
+												</div>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/trump-rural-broadband-will-be-part-infrastructure-package-413615">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/trump-rural-broadband-will-be-part-infrastructure-package-413615" title="Trump: Rural Broadband Will Be Part of Infrastructure Package">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzNzQ1NjQ4ODMwMjAz/trump_wikicommonsresizedjpg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Trump_WikicommonsRESIZED.jpg"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/policy" phx-track-event phx-track-id="Label">Policy</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/trump-rural-broadband-will-be-part-infrastructure-package-413615">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">Trump: Rural Broadband Will Be Part of Infrastructure Package</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">President stumps at Iowa community college</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/house-digs-broadband-infrastructure-411648">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/house-digs-broadband-infrastructure-411648" title="House Digs Into Broadband Infrastructure">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzNzMzODM2ODE3NDkw/capitol-building-senate_resizedjpg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+																		 alt="Capitol-Building-Senate_RESIZED.jpg"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/distribution/telco-tv" phx-track-event phx-track-id="Label">Telco TV</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/house-digs-broadband-infrastructure-411648">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">House Digs Into Broadband Infrastructure</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">Marathon hearing looks at challenges to deployment</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/president-fleshes-out-infrastructure-plan-418093">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/president-fleshes-out-infrastructure-plan-418093" title="President Fleshes Out Infrastructure Plan">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzOTAzMjIwMDQ4OTc4/whitehouseresizedjpg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="WhiteHouseRESIZED.jpg"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/policy" phx-track-event phx-track-id="Label">Policy</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/president-fleshes-out-infrastructure-plan-418093">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">President Fleshes Out Infrastructure Plan</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">Rural broadband gets cut of $50 billion in rural seed money</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/president-will-talk-about-infrastructure-dereg-417775">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/president-will-talk-about-infrastructure-dereg-417775" title="President Will Talk About Infrastructure, Dereg">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzODE4MTI1NjgyNDI3/whitehousepng.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="whitehouse.png"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/policy" phx-track-event phx-track-id="Label">Policy</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/president-will-talk-about-infrastructure-dereg-417775">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">President Will Talk About Infrastructure, Dereg</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">White House official outlines State of the Union speech</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+											<div class="l-grid--item">
+												<phoenix-super-link href="/news/gop-communications-subcommittee-outlines-broadband-infrastructure-priorities-417445">
+													<article class="m-card mm-card--type-standard mm-card--density-standard" role="article">
+														<div class="m-card--media"><a class="m-card--image-link m-background-image" phx-track-event phx-track-id="Image" href="/news/gop-communications-subcommittee-outlines-broadband-infrastructure-priorities-417445" title="GOP Communications Subcommittee Outlines Broadband Infrastructure Priorities">
+																<phoenix-picture>
+																	<picture class="is-waiting-to-load">
+																		<source type="image/webp" media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.webp 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.webp 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 675px)" data-srcset="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg 960w" sizes="320px">
+																		<source type="image/webp" media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.webp 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.webp 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.webp 960w" sizes="320px">
+																		<source media="(min-width: 0px)" data-srcset="https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_320/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg 320w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_640/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg 640w, https://www.multichannel.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_960/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg 960w" sizes="320px"><img class="m-card--image-element" decoding="async" nopin="true" sizes="320px" src="https://www.multichannel.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU0MDYzNjkxOTYwODg3MDM1/capitol-building-senate_resizedjpg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+																		 alt="Capitol-Building-Senate_RESIZED.jpg"></picture>
+																	<div class="m-card--image-aspect-ratio-pusher"></div>
+																</phoenix-picture>
+															</a></div>
+														<div class="m-card--content">
+															<div class="m-card--label"><a href="/news/policy" phx-track-event phx-track-id="Label">Policy</a></div>
+															<phoenix-ellipsis class="m-ellipsis m-card--header"><a phx-track-event phx-track-id="Title" href="/news/gop-communications-subcommittee-outlines-broadband-infrastructure-priorities-417445">
+																	<h2 class="m-ellipsis--text m-card--header-text" role="heading">GOP Communications Subcommittee Outlines Broadband Infrastructure Priorities</h2>
+																</a></phoenix-ellipsis>
+															<phoenix-ellipsis class="m-ellipsis">
+																<p class="m-card--body m-ellipsis--text">Targeting 'currently unserved' is chief among them</p>
+															</phoenix-ellipsis>
+														</div>
+													</article>
+												</phoenix-super-link>
+											</div>
+										</div>
+									</section>
+								</section>
+							</section>
+							<div class="m-detail--blockthrough-ads"><span class="bt-uid-tg" uid="5ae8a9c908-168" style="display: none !important"></span></div>
+							<footer class="m-footer">
+								<div class="m-footer--container">
+									<div class="m-footer--links-cell">
+										<ul class="m-footer--links">
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="/page/about-us" phx-track-event phx-track-id="Link">About Us</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="/page/contact-us" phx-track-event phx-track-id="Link">Contact Us</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="/page/advertise" phx-track-event phx-track-id="Link">Advertise</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="https://www.futureplc.com/privacy-policy/" target="blank" phx-track-event phx-track-id="Link">Privacy Policy</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="https://www.futureplc.com/terms-conditions/" target="blank" phx-track-event phx-track-id="Link">Terms of Use</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="https://www.futureplc.com/cookies-policy/" target="blank" phx-track-event phx-track-id="Link">Ad Choices</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="https://www.b2bmediaportal.com/nbm2/subscribe.aspx?f=MCN&amp;pageid=1" target="blank" phx-track-event phx-track-id="Link">Subscribe</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="https://www.multichannel.com/.rss/full/" phx-track-event phx-track-id="Link">RSS</a></li>
+											<li aria-hidden="false" phx-track-id="Footer Links"><a href="https://www.saymedia.com/privacy" target="_blank" phx-track-event phx-track-id="Link">Platform Privacy</a></li>
+										</ul>
+										<div class="m-footer--copyright">&copy; 2019 Future Publishing Limited Quay House, The Ambury, Bath BA1 1UA. All rights reserved. England and Wales company registration number 2008885.</div>
+									</div>
+									<div class="m-footer--tempest-logo-cell"><a target="_blank" href="https://www.saymedia.com/publishing">
+											<phoenix-icon-fallback class="m-svg m-footer--tempest-logo" icon="tempest-footer"><svg>
+													<use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#tempest-footer"></use>
+												</svg></phoenix-icon-fallback>
+										</a></div>
+								</div>
+							</footer>
+						</div>
+					</section>
+				</div>
+				<div>
+					<div>
+						<div>
+							<div id="ad-71a8e071642a46a0a922a4ff9974066f"></div>
+						</div>
+					</div>
+				</div>
+				<div class="m-fixedbottom-ad--container">
+					<phoenix-ad class="m-fixedbottom-ad not-size-b not-size-c not-size-d" auto-reload config='{"adReloaderDelay":30,"maxAdReloads":25,"adReloaderSizeCodes":["300x50","320x50","320x60","728x90","768x66","970x90","1x1"],"moduleClass":"m-fixedbottom-ad","slotId":"ad-6035ca595ecb4765a76ad14d1b33576d","visClasses":["not-size-b","not-size-c","not-size-d"],"slotConfig":{"config":{"sizes":[[320,60],[320,50],[300,50]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomA"}],"screenSizes":["A"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-6035ca595ecb4765a76ad14d1b33576d","adUnitPath":"/88059007/www.multichannel.com/news/policy"}}' data-class-rules="[{&quot;dimensions&quot;:[&quot;300x50&quot;,&quot;301x50&quot;,&quot;320x50&quot;,&quot;321x50&quot;,&quot;728x90&quot;,&quot;729x90&quot;,&quot;970x90&quot;,&quot;971x90&quot;,&quot;1x1&quot;],&quot;classes&quot;:[&quot;m-advertisement--fixedbottom&quot;,&quot;m-advertisement--fixedbottom-contained&quot;]},{&quot;dimensions&quot;:[&quot;728x90&quot;,&quot;729x90&quot;,&quot;970x90&quot;,&quot;971x90&quot;,&quot;1x1&quot;],&quot;classes&quot;:[&quot;m-advertisement--fixedbottom-close-button&quot;]}]"
+					 fixed-visible skip-dynamic-call>
+						<div class="m-fixedbottom-ad--slot is-placeholder not-size-b not-size-c not-size-d">
+							<div id="ad-6035ca595ecb4765a76ad14d1b33576d"></div>
+						</div>
+					</phoenix-ad>
+					<phoenix-ad class="m-fixedbottom-ad not-size-a not-size-c not-size-d" auto-reload close-button config='{"adReloaderDelay":30,"maxAdReloads":25,"adReloaderSizeCodes":["300x50","320x50","320x60","728x90","768x66","970x90","1x1"],"moduleClass":"m-fixedbottom-ad","slotId":"ad-c6aa0074383d4ad594ab0f2b1c702ed5","visClasses":["not-size-a","not-size-c","not-size-d"],"slotConfig":{"config":{"sizes":[[768,66],[728,90]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomB"}],"screenSizes":["B"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-c6aa0074383d4ad594ab0f2b1c702ed5","adUnitPath":"/88059007/www.multichannel.com/news/policy"}}' data-class-rules="[{&quot;dimensions&quot;:[&quot;300x50&quot;,&quot;301x50&quot;,&quot;320x50&quot;,&quot;321x50&quot;,&quot;728x90&quot;,&quot;729x90&quot;,&quot;970x90&quot;,&quot;971x90&quot;,&quot;1x1&quot;],&quot;classes&quot;:[&quot;m-advertisement--fixedbottom&quot;,&quot;m-advertisement--fixedbottom-contained&quot;]},{&quot;dimensions&quot;:[&quot;728x90&quot;,&quot;729x90&quot;,&quot;970x90&quot;,&quot;971x90&quot;,&quot;1x1&quot;],&quot;classes&quot;:[&quot;m-advertisement--fixedbottom-close-button&quot;]}]"
+					 fixed-visible skip-dynamic-call>
+						<div class="m-fixedbottom-ad--slot is-placeholder not-size-a not-size-c not-size-d">
+							<div id="ad-c6aa0074383d4ad594ab0f2b1c702ed5"></div>
+						</div>
+					</phoenix-ad>
+					<phoenix-ad class="m-fixedbottom-ad not-size-a not-size-b" auto-reload close-button config='{"adReloaderDelay":30,"maxAdReloads":25,"adReloaderSizeCodes":["300x50","320x50","320x60","728x90","768x66","970x90","1x1"],"moduleClass":"m-fixedbottom-ad","slotId":"ad-99470d66d2a0445b805699035a87fc3d","visClasses":["not-size-a","not-size-b"],"slotConfig":{"config":{"sizes":[[900,65],[970,90],[728,90]]},"model":{"zone":"fixed_bottom","index":0,"isOutstream":false},"sizes":[{"name":"fixedBottomC"}],"screenSizes":["C"],"slotModel":{"zone":"fixed_bottom","index":0,"isOutstream":false},"id":"ad-99470d66d2a0445b805699035a87fc3d","adUnitPath":"/88059007/www.multichannel.com/news/policy"}}' data-class-rules="[{&quot;dimensions&quot;:[&quot;300x50&quot;,&quot;301x50&quot;,&quot;320x50&quot;,&quot;321x50&quot;,&quot;728x90&quot;,&quot;729x90&quot;,&quot;970x90&quot;,&quot;971x90&quot;,&quot;1x1&quot;],&quot;classes&quot;:[&quot;m-advertisement--fixedbottom&quot;,&quot;m-advertisement--fixedbottom-contained&quot;]},{&quot;dimensions&quot;:[&quot;728x90&quot;,&quot;729x90&quot;,&quot;970x90&quot;,&quot;971x90&quot;,&quot;1x1&quot;],&quot;classes&quot;:[&quot;m-advertisement--fixedbottom-close-button&quot;]}]"
+					 fixed-visible skip-dynamic-call>
+						<div class="m-fixedbottom-ad--slot is-placeholder not-size-a not-size-b">
+							<div id="ad-99470d66d2a0445b805699035a87fc3d"></div>
+						</div>
+					</phoenix-ad>
+				</div>
+			</div>
+		</div>
+		<div>
+			<phx-promotions></phx-promotions>
+		</div>
+		<script id="phx-webcomponent-accordion" async src="/.bootscripts/webcomponents/accordion.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-picture" async src="/.bootscripts/webcomponents/picture.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-ad" async src="/.bootscripts/webcomponents/ad.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-import" async src="/.bootscripts/webcomponents/import.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-breadcrumbs" async src="/.bootscripts/webcomponents/breadcrumbs.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-twitterEmbed" async src="/.bootscripts/webcomponents/twitterEmbed.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-disqusThread" async src="/.bootscripts/webcomponents/disqusThread.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-superLink" async src="/.bootscripts/webcomponents/superLink.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-ellipsis" async src="/.bootscripts/webcomponents/ellipsis.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-page" async src="/.bootscripts/webcomponents/page.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-style" async src="/.bootscripts/webcomponents/style.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-iconFallback" async src="/.bootscripts/webcomponents/iconFallback.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-overlay" async src="/.bootscripts/webcomponents/overlay.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script id="phx-webcomponent-notifier" async src="/.bootscripts/webcomponents/notifier.min.js?v=2019-02-27-002459-fcdccda-012776"></script>
+		<script>"use strict";function _toConsumableArray(arr){return _arrayWithoutHoles(arr)||_iterableToArray(arr)||_nonIterableSpread()}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function _iterableToArray(iter){if(Symbol.iterator in Object(iter)||Object.prototype.toString.call(iter)==="[object Arguments]")return Array.from(iter)}function _arrayWithoutHoles(arr){if(Array.isArray(arr)){for(var i=0,arr2=new Array(arr.length);i<arr.length;i++){arr2[i]=arr[i]}return arr2}}phxConfigQueue.push(function(){var _document$querySelect;var newClasses=[this.device.get()];var info=this.browser.get();if(info.found){newClasses=newClasses.concat([info.type,info.type+info.version]);if(info.iOS){newClasses=newClasses.concat(["ios","ios"+info.iOS])}}newClasses=newClasses.map(function(s){return s.toLowerCase()});(_document$querySelect=document.querySelector("html").classList).add.apply(_document$querySelect,_toConsumableArray(newClasses))});</script>
+		<phoenix-script delay-load src="/.bootscripts/hubRebalancer.min.js?v=2019-02-27-002459-fcdccda-012776"></phoenix-script>
+		<phoenix-script delay-load src="/.bootscripts/streamMoreItems.min.js?v=2019-02-27-002459-fcdccda-012776"></phoenix-script>
+		<script type="text/template" id="videoplayer-tag">"use strict";var src="https://saymedia-com.videoplayerhub.com/videoloader.js";var e=document.createElement("script");e.src=src;e.onload=function(){if(window.BT){BT.clearThrough()}};document.body.appendChild(e);</script>
+		<phoenix-script block-premium wait-for-app script-id="videoplayer-tag"></phoenix-script>
+		<script type="application/json" id="liftigniter-metadata">
+			{
+				"noShow": "false",
+				"url": "https://www.multichannel.com/news/sotu-is-light-on-broadband-infrastructure",
+				"title": "SOTU Is Light on Broadband Infrastructure",
+				"description": "Makes no mention of need for broadband buildout, race to 5G or closing digital divide",
+				"thumbnail": "https://www.multichannel.com/.image/t_share/MTYxODE5NDkyODk5MzY2NTI1/2019-sotu-donald-trump-1.jpg",
+				"published_time": "2019-02-06T13:18:31Z",
+				"author": "John  Eggerton",
+				"tags": ["TV white spaces", "Donald Trump", "SOTU", "broadband", "infrastructure"],
+				"section": "Policy"
+			}
+		</script>
+		<script>"use strict";window.liftIgniter={};var liftIgniterPromise=new Promise(function(resolve,reject){window.liftIgniter.resolve=resolve});window.liftIgniter.scriptLoadedPromise=function(){return liftIgniterPromise};</script>
+		<script type="text/template" id="liftigniter-init">(function(jsKey) {"use strict";if(typeof $igniter_var==="undefined"){(function(w,d,s,p,v,e,r){w.$ps=w.performance&&w.performance.now&&typeof w.performance.now=="function"?w.performance.now():undefined;w["$igniter_var"]=v;w[v]=w[v]||function(){(w[v].q=w[v].q||[]).push(arguments)};w[v].l=1*new Date;e=d.createElement(s),r=d.getElementsByTagName(s)[0];e.async=1;e.src=p+"?ts="+(+new Date/3600000|0);r.parentNode.insertBefore(e,r)})(window,document,"script","//cdn.petametrics.com/"+jsKey+".js","$p");$p("init",jsKey);$p("send","pageview");window.liftIgniter.resolve()}})('999gba4qphtjrmpe');</script>
+		<phoenix-script script-id="liftigniter-init" block-on-gdpr-applicable block-premium delay-load></phoenix-script><!-- Template for the recommended content widget-->
+		<script id="li-recommendation-template" type="application/mustache">{{#items}}<div class="m-liftigniter--recommended-item"><a class="m-liftigniter--link" href="{{url}}">{{#thumbnail}}<div class="m-liftigniter--thumbnail-container"><img class="m-liftigniter--thumbnail" src="{{thumbnail}}" width="80" height="80"></div>{{/thumbnail}}<div class="m-liftigniter--metadata"><div class="m-liftigniter--related-story">RELATED STORY</div><phoenix-ellipsis class="m-ellipsis"><div class="m-liftigniter--title m-ellipsis--text">{{title}}</div></phoenix-ellipsis><phoenix-icon-fallback class="m-svg m-liftigniter--right-arrow" icon="ico_angle_right" aria-hidden="true"><svg><use xlink:href="/assets-global/icons/svg-sprite.svg?v=2019-02-27-002459-fcdccda-012776#ico_angle_right"></use></svg></phoenix-icon-fallback></div><button class="m-liftigniter--button" type="submit">READ</button></a></div>{{/items}}</script>
+		<script type="text/template" id="carbon-analytics">(function(scriptUrl, tagId) {"use strict";window.CustomerConnectAnalytics="cca";window.cca=window.cca||function(){(window.cca.q=window.cca.q||[]).push(arguments)};var script=document.createElement("script");script.src=scriptUrl+"?id="+window.location.hostname+"&parentId="+tagId;document.head.appendChild(script);})('https://carbon-cdn.ccgateway.net/script', 'b4b3d228');</script>
+		<phoenix-script script-id="carbon-analytics" block-on-gdpr-vendor-consent="493" block-on-gdpr-purpose-consent="5" block-premium delay-load wait-for-app></phoenix-script>
+	</phoenix-page>
+	<script>
+		(function (appScripts) {
+			"use strict";
+
+			function dropExtScript(src) {
+				return new Promise(function (resolve, reject) {
+					var e = document.createElement("script");
+					e.async = false;
+					e.src = src;
+					e.addEventListener("load", function () {
+						resolve()
+					}, false);
+					e.addEventListener("error", function () {
+						console.error("failed to load " + src);
+						resolve()
+					}, false);
+					document.body.appendChild(e)
+				})
+			}
+
+			function dropExtScripts(scripts) {
+				var promises = [];
+				scripts.forEach(function (s) {
+					promises.push(dropExtScript(s))
+				});
+				return Promise.all(promises)
+			}
+
+			function loadAndStartApp() {
+				dropExtScripts(appScripts).then(function () {
+					var e = document.createElement("script");
+					e.text = "require(['main'], function () {" + "window._angularAppLoaded=true;" + "window.dispatchEvent(new CustomEvent('angularAppLoaded'));" + "});";
+					document.body.appendChild(e)
+				})
+			}
+			if (appScripts.length > 0) {
+				window.getTimedOutPageLoadPromise(30000).then(loadAndStartApp)
+			}
+		})(["/.config.js?config=published&cv=451413869c225175eeb2633015aeb507&v=2019-02-27-002459-fcdccda-012776", "/.components.min.js?v=2019-02-27-002459-fcdccda-012776", "/.app.min.js?v=2019-02-27-002459-fcdccda-012776", "/components/angular-i18n/angular-locale_en-us.js?v=2019-02-27-002459-fcdccda-012776"]);
+	</script>
+</body>
+
+</html>

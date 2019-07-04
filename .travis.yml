@@ -1,0 +1,42 @@
+sudo: enabled
+dist: xenial
+language: python
+
+# Build matrix
+os:
+  - linux
+  # - osx
+python:
+  - 3.6
+  - 3.7
+
+# # OSX build sometimes has problems getting an up-to-date python installation
+# matrix:
+#   allow_failures:
+#     - os: osx
+
+before_install:
+  # Install node.js following instructions from
+  #   https://nodejs.org/en/download/package-manager/
+  - sudo apt install curl
+  - curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+  - sudo apt install nodejs
+  # Install ODBC development libraries
+  - sudo apt install unixodbc-dev
+
+install:
+  # Install package dependencies
+  - pip install -r requirements-dev.txt
+  # Install additional ReadabiliPy dependencies
+  - npm install
+  - pip install -r ReadabiliPy/requirements-dev.txt
+
+script:
+  # Run all pytest unit tests
+  - python -m pytest -v tests --cov misinformation --cov-report term-missing --benchmark-disable
+  # Run pyflakes for error detection
+  - pyflakes *.py misinformation tests
+  # Check PEP8 compliance (ignoring long lines)
+  - pycodestyle --statistics --ignore=E501 --count *.py misinformation tests
+  # Run pylint for stricter error checking
+  - pylint misinformation tests

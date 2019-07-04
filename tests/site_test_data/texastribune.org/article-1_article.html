@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<title>Asking Texas voters to swap higher sales taxes for property tax cuts | The Texas Tribune</title>
+<meta charset="utf-8"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"UgMGVFZADAYCUVBR"};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(16),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(17),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,v="fn"+h,w="bstTimer",y="pushState",g=t("loader");g.features.stn=!0,t(6);var b=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof b&&(this.bstStart=g.now())}),o.on(v,function(t,n){var e=t[0];e instanceof b&&i("bst",[e,n,this.bstStart,g.now()])}),a.on(m,function(t,n,e){this.bstStart=g.now(),this.bstType=e}),a.on(v,function(t,n){i(w,[n,this.bstStart,g.now(),this.bstType])}),s.on(m,function(){this.bstStart=g.now()}),s.on(v,function(t,n){i(w,[n,this.bstStart,g.now(),"requestAnimationFrame"])}),o.on(y+p,function(t){this.time=g.now(),this.startPath=location.pathname+location.hash}),o.on(y+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t(19)(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){var r=t("ee").get("history"),o=t(19)(r);n.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,n,e){var r=t("ee").get("raf"),o=t(19)(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t(19)(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],9:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,y,"fn-",s)}function i(t){g.push(t),h&&(x?x.then(a):v?v(a):(E=-E,O.data=E))}function a(){for(var t=0;t<g.length;t++)r([],g[t]);g.length&&(g=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t(19)(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,v=l.SI,w="readystatechange",y=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],g=[];n.exports=u;var b=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(w,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,b),b.prototype=p.prototype,d.inPlace(b.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var x=m&&m.resolve();if(!v&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===w||a()})},{}],10:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<d;r++)t.removeEventListener(u[r],this.listener,!1);if(!n.aborted){if(e.duration=a.now()-this.startTime,4===t.readyState){n.status=t.status;var i=o(t,this.lastSize);if(i&&(e.rxSize=i),this.sameOrigin){var c=t.getResponseHeader("X-NewRelic-App-Data");c&&(n.cat=c.split(", ").pop())}}else n.status=0;e.cbTime=this.cbTime,f.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime])}}}function o(t,n){var e=t.responseType;if("json"===e&&null!==n)return n;var r="arraybuffer"===e||"blob"===e||"json"===e?t.response:t.responseText;return h(r)}function i(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.sameOrigin=e.sameOrigin}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(11),f=t("ee"),u=["load","error","abort","timeout"],d=u.length,l=t("id"),p=t(14),h=t(13),m=window.XMLHttpRequest;a.features.xhr=!0,t(9),f.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,p&&(p>34||p<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),f.on("open-xhr-start",function(t){this.params={method:t[0]},i(this,t[1]),this.metrics={}}),f.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),f.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=h(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{f.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<d;s++)n.addEventListener(u[s],this.listener,!1)}),f.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),f.on("xhr-load-added",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),f.on("xhr-load-removed",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),f.on("addEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-added",[t[1],t[2]],n)}),f.on("removeEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-removed",[t[1],t[2]],n)}),f.on("fn-start",function(t,n,e){n instanceof m&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),f.on("fn-end",function(t,n){this.xhrCbStart&&f.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)})}},{}],11:[function(t,n,e){n.exports=function(t){var n=document.createElement("a"),e=window.location,r={};n.href=t,r.port=n.port;var o=n.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=n.hostname||e.hostname,r.pathname=n.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!n.protocol||":"===n.protocol||n.protocol===e.protocol,a=n.hostname===document.domain&&n.port===e.port;return r.sameOrigin=i&&(!n.hostname||a),r}},{}],12:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(16),s=t(17),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t,n){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,n])}},{}],13:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],14:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],15:[function(t,n,e){function r(t,n){if(!o)return!1;if(t!==o)return!1;if(!n)return!0;if(!i)return!1;for(var e=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==e[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}n.exports={agent:o,version:i,match:r}},{}],16:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],17:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],18:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],19:[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(17),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=m(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[g[e]];return d&&d.push([b,e,r,a]),a}}function p(t,n){y[t]=m(t).concat(n)}function h(t,n){var e=y[t];if(e)for(var r=0;r<e.length;r++)e[r]===n&&e.splice(r,1)}function m(t){return y[t]||[]}function v(t){return d[t]=d[t]||o(e)}function w(t,n){f(t,function(t,e){n=n||"feature",g[e]=n,n in u||(u[n]=[])})}var y={},g={},b={on:p,addEventListener:p,removeEventListener:h,emit:e,get:v,listeners:m,context:n,buffer:w,abort:a,aborted:!1};return b}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(16),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!E++){var t=x.info=NREUM.info,n=p.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(g,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+x.offset],null,"api");var e=p.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===p.readyState&&i()}function i(){c("mark",["domContent",a()+x.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-x.offset}var s=(new Date).getTime(),c=t("handle"),f=t(16),u=t("ee"),d=t(15),l=window,p=l.document,h="addEventListener",m="attachEvent",v=l.XMLHttpRequest,w=v&&v.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:v,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var y=""+location,g={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1118.min.js"},b=v&&w&&w[h]&&!/CriOS/.test(navigator.userAgent),x=n.exports={offset:s,now:a,origin:y,features:{},xhrWrappable:b,userAgent:d};t(12),p[h]?(p[h]("DOMContentLoaded",i,!1),l[h]("load",r,!1)):(p[m]("onreadystatechange",o),l[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,O=t(18)},{}]},{},["loader",2,10,4,3]);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"8636ab2091","applicationID":"452513","transactionName":"ZwZWZ0NWD0VRAE1YCV5MckZfVBVfXw0WUgleF1FdRWgMV14CXlQLVQ1AHVBFFV9TD1xCSEYKUURCDSBERApaXQN0BkBSWFtPUVUX","queueTime":4,"applicationTime":156,"agent":""}</script>
+<link href="//cdnjs.cloudflare.com" rel="dns-prefetch">
+<link href="//cdn.texastribune.org" rel="dns-prefetch">
+<link href="//static.texastribune.org" rel="dns-prefetch">
+<link href="//www.googletagmanager.com" rel="dns-prefetch">
+<link href="//www.googletagservices.com" rel="dns-prefetch">
+<link href="//ajax.googleapis.com" rel="dns-prefetch">
+<link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
+<link rel="apple-touch-icon" href="/static/images/TT-Apple-Touch-icon120x120.e2a478f6e062.jpg">
+<link rel="apple-touch-icon" sizes="152x152" href="/static/images/TT-Apple-Touch-icon152x152.cab17cc714d0.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/images/TT-Apple-Touch-icon180x180.861146488a95.jpg">
+<link rel="apple-touch-icon" sizes="167x167" href="/static/images/TT-Apple-Touch-icon167x167.d14faa539773.jpg">
+<link rel="apple-touch-icon" sizes="128x128" href="/static/images/TT-Android-icon128x128.fa0d7b4ffb46.jpg">
+<link rel="apple-touch-icon" sizes="192x192" href="/static/images/TT-Android-icon192x192.6476f55cfc99.jpg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/">
+<script type="application/ld+json">
+  {
+    "@type": "NewsArticle",
+    "headline": "Analysis: Asking Texas voters to swap higher sales taxes for property tax cuts",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://thumbnails.texastribune.org/Dn9zyLQtohsT5ea6N-5JkbWs2NQ=/1200x804/smart/filters:quality(95)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg",
+      "width": 1200,
+      "height": 804
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/"
+    },
+    "@context": "http://schema.org",
+    "dateCreated": "2019-03-15T05:01:00+00:00",
+    "datePublished": "2019-03-15T05:01:00+00:00",
+
+
+      "dateModified": "2019-03-15T05:01:00+00:00",
+
+
+
+
+        "author": [
+
+            {
+              "@type": "Person",
+              "name": "Ross Ramsey",
+              "affiliation": {
+                "@type": "Organization",
+                "name": "Texas Tribune"
+              }
+            }
+
+        ],
+        "creator": [
+
+            {
+              "@type": "Person",
+              "name": "Ross Ramsey",
+              "affiliation": {
+                "@type": "Organization",
+                "name": "Texas Tribune"
+              }
+            }
+
+        ],
+
+
+
+    "publisher": {
+      "@type": "Organization",
+      "name": "Texas Tribune",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.texastribune.org/static/images/amp-carousel.114a9bc257b2.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Texas voters told candidates they want property tax relief, and it\u0027s remarkably expensive. That\u0027s why state lawmakers are talking about higher sales taxes.",
+    "inLanguage":"en_US",
+    "url": "https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/",
+    "keywords": [
+      "texas news",
+      "texas politics",
+      "texas policy",
+      "texas government",
+
+        "public education",
+
+        "school finance",
+
+        "taxes",
+
+        "Dan Huberty",
+
+        "Dan Patrick",
+
+        "86th Legislative Session",
+
+        "property taxes"
+
+    ]
+  }
+</script>
+<link rel="amphtml" href="https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/amp/">
+<meta name="author" content="The Texas Tribune">
+<meta name="copyright" content="&copy; The Texas Tribune" />
+<meta name="publisher" content="The Texas Tribune" />
+<link href="https://plus.google.com/+texastribune/" rel="publisher" />
+<meta name="robots" content="index,follow" />
+<meta name="siteinfo" content="http://www.texastribune.org/robots.txt" />
+<link rel="apple-touch-icon" href="/static/images/apple-touch-icon.2984da3fd3e8.png" />
+<meta name="google-site-verification" content="3EMut9KLnb_7fohrI_bDaR4py76QIWAt4uPidjagbzI" />
+<meta name="y_key" content="36169ff9ee60f3ab" />
+<meta name="msvalidate.01" content="DB22C31255557D1E219990CA92192CBB" />
+<meta name="pocket-site-verification" content="a03da537417a06100ceed0ab61a3d2" />
+<meta property="fb:app_id" content="154122474650943">
+<meta property="og:site_name" content="The Texas Tribune" />
+<meta property="fb:pages" content="124434790836">
+<meta property="og:url" content="https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/">
+<meta name="description" content="Texas voters told candidates they want property tax relief, and it&#39;s remarkably expensive. That&#39;s why state lawmakers are talking about higher sales taxes.">
+<meta name="keywords" content="texas news, texas politics, texas policy, texas government, public education, school finance, taxes, Dan Huberty, Dan Patrick, 86th Legislative Session, property taxes">
+<meta name="author" content="Ross Ramsey">
+<meta property="og:title" content="Analysis: Asking Texas voters to swap higher sales taxes for property tax cuts">
+<meta property="og:type" content="article">
+<meta property="og:description" content="Texas voters told candidates they want property tax relief, and it&#39;s remarkably expensive. That&#39;s why state lawmakers are talking about higher sales taxes.">
+<meta property="article:publisher" content="https://www.facebook.com/texastribune/">
+<meta property="article:published_time" content="2019-03-15T05:01:00+00:00">
+<meta property="og:image" content="https://thumbnails.texastribune.org/Dn9zyLQtohsT5ea6N-5JkbWs2NQ=/1200x804/smart/filters:quality(95)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg">
+<meta property="article:author" content="https://www.facebook.com/rramseytrib" />
+<meta name="parsely-type" content="post">
+<meta name="parsely-title" content="Analysis: Asking Texas voters to swap higher sales taxes for property tax cuts">
+<meta name="parsely-link" content="https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/">
+<meta name="parsely-pub-date" content="2019-03-15T05:01:00+00:00">
+<meta name="parsely-image-url" content="https://thumbnails.texastribune.org/Dn9zyLQtohsT5ea6N-5JkbWs2NQ=/1200x804/smart/filters:quality(95)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg">
+<meta name="parsely-author" content="Ross Ramsey">
+<meta name="parsely-tags" content="public education,school finance,taxes,Dan Huberty,Dan Patrick,86th Legislative Session,property taxes">
+<meta name="twitter:site" content="@TexasTribune">
+<meta name="twitter:title" content="Analysis: Asking Texas voters to swap higher sales taxes for proper...">
+<meta name="twitter:description" content="Texas voters told candidates they want property tax relief, and it&#39;s remarkably expensive. That&#39;s why state lawmakers are talking about higher sales taxes.">
+<meta name="twitter:creator" content="@rossramsey">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://thumbnails.texastribune.org/Dn9zyLQtohsT5ea6N-5JkbWs2NQ=/1200x804/smart/filters:quality(95)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg">
+<link rel="stylesheet" type="text/css" href="/static/css/tt_styles.ea5f8a1fd914.css">
+<script>
+  /**
+    Promises
+    https://github.com/bramstein/fontfaceobserver
+  */
+  (function(){'use strict';var f,g=[];function l(a){g.push(a);1==g.length&&f()}function m(){for(;g.length;)g[0](),g.shift()}f=function(){setTimeout(m)};function n(a){this.a=p;this.b=void 0;this.f=[];var b=this;try{a(function(a){q(b,a)},function(a){r(b,a)})}catch(c){r(b,c)}}var p=2;function t(a){return new n(function(b,c){c(a)})}function u(a){return new n(function(b){b(a)})}function q(a,b){if(a.a==p){if(b==a)throw new TypeError;var c=!1;try{var d=b&&b.then;if(null!=b&&"object"==typeof b&&"function"==typeof d){d.call(b,function(b){c||q(a,b);c=!0},function(b){c||r(a,b);c=!0});return}}catch(e){c||r(a,e);return}a.a=0;a.b=b;v(a)}}
+  function r(a,b){if(a.a==p){if(b==a)throw new TypeError;a.a=1;a.b=b;v(a)}}function v(a){l(function(){if(a.a!=p)for(;a.f.length;){var b=a.f.shift(),c=b[0],d=b[1],e=b[2],b=b[3];try{0==a.a?"function"==typeof c?e(c.call(void 0,a.b)):e(a.b):1==a.a&&("function"==typeof d?e(d.call(void 0,a.b)):b(a.b))}catch(h){b(h)}}})}n.prototype.g=function(a){return this.c(void 0,a)};n.prototype.c=function(a,b){var c=this;return new n(function(d,e){c.f.push([a,b,d,e]);v(c)})};
+  function w(a){return new n(function(b,c){function d(c){return function(d){h[c]=d;e+=1;e==a.length&&b(h)}}var e=0,h=[];0==a.length&&b(h);for(var k=0;k<a.length;k+=1)u(a[k]).c(d(k),c)})}function x(a){return new n(function(b,c){for(var d=0;d<a.length;d+=1)u(a[d]).c(b,c)})};window.Promise||(window.Promise=n,window.Promise.resolve=u,window.Promise.reject=t,window.Promise.race=x,window.Promise.all=w,window.Promise.prototype.then=n.prototype.c,window.Promise.prototype["catch"]=n.prototype.g);}());
+</script>
+<script>
+  (function() {
+    if (sessionStorage && sessionStorage.criticalFontsLoaded) {
+      document.documentElement.className += ' fonts-loaded';
+      return;
+    }
+
+    /**
+      Font Face Observer v2.0.13 - © Bram Stein
+      License: BSD-3-Clause - https://github.com/bramstein/fontfaceobserver/blob/master/LICENSE
+      Repository https://github.com/bramstein/fontfaceobserver
+    */
+    (function(){function l(a,b){document.addEventListener?a.addEventListener("scroll",b,!1):a.attachEvent("scroll",b)}function m(a){document.body?a():document.addEventListener?document.addEventListener("DOMContentLoaded",function c(){document.removeEventListener("DOMContentLoaded",c);a()}):document.attachEvent("onreadystatechange",function k(){if("interactive"==document.readyState||"complete"==document.readyState)document.detachEvent("onreadystatechange",k),a()})};function r(a){this.a=document.createElement("div");this.a.setAttribute("aria-hidden","true");this.a.appendChild(document.createTextNode(a));this.b=document.createElement("span");this.c=document.createElement("span");this.h=document.createElement("span");this.f=document.createElement("span");this.g=-1;this.b.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;";this.c.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;";
+    this.f.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;";this.h.style.cssText="display:inline-block;width:200%;height:200%;font-size:16px;max-width:none;";this.b.appendChild(this.h);this.c.appendChild(this.f);this.a.appendChild(this.b);this.a.appendChild(this.c)}
+    function t(a,b){a.a.style.cssText="max-width:none;min-width:20px;min-height:20px;display:inline-block;overflow:hidden;position:absolute;width:auto;margin:0;padding:0;top:-999px;white-space:nowrap;font-synthesis:none;font:"+b+";"}function y(a){var b=a.a.offsetWidth,c=b+100;a.f.style.width=c+"px";a.c.scrollLeft=c;a.b.scrollLeft=a.b.scrollWidth+100;return a.g!==b?(a.g=b,!0):!1}function z(a,b){function c(){var a=k;y(a)&&a.a.parentNode&&b(a.g)}var k=a;l(a.b,c);l(a.c,c);y(a)};function A(a,b){var c=b||{};this.family=a;this.style=c.style||"normal";this.weight=c.weight||"normal";this.stretch=c.stretch||"normal"}var B=null,C=null,E=null,F=null;function G(){if(null===C)if(J()&&/Apple/.test(window.navigator.vendor)){var a=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(window.navigator.userAgent);C=!!a&&603>parseInt(a[1],10)}else C=!1;return C}function J(){null===F&&(F=!!document.fonts);return F}
+    function K(){if(null===E){var a=document.createElement("div");try{a.style.font="condensed 100px sans-serif"}catch(b){}E=""!==a.style.font}return E}function L(a,b){return[a.style,a.weight,K()?a.stretch:"","100px",b].join(" ")}
+    A.prototype.load=function(a,b){var c=this,k=a||"BESbswy",q=0,D=b||3E3,H=(new Date).getTime();return new Promise(function(a,b){if(J()&&!G()){var M=new Promise(function(a,b){function e(){(new Date).getTime()-H>=D?b():document.fonts.load(L(c,'"'+c.family+'"'),k).then(function(c){1<=c.length?a():setTimeout(e,25)},function(){b()})}e()}),N=new Promise(function(a,c){q=setTimeout(c,D)});Promise.race([N,M]).then(function(){clearTimeout(q);a(c)},function(){b(c)})}else m(function(){function u(){var b;if(b=-1!=
+    f&&-1!=g||-1!=f&&-1!=h||-1!=g&&-1!=h)(b=f!=g&&f!=h&&g!=h)||(null===B&&(b=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent),B=!!b&&(536>parseInt(b[1],10)||536===parseInt(b[1],10)&&11>=parseInt(b[2],10))),b=B&&(f==v&&g==v&&h==v||f==w&&g==w&&h==w||f==x&&g==x&&h==x)),b=!b;b&&(d.parentNode&&d.parentNode.removeChild(d),clearTimeout(q),a(c))}function I(){if((new Date).getTime()-H>=D)d.parentNode&&d.parentNode.removeChild(d),b(c);else{var a=document.hidden;if(!0===a||void 0===a)f=e.a.offsetWidth,
+    g=n.a.offsetWidth,h=p.a.offsetWidth,u();q=setTimeout(I,50)}}var e=new r(k),n=new r(k),p=new r(k),f=-1,g=-1,h=-1,v=-1,w=-1,x=-1,d=document.createElement("div");d.dir="ltr";t(e,L(c,"sans-serif"));t(n,L(c,"serif"));t(p,L(c,"monospace"));d.appendChild(e.a);d.appendChild(n.a);d.appendChild(p.a);document.body.appendChild(d);v=e.a.offsetWidth;w=n.a.offsetWidth;x=p.a.offsetWidth;I();z(e,function(a){f=a;u()});t(e,L(c,'"'+c.family+'",sans-serif'));z(n,function(a){g=a;u()});t(n,L(c,'"'+c.family+'",serif'));
+    z(p,function(a){h=a;u()});t(p,L(c,'"'+c.family+'",monospace'))})})};"object"===typeof module?module.exports=A:(window.FontFaceObserver=A,window.FontFaceObserver.prototype.load=A.prototype.load);}());
+
+    var openSans = new FontFaceObserver('Open Sans', { weight: 400 }),
+        openSansBold = new FontFaceObserver('Open Sans', { weight: 700 }),
+        ptSerif = new FontFaceObserver('PT Serif', { weight: 400 }),
+        ptSerifBold = new FontFaceObserver('PT Serif', { weight: 700 });
+
+    Promise.all([
+      ptSerif.load(null, 5000),
+      ptSerifBold.load(null, 5000),
+      openSans.load(null, 5000),
+      openSansBold.load(null, 5000)
+    ]).then(function() {
+      document.documentElement.className += ' fonts-loaded';
+      sessionStorage.criticalFontsLoaded = true;
+    });
+  })();
+</script>
+<script>
+  var dataLayer = window.dataLayer || [];
+
+  dataLayer.push({
+    contentType: 'article',
+    contentCategory: 'News'
+  });
+</script>
+<script>
+  dataLayer.push({
+    contentSeries: 'Texas Legislature 2019',
+    wordCount: 805,
+    title: 'Analysis: Asking Texas voters to swap higher sales taxes for property tax cuts',
+    tags: 'public education,school finance,taxes,Dan Huberty,Dan Patrick,86th Legislative Session,property taxes',
+    author: 'Ross Ramsey',
+    publishDate: '03-15-2019',
+    contentID: '32651'
+  });
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-P5L2Z5Z');</script>
+
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+  fbq('init', '1570461443220689');
+  fbq('track', "PageView");
+  fbq('track', 'ViewContent');
+  fbq('track', 'Search');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1570461443220689&ev=PageView&noscript=1"/>
+</noscript>
+
+<script src="https://www.googletagservices.com/tag/js/gpt.js" async></script>
+<script>
+          window.ttGlobal = { pageType: 'generic' };
+        </script>
+<script>
+          document
+            .documentElement
+            .classList
+            .remove('no-js');
+        </script>
+</head>
+<body class="tt_body">
+<noscript>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P5L2Z5Z" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+<nav class="navbar grid_separator">
+<div class="navbar__top navbar__top--standard">
+<a href="/" class="navbar__logo">
+<img alt="The Texas Tribune" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNTAwIDU1LjA3NCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTAwIDU1LjA3NCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQoJPGc+DQoJCTxnPg0KCQkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTcyLjUxMSw4LjczdjM5LjE0NGgtOC43OTlWOC43M2gtOC42NlYwLjk4N2gyNi4wNDlWOC43M0g3Mi41MTF6Ii8+DQoJCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTAyLjUxLDQ3Ljg3NFYyOC42NTVoLTkuNzg2djE5LjIxOWgtOC43MjlWMC45ODdoOC43Mjl2MTkuODU1aDkuNzg2VjAuOTg3aDguODAxdjQ2Ljg4N0gxMDIuNTF6Ii8+DQoJCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTE2Ljc2Miw0Ny44NzRWMC45ODdoMjIuMzg3djcuNTMySDEyNS40OXYxMS42MTdoOS40MzR2Ni45aC05LjQzNHYxMy4wMjNoMTMuNjU5djcuODE1SDExNi43NjJ6Ii8+DQoJCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTY5LjU2LDguNzN2MzkuMTQ0aC04LjgwMVY4LjczaC04LjY2VjAuOTg3aDI2LjA0OVY4LjczSDE2OS41NnoiLz4NCgkJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xODEuOTE4LDQ3Ljg3NFYwLjk4N2gyMi4zODl2Ny41MzJoLTEzLjY1OHYxMS42MTdoOS40MzN2Ni45aC05LjQzM3YxMy4wMjNoMTMuNjU4djcuODE1SDE4MS45MTh6Ii8+DQoJCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjI2Ljk4MSw0Ny44NzRsLTUuNDkyLTE2LjE5MWwtNS45ODMsMTYuMTkxaC04LjUxOWw5LjY0NS0yMy42NTZMMjA3LjU1LDAuOTg3aDkuMTUzbDUuMTM4LDE2LjE5MQ0KCQkJCWw1LjYzMy0xNi4xOTFoOC41OWwtOS4zNjMsMjIuNTI5bDkuNDMzLDI0LjM1OEgyMjYuOTgxeiIvPg0KCQkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTI1Ny41NTgsNDcuODc0bC0xLjU1LTkuMjIxaC04LjMwN2wtMS42OSw5LjIyMWgtOC4xNjdsOS40MzQtNDYuODg3aDkuNzg2bDkuMzYzLDQ2Ljg4N0gyNTcuNTU4eg0KCQkJCSBNMjUyLjA2NiwxMy42NTlsLTMuMTY5LDE4LjA5NGg1Ljk4NEwyNTIuMDY2LDEzLjY1OXoiLz4NCgkJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yODAuNTc0LDQ4LjkzYy04LjAyNiwwLTEzLjAyNC00Ljc4NS0xMy4wMjQtMTIuMTA5di0zLjIzOGg4LjAyNnYyLjc0NmMwLDMuNDQ5LDEuNjE5LDUuMzUyLDQuNzg4LDUuMzUyDQoJCQkJYzMuMDk4LDAsNC42NDYtMS44MzIsNC42NDYtNC43MThjMC0zLjczMS0yLjM5NC02LjI2NS03LjA0MS05LjcxNWMtNC43ODYtMy40NS05Ljk5Ni04LjA5Ni05Ljk5Ni0xNC42NDINCgkJCQlDMjY3Ljk3Miw1Ljg0NCwyNzIuMzM3LDAsMjgwLjc4NSwwYzcuMzkzLDAsMTIuMzIxLDUuMDcsMTIuMzIxLDEyLjA0djMuMDI3aC03Ljk1NnYtMi44MTdjMC0yLjg4Ni0xLjQ3Ni00Ljk5OC00LjQzNC00Ljk5OA0KCQkJCWMtMi41MzQsMC00LjIyNSwxLjYxOS00LjIyNSw0LjIyNWMwLDMuOTQyLDIuMzIzLDUuOTg0LDcuNTMyLDkuNzg2YzUuNTY0LDQuMTUzLDkuNTA2LDguMzc4LDkuNTA2LDE0LjcxNQ0KCQkJCUMyOTMuNTI4LDQzLjUxLDI4OC4zMTksNDguOTMsMjgwLjU3NCw0OC45M3oiLz4NCgkJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0zMjIuNTUyLDguNzN2MzkuMTQ0aC04LjhWOC43M2gtOC42NjFWMC45ODdoMjYuMDUxVjguNzNIMzIyLjU1MnoiLz4NCgkJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0zNTYuNDY3LDQ4LjE1N2MtMy40NSwwLTQuNzg4LTIuODE3LTQuNzg4LTYuOXYtOC44YzAtMi4xODItMS4xMjctNC4wMTMtMy41OS00LjAxM2gtNC41NzZ2MTkuNDMxaC04LjczDQoJCQkJVjAuOTg3aDE0LjQzMmM2LjQwNSwwLDEwLjcsMy42NjIsMTAuNywxMC4yMDd2Ni42MmMwLDMuNTE4LTEuNjE5LDYuMTI0LTUuMjc5LDcuMjVjMy42NTksMC45ODcsNS40Miw0LjA4Myw1LjQyLDcuMTExdjguNTkNCgkJCQljMCwyLjE4MywwLjYzMywzLjY1OSwxLjY5MSw0Ljc4NnYyLjYwNkgzNTYuNDY3eiBNMzUxLjM5NywxMS41NDZjMC0yLjExMS0wLjkxNS0zLjM4LTMuMDk3LTMuMzhoLTQuNzg2djEzLjhoNC40MzYNCgkJCQljMi4yNTIsMCwzLjQ0Ny0xLjE5OCwzLjQ0Ny0zLjczMVYxMS41NDZ6Ii8+DQoJCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMzY2LjkxNSw0Ny44NzRWMC45ODdoOC43MzF2NDYuODg3SDM2Ni45MTV6Ii8+DQoJCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMzk3LjQ2NSw0Ny44NzRoLTE0Ljc4M1YwLjk4N2gxNC42NDRjNi40MDcsMCwxMC4zNDksMy40NSwxMC4zNDksOS45Mjh2NS4wNjgNCgkJCQljMCw0LjAxMy0xLjU1LDcuMDQyLTUuNTYyLDcuODg0YzQuMjI2LDEuMTI4LDUuNzczLDQuMDE0LDUuNzczLDcuOTU4djYuMTI0QzQwNy44ODYsNDQuNDk2LDQwMy44NzIsNDcuODc0LDM5Ny40NjUsNDcuODc0eg0KCQkJCSBNMzk5LjI5NywxMS41NDZjMC0yLjExMS0wLjkxNi0zLjM4LTMuMDk5LTMuMzhoLTQuNzE2djEyLjg4NWg0LjM2NGMyLjI1NCwwLDMuNDUxLTEuMTk4LDMuNDUxLTMuNjYyVjExLjU0NnogTTM5OS40MzcsMzEuMTkxDQoJCQkJYzAtMi40NjUtMS4xOTYtMy43MzEtMy40NDktMy43MzFoLTQuNTA2djEzLjIzNWg0LjkyOGMyLjE4MywwLDMuMDI3LTEuMTk4LDMuMDI3LTMuMzc5VjMxLjE5MXoiLz4NCgkJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik00MjYuMjc5LDQ4LjkzYy03LjYwNCwwLTEzLjIzNi00Ljg1Ny0xMy4yMzYtMTEuODk5VjAuOTg3aDguODd2MzYuMDQ1YzAsMi43NDYsMS41NDgsNC4yOTcsNC4zNjYsNC4yOTcNCgkJCQljMi44ODYsMCw0LjQzNC0xLjU1MSw0LjQzNC00LjI5N1YwLjk4N2g4LjUxOHYzNi4wNDVDNDM5LjIzMSw0NC4wNzMsNDMzLjg4MSw0OC45Myw0MjYuMjc5LDQ4LjkzeiIvPg0KCQkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQ2NC45NjcsNDcuODc0bC05LjA4My0xOS45OTRsLTMuMzA5LTcuNDYydjI3LjQ1NWgtOC4wMjdWMC45ODdoNy41MzVsOC42NTgsMjAuMzQ2bDMuMDk5LDcuNDYzVjAuOTg3DQoJCQkJaDcuODg2djQ2Ljg4N0g0NjQuOTY3eiIvPg0KCQkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQ3Ny42MTMsNDcuODc0VjAuOTg3SDUwMHY3LjUzMmgtMTMuNjU4djExLjYxN2g5LjQzNHY2LjloLTkuNDM0djEzLjAyM0g1MDB2Ny44MTVINDc3LjYxM3oiLz4NCgkJPC9nPg0KCQk8cGF0aCBmaWxsPSIjRkVCRjEwIiBkPSJNMCwwLjUwOXY1NC41NjVsMTAuOTczLTYuODU5aDM2LjczM1YwLjUwOUgweiBNMzQuMTY1LDM4LjYwOWwtMTAuNDUtNi44NzVsLTEwLjQ0OCw2Ljg3NWwzLjMxLTEyLjA2DQoJCQlsLTkuNzY3LTcuODEybDEyLjQ5My0wLjU4bDQuNDEyLTExLjcwM2w0LjQxMiwxMS43MDNsMTIuNDkzLDAuNThsLTkuNzY3LDcuODEyTDM0LjE2NSwzOC42MDl6Ii8+DQoJPC9nPg0KPC9zdmc+DQo=">
+</a>
+<div class="navbar__content ">
+<ul class="navbar__items hide_until--l js-toggle-on-search">
+<li class="navbar__item navbar__item--space-right">
+<a class="navbar__item-content navbar__clickable navbar__clickable--animated " href="/our-picks/" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="our-picks">Our Picks</a>
+</li>
+<li class="navbar__item navbar__item--space-right">
+<a class="navbar__item-content navbar__clickable navbar__clickable--animated " href="/series/news-apps-graphics-databases/" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="data">Data</a>
+</li>
+<li class="navbar__item navbar__item--space-right">
+<a class="navbar__item-content navbar__clickable navbar__clickable--animated " href="/events/" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="events">Events</a>
+</li>
+<li class="navbar__item navbar__item--space-right">
+<a class="navbar__item-content navbar__clickable navbar__clickable--animated " href="/about/subscribe/" ga-on="click" ga-event-category="subscribe intent" ga-event-action="top nav click" ga-event-label="not frontpage">Newsletters</a>
+</li>
+<li class="navbar__item navbar__item--giant-space-right">
+<a class="navbar__item-content navbar__clickable navbar__clickable--animated" href="https://support.texastribune.org/donate?installmentPeriod=once&amount=60#join-today" ga-on="click" ga-event-category="donations" ga-event-action="membership-intent" ga-event-label="navbar">Donate</a>
+</li>
+</ul>
+<ul id="greeting" class="navbar__items js-toggle-on-search hide_until--l">
+<li id="greeting-attach"></li>
+<li class="navbar__item">
+<button id="nav-search-open" class="navbar__item-content navbar__clickable" aria-label="Show site search form" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="search-open">
+<i class="fa fa-search" aria-hidden="true"></i>
+</button>
+</li>
+</ul>
+<ul class="navbar__items hide_from--l">
+<li class="navbar__item">
+<button id="nav-menu-open" class="navbar__item-content navbar__text navbar__clickable" aria-label="Show menu" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="menu-open">
+<i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Menu
+</button>
+</li>
+<li id="nav-menu-close" class="navbar__item hidden">
+<button class="navbar__item-content navbar__text navbar__clickable" aria-label="Hide menu" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="menu-close">
+<i class="fa fa-close" aria-hidden="true"></i>&nbsp;Close
+</button>
+</li>
+</ul>
+</div>
+<div id="nav-search-form" class="navbar__search hidden hide_until--l">
+<form class="navbar__search-form" method="get" action="/search/">
+<button class="navbar__search-button navbar__clickable" type="submit" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="search-submit">
+<i class="fa fa-search" aria-hidden="true"></i>
+</button>
+<input class="navbar__search-input" name="q" type="text" placeholder="Search The Texas Tribune" aria-label="Search The Texas Tribune">
+<button id="nav-search-close" class="navbar__clickable" type="button" aria-label="Close site search form" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="search-close">
+<i class="fa fa-close" aria-hidden="true"></i>
+</button>
+</form>
+</div>
+</div>
+<div id="nav-dropdown" class="navbar__dropdown hide_from--l hidden">
+<div class="navbar__dropdown-search grid_separator">
+<form class="navbar__search-form" method="get" action="/search/">
+<button class="navbar__search-button navbar__clickable" type="submit" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="search-submit">
+<i class="fa fa-search" aria-hidden="true"></i>
+</button>
+<input class="navbar__search-input" name="q" type="text" placeholder="Search The Texas Tribune" aria-label="Search The Texas Tribune">
+</form>
+</div>
+<ul id="mobile-greeting" class="navbar__dropdown-items">
+<li class="navbar__dropdown-item">
+<a class="navbar__clickable " href="/our-picks/" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="our picks">Our Picks</a>
+</li>
+<li class="navbar__dropdown-item">
+<a class="navbar__clickable " href="/series/news-apps-graphics-databases/" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="data">Data</a>
+</li>
+<li class="navbar__dropdown-item">
+<a class="navbar__clickable " href="/events/" ga-on="click" ga-event-category="navigation" ga-event-action="top nav click" ga-event-label="events">Events</a>
+</li>
+<li class="navbar__dropdown-item">
+<a class="navbar__clickable " href="/about/subscribe/" ga-on="click" ga-event-category="subscribe intent" ga-event-action="top nav click" ga-event-label="not frontpage">Newsletters</a>
+</li>
+<li class="navbar__dropdown-item">
+<a class="navbar__clickable" href="https://support.texastribune.org/donate?installmentPeriod=once&amount=60#join-today" ga-on="click" ga-event-category="donations" ga-event-action="membership-intent" ga-event-label="navbar">Donate</a>
+</li>
+<li id="mobile-greeting-attach"></li>
+</ul>
+</div>
+</nav>
+<div class="grid_container hide_until--l">
+<div class="site_ad--header">
+<div class="adunit" id="ad_roofline"></div>
+</div>
+</div>
+<main>
+<article class="nav_menu--buffer">
+<div class="grid_container--l grid_separator--l">
+<header class="grid_padded grid_separator">
+<div id="article-hed-byline">
+<h1 itemprop="headline" class="headline grid_separator">Analysis: Asking Texas voters to swap higher sales taxes for property tax cuts</h1>
+<div class="border--yellow_notch hide_from--s"></div>
+<p class="story_summary grid_separator">Texas voters told candidates they want property tax relief, and it's remarkably expensive. That's why state lawmakers are talking about higher sales taxes.</p>
+<p class="byline grid_separator">
+<span class="byline--item">by <a href="/about/staff/ross-ramsey/">Ross Ramsey</a></span>
+<time class="byline--item" datetime="Fri, 15 Mar 2019 00:01:00 -0500" title="2019-03-15 00:01">March 15, 2019</time><time class="byline--item" datetime="Fri, 15 Mar 2019 00:01:00 -0500" title="2019-03-15 00:01">5 hours ago</time>
+</p>
+</div>
+<div id="share_button_row" class="grid_row" ga-tracker="social_shares">
+<div class="col">
+<a class="button button--share_inline button--fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/%3Futm_campaign%3Dtrib-social-buttons%26utm_source%3Dfacebook%26utm_medium%3Dsocial" target="_blank" aria-label="Share on Facebook" ga-on="click" ga-event-category="Share" ga-event-action="facebook-intent" ga-event-label="Share Button Row">
+<i class="fa fa-facebook" aria-hidden="true" title="Share on Facebook"></i>
+</a>
+</div>
+<div class="col">
+<a class="button button--share_inline button--twitter" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/%3Futm_campaign%3Dtrib-social-buttons%26utm_source%3Dtwitter%26utm_medium%3Dsocial&amp;text=Analysis%3A%20Asking%20Texas%20voters%20to%20swap%20higher%20sales%20taxes%20for%20property%20tax%20cuts&amp;via=TexasTribune&amp;related=TexasTribune,TribTalkTX,TXTribuneEvents,TribData" target="_blank" aria-label="Share on Twitter" ga-on="click" ga-event-category="Share" ga-event-action="twitter-intent" ga-event-label="Share Button Row">
+<i class="fa fa-twitter" aria-hidden="true" title="Share on Twitter"></i>
+</a>
+</div>
+<div class="col">
+<a class="button button--share_inline button--email" href="mailto:?subject=Analysis%3A%20Asking%20Texas%20voters%20to%20swap%20higher%20sales%20taxes%20for%20property%20tax%20cuts&body=https://www.texastribune.org/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/" aria-label="Share this story by email" ga-on="click" ga-event-category="Share" ga-event-action="email-intent" ga-event-label="Share Button Row">
+<i class="fa fa-envelope" aria-hidden="true" title="Share this story by email"></i>
+</a>
+</div>
+<div class="col story_share--wrapper">
+<a class="button button--share_inline button--comments" href="#story_bottom" aria-label="View comments" ga-on="click" ga-event-category="Comment" ga-event-action="comment-intent" ga-event-label="Share Button Row">
+<i class="fa fa-comments" aria-hidden="true" title="View comments"></i>
+</a>
+</div>
+<div class="col hide_until--l">
+<a class="button button--share_inline button--republish" href="/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/republish/" aria-label="Republish this story" title="Republish this story" ga-on="click" ga-event-category="Republish" ga-event-action="republish-intent" ga-event-label="Share Button Row">
+Republish
+</a>
+</div>
+</div>
+</header>
+<div class="grid_padded--temp">
+<div>
+<figure class="image_default">
+<picture>
+<source media="(min-width: 1px)" srcset="https://thumbnails.texastribune.org/-vu4-zABtjhsgUKRvk8VpI8K7ck=/1250x838/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 1250w,
+                  https://thumbnails.texastribune.org/k9ysNP2V85ODbDTyLO3U2iWvcbo=/850x570/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 850w,
+                  https://thumbnails.texastribune.org/CCRbHfz887Es2geDH1TqDvgC4mo=/650x436/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 650w,
+                  https://thumbnails.texastribune.org/8biRTv1UJEKm5Ebn4kKUCVQL7IM=/400x268/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 400w" sizes="(min-width: 52.8125em) 845px, 100vw">
+<img alt="House Public Education Committee Chair Dan Huberty is talking to legislators about raising the state sales tax by a penny, to 7.25 percent, and pouring the money into public education." src="https://thumbnails.texastribune.org/k9ysNP2V85ODbDTyLO3U2iWvcbo=/850x570/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg" srcset="https://thumbnails.texastribune.org/k9ysNP2V85ODbDTyLO3U2iWvcbo=/850x570/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 850w,
+                  https://thumbnails.texastribune.org/-vu4-zABtjhsgUKRvk8VpI8K7ck=/1250x838/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 1250w,
+                  https://thumbnails.texastribune.org/CCRbHfz887Es2geDH1TqDvgC4mo=/650x436/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 650w,
+                  https://thumbnails.texastribune.org/8biRTv1UJEKm5Ebn4kKUCVQL7IM=/400x268/smart/filters:quality(80)/https://static.texastribune.org/media/files/b41d32bdecf1a260d8ff9a7d907da302/O3_TTEvents_HUBERTY_JJ_TT.jpg 400w" sizes="(min-width: 52.8125em) 845px, 100vw">
+</picture>
+<figcaption class="image_default--caption">
+House Public Education Committee Chair Dan Huberty is talking to legislators about raising the state sales tax by a penny, to 7.25 percent, and pouring the money into public education.
+<cite><i class="fa fa-camera"></i> John Jordan/The Texas Tribune</cite>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="story_body grid_separator--l">
+<header class="plugin plugin-series-header plugin--centered plugin--centered-narrow-padded">
+<div class="series_header">
+<h3 class="grid_separator--s link--blue_subtle"><a class="unlink" href="/series/texas-legislature-2019/">Texas Legislature 2019</a></h3>
+<p>The 86th Legislature runs from Jan. 8 to May 27. From the state budget to health care to education policy &mdash; and the politics behind it all &mdash; we focus on what Texans need to know about the biennial legislative session.</p>&nbsp;<span class="full_story"><a class="unlink" href="/series/texas-legislature-2019/">More in this series&nbsp;<i class="fa fa-long-arrow-right"></i></a></span>
+</div>
+</header>
+<p><i><sup>Editor's note: If you'd like an email notice whenever we publish Ross Ramsey's column, click </sup></i><a href="http://texastribune.us3.list-manage1.com/subscribe?u=3d0ce87edeeb6df90043897db&amp;id=d9a68d8efc"><i><sup>here</sup></i></a><i><sup>.</sup></i></p>
+<p>In the rush of legislation filed before last week’s deadline, you wouldn’t be the only person who missed the measure proposing a 6.26 percent state sales tax rate. No reason you should have seen it or made note of it.</p>
+<p>For one thing, it’s a teensy tax increase, at least on paper — at least for now. The state’s current sales tax rate is 6.25 percent, and local governments can add two cents on top of that rate. The increase to 6.26 percent is a placeholder in a proposed constitutional amendment — a place to put the real number when it’s available.</p>
+<p>That number is in the possession of House Public Education Committee Chair <a href="https://www.texastribune.org/directory/dan-huberty/">Dan Huberty</a>, R-Houston, who is talking to legislators about raising the state sales tax by a penny, to 7.25 percent (the new tax rate he’s waiting to propose), and pouring the money into public education. It wouldn’t be for new spending, but it would increase state spending enough to significantly lower local property taxes — the driving political force behind the state’s current legislative push for school finance reform.</p>
+<div class="plugin-ad plugin">
+<div class="plugin-ad__inner">
+<p class="plugin-ad__label">The Texas Tribune thanks its sponsors. <a href="https://mediakit.texastribune.org/" ga-on="click" ga-event-category="Sponsorship" ga-event-action="sponsorship-intent" ga-event-label="Hum">Become one</a>.</p>
+<div class="plugin-ad__unit">
+<div id="ad-unit-281317"></div>
+</div>
+</div>
+</div>
+<p>A little change in your local property taxes, translated into statewide finance, takes a tremendous amount of money. But a 1-cent rate increase in sales taxes would produce a lot of money. The state collected $31.94 billion from sales taxes in the 2018 fiscal year, according to the Texas comptroller of public accounts; at that level of taxable sales, a 1-cent increase in the rate would bring in an extra $5.1 billion.</p>
+<p>Local school districts, fueled by the local property taxes Texas voters hate so much, spent about $14.7 billion more than the state on public education in fiscal year 2018, according to the comptroller. The $5.1 billion from a 1-cent sales tax increase wouldn’t be enough to level that out, but it would sure make a dent.</p>
+<p>Citing the comptroller’s numbers, one more time: The state currently covers 36 percent of the cost of public education, and the locals cover the other 64 percent; throwing $5.1 billion into the state column and lowering the local spending by the same amount would bring those closer to balance: about 46 percent state and 54 percent local.</p>
+<p>That’s also enough — and here is where legislators might find the political payoff, if there is one — to finance a property tax cut that’s visible to homeowners. Huberty’s introductory <a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=86R&amp;Bill=HB3">House Bill 3</a> — commonly called the school finance bill — would cut property taxes by about $100 for the owner of a home with a taxable value of $250,000, according to the author and others.</p>
+<div class="plugin-ad plugin">
+<div class="plugin-ad__inner">
+<p class="plugin-ad__label">The Texas Tribune thanks its sponsors. <a href="https://mediakit.texastribune.org/" ga-on="click" ga-event-category="Sponsorship" ga-event-action="sponsorship-intent" ga-event-label="Hum">Become one</a>.</p>
+<div class="plugin-ad__unit">
+<div id="ad-unit-281318"></div>
+</div>
+</div>
+</div>
+<p>He can do that with money that’s already in the state’s hands. His proposed tax swap would increase the size of the property tax cut and also provide money for public education in future years.</p>
+<p>His proposed constitutional amendment would raise your sales taxes, but that same sample homeowner would get almost $500 in property tax cuts — in addition to the $100 in property tax cuts in the current school finance bill.</p>
+<p>If the sales tax play is the one legislators choose, the issue will be in voters’ control before the end of the year, in ballot language something like this: “The constitutional amendment to provide funding for the cost of maintaining and operating the public school system and to reduce school district ad valorem tax rates through an increase in the state sales and use tax rate.”</p>
+<div class="plugin plugin--centered plugin--centered-narrow-padded print__hide">
+<div id="newsletter-subscribe-9eb53e440f">
+<div id="newsletter-subscribe-attach-9eb53e440f" class="loading loading--s" aria-hidden="true"></div>
+</div>
+</div>
+<p>That’s Huberty’s opening in <a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=86R&amp;Bill=HJR3">House Joint Resolution 3</a>, which would make it to Texas voters’ ballots if it’s backed with a two-thirds vote in both legislative chambers. The Senate is working to pass its legislation forcing automatic voter referenda on local property tax revenue increases; the trigger is at 2.5 percent for now; speaking to the NE Tarrant Tea Party this week, Lt. Gov. <a href="https://www.texastribune.org/directory/dan-patrick/">Dan Patrick</a> predicted the final number will be between 2.5 percent and 4 percent.</p>
+<p>Wherever that limit lands, however, it will not mean a tax cut — which means it’s not the kind of property tax legislation voters are telling their politicians they want.</p>
+<p>A tax cut is the thing, the prompt to action for this Legislature. Huberty and others are now saying, right out loud and in public, that school finance wouldn’t be taking place this year if politicians and legislators were not so motivated by property taxpayers. Their line is that you can’t get school finance reform without property tax reform.</p>
+<div class="plugin-ad plugin">
+<div class="plugin-ad__inner">
+<p class="plugin-ad__label">The Texas Tribune thanks its sponsors. <a href="https://mediakit.texastribune.org/" ga-on="click" ga-event-category="Sponsorship" ga-event-action="sponsorship-intent" ga-event-label="Hum">Become one</a>.</p>
+<div class="plugin-ad__unit">
+<div id="ad-unit-281320"></div>
+</div>
+</div>
+</div>
+<p>And you don’t really have property tax relief if all you do is limit how much more expensive government will become in the future. That’s why conservative lawmakers are pressing for lower property taxes — even if it means they have to raise other taxes to get there.</p>
+<aside class="plugin-read-more plugin plugin--centered plugin--centered-narrow-padded print__hide">
+<p class="plugin-read-more__title grid_separator">Read related Tribune coverage</p>
+<ul class="plugin-read-more__list">
+<li class="grid_separator">
+<a href="/2019/03/11/texas-legislature-not-built-for-harmony-was-built-for-debate/" ga-on="click" ga-event-category="Related link" ga-event-label="related - ReadMore" ga-event-action="/2019/03/11/texas-legislature-not-built-for-harmony-was-built-for-debate/">Analysis: The Texas Legislature wasn’t built for harmony. It was built for debate.</a>
+</li>
+<li class="grid_separator">
+<a href="/2019/03/08/in-step-with-texas-voters-sometimes-out-of-step-others/" ga-on="click" ga-event-category="Related link" ga-event-label="related - ReadMore" ga-event-action="/2019/03/08/in-step-with-texas-voters-sometimes-out-of-step-others/">Analysis: In step with Texas voters on some things, and out of step on some others</a>
+</li>
+<li class="">
+<a href="/2019/02/18/need-money-for-property-tax-cuts-ask-voters-first/" ga-on="click" ga-event-category="Related link" ga-event-label="related - ReadMore" ga-event-action="/2019/02/18/need-money-for-property-tax-cuts-ask-voters-first/">Analysis: Need money for property tax cuts? Ask voters first</a>
+</li>
+</ul>
+</aside>
+<script>
+(function () {
+  var readMoreLinks = [];
+
+
+    readMoreLinks.push('32619');
+
+    readMoreLinks.push('32615');
+
+    readMoreLinks.push('32488');
+
+
+  window.ttGlobal.readMoreLinks = readMoreLinks;
+}());
+</script>
+<aside class="plugin-member-promo plugin plugin--centered plugin--centered-narrow-padded">
+<div class="plugin-member-promo__inner">
+<h2 class="headline grid_separator">Quality journalism doesn't come free</h2>
+<p>Perhaps it goes without saying — but producing quality journalism isn't cheap. At a time when newsroom resources and revenue across the country are declining, The Texas Tribune remains committed to sustaining our <a href="/about">mission</a>: creating a more engaged and informed Texas with every story we cover, every event we convene and every newsletter we send. As a nonprofit newsroom, we rely on members to help keep our stories free and our events open to the public. Do you value our journalism? Show us with your support.</p>
+<a href="https://support.texastribune.org/donate?installmentPeriod=yearly&amount=150&campaignId=701460000007V3QAAU#join-today" class="button button--full-yellow grid_separator" ga-on="click" ga-event-category="donations" ga-event-action="membership-intent" ga-event-label="story-cta-button">Yes, I'll donate today</a>
+</div>
+</aside>
+<div class="story_comments plugin-comments plugin plugin--centered plugin--centered-narrow-padded print__hide">
+<a id="story_bottom" class="story_comments--anchor"></a>
+<h3 class="grid_separator">
+<a id="comment-show" class="link--teal" href="" ga-on="click" ga-event-category="Comment" ga-event-action="comment-intent" ga-event-label="Hum - Bottom">
+<i class="fa fa-comments"></i>
+<span id="comment-count"></span>
+</a>
+<a id="comment-hide" class="link--teal hidden" href="" ga-on="click" ga-event-category="Comment" ga-event-action="comment-hide" ga-event-label="Hum - Bottom">
+<i class="fa fa-comments-o"></i>
+Hide all comments
+</a>
+</h3>
+<div id="comment-content" class="comment--container hidden">
+<div id="comment-policy" class="box_information">
+<h5 class="smallcaps grid_separator--s">Comment Policy</h5>
+<p class="subtext">The Texas Tribune is pleased to provide the opportunity for you to share your observations about this story. We encourage lively debate on the issues of the day, but we ask that you refrain from using profanity or other offensive speech, engaging in personal attacks or name-calling, posting advertising, or wandering away from the topic at hand. To comment, you must be a registered user of the Tribune, and your real name will be displayed. All comments are shown in Central Time. Thanks for taking time to offer your thoughts.</p>
+</div>
+<h4 id="comment-anonymous" class="comment--post grid_separator">
+<strong>You must be logged in to leave a comment.</strong> | <a href="/accounts/login/?next=/2019/03/15/asking-texas-voters-swap-higher-sales-taxes-property-tax-cuts/" ga-on="click" ga-event-category="Comment" ga-event-action="login-intent" ga-event-label="Hum - Bottom">Login</a> | <a href="/accounts/register/" ga-on="click" ga-event-category="Comment" ga-event-action="signup-intent" ga-event-label="Hum - Bottom">Sign Up</a>
+</h4>
+<form id="comment-form" action="" method="post" enctype="multipart/form-data">
+<h5 class="smallcaps">Your Comment</h5>
+<textarea id="comment-entry" cols="40" name="comment" rows="10"></textarea>
+<div class="comment--post">
+<p id="comment-name-notification"></p>
+<input id="comment-submit" class="button button--yellow" type="submit" value="Post Comment" ga-on="click" ga-event-category="Comment" ga-event-action="comment-submit" ga-event-label="Hum - Bottom">
+</div>
+</form>
+<ul id="comment-list" class="story_comments--list"></ul>
+<button id="comment-load-more" class="button button--yellow grid_separator hidden">Read More Comments</button>
+</div>
+</div>
+</div>
+<div class="grid_container--xl grid_padded grid_separator print__hide">
+<div class="grid_row grid_wrap--l">
+<div class="col_8 grid_separator">
+<div class="grid_separator">
+<div id="related-or-series">
+<div id="related-or-series-attach" class="loading loading--s" aria-hidden="true"></div>
+</div>
+</div>
+<div class="grid_separator">
+<div id="most-viewed-or-tribtalk">
+<div id="most-viewed-or-tribtalk-attach" class="loading loading--s" aria-hidden="true"></div>
+</div>
+</div>
+</div>
+<div class="col_4">
+<div id="hearken">
+<div id="hearken-attach"></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+<div class="site_ad--wrapper site_ad--footer">
+<div id="ad_footer"></div>
+</div>
+<footer>
+<div id="site_footer" class="site_footer">
+<div class="grid_container grid_row">
+<div class="col">
+<figure class="site_footer--logo">
+<img src="/static/images/TxTrib-bug-logo.d96b6a55ca6d.svg" alt="">
+</figure>
+<ul>
+<div class="border--yellow_notch"></div>
+<li>
+
+<a href="https://support.texastribune.org/donate?installmentPeriod=once&amount=60#join-today" title="Donate" class="donate" ga-on="click" ga-event-category="donations" ga-event-action="membership-intent" ga-event-label="footer">Donate</a>
+
+
+</li>
+<li>
+<a href="/contact/" title="Contact Us">Contact Us</a>
+</li>
+<li>
+<a href="https://mediakit.texastribune.org/" title="Advertise" class="advertise">Advertise</a>
+</li>
+<li><a href="/">&copy; 2019 The Texas Tribune</a></li>
+</ul>
+</div>
+<div id="footer-sections" class="col hide_until--s">
+<h5 class="site_footer--header">Topics</h5>
+<ul>
+<li>
+<a href="/topics/congress/" data-section="congress">Congress</a>
+</li>
+<li>
+<a href="/topics/courts/" data-section="courts">Courts</a>
+</li>
+<li>
+<a href="/topics/criminal-justice/" data-section="criminal-justice">Criminal justice</a>
+</li>
+<li>
+<a href="/topics/demographics/" data-section="demographics">Demographics</a>
+</li>
+<li>
+<a href="/topics/economy/" data-section="economy">Economy</a>
+</li>
+<li>
+<a href="/topics/energy/" data-section="energy">Energy</a>
+</li>
+<li>
+<a href="/topics/environment/" data-section="environment">Environment</a>
+</li>
+<li>
+<a href="/topics/health-care/" data-section="health-care">Health care</a>
+</li>
+<li>
+<a href="/topics/higher-education/" data-section="higher-education">Higher education</a>
+</li>
+<li>
+<a href="/topics/immigration/" data-section="immigration">Immigration</a>
+</li>
+<li>
+<a href="/topics/politics/" data-section="politics">Politics</a>
+</li>
+<li>
+<a href="/topics/public-education/" data-section="public-education">Public education</a>
+</li>
+<li>
+<a href="/topics/state-government/" data-section="state-government">State government</a>
+</li>
+</ul>
+</div>
+<div class="col">
+<h5 class="site_footer--header">Info</h5>
+<ul>
+<li>
+<a href="/about/" title="About Us">About Us</a>
+</li>
+<li>
+<a href="/about/staff/">Our Staff</a>
+</li>
+<li>
+<a href="/support-us/donors-and-members/" title="Who Funds Us?">Who Funds Us?</a>
+</li>
+<li>
+<a href="/about/texas-tribune-strategic-plan/" title="Strategic Plan">Strategic Plan</a>
+</li>
+<li>
+<a href="/republishing-guidelines/" title="Republishing Guidelines">Republishing Guidelines</a>
+</li>
+<li>
+<a href="/about/ethics/" title="Code of Ethics">Code of Ethics</a>
+</li>
+<li>
+<a href="/about/terms-of-service/" title="Terms of Service">Terms of Service</a>
+</li>
+<li>
+<a href="/about/privacy-policy/" title="Privacy Policy">Privacy Policy</a>
+</li>
+<li>
+<a href="/about/tips/" title="Send a Tip">Send us a confidential tip</a>
+</li>
+<li>
+<a href="/corrections/" title="Corrections">Corrections</a>
+</li>
+<li>
+<a href="/about/feeds/" title="Feeds">Feeds</a>
+</li>
+<li>
+<a href="/about/subscribe/" title="Newsletters" ga-event-category="subscribe intent" ga-event-action="footer link">Newsletters</a>
+</li>
+<li>
+<a href="/video/" title="Video">Video</a>
+</li>
+</ul>
+</div>
+<div class="col">
+<h5 class="site_footer--header">Social Media</h5>
+<ul>
+<li>
+<a href="https://facebook.com/texastribune" title="Facebook" class="external" ga-event-action="TT Facebook" ga-event-category="social follow intent"><i class="fa fa-facebook"></i>Facebook</a>
+</li>
+<li>
+<a href="https://twitter.com/texastribune" title="Twitter" class="external" ga-event-action="TT Twitter" ga-event-category="social follow intent"><i class="fa fa-twitter"></i>Twitter</a>
+</li>
+<li>
+<a href="https://youtube.com/user/thetexastribune?sub_confirmation=1" title="YouTube" class="external" ga-event-action="TT YouTube" ga-event-category="social follow intent"><i class="fa fa-youtube"></i>YouTube</a>
+</li>
+<li>
+<a href="https://instagram.com/texas_tribune" title="Instagram" class="external" ga-event-action="TT Instagram" ga-event-category="social follow intent"><i class="fa fa-instagram"></i>Instagram</a>
+</li>
+<li>
+<a href="https://www.linkedin.com/company/texas-tribune" title="LinkedIn" class="external" ga-event-action="TT LinkedIn" ga-event-category="social follow intent"><i class="fa fa-linkedin"></i>LinkedIn</a>
+</li>
+<li>
+<a href="https://www.reddit.com/user/texastribune" title="Reddit" class="external"><i class="fa fa-reddit"></i>Reddit</a>
+</li>
+<div class="border--yellow_notch"></div>
+<li>
+<a href="https://www.facebook.com/groups/thisisyourtexas/" title="This is Your Texas" class="external"><i class="fa fa-facebook"></i>Join our Facebook Group, This Is Your Texas.</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<script>
+          window.lazySizesConfig = {
+            lazyClass: 'js-lazy-image',
+            loadingClass: 'js-lazy-image--loading',
+            loadedClass: 'js-lazy-image--loaded'
+          };
+        </script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.4/lazysizes.min.js" integrity="sha384-IPp2hHSz/NTW/n7FDB45pORGnZZbyF3R2qTfonxnU2xt/fxmHGJS52LqTd/gPdxp" crossorigin="anonymous"></script>
+<script src="/static/js/build/runtime.86b284e36ee4f7a6cb13.js"></script>
+<script src="/static/js/build/1.chunk.e999999ce9d2de5258cf.js"></script>
+<script src="/static/js/build/2.chunk.21e33b9029c8d5bf882a.js"></script>
+<script src="/static/js/build/story.chunk.f597dc35e3deb43b4e37.js"></script>
+
+<div id="parsely-root" style="display: none">
+<div id="parsely-cfg" data-parsely-site="texastribune.org"></div>
+</div>
+<script>
+    (function(s, p, d) {
+      var h=d.location.protocol, i=p+"-"+s,
+        e=d.getElementById(i), r=d.getElementById(p+"-root"),
+        u=h==="https:"?"d1z2jf7jlzjs58.cloudfront.net"
+        :"static."+p+".com";
+      if (e) return;
+      e = d.createElement(s); e.id = i; e.async = true;
+      e.src = h+"//"+u+"/p.js"; r.appendChild(e);
+    })("script", "parsely", document);
+  </script>
+
+
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+// Insert Twitter Pixel ID and Standard Event data below
+twq('init','nxdko');
+twq('track','PageView');
+</script>
+
+<a href="/test/hotbots/" rel="nofollow"> </a>
+<script>
+  (function() {
+    var gutenTags = [],
+        gutenTagsToEmbed = [],
+        authors = [],
+        seriesSlug = '';
+
+
+
+      gutenTags.push('subject-public-education');
+
+
+        gutenTagsToEmbed.push('subject-school-finance');
+
+      gutenTags.push('subject-school-finance');
+
+
+      gutenTags.push('subject-taxes');
+
+
+      gutenTags.push('person-dan-huberty');
+
+
+      gutenTags.push('person-dan-patrick');
+
+
+      gutenTags.push('subject-86th-legislative-session');
+
+
+        gutenTagsToEmbed.push('subject-property-taxes');
+
+      gutenTags.push('subject-property-taxes');
+
+
+
+
+        seriesSlug = 'texas-legislature-2019';
+
+
+
+
+      authors.push('ross-ramsey');
+
+
+    var updates = {
+      objId: '32651',
+      authors: authors,
+      pageType: 'article',
+      gutenTags: gutenTags,
+      gutenTagsToEmbed: gutenTagsToEmbed,
+      seriesSlug: seriesSlug
+    };
+
+    Object.keys(updates).forEach(function(key) {
+      window.ttGlobal[key] = updates[key];
+    });
+  }());
+</script>
+<script>
+        (function() {
+          var units = [
+            { id: 'ad_roofline', type: 'roofline' },
+            { id: 'ad_footer', type: 'footer' }
+          ];
+          jsBundle.defineUnits(units);
+        }());
+      </script>
+<script>
+          (function() {
+            jsBundle.defineUnits([
+              { id: 'ad-unit-281317', type: 'articleFlex' }
+            ]);
+          }());
+        </script>
+<script>
+          (function() {
+            jsBundle.defineUnits([
+              { id: 'ad-unit-281318', type: 'articleFlex' }
+            ]);
+          }());
+        </script>
+<script>
+          (function() {
+            jsBundle.defineUnits([
+              { id: 'ad-unit-281320', type: 'articleFlex' }
+            ]);
+          }());
+        </script>
+<script>
+        jsBundle.initStore();
+      </script>
+<script>
+  jsBundle.buildNewsletterSignUp({
+    interestId: '9eb53e440f',
+
+    isAuto: true,
+
+
+    logoUrl: 'https://static.texastribune.org/media/newsletters/TT-subscription-thebrief.png',
+
+    title: 'The Brief',
+    description: 'Keep tabs on Texas politics and policy with our morning newsletter',
+    display: {
+
+      bgColor: '#e3eff2'
+    },
+    ga: {
+      label: 'story page'
+    }
+  });
+</script>
+<script>
+                jsBundle.buildRelatedOrSeries({
+                  selector: 'related-or-series',
+                  scrollOffset: 1.1
+                });
+
+                jsBundle.buildMostViewedOrTribTalk({
+                  selector: 'most-viewed-or-tribtalk',
+                  scrollOffset: 1.1
+                });
+              </script>
+<script>
+                  jsBundle.buildHearken();
+                </script>
+<script>
+        jsBundle.loadData();
+      </script>
+</body>
+</html>
