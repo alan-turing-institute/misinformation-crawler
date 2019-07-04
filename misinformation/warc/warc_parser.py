@@ -76,7 +76,7 @@ class WarcParser(Connector):
                               no_date=0, no_byline=0, no_title=0)
 
         # Speed up retrieval by setting a maximum number of entries to retrieve from the tables
-        max_entries = 50 * max_articles if max_articles > 0 else None
+        max_entries = 10 * max_articles if max_articles > 0 else None
 
         # Load WARC files
         warcfile_entries = self.load_warcfiles(site_name, max_entries, use_local)
@@ -116,19 +116,18 @@ class WarcParser(Connector):
             with suppress(KeyError):
                 article["metadata"] = json.dumps(article["metadata"])
 
-            # Check for missing fields
-            if not article["publication_datetime"]:
-                self.counts["no_date"] += 1
-            if not article["byline"]:
-                self.counts["no_byline"] += 1
-            if not article["title"]:
-                self.counts["no_title"] += 1
-
             # Add article to database unless we're running locally
             if article["content"]:
                 if not use_local:
                     self.add_to_database(article)
                 self.counts["articles"] += 1
+                # Check for missing fields in these articles
+                if not article["publication_datetime"]:
+                    self.counts["no_date"] += 1
+                if not article["byline"]:
+                    self.counts["no_byline"] += 1
+                if not article["title"]:
+                    self.counts["no_title"] += 1
             logging.info("Finished processing %s/%s: %s", idx, self.counts["warcentries"], entry.article_url)
 
         # Print statistics
