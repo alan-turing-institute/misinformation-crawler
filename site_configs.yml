@@ -1386,17 +1386,21 @@ newsweek.com:
       url_must_contain: '/us'
       article_links: '//h3/a'
   article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="title"]/text() | //header[@class="article-header"]/h1/text()'
+      match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@itemprop="author"]/a/span[@itemprop="name"]/text() | //span[@itemprop="author"]/span[@itemprop="name"]/text()'
+      select_expression: '//span[@class="author"]//span/text()'
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-body"]'
+      select_expression: '//div[contains(@class, "article-body")]'
       match_rule: 'single'
       remove_expressions:
-        - '//span[contains(@class, "embed-image")]'
-        - '//span[contains(@class, "figure")]'
+        - '//figure'
+        - '//h2'  # used for image headers within article body
 
 notallowedto.com:
   site_name: 'notallowedto.com'
