@@ -13,12 +13,12 @@ class PressableButton:
     def __init__(self, xpath, interact_method):
         self.xpath = xpath
         self.interact_method = interact_method
-        self.button = None
+        self.element = None
 
     def find_if_exists(self, driver):
         """Use a webdriver to get an interactable button specified by the xpath"""
         try:
-            self.button = driver.find_element_by_xpath(self.xpath)
+            self.element = driver.find_element_by_xpath(self.xpath)
             return True
         except NoSuchElementException:
             pass
@@ -30,14 +30,14 @@ class PressableButton:
         if self.interact_method == 'Return':
             # Interact by sending a keypress of 'Return' to the button.
             # This works even when the button is not currently visible in the viewport.
-            self.button.send_keys(Keys.RETURN)
+            self.element.send_keys(Keys.RETURN)
         if self.interact_method == 'Click':
             # Interact by moving to the element and then clicking.
             # This is more fragile, so we only use it for those button
             # xpaths that will not accept keypress 'Return'.
             actions = ActionChains(driver)
-            actions.move_to_element(self.button).perform()
-            self.button.click()
+            actions.move_to_element(self.element).perform()
+            self.element.click()
 
 
 class ButtonPressMiddleware:
@@ -119,7 +119,7 @@ class ButtonPressMiddleware:
                     button.press_button(self.driver)
 
                     # Store the button location so that we can check when the page is reloaded
-                    button_location = button.button.location
+                    button_location = button.element.location
 
                     # Track the number of clicks that we've performed
                     n_clicks_performed += 1
@@ -135,7 +135,7 @@ class ButtonPressMiddleware:
                     # NB. the default poll frequency is 0.5s so if we want
                     # short timeouts this needs to be changed in the
                     # WebDriverWait constructor
-                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != button.button.location)
+                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != button.element.location)
 
                 except ElementNotVisibleException:
                     # This can happen when the page refresh makes a previously
@@ -166,6 +166,8 @@ class ButtonPressMiddleware:
         for button in self.form_buttons:
             while button.find_if_exists(self.driver):
                 try:
+                    # We may need to add a wait after the button is pressed here in future
+                    # but this isn't an issue for current sites
                     button.press_button(self.driver)
                     spider.logger.info('Clicked a form button ({}).'.format(button.xpath))
                 # Stop trying to click a form button when it no longer exists
@@ -203,9 +205,8 @@ class ButtonPressMiddleware:
         # Press all the load buttons so we get the max no. of articles
         if self.contains_button(response, load=True):
             for button in self.load_buttons:
-                for _ in range(self.max_button_clicks):
-                    if button.find_if_exists(self.driver):
-                        page_source = self.press_load_button_repeatedly(button, spider)
+                if button.find_if_exists(self.driver):
+                    page_source = self.press_load_button_repeatedly(button, spider)
 
         html_str = page_source.encode(request.encoding)
 
