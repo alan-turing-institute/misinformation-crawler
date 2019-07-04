@@ -106,7 +106,7 @@ class ButtonPressMiddleware:
                 return True
         return False
 
-    def press_load_button(self, button, spider):
+    def press_load_button_repeatedly(self, button, spider):
         """Press a PressableButton as many times as we want, catch exceptions and log info to spider"""
         n_clicks_performed = 0
         cached_page_source = None
@@ -211,7 +211,7 @@ class ButtonPressMiddleware:
             for button in self.load_buttons:
                 for _ in range(self.max_button_clicks):
                     if button.find_if_exists(self.driver):
-                        page_source = self.press_load_button(button, spider)
+                        page_source = self.press_load_button_repeatedly(button, spider)
 
         html_str = page_source.encode(request.encoding)
 
