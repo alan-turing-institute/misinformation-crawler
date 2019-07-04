@@ -92,16 +92,10 @@ class ButtonPressMiddleware:
                 pass
         return None
 
-    def response_contains_a_button(self, response):
+    def contains_button(self, response, load=False, form=False):
         """Check if any there are any load or form buttons in the response."""
-        for button in self.load_buttons + self.form_buttons:
-            if response.xpath(button.xpath):
-                return True
-        return False
-
-    def response_contains_load_button(self, response):
-        """Check if any there are any load buttons in the response."""
-        for button in self.load_buttons:
+        buttons = (self.load_buttons if load else []) + (self.form_buttons if form else [])
+        for button in buttons:
             if response.xpath(button.xpath):
                 return True
         return False
@@ -191,7 +185,7 @@ class ButtonPressMiddleware:
         self.seen_urls.add(request.url)
 
         # Look for a load button or form button using xpaths on the scrapy response
-        if not self.response_contains_a_button(response):
+        if not self.contains_button(response, load=True, form=True):
             return response
 
         # Load the URL using chromedriver
@@ -207,7 +201,7 @@ class ButtonPressMiddleware:
         page_source = self.driver.page_source
 
         # Press all the load buttons so we get the max no. of articles
-        if self.response_contains_load_button(response):
+        if self.contains_button(response, load=True):
             for button in self.load_buttons:
                 for _ in range(self.max_button_clicks):
                     if button.find_if_exists(self.driver):
