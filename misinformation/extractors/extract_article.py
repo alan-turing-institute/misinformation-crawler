@@ -74,14 +74,8 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
             iso_string = None
             if "datetime_formats" in config["article"]["publication_datetime"]:
                 datetime_formats = config["article"]["publication_datetime"]['datetime_formats']
-                # Some sites have a large number of possible formats, in the site configs
-                # which we reduce by removing characters from the datetime_string
-                simplified_formats = False
-                if "datetime_formats_simplified" in config["article"]["publication_datetime"]:
-                    simplified_formats = config["article"]["publication_datetime"]["datetime_formats_simplified"]
-                # Only one format should match, so we just use the first one in the list that does
                 for dt_format in datetime_formats:
-                    iso_string = extract_datetime_string(datetime_string, dt_format, simplified_formats=simplified_formats)
+                    iso_string = extract_datetime_string(datetime_string, dt_format)
                     if iso_string:
                         break
             else:
