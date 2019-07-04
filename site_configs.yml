@@ -48,7 +48,6 @@ abcnews.go.com:
         - 'MMM D YYYY h:mm A'
         - 'MMM DD YYYY'
         - 'MMM D YYYY'
-        - 'MMMM YYYY'
         - 'YYYY-MM-DD'
     content:
       select_method: 'xpath'
