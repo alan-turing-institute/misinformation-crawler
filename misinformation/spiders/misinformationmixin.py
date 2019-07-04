@@ -116,7 +116,7 @@ class MisinformationMixin():
             resolved_url = response.request.meta.get("redirect_urls")[0]
         else:
             resolved_url = response.url
-        resolved_url = canonicalize_url(resolved_url)
+        resolved_url = canonicalize_url(resolved_url, keep_blank_values=False)
         self.logger.info("Searching for a URL match at: {}".format(resolved_url))
 
         # Always reject the front page of the domain since this will change
