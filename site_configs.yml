@@ -1243,14 +1243,19 @@ mic.com:
     url_must_contain: '(/p/|/articles/)'
     byline:
       select_method: 'xpath'
-      select_expression: '//node()[@class="gN"]/text()'
+      select_expression: '//div[span[text()="By "]]/node()/text()'
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="gh gg"]'
-      match_rule: 'single'
+      select_expression: '//article[div[div[p]]] | //article[div[div[div[div[div[p]]]]]]'
+      match_rule: 'first'
       remove_expressions:
         - '//figure'
+        - '//img'
+        - '//cite'
+        - '//h1'  # Title not part of content
+        - '//div[time]'  # This div contains date
+        - '//div[span[text()="By "]]'  # This div contains byline
 
 missoulacurrent.com:
   site_name: 'missoulacurrent.com'
