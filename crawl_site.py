@@ -49,6 +49,17 @@ def main():
             'CLOSESPIDER_ITEMCOUNT': args.max_articles
         })
 
+    # For sites with a maximum per-crawler limit, use lots of shallow crawlers
+    # which will self-terminate when they hit a 402 error
+    if "use_shallow_crawlers" in site_configs[args.site_name]["crawl_strategy"]:
+        if site_configs[args.site_name]["crawl_strategy"]["use_shallow_crawlers"]:
+            n_requests = 1000
+            if args.max_articles > 0:
+                n_requests = min(n_requests, 10 * args.max_articles)
+            settings.update({
+                'CONCURRENT_REQUESTS': n_requests
+            })
+
     # Set up a crawler process
     process = CrawlerProcess(settings)
 
