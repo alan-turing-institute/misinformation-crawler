@@ -1,10 +1,12 @@
-# Taken from https://github.com/clemfromspace/scrapy-cloudflare-middleware
-
 from cfscrape import get_tokens
 
 
 class CloudFlareMiddleware:
-    """Scrapy middleware to bypass the CloudFlare anti-bot protection"""
+    """
+    Scrapy middleware to bypass the CloudFlare anti-bot protection
+
+    Taken from https://github.com/clemfromspace/scrapy-cloudflare-middleware
+    """
 
     @staticmethod
     def is_cloudflare(response):
