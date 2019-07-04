@@ -6,7 +6,8 @@ import pkg_resources
 import pytest
 import yaml
 from scrapy.http import Request, TextResponse
-from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string, simplify_extracted_byline, simplify_extracted_title
+from misinformation.extractors import extract_article, extract_element, xpath_extract_spec, extract_datetime_string
+from misinformation.extractors.extract_article import simplify_extracted_byline, simplify_extracted_title
 
 SITE_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "site_test_data")
 UNIT_TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "unit_test_data")

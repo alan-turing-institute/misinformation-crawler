@@ -10,6 +10,4 @@ __all__ = [
     "extract_datetime_string",
     "extract_element",
     "xpath_extract_spec",
-    "simplify_extracted_byline",
-    "simplify_extracted_title",
 ]
