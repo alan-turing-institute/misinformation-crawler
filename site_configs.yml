@@ -1287,15 +1287,25 @@ motherjones.com:
   article:
     byline:
       select_method: 'xpath'
+<<<<<<< HEAD
       select_expression: '//h3[@class="byline"]/span/a/text() | //span[@class="byline"]/a/text()'
+=======
+      select_expression: '//h3[@class="byline"]/span/a/text() | //span[@class="byline"]/a/text() '
+>>>>>>> add 2nd article type motherjones
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
-      select_expression: '//article[@class="entry-content"]'
+      select_expression: '//article[@class="entry-content"] | //div[@id="fullwidth-body"]'
       match_rule: 'single'
       remove_expressions:
         - '//div[contains(@class, "is-image")]'
         - '//div[contains(@class, "newsletter-signup")]'
+        - '//div[contains(@class, "mj-video")]'
+        - '//div[contains(@class, "mj-related")]'
+        - '//div[contains(@class, "promo-all")]'
+        - '//aside'
+        - '//figure'
+        - '//section[contains(@class, "inline-element")]'
 
 multichannel.com:
   site_name: 'multichannel.com'
