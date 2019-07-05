@@ -1935,6 +1935,29 @@ theblaze.com:
       remove_expressions:
         - '//p[contains(@class, "shortcode-media")]'
 
+thedailybeast.com:
+  site_name: 'thedailybeast.com'
+  start_url: 'https://www.thedailybeast.com/category/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'thedailybeast.com/category/politics$'
+      url_must_not_contain: '/author/'
+      article_links: '//a[contains(@class, "GridStory__title-link")]'
+  article:
+    url_must_not_contain: '/author/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="authors"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//article[@class="Body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//section[@class="Fancylinks"]'
+        - '//section[@class="RelatedArticles"]'
+
 thedailysheeple.com:
   site_name: 'thedailysheeple.com'
   start_url: 'https://www.thedailysheeple.com/'
