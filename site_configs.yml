@@ -1020,10 +1020,12 @@ infowars.com:
   site_name: 'infowars.com'
   start_url: 'http://infowars.com/category/us-news/'
   crawl_strategy:
-    method: 'scattergun'
-    scattergun:
-      url_must_not_contain: '/(watch|category|author|contributors|tag)/'
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'infowars.com/category/us-news/$'
+      article_links: '//article//h3/a'
   article:
+    url_must_not_contain: '/(watch|category|author|contributors|tag)/'
     byline:
       select_method: 'xpath'
       select_expression: '(//span[@class="author"]/descendant::*/text() | //div[@class="text"]/article/descendant::*/text())'
