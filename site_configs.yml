@@ -1465,7 +1465,7 @@ npr.org:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//p[contains(@class, "byline__name")]/a/text()'
+      select_expression: '//p[contains(@class, "byline__name")]//text()'
       match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
@@ -1477,6 +1477,8 @@ npr.org:
       match_rule: 'single'
       remove_expressions:
         - '//div[contains(@class, "image")]'
+        - '//div[@class="bucketblock"]'
+        - '//aside'
 
 nytimes.com:
   site_name: 'nytimes.com'
