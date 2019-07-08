@@ -1,9 +1,9 @@
 import datetime
 from contextlib import suppress
+import re
 from ReadabiliPy.readabilipy import simple_json_from_html_string
 from .extract_element import extract_element
 from .extract_datetime import extract_datetime_string
-import re
 
 
 def xpath_extract_spec(xpath_expression, match_rule="single", warn_if_missing=True):
