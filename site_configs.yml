@@ -43,16 +43,11 @@ abcnews.go.com:
       select_expression: '//span[@class="timestamp"]/text()'
       match_rule: 'single'
       datetime_formats:
-        - 'MMMM DD, YYYY'
-        - 'MMMM DD , YYYY'
-        - 'MMMM D, YYYY'
-        - 'MMM D, YYYY, h:mm A'
-        - 'MMM D, YYYY'
-        - 'MMM. DD, YYYY'
-        - 'MMM.DD, YYYY'
-        - 'MMM., DD, YYYY'
-        - 'MMM. D, YYYY'
-        - 'MMMM YYYY'
+        - 'MMMM DD YYYY'
+        - 'MMMM D YYYY'
+        - 'MMM D YYYY h:mm A'
+        - 'MMM DD YYYY'
+        - 'MMM D YYYY'
         - 'YYYY-MM-DD'
     content:
       select_method: 'xpath'
@@ -83,7 +78,7 @@ abqjournal.com:
       select_expression: '//header[@class="entry-title"]/section[@class="entry-meta"]/h6//text()'
       match_rule: 'last'
       datetime_formats:
-        - 'dddd, MMMM Do, YYYY [at] h:mmA'
+        - 'dddd MMMM Do YYYY [at] h:mmA'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entry"]'
@@ -221,10 +216,8 @@ austinchronicle.com:
       select_expression: '//h4[@class="byline"]//text()'
       match_rule: 'last'
       datetime_formats:
-        - 'h:mmA, ddd. MMM. DD, YYYY'
-        - 'h:mmA, ddd. MMM DD, YYYY'
-        - 'ddd., MMMM D, YYYY'
-        - 'ddd., MMMM  D, YYYY'
+        - 'h:mmA ddd MMM DD YYYY'
+        - 'ddd MMMM D YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//article/div[@class="copy"]'
@@ -387,7 +380,7 @@ christianpost.com:
       select_expression: '//div[@class="article-byline"]/time[@class="visually-hidden"]/text()'
       match_rule: 'single'
       datetime_formats:
-        - 'dddd, MMMM DD, YYYY'
+        - 'dddd MMMM DD YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//article[@id="article_content"]'
@@ -946,7 +939,7 @@ henrymakow.com:
       select_expression: '//div[@class="text"]/p/text()'
       match_rule: 'first'
       datetime_formats:
-        - 'MMMM D, YYYY'
+        - 'MMMM D YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="text-body"]'
@@ -1107,7 +1100,7 @@ judicialwatch.org:
       select_expression: '//p[@itemprop="datePublished"]/text()'
       match_rule: 'single'
       datetime_formats:
-        - 'MMMM DD, YYYY'
+        - 'MMMM DD YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="entrycontent"]'
@@ -1396,17 +1389,21 @@ newsweek.com:
       url_must_contain: '/us'
       article_links: '//h3/a'
   article:
+    title:
+      select_method: 'xpath'
+      select_expression: '//h1[@class="title"]/text() | //header[@class="article-header"]/h1/text()'
+      match_rule: 'single'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@itemprop="author"]/a/span[@itemprop="name"]/text() | //span[@itemprop="author"]/span[@itemprop="name"]/text()'
+      select_expression: '//span[@class="author"]//span/text()'
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-body"]'
+      select_expression: '//div[contains(@class, "article-body")]'
       match_rule: 'single'
       remove_expressions:
-        - '//span[contains(@class, "embed-image")]'
-        - '//span[contains(@class, "figure")]'
+        - '//figure'
+        - '//h2'  # used for image headers within article body
 
 notallowedto.com:
   site_name: 'notallowedto.com'
@@ -1638,7 +1635,7 @@ prisonplanet.com:
       select_expression: '//div[@class="subarticle"]/p/text()'
       match_rule: 'group'
       datetime_formats:
-        - 'MMMM D, YYYY'
+        - 'MMMM D YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="subarticle"]'
@@ -1713,7 +1710,7 @@ redstatewatcher.com:
       select_expression: 'substring-after(//p[@class="text-muted"]/text(), ",")'
       match_rule: 'single'
       datetime_formats:
-        - 'MMMM D, YYYY'
+        - 'MMMM D YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="container"]/div[@class="row"]/div[@class="col-md-8"]'
@@ -1789,7 +1786,7 @@ satirewire.com:
       select_expression: '//span[@class="entry-date"]/text()'
       match_rule: 'single'
       datetime_formats:
-        - 'MMM D, YYYY'
+        - 'MMM D YYYY'
     url_must_contain: '/content1/\?p=\d+'
     content:
       select_method: 'xpath'
@@ -1859,7 +1856,7 @@ talkingpointsmemo.com:
       select_expression: '//div[@class="Article__Date"]//text()'
       match_rule: 'single'
       datetime_formats:
-        - 'MMMM D, YYYY H:mm A'
+        - 'MMMM D YYYY H:mm A'
     content:
       select_method: 'xpath'
       select_expression: '//div[@id="article-content"]'
@@ -1941,6 +1938,29 @@ theblaze.com:
       remove_expressions:
         - '//p[contains(@class, "shortcode-media")]'
 
+thedailybeast.com:
+  site_name: 'thedailybeast.com'
+  start_url: 'https://www.thedailybeast.com/category/politics'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'thedailybeast.com/category/politics$'
+      url_must_not_contain: '/author/'
+      article_links: '//a[contains(@class, "GridStory__title-link")]'
+  article:
+    url_must_not_contain: '/author/'
+    byline:
+      select_method: 'xpath'
+      select_expression: '//meta[@name="authors"]/@content'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//article[@class="Body"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//section[@class="Fancylinks"]'
+        - '//section[@class="RelatedArticles"]'
+
 thedailysheeple.com:
   site_name: 'thedailysheeple.com'
   start_url: 'https://www.thedailysheeple.com/'
@@ -2002,7 +2022,7 @@ theintercept.com:
       select_expression: '//span[@class="PostByline-date"]/span/text()'
       match_rule: 'single'
       datetime_formats:
-        - 'MMMM D YYYY, h:mm'
+        - 'MMMM D YYYY h:mm'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="PostContent"]'
@@ -2191,7 +2211,7 @@ usatoday.com:
       select_expression: '//div[@class="publish-date"]/text()'
       match_rule: 'single'
       datetime_formats:
-        - '[Published] hh:mm A [EST] MMM DD, YYYY'
+        - '[Published] hh:mm A [EST] MMM DD YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-wrapper"]'
@@ -2334,7 +2354,7 @@ washingtontimes.com:
       select_expression: '//span[@class="source"]/text()'
       match_rule: 'last'
       datetime_formats:
-        - 'dddd, MMMM DD, YYYY'
+        - 'dddd MMMM DD YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="storyareawrapper"]'

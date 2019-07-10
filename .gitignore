@@ -5,7 +5,7 @@ extract_article.py
 blank_site_config.yml
 
 # Secrets folder containing sensitive data
-secrets/
+secrets/*
 
 # generated data
 /webpages/
