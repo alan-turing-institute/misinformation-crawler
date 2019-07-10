@@ -86,6 +86,10 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
                 # Join non-empty elements together with commas
                 extracted_element = ", ".join([x for x in elements if x])
 
+            elif match_rule == 'concatenate_with_space':
+                # Join non-empty elements together with single spaces
+                extracted_element = " ".join([x for x in elements if x])
+
             elif match_rule == 'group':
                 # Group several elements and wrap them in a div
                 extracted_element = "<div>" + "".join(elements) + "</div>"
