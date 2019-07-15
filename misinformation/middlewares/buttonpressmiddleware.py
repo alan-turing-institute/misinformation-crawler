@@ -172,13 +172,11 @@ class ButtonPressMiddleware:
             except WebDriverException:
                 spider.logger.info("Terminating button clicking after losing connection to page {}.".format(url))
                 break
-
         try:
             return self.driver.page_source
         except WebDriverException:
             pass
         return cached_page_source
-
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
