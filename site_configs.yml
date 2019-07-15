@@ -373,7 +373,7 @@ christianpost.com:
     url_must_contain: '/(politics|news)/[a-z0-9\-]+\.html$'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-byline"]/span[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
+      select_expression: '//div[@class="article-byline"]/span//span[@itemprop="name"]/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
