@@ -59,8 +59,9 @@ class ButtonPressMiddleware:
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.seen_urls = set()
         self.form_button_delay = 1
-        self.max_button_clicks = 5000
-        self.timeout_single_click = 60
+        self.max_button_clicks = 5000   # each button clicked at most 5000 times
+        self.timeout_single_click = 60  # 60 second timeout on page reload
+        self.timeout_cumulative = 1800  # 30 minute cumulative timeout
         self.form_buttons = [
             PressableButton('//button[@class="qc-cmp-button"]', "Return"),
             PressableButton('//button[@data-click="close"]', "Return"),
@@ -120,7 +121,8 @@ class ButtonPressMiddleware:
         """Press a PressableButton as many times as we want, catch exceptions and log info to spider"""
         n_clicks_performed = 0
         cached_page_source = None
-        while True:
+        start_time = time.time()
+        while (time.time() - start_time) < self.timeout_cumulative:
             try:
                 # We need a nested try block here, since the WebDriverWait
                 # inside the ElementNotVisibleException or the
