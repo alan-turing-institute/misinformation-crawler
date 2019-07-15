@@ -115,7 +115,7 @@ def simplify_extracted_byline(byline):
     byline = re.sub(r"\s+", ' ', byline)
     # Remove leading and trailing whitespace
     byline = byline.strip()
-    # Ignore any byline string that is just something from this list
+    # Ignore any byline string that does not contain an author
     if byline in no_author_here:
         return None
     return byline
