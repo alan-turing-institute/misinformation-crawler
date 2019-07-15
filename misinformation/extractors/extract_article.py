@@ -104,11 +104,11 @@ def simplify_extracted_byline(byline):
     attributions = ["by ", "By "]
     no_author_here = ["and", "By", ","]
     remove_after = ["/", "(", "|"]
-    # Remove start of the byline string if in this list
+    # Remove start of the byline string if it is an attribution
     for attribution in attributions:
         if byline.startswith(attribution):
             byline = byline.replace(attribution, "")
-    # Remove any part of the byline string after items in this list
+    # Remove any part of the byline string following a termination marker
     for remove_string in remove_after:
         byline = byline.split(remove_string)[0]
     # Replace any whitespace with a single space
