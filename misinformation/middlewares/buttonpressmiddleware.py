@@ -58,9 +58,9 @@ class ButtonPressMiddleware:
         chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.seen_urls = set()
-        self.timeout = 60
         self.form_button_delay = 1
-        self.max_button_clicks = 10000
+        self.max_button_clicks = 5000
+        self.timeout_single_click = 60
         self.form_buttons = [
             PressableButton('//button[@class="qc-cmp-button"]', "Return"),
             PressableButton('//button[@data-click="close"]', "Return"),
@@ -151,21 +151,21 @@ class ButtonPressMiddleware:
                     # NB. the default poll frequency is 0.5s so if we want
                     # short timeouts this needs to be changed in the
                     # WebDriverWait constructor
-                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != button.element.location)
+                    WebDriverWait(self.driver, self.timeout_single_click).until(lambda _: button_location != button.element.location)
 
                 except ElementNotVisibleException:
                     # This can happen when the page refresh makes a previously
                     # found element invisible until the page load is finished
-                    WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, button.xpath)))
+                    WebDriverWait(self.driver, self.timeout_single_click).until(visibility_of_element_located((By.XPATH, button.xpath)))
                 except ElementNotInteractableException:
                     # This can happen when the page refresh makes an element
                     # non-clickable for some period
-                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, button.xpath)))
+                    WebDriverWait(self.driver, self.timeout_single_click).until(element_to_be_clickable((By.XPATH, button.xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
                 spider.logger.info("Terminating button clicking since there are no more load buttons on page {}.".format(url))
                 break
             except TimeoutException:
-                spider.logger.info("Terminating button clicking after exceeding timeout of {} seconds for page {}.".format(self.timeout, url))
+                spider.logger.info("Terminating button clicking after exceeding timeout of {} seconds for page {}.".format(self.timeout_single_click, url))
                 break
             except WebDriverException:
                 spider.logger.info("Terminating button clicking after losing connection to page {}.".format(url))
