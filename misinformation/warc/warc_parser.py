@@ -66,6 +66,24 @@ class WarcParser(Connector):
                      )
         return article_urls
 
+    def add_to_database(self, article):
+        '''Add an article to the database'''
+        logging.info("  starting database export for: %s", article["article_url"])
+
+        # Construct Article table entry
+        article_data = Article(**article)
+
+        # Add webpage entry to database
+        try:
+            self.add_entry(article_data)
+        except RecoverableDatabaseError as err:
+            logging.info(str(err))
+        except NonRecoverableDatabaseError as err:
+            logging.critical(str(err))
+            raise
+
+        logging.info("  finished database export for: %s", article["article_url"])
+
     def process_webpages(self, site_name, config, max_articles=-1, use_local=False):
         '''Process webpages from a single site'''
         start_time = datetime.datetime.utcnow()
@@ -128,6 +146,8 @@ class WarcParser(Connector):
                     self.counts["no_byline"] += 1
                 if not article["title"]:
                     self.counts["no_title"] += 1
+            else:
+                logging.info("  no article found for: %s", entry.article_url)
             logging.info("Finished processing %s/%s: %s", idx, self.counts["warcentries"], entry.article_url)
 
         # Print statistics
@@ -180,21 +200,3 @@ class WarcParser(Connector):
                      colored(n_pages, "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
-
-    def add_to_database(self, article):
-        '''Add an article to the database'''
-        logging.info("  starting database export for: %s", article["article_url"])
-
-        # Construct Article table entry
-        article_data = Article(**article)
-
-        # Add webpage entry to database
-        try:
-            self.add_entry(article_data)
-        except RecoverableDatabaseError as err:
-            logging.info(str(err))
-        except NonRecoverableDatabaseError as err:
-            logging.critical(str(err))
-            raise
-
-        logging.info("  finished database export for: %s", article["article_url"])
