@@ -5,15 +5,15 @@ language: python
 # Build matrix
 os:
   - linux
-  - osx
+  # - osx
 python:
   - 3.6
   - 3.7
 
-# OSX build sometimes has problems getting an up-to-date python installation
-matrix:
-  allow_failures:
-    - os: osx
+# # OSX build sometimes has problems getting an up-to-date python installation
+# matrix:
+#   allow_failures:
+#     - os: osx
 
 before_install:
   # Install node.js following instructions from

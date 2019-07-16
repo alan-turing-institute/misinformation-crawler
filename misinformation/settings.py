@@ -68,7 +68,7 @@ FEED_EXPORT_ENCODING = 'utf-8'
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'misinformation.middlewares.JSLoadButtonMiddleware': 400,
+    'misinformation.middlewares.ButtonPressMiddleware': 400,
     'misinformation.middlewares.CloudFlareMiddleware': 500,
     'misinformation.middlewares.DelayedRetryMiddleware': 600
 }
