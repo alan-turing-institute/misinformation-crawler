@@ -656,8 +656,7 @@ denverpost.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: 'www.denverpost.com/news/colorado/'
-      url_must_not_contain: 'www.denverpost.com/news/colorado/page/'  # These pages exist but no "next" button to reach them, click button with JSLoadButtonMiddleware instead
+      url_must_contain: 'www.denverpost.com/news/colorado/page'
       article_links: '//a[@class="article-title"]'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/'

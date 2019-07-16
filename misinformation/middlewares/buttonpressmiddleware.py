@@ -71,7 +71,6 @@ class ButtonPressMiddleware:
             PressableButton('//input[contains(@class, "agree")]', "Return"),
         ]
         self.load_buttons = [
-            PressableButton('//a[@class="load-more"]', "Return"),
             PressableButton('//a[contains(@class, "m-more")]', "Return"),
             PressableButton('//a[text()="Show More"]', "Return"),
             PressableButton('//button[@class="btn-more"]', "Return"),
