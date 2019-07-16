@@ -1,5 +1,6 @@
 import datetime
 from contextlib import suppress
+import re
 from ReadabiliPy.readabilipy import simple_json_from_html_string
 from .extract_element import extract_element
 from .extract_datetime import extract_datetime_string
@@ -47,12 +48,14 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
 
     # Next overwite with site config versions, if they exist
     if "article" in config:
+        # Attempt to extract article HTML, using a blank entry if nothing can be extracted
         article_html = extract_element(response, config["article"]["content"])
-        if article_html:
-            readabilipy_article = simple_json_from_html_string(article_html, content_digests, node_indexes, use_readability=False)
-            article["content"] = readabilipy_article["content"]
-            article["plain_content"] = readabilipy_article["plain_content"]
-            article["plain_text"] = readabilipy_article["plain_text"]
+        if not article_html:
+            article_html = ""
+        readabilipy_article = simple_json_from_html_string(article_html, content_digests, node_indexes, use_readability=False)
+        article["content"] = readabilipy_article["content"]
+        article["plain_content"] = readabilipy_article["plain_content"]
+        article["plain_text"] = readabilipy_article["plain_text"]
 
     # Check whether we extracted an empty article and reject if so
     if article["content"] == "<div></div>":
@@ -64,7 +67,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
     if "content" in article and article["content"]:
         # Extract title if in config
         with suppress(KeyError):
-            article["title"] = extract_element(response, config["article"]["title"])
+            article["title"] = extract_element(response, config["article"]["title"], postprocessing_fn=simplify_extracted_title)
         # Extract byline
         with suppress(KeyError):
             article["byline"] = extract_element(response, config["article"]["byline"], postprocessing_fn=simplify_extracted_byline)
@@ -99,16 +102,31 @@ def simplify_extracted_byline(byline):
     """Simplify bylines by removing attribution words, rejecting bylines without authors and removing
     anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
     attributions = ["by ", "By "]
-    no_author_here = ["and", "By"]
+    no_author_here = ["and", "By", ","]
     remove_after = ["/", "(", "|"]
-
+    # Remove start of the byline string if it is an attribution
     for attribution in attributions:
         if byline.startswith(attribution):
             byline = byline.replace(attribution, "")
+    # Remove any part of the byline string following a termination marker
     for remove_string in remove_after:
         byline = byline.split(remove_string)[0]
+    # Replace any whitespace with a single space
+    byline = re.sub(r"\s+", ' ', byline)
+    # Remove leading and trailing whitespace
     byline = byline.strip()
-
+    # Ignore any byline string that does not contain an author
     if byline in no_author_here:
         return None
     return byline
+
+
+def simplify_extracted_title(title):
+    """Simplify titles by removing anything after a vertical bar (usually a site name)"""
+    remove_after = ["|"]  # Add to this list if needed
+
+    for remove_string in remove_after:
+        title = title.split(remove_string)[0]
+    title = title.strip()
+
+    return title
