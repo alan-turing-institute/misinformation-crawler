@@ -373,7 +373,7 @@ christianpost.com:
     url_must_contain: '/(politics|news)/[a-z0-9\-]+\.html$'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="article-byline"]/span[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
+      select_expression: '//div[@class="article-byline"]/span//span[@itemprop="name"]/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
@@ -819,18 +819,17 @@ federalistpress.com:
 
 foxnews.com:
   site_name: 'foxnews.com'
-  start_url: 'http://www.foxnews.com/politics.html'
+  start_url: 'http://www.foxnews.com/politics'
   crawl_strategy:
-    method: 'scattergun'
-    scattergun:
-      url_must_not_contain: '\.print$'
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'http://www.foxnews.com/politics$'
   article:
     url_must_contain: '^((?!category).)*/politics/[\-a-z]+'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="author-byline"]/span/span/a/text()'
-      match-rule: 'concatenate'
-      warn_if_missing: false
+      select_expression: '//div[@class="author-byline"]/span/node()//text()'
+      match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@name="dcterms.created"]/@content'
@@ -1020,10 +1019,12 @@ infowars.com:
   site_name: 'infowars.com'
   start_url: 'http://infowars.com/category/us-news/'
   crawl_strategy:
-    method: 'scattergun'
-    scattergun:
-      url_must_not_contain: '/(watch|category|author|contributors|tag)/'
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'infowars.com/category/us-news/$'
+      article_links: '//article//h3/a'
   article:
+    url_must_not_contain: '/(watch|category|author|contributors|tag)/'
     byline:
       select_method: 'xpath'
       select_expression: '(//span[@class="author"]/descendant::*/text() | //div[@class="text"]/article/descendant::*/text())'
@@ -1227,25 +1228,28 @@ mediaite.com:
 
 mic.com:
   site_name: 'mic.com'
-  start_url: 'https://mic.com/'
+  start_url: 'https://www.mic.com/sitemaps/posts.xml'
   crawl_strategy:
-    strip_query_strings: True
-    method: 'index_page'
-    index_page:
-      url_must_not_contain: '/articles/'
-      article_links: '//div[@class="ip iS ir"]/a'
+    method: 'sitemap'
+    site_map:
+      url_must_contain: 'sitemap'
   article:
-    url_must_not_contain: 'mailto:'
+    url_must_contain: '(/p/|/articles/)'
     byline:
       select_method: 'xpath'
-      select_expression: '//span[contains(@itemprop, "author")]//span[@itemprop="name"]/@data-byline-name'
+      select_expression: '//div[span[text()="By "]]/node()/text()'
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "article-page-body")]/article'
-      match_rule: 'single'
+      select_expression: '//article[div[div[p]]] | //article[div[div[div[div[div[p]]]]]]'
+      match_rule: 'first'
       remove_expressions:
-        - '//figure[@class="embed"]'
+        - '//figure'
+        - '//img'
+        - '//cite'
+        - '//h1'  # Title not part of content
+        - '//div[time]'  # This div contains date
+        - '//div[span[text()="By "]]'  # This div contains byline
 
 missoulacurrent.com:
   site_name: 'missoulacurrent.com'
