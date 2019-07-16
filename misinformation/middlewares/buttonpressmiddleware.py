@@ -71,7 +71,6 @@ class ButtonPressMiddleware:
             PressableButton('//input[contains(@class, "agree")]', "Return"),
         ]
         self.load_buttons = [
-            PressableButton('//a[contains(@class, "m-more")]', "Return"),
             PressableButton('//button[@class="btn-more"]', "Return"),
             PressableButton('//button[@phx-track-id="load more"]', "Return"),
             PressableButton('//button[contains(@class, "LoadMoreButton")]', "Return"),
