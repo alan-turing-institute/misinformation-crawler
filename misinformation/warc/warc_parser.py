@@ -171,24 +171,24 @@ class WarcParser(Connector):
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
         # Date extraction failures
-        hit_percentage = float(100 * self.counts["no_date"] / self.counts["pages"]) if self.counts["pages"] > 0 else 0
+        hit_percentage = float(100 * self.counts["no_date"] / self.counts["articles"]) if self.counts["articles"] > 0 else 0
         logging.info("... of these %s/%s had no date => %s",
                      colored(self.counts["no_date"], "blue"),
-                     colored(self.counts["pages"], "blue"),
+                     colored(self.counts["articles"], "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
         # Byline extraction failures
-        hit_percentage = float(100 * self.counts["no_byline"] / self.counts["pages"]) if self.counts["pages"] > 0 else 0
+        hit_percentage = float(100 * self.counts["no_byline"] / self.counts["articles"]) if self.counts["articles"] > 0 else 0
         logging.info("... of these %s/%s had no byline => %s",
                      colored(self.counts["no_byline"], "blue"),
-                     colored(self.counts["pages"], "blue"),
+                     colored(self.counts["articles"], "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
         # Title extraction failures
-        hit_percentage = float(100 * self.counts["no_title"] / self.counts["pages"]) if self.counts["pages"] > 0 else 0
+        hit_percentage = float(100 * self.counts["no_title"] / self.counts["articles"]) if self.counts["articles"] > 0 else 0
         logging.info("... of these %s/%s had no title => %s",
                      colored(self.counts["no_title"], "blue"),
-                     colored(self.counts["pages"], "blue"),
+                     colored(self.counts["articles"], "blue"),
                      colored("{:.2f}%".format(hit_percentage), "green"),
                      )
         # Overall article extraction percentage
