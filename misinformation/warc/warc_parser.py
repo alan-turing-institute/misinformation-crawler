@@ -105,7 +105,7 @@ class WarcParser(Connector):
         for idx, entry in enumerate(warcfile_entries, start=1):
             # Stop if we've reached the processing limit
             if self.counts["articles"] >= max_articles > 0:
-                logging.info("Reached article processing limit: %s", max_articles)
+                logging.info("Reached article processing limit: %s", colored(max_articles, "blue"))
                 break
 
             # Skip over pages that have already been processed
