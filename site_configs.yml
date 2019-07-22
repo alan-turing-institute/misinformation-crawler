@@ -2256,23 +2256,26 @@ vanityfair.com:
     url_must_contain: '\d\d\d\d/\d\d/'
     byline:
       select_method: 'xpath'
-      select_expression: '//meta[@name="author"]/@content'
-      match_rule: 'single'
+      select_expression: '//meta[@name="author"]/@content | //div[contains(@class, "bylines__byline")]/div[@class="byline__name"]/a/text()'
+      match_rule: 'last'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//meta[@name="pubdate"]/@content'
+      select_expression: '//meta[@name="pubdate"]/@content | //time[contains(@class, "publish-date")]/text()'
       match_rule: 'single'
       datetime_formats:
         - 'YYYY-MM-DDTHH:mm:ss'
+        - 'MMMM D YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "article-main")]'
+      select_expression: '//div[contains(@class, "article-main")] | //div[@data-attribute-verso-pattern="article-body"]//section[contains(@class, "section-embed")]'
       match_rule: 'single'
       remove_expressions:
-        - '//header'
-        - '//figure'
-        - '//div[contains(@class, "mvt-variant")]'
         - '//div[contains(@class, "component-content-footer")]'
+        - '//div[contains(@class, "full-bleed-ad")]'
+        - '//div[contains(@class, "grid-layout__aside")]'
+        - '//div[contains(@class, "mvt-variant")]'
+        - '//figure'
+        - '//header'
 
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
