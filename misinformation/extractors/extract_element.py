@@ -50,8 +50,6 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
     if method == 'xpath':
         # Extract all instances matching xpath expression
         selectors = response.xpath(select_expression)
-        for selector in selectors:
-            print(selector, selector.root, type(selector))
         # Remove all instances matching xpath expressions
         selectors = remove_xpath_expressions(selectors, remove_expressions)
         # Stringify elements then strip leading and trailing whitespace
@@ -79,7 +77,6 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
                 extracted_element = elements[0]
 
             elif match_rule == 'last':
-                print(elements)
                 extracted_element = elements[-1]
 
             elif match_rule == 'largest':
