@@ -2316,7 +2316,7 @@ vox.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="c-entry-content"]'
+      select_expression: '//div[contains(@class, "c-entry-content")]'
       match_rule: 'single'
 
 washingtonexaminer.com:
