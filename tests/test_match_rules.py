@@ -71,12 +71,23 @@ def test_extract_largest():
 def test_extract_concatenate():
     html = """
         <div>
+            <p>Firs</p>
+            <p>t Second</p>
+        </div>
+    """
+    expected_result = "First Second"
+    assert simplified_extraction(html, "//div/p/text()", "concatenate") == expected_result
+
+
+def test_extract_comma_join():
+    html = """
+        <div>
             <p>First</p>
             <p>Second</p>
         </div>
     """
     expected_result = "First, Second"
-    assert simplified_extraction(html, "//div/p/text()", "concatenate") == expected_result
+    assert simplified_extraction(html, "//div/p/text()", "comma_join") == expected_result
 
 
 def test_extract_group():

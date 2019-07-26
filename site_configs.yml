@@ -37,7 +37,7 @@ abcnews.go.com:
     byline:
       select_method: 'xpath'
       select_expression: '//ul[@class="authors"]/li/div/a/text() | //ul[@class="authors"]/li/div/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="timestamp"]/text()'
@@ -259,7 +259,7 @@ bostonherald.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "byline")]//a[@class=" author-name"]/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-body"]'
@@ -295,7 +295,7 @@ buffalonews.com:
     byline:
       select_method: 'xpath'
       select_expression: '//span[contains(@class, "post-author")]/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="the-content"]'
@@ -657,8 +657,7 @@ denverpost.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: 'www.denverpost.com/news/colorado/'
-      url_must_not_contain: 'www.denverpost.com/news/colorado/page/'  # These pages exist but no "next" button to reach them, click button with JSLoadButtonMiddleware instead
+      url_must_contain: 'www.denverpost.com/news/colorado/page'
       article_links: '//a[@class="article-title"]'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
@@ -830,7 +829,7 @@ foxnews.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="author-byline"]/span/node()//text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//meta[@name="dcterms.created"]/@content'
@@ -856,7 +855,7 @@ frontpagemag.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="field-author"]/a/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="field-body"]'
@@ -1239,7 +1238,7 @@ mic.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[span[text()="By "]]/node()/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//article[div[div[p]]] | //article[div[div[div[div[div[p]]]]]]'
@@ -1289,7 +1288,7 @@ motherjones.com:
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="byline"]/a/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//article[@class="entry-content"]'
@@ -1398,7 +1397,7 @@ newsweek.com:
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="author"]//span/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "article-body")]'
@@ -1460,7 +1459,7 @@ nytimes.com:
     byline:
       select_method: 'xpath'
       select_expression: '//*[contains(@itemprop, "author")]//span[@itemprop="name"]/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
       warn_if_missing: false
     content:
       select_method: 'xpath'
@@ -1595,7 +1594,7 @@ politico.com:
     byline:
       select_method: 'xpath'
       select_expression: '//p[@class="byline"]//text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
       warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
@@ -1821,7 +1820,7 @@ sputniknews.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: 'sputniknews.com/archive/$'
+      url_must_contain: '/archive/\?id='
       article_links: '//h2[@class="b-plainlist__title"]/a'
   article:
     url_must_contain: '/\d\d\d\d\d\d\d\d'
@@ -1852,7 +1851,7 @@ talkingpointsmemo.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="Article__Byline"]//text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//div[@class="Article__Date"]//text()'
@@ -1883,7 +1882,7 @@ tampabay.com:
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@name="author"]/@content | //meta[@property="authors"]/@content'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time/@datetime | //meta[@property="article:published_time"]/@content'
@@ -1908,7 +1907,7 @@ texastribune.org:
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@name="parsely-author"]/@content'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
       warn_if_missing: false
     content:
       select_method: 'xpath'
@@ -2018,7 +2017,7 @@ theintercept.com:
     byline:
       select_method: 'xpath'
       select_expression: '//a[@rel="author"]/span/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="PostByline-date"]/span/text()'
@@ -2123,7 +2122,7 @@ thinkprogress.org:
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="post__byline__author"]//a/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="post__content"]'
@@ -2163,7 +2162,7 @@ time.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[@class="author-text"]/a[@class="bold author-name"]/text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
       warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
@@ -2258,23 +2257,26 @@ vanityfair.com:
     url_must_contain: '\d\d\d\d/\d\d/'
     byline:
       select_method: 'xpath'
-      select_expression: '//meta[@name="author"]/@content'
-      match_rule: 'single'
+      select_expression: '//div[contains(@class, "bylines__byline")]/div[@class="byline__name"]//text() | //div[@class="contributors"]//li[@class="contributor"]//text()'
+      match_rule: 'concatenate'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//meta[@name="pubdate"]/@content'
+      select_expression: '//meta[@name="pubdate"]/@content | //time[contains(@class, "publish-date")]/text()'
       match_rule: 'single'
       datetime_formats:
         - 'YYYY-MM-DDTHH:mm:ss'
+        - 'MMMM D YYYY'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "article-main")]'
+      select_expression: '//div[contains(@class, "article-main")] | //div[@class="content-background"]//section[contains(@class, "section-embed")]'
       match_rule: 'single'
       remove_expressions:
-        - '//header'
-        - '//figure'
-        - '//div[contains(@class, "mvt-variant")]'
         - '//div[contains(@class, "component-content-footer")]'
+        - '//div[contains(@class, "full-bleed-ad")]'
+        - '//div[contains(@class, "grid-layout__aside")]'
+        - '//div[contains(@class, "mvt-variant")]'
+        - '//figure'
+        - '//header'
 
 veteransnewsreport.com:
   site_name: 'veteransnewsreport.com'
@@ -2315,7 +2317,7 @@ vox.com:
       match_rule: 'single'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="c-entry-content"]'
+      select_expression: '//div[contains(@class, "c-entry-content")]'
       match_rule: 'single'
 
 washingtonexaminer.com:

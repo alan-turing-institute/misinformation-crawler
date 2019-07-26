@@ -1,3 +1,4 @@
+import time
 from scrapy.http import HtmlResponse
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException, ElementNotVisibleException, ElementNotInteractableException, WebDriverException
@@ -27,11 +28,11 @@ class PressableButton:
     def press_button(self, driver):
         """Navigate to and press a button, using a webdriver"""
         self.find_if_exists(driver)
-        if self.interact_method == 'Return':
+        if self.interact_method == "Return":
             # Interact by sending a keypress of 'Return' to the button.
             # This works even when the button is not currently visible in the viewport.
             self.element.send_keys(Keys.RETURN)
-        if self.interact_method == 'Click':
+        if self.interact_method == "Click":
             # Interact by moving to the element and then clicking.
             # This is more fragile, so we only use it for those button
             # xpaths that will not accept keypress 'Return'.
@@ -54,33 +55,33 @@ class ButtonPressMiddleware:
     """
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.seen_urls = set()
-        self.timeout = 60
-        self.max_button_clicks = 10000
+        self.form_button_delay = 1
+        self.max_button_clicks = 5000   # each button clicked at most 5000 times
+        self.timeout_single_click = 60  # 60 second timeout on page reload
+        self.timeout_cumulative = 1800  # 30 minute cumulative timeout
         self.form_buttons = [
-            PressableButton('//button[@class="qc-cmp-button"]', 'Return'),
-            PressableButton('//button[@data-click="close"]', 'Return'),
-            PressableButton('//button[@name="agree"]', 'Return'),
-            PressableButton('//button[contains(@class, "gdpr-modal-close")]', 'Return'),
-            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
-            PressableButton('//input[contains(@class, "agree")]', 'Return'),
+            PressableButton('//button[@class="qc-cmp-button"]', "Return"),
+            PressableButton('//button[@data-click="close"]', "Return"),
+            PressableButton('//button[@name="agree"]', "Return"),
+            PressableButton('//button[contains(@class, "gdpr-modal-close")]', "Return"),
+            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', "Return"),
+            PressableButton('//input[contains(@class, "agree")]', "Return"),
         ]
         self.load_buttons = [
-            PressableButton('//a[@class="load-more"]', 'Return'),
-            PressableButton('//a[contains(@class, "m-more")]', 'Return'),
-            PressableButton('//a[text()="Show More"]', 'Return'),
-            PressableButton('//button[@class="btn-more"]', 'Return'),
-            PressableButton('//button[@phx-track-id="load more"]', 'Return'),
-            PressableButton('//button[contains(@class, "LoadMoreButton")]', 'Return'),
-            PressableButton('//button[contains(@class, "show-more")]', 'Return'),
-            PressableButton('//button[text()="Load More"]', 'Return'),
-            PressableButton('//button[text()="Show More"]', 'Return'),
-            PressableButton('//div[contains(@class, "button-load-more")]', 'Click'),
-            PressableButton('//div[contains(@class, "load-btn")]/a', 'Return'),
-            PressableButton('//div[contains(@class, "pb-loadmore")]', 'Click'),
-            PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
+            PressableButton('//button[@class="btn-more"]', "Return"),
+            PressableButton('//button[@phx-track-id="load more"]', "Return"),
+            PressableButton('//button[contains(@class, "LoadMoreButton")]', "Return"),
+            PressableButton('//button[contains(@class, "show-more")]', "Return"),
+            PressableButton('//button[text()="Load More"]', "Return"),
+            PressableButton('//button[text()="Show More"]', "Return"),
+            PressableButton('//div[contains(@class, "button-load-more")]', "Click"),
+            PressableButton('//div[contains(@class, "load-btn")]/a', "Return"),
+            PressableButton('//div[contains(@class, "pb-loadmore")]', "Click"),
+            PressableButton('//li[@class="pager__item"]/a[text()="Show More"]', "Return"),
+            PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', "Return"),
         ]
 
     def get_next_available_button(self, button_list):
@@ -101,11 +102,25 @@ class ButtonPressMiddleware:
                 return True
         return False
 
-    def press_load_button_repeatedly(self, button, spider):
+    def press_form_buttons(self, spider, url):
+        """Press any form buttons on the page until they disappear"""
+        for button in self.form_buttons:
+            while button.find_if_exists(self.driver):
+                # Keep pressing the button with a brief delay to avoid multiple clicks
+                try:
+                    button.press_button(self.driver)
+                    spider.logger.info("Clicked a form button ({}) on {}.".format(button.xpath, url))
+                    time.sleep(self.form_button_delay)
+                # If the button is not interactable then move to the next one
+                except (NoSuchElementException, ElementNotInteractableException, StaleElementReferenceException):
+                    break
+
+    def press_load_button_repeatedly(self, button, spider, url):
         """Press a PressableButton as many times as we want, catch exceptions and log info to spider"""
         n_clicks_performed = 0
         cached_page_source = None
-        while True:
+        start_time = time.time()
+        while (time.time() - start_time) < self.timeout_cumulative:
             try:
                 # We need a nested try block here, since the WebDriverWait
                 # inside the ElementNotVisibleException or the
@@ -124,11 +139,11 @@ class ButtonPressMiddleware:
 
                     # Track the number of clicks that we've performed
                     n_clicks_performed += 1
-                    spider.logger.info('Clicked a load button ({}) once ({} times in total).'.format(button.xpath, n_clicks_performed))
+                    spider.logger.info("Clicked a load button ({}) once ({} times in total) on {}.".format(button.xpath, n_clicks_performed, url))
 
                     # Terminate if we're at the maximum number of clicks
                     if n_clicks_performed >= self.max_button_clicks > 0:
-                        spider.logger.info('Finished loading more articles after clicking button {} times.'.format(n_clicks_performed))
+                        spider.logger.info("Finished loading more articles after clicking button {} times on {}.".format(n_clicks_performed, url))
                         break
 
                     # Wait until the page has been refreshed. We test for this
@@ -136,44 +151,33 @@ class ButtonPressMiddleware:
                     # NB. the default poll frequency is 0.5s so if we want
                     # short timeouts this needs to be changed in the
                     # WebDriverWait constructor
-                    WebDriverWait(self.driver, self.timeout).until(lambda _: button_location != button.element.location)
+                    WebDriverWait(self.driver, self.timeout_single_click).until(lambda _: button_location != button.element.location)
 
                 except ElementNotVisibleException:
                     # This can happen when the page refresh makes a previously
                     # found element invisible until the page load is finished
-                    WebDriverWait(self.driver, self.timeout).until(visibility_of_element_located((By.XPATH, button.xpath)))
+                    WebDriverWait(self.driver, self.timeout_single_click).until(visibility_of_element_located((By.XPATH, button.xpath)))
                 except ElementNotInteractableException:
                     # This can happen when the page refresh makes an element
                     # non-clickable for some period
-                    WebDriverWait(self.driver, self.timeout).until(element_to_be_clickable((By.XPATH, button.xpath)))
+                    WebDriverWait(self.driver, self.timeout_single_click).until(element_to_be_clickable((By.XPATH, button.xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
-                spider.logger.info('Terminating button clicking since there are no more load buttons on the page.')
-                break
+                # The button we were clicking has gone, but maybe it moved
+                # Check whether we can find another button of this type
+                if not button.find_if_exists(self.driver):
+                    spider.logger.info("Terminating button clicking since there are no more load buttons on page {}.".format(url))
+                    break
             except TimeoutException:
-                spider.logger.info('Terminating button clicking after exceeding timeout of {} seconds.'.format(self.timeout))
+                spider.logger.info("Terminating button clicking after exceeding timeout of {} seconds for page {}.".format(self.timeout_single_click, url))
                 break
             except WebDriverException:
-                spider.logger.info('Terminating button clicking after losing connection to the page.')
+                spider.logger.info("Terminating button clicking after losing connection to page {}.".format(url))
                 break
-
         try:
             return self.driver.page_source
         except WebDriverException:
             pass
         return cached_page_source
-
-    def press_form_buttons(self, spider):
-        """Press any form buttons on the page until the form dissapears"""
-        for button in self.form_buttons:
-            while button.find_if_exists(self.driver):
-                try:
-                    # We may need to add a wait after the button is pressed here in future
-                    # but this isn't an issue for current sites
-                    button.press_button(self.driver)
-                    spider.logger.info('Clicked a form button ({}).'.format(button.xpath))
-                # Stop trying to click a form button when it no longer exists
-                except (NoSuchElementException, ElementNotInteractableException):
-                    break
 
     def process_response(self, request, response, spider):
         """Process the page response using the selenium driver if applicable.
@@ -195,10 +199,10 @@ class ButtonPressMiddleware:
         self.driver.get(request.url)
 
         # We should only reach this point if we have found a javascript button
-        spider.logger.info('Identified a javascript load button on {}.'.format(request.url))
+        spider.logger.debug("Identified interactable buttons on {}.".format(request.url))
 
         # Press any form buttons needed to access the home page of the site
-        self.press_form_buttons(spider)
+        self.press_form_buttons(spider, request.url)
 
         # Get the cached page source in case the page crashes
         page_source = self.driver.page_source
@@ -207,7 +211,7 @@ class ButtonPressMiddleware:
         if self.contains_button(response, load=True):
             for button in self.load_buttons:
                 if button.find_if_exists(self.driver):
-                    page_source = self.press_load_button_repeatedly(button, spider)
+                    page_source = self.press_load_button_repeatedly(button, spider, request.url)
 
         html_str = page_source.encode(request.encoding)
 
