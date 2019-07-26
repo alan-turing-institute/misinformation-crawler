@@ -530,9 +530,9 @@ dailycaller.com:
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//time[contains(@class, "text-right")]/span[contains(@class, "block")]/text()'
-      match_rule: 'concatenate_with_space'
+      match_rule: 'comma_join'
       datetime_formats:
-        - 'MMMM DD YYYY h:mm A'
+        - 'MMMM DD, YYYY, h:mm A'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@id, "ob-read-more-selector")]'
