@@ -1602,7 +1602,7 @@ politico.com:
       datetime_formats:
         - 'YYYY-MM-DD HH:mm:ss'
         - 'YYYY-MM-DDTHH:mm'
-        - '/MMMM YYYY'
+        - 'MMMM YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//*[contains(@class, "story-text")]'
