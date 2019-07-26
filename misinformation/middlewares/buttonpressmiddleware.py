@@ -71,9 +71,6 @@ class ButtonPressMiddleware:
             PressableButton('//input[contains(@class, "agree")]', "Return"),
         ]
         self.load_buttons = [
-            PressableButton('//a[@class="load-more"]', "Return"),
-            PressableButton('//a[contains(@class, "m-more")]', "Return"),
-            PressableButton('//a[text()="Show More"]', "Return"),
             PressableButton('//button[@class="btn-more"]', "Return"),
             PressableButton('//button[@phx-track-id="load more"]', "Return"),
             PressableButton('//button[contains(@class, "LoadMoreButton")]', "Return"),
@@ -83,6 +80,7 @@ class ButtonPressMiddleware:
             PressableButton('//div[contains(@class, "button-load-more")]', "Click"),
             PressableButton('//div[contains(@class, "load-btn")]/a', "Return"),
             PressableButton('//div[contains(@class, "pb-loadmore")]', "Click"),
+            PressableButton('//li[@class="pager__item"]/a[text()="Show More"]', "Return"),
             PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', "Return"),
         ]
 
@@ -164,8 +162,11 @@ class ButtonPressMiddleware:
                     # non-clickable for some period
                     WebDriverWait(self.driver, self.timeout_single_click).until(element_to_be_clickable((By.XPATH, button.xpath)))
             except (NoSuchElementException, StaleElementReferenceException):
-                spider.logger.info("Terminating button clicking since there are no more load buttons on page {}.".format(url))
-                break
+                # The button we were clicking has gone, but maybe it moved
+                # Check whether we can find another button of this type
+                if not button.find_if_exists(self.driver):
+                    spider.logger.info("Terminating button clicking since there are no more load buttons on page {}.".format(url))
+                    break
             except TimeoutException:
                 spider.logger.info("Terminating button clicking after exceeding timeout of {} seconds for page {}.".format(self.timeout_single_click, url))
                 break
