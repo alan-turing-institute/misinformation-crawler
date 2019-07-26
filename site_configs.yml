@@ -1615,7 +1615,6 @@ politico.com:
         - '//aside'
         - '//p[@class="story-continued"]'
         - '//amp-ad'
-        - '//blockquote'
 
 prisonplanet.com:
   site_name: 'prisonplanet.com'
