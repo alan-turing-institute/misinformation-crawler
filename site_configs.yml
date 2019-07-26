@@ -525,14 +525,15 @@ dailycaller.com:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/'
     byline:
       select_method: 'xpath'
-      select_expression: '//a[contains(@href, "/author/")]/text()'
+      select_expression: '//div[@class="author"]/text() | //a[contains(@href, "/author/")]/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//time[contains(@class, "text-right")]/span[contains(@class, "block")]/text()'
+      select_expression: '//time/text() | //time[contains(@class, "text-right")]/span[contains(@class, "block")]/text()'
       match_rule: 'comma_join'
       datetime_formats:
         - 'MMMM DD, YYYY, h:mm A'
+        - 'h:m A MM/DD/YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@id, "ob-read-more-selector")]'
