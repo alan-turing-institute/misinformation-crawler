@@ -49,11 +49,11 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
     # Apply selector to response to extract chosen metadata field
     if method == 'xpath':
         # Extract all instances matching xpath expression
-        elements = response.xpath(select_expression)
+        selectors = response.xpath(select_expression)
         # Remove all instances matching xpath expressions
-        elements = remove_xpath_expressions(elements, remove_expressions)
+        selectors = remove_xpath_expressions(selectors, remove_expressions)
         # Stringify elements then strip leading and trailing whitespace
-        elements = elements.extract()
+        elements = selectors.extract()
         elements = [item.strip() for item in elements]
         # Additional processing for each element, if required
         if postprocessing_fn:
@@ -83,6 +83,10 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
                 extracted_element = sorted(elements, key=len)[-1]
 
             elif match_rule == 'concatenate':
+                # Join non-empty elements together with no spacing
+                extracted_element = "".join([x for x in elements if x])
+
+            elif match_rule == 'comma_join':
                 # Join non-empty elements together with commas
                 extracted_element = ", ".join([x for x in elements if x])
 

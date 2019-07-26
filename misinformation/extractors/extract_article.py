@@ -1,5 +1,6 @@
 import datetime
 from contextlib import suppress
+import re
 from ReadabiliPy.readabilipy import simple_json_from_html_string
 from .extract_element import extract_element
 from .extract_datetime import extract_datetime_string
@@ -101,16 +102,20 @@ def simplify_extracted_byline(byline):
     """Simplify bylines by removing attribution words, rejecting bylines without authors and removing
     anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
     attributions = ["by ", "By "]
-    no_author_here = ["and", "By"]
+    no_author_here = ["and", "By", ","]
     remove_after = ["/", "(", "|"]
-
+    # Remove start of the byline string if it is an attribution
     for attribution in attributions:
         if byline.startswith(attribution):
             byline = byline.replace(attribution, "")
+    # Remove any part of the byline string following a termination marker
     for remove_string in remove_after:
         byline = byline.split(remove_string)[0]
+    # Replace any whitespace with a single space
+    byline = re.sub(r"\s+", ' ', byline)
+    # Remove leading and trailing whitespace
     byline = byline.strip()
-
+    # Ignore any byline string that does not contain an author
     if byline in no_author_here:
         return None
     return byline
