@@ -663,7 +663,7 @@ denverpost.com:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="byline"]/a/text() | //span[@class="author"]/a/text()'
+      select_expression: '//div[@class="byline"]/a/text() | //span[contains(@class, "author")]//text()'
       match_rule: 'first'
     content:
       select_method: 'xpath'
@@ -673,7 +673,9 @@ denverpost.com:
         - '//div[contains(@class, "dfp-ad")]'
         - '//div[contains(@data-spmark, "title")]'
         - '//div[contains(@class, "comments-area")]'
+        - '//div[contains(@class, "share-wrapper")]'
         - '//div[@class="yarpp-related"]'
+        - '//div[@class="gss-container"]'
         - '//figure'
         - '//aside'
         - '//footer'
