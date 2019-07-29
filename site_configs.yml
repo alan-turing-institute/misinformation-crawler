@@ -411,6 +411,7 @@ clickhole.com:
       remove_expressions:
         - '//div[contains(@class, "ad-container")]'
         - '//div[contains(@class, "ad-unit")]'
+
 cnn.com:
   site_name: 'cnn.com'
   start_url: 'https://edition.cnn.com/politics'
