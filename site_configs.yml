@@ -1287,8 +1287,8 @@ motherjones.com:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@class="byline"]/a/text()'
-      match_rule: 'concatenate'
+      select_expression: '//span[@class="byline"]/a/text() | //h3[@class="byline"]/span/a/text()'
+      match_rule: 'comma_join'
     content:
       select_method: 'xpath'
       select_expression: '//article[@class="entry-content"] | //div[@id="fullwidth-body"]'
