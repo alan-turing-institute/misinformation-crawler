@@ -1601,11 +1601,12 @@ politico.com:
       warn_if_missing: false
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//time[@itemprop="datePublished"]/@datetime'
+      select_expression: '//time[@itemprop="datePublished"]/@datetime | //p[@class="issue"]/a/text()'
       match_rule: 'single'
       datetime_formats:
         - 'YYYY-MM-DD HH:mm:ss'
         - 'YYYY-MM-DDTHH:mm'
+        - 'MMMM YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//*[contains(@class, "story-text")]'
