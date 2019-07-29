@@ -74,7 +74,7 @@ class ButtonPressMiddleware:
         self.load_buttons = [
             PressableButton('//button[@class="btn-more"]', 'Return'),
             PressableButton('//button[@phx-track-id="load more"]', 'Return'),
-            PressableButton('//button[text()="Load more stories"]', 'Return'),
+            PressableButton('//button[@class="options__load-more"]', 'Return'),
             PressableButton('//button[contains(@class, "LoadMoreButton")]', 'Return'),
             PressableButton('//button[contains(@class, "show-more")]', 'Return'),
             PressableButton('//button[text()="Load More"]', 'Return'),
@@ -209,10 +209,9 @@ class ButtonPressMiddleware:
         page_source = self.driver.page_source
 
         # Press all the load buttons so we get the max no. of articles
-        if self.contains_button(response, load=True):
-            for button in self.load_buttons:
-                if button.find_if_exists(self.driver):
-                    page_source = self.press_load_button_repeatedly(button, spider, request.url)
+        for button in self.load_buttons:
+            if button.find_if_exists(self.driver):
+                page_source = self.press_load_button_repeatedly(button, spider, request.url)
 
         html_str = page_source.encode(request.encoding)
 

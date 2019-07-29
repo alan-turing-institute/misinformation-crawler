@@ -1455,13 +1455,10 @@ npr.org:
   site_name: 'npr.org'
   start_url: 'https://www.npr.org/sections/politics/'
   crawl_strategy:
-    method: 'scattergun'
-    scattergun:
-      url_must_contain: 'npr.org/\d\d\d\d/\d\d/\d\d/'
-    # method: 'index_page'
-    # index_page:
-    #   url_must_contain: 'section/politics/$'
-    #   article_links: '//h2[@class="title"]/a'
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'section/politics/$'
+      article_links: '//h2[@class="title"]/a'
   article:
     byline:
       select_method: 'xpath'
