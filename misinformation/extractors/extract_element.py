@@ -58,6 +58,8 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
         # Additional processing for each element, if required
         if postprocessing_fn:
             elements = [elem for elem in map(postprocessing_fn, elements) if elem]
+            # Remove duplicate elements
+            elements = list(dict.fromkeys(elements))
         # If no elements are found then return None and log a warning.
         num_matches = len(elements)
         if num_matches == 0:
