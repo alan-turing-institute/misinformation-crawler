@@ -421,6 +421,7 @@ cnn.com:
       url_must_not_contain: '/(TRANSCRIPTS|www.cnn.com|videos)/'
   article:
     url_must_contain: '/\d+/(POLITICS|politics)/.+/index.html'
+    url_must_not_contain: '/gallery/'
     byline:
       select_method: 'xpath'
       select_expression: '//meta[@itemprop="author"]/@content'
