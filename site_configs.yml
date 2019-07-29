@@ -1382,7 +1382,7 @@ nbcnews.com:
         - 'ddd MMM D YYYY HH:mm:ss'
     content:
       select_method: 'xpath'
-      select_expression: '//div[contains(@class, "body")]/p[@class=""]'
+      select_expression: '//div[contains(@class, "body")]/p[@class="endmarkEnabled"] | //div[contains(@class, "body")]/p[@class=""]'
       match_rule: 'group'
 
 newsweek.com:
