@@ -1287,11 +1287,7 @@ motherjones.com:
   article:
     byline:
       select_method: 'xpath'
-<<<<<<< HEAD
-      select_expression: '//h3[@class="byline"]/span/a/text() | //span[@class="byline"]/a/text()'
-=======
-      select_expression: '//h3[@class="byline"]/span/a/text() | //span[@class="byline"]/a/text() '
->>>>>>> add 2nd article type motherjones
+      select_expression: '//span[@class="byline"]/a/text()'
       match_rule: 'concatenate'
     content:
       select_method: 'xpath'
