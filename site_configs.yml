@@ -1463,7 +1463,7 @@ npr.org:
     byline:
       select_method: 'xpath'
       select_expression: '//p[contains(@class, "byline__name")]//text()'
-      match_rule: 'concatenate'
+      match_rule: 'comma_join'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//div[@class="dateblock"]/time/@datetime'
