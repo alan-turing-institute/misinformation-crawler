@@ -519,18 +519,21 @@ dailycaller.com:
   site_name: 'dailycaller.com'
   start_url: 'https://dailycaller.com/section/politics'
   crawl_strategy:
-    method: 'scattergun'
+    method: 'index_page'
+    index_page:
+      url_must_contain: '/politics/page/'
   article:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/.*/'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="author"]/text()'
+      select_expression: '//div[@class="author"]/text() | //a[contains(@href, "/author/")]/text()'
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//time/text()'
-      match_rule: 'first'
+      select_expression: '//time/text() | //time[contains(@class, "text-right")]/span[contains(@class, "block")]/text()'
+      match_rule: 'comma_join'
       datetime_formats:
+        - 'MMMM DD, YYYY, h:mm A'
         - 'h:m A MM/DD/YYYY'
     content:
       select_method: 'xpath'
