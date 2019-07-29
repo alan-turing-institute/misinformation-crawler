@@ -23,7 +23,8 @@ def extract_datetime_string(date_string, date_format=None, timezone=False):
         # Some sites have a large number of possible formats, in the site configs
         # which we reduce by removing characters from the date_string
         for separator_character in [',', '.']:
-            date_string = date_string.replace(separator_character, ' ')
+            if not date_format or separator_character not in date_format:
+                date_string = date_string.replace(separator_character, ' ')
         date_string = re.sub(r"\s+", " ", date_string)
         # We don't want to lose the full stop when the date is in isoformat and has .000Z at the end:
         date_string = date_string.replace(" 000Z", ".000Z")
