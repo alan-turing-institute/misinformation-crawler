@@ -1292,7 +1292,7 @@ motherjones.com:
     content:
       select_method: 'xpath'
       select_expression: '//article[@class="entry-content"] | //div[@id="fullwidth-body"]'
-      match_rule: 'single'
+      match_rule: 'first'
       remove_expressions:
         - '//div[contains(@class, "is-image")]'
         - '//div[contains(@class, "newsletter-signup")]'
