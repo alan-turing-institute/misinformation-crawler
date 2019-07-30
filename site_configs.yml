@@ -1688,6 +1688,12 @@ redstate.com:
       select_method: 'xpath'
       select_expression: '//meta[@name="author"]/@content'
       match_rule: 'first'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: 'substring-after(//p[@class="byline"]/text(), "Posted at ")'
+      match_rule: 'single'
+      datetime_formats:
+        - 'h:mm A [on] MMMM D, YYYY'
     content:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "below-content")]'
