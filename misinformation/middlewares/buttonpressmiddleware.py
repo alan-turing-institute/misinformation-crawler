@@ -63,26 +63,26 @@ class ButtonPressMiddleware:
         self.timeout_single_click = 60  # 60 second timeout on page reload
         self.timeout_cumulative = 1800  # 30 minute cumulative timeout
         self.form_buttons = [
-            PressableButton('//button[@class="qc-cmp-button"]', 'Return'),
-            PressableButton('//button[@id="accept"]', 'Return'),
-            PressableButton('//button[@data-click="close"]', 'Return'),
-            PressableButton('//button[@name="agree"]', 'Return'),
-            PressableButton('//button[contains(@class, "gdpr-modal-close")]', 'Return'),
-            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', 'Return'),
-            PressableButton('//input[contains(@class, "agree")]', 'Return'),
+            PressableButton('//button[@class="qc-cmp-button"]', "Return"),
+            PressableButton('//button[@id="accept"]', "Return"),
+            PressableButton('//button[@data-click="close"]', "Return"),
+            PressableButton('//button[@name="agree"]', "Return"),
+            PressableButton('//button[contains(@class, "gdpr-modal-close")]', "Return"),
+            PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', "Return"),
+            PressableButton('//input[contains(@class, "agree")]', "Return"),
         ]
         self.load_buttons = [
-            PressableButton('//button[@class="btn-more"]', 'Return'),
-            PressableButton('//button[@phx-track-id="load more"]', 'Return'),
-            PressableButton('//button[@class="options__load-more"]', 'Return'),
-            PressableButton('//button[contains(@class, "LoadMoreButton")]', 'Return'),
-            PressableButton('//button[contains(@class, "show-more")]', 'Return'),
-            PressableButton('//button[text()="Load More"]', 'Return'),
-            PressableButton('//button[text()="Show More"]', 'Return'),
-            PressableButton('//div[contains(@class, "button-load-more")]', 'Click'),
-            PressableButton('//div[contains(@class, "load-btn")]/a', 'Return'),
-            PressableButton('//div[contains(@class, "pb-loadmore")]', 'Click'),
-            PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', 'Return'),
+            PressableButton('//button[@class="btn-more"]', "Return"),
+            PressableButton('//button[@phx-track-id="load more"]', "Return"),
+            PressableButton('//button[@class="options__load-more"]', "Return"),
+            PressableButton('//button[contains(@class, "LoadMoreButton")]', "Return"),
+            PressableButton('//button[contains(@class, "show-more")]', "Return"),
+            PressableButton('//button[text()="Load More"]', "Return"),
+            PressableButton('//button[text()="Show More"]', "Return"),
+            PressableButton('//div[contains(@class, "button-load-more")]', "Click"),
+            PressableButton('//div[contains(@class, "load-btn")]/a', "Return"),
+            PressableButton('//div[contains(@class, "pb-loadmore")]', "Click"),
+            PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', "Return"),
         ]
 
     def get_next_available_button(self, button_list):
