@@ -1332,8 +1332,8 @@ nationalreview.com:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//meta[@name="sailthru.author"]/@content'
-      match_rule: 'single'
+      select_expression: '//meta[@name="sailthru.author"]/@content | //a[@rel="author"]/text()'
+      match_rule: 'first'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-content"]'
