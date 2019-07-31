@@ -554,7 +554,7 @@ dailykos.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
-      match_rule: 'single'
+      match_rule: 'first'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="timestamp "]/@data-epoch-time'
@@ -563,8 +563,8 @@ dailykos.com:
       match_rule: 'first'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="story-intro story-content"]'
-      match_rule: 'single'
+      select_expression: '//div[contains(@class, "story-content")]'
+      match_rule: 'group'
 
 dailywire.com:
   site_name: 'dailywire.com'
