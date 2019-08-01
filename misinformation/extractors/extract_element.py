@@ -33,7 +33,7 @@ def remove_xpath_expressions(input_selectors, remove_expressions):
     return output_selectors
 
 
-def extract_element(response, extract_spec, postprocessing_fn=None):
+def extract_element(response, extract_spec, postprocessing_fn=None, byline=False):
     # Extract selector specification
     method = extract_spec['select_method']
     select_expression = extract_spec['select_expression']
@@ -58,7 +58,8 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
         # Additional processing for each element, if required
         if postprocessing_fn:
             elements = [elem for elem in map(postprocessing_fn, elements) if elem]
-            # Remove duplicate elements
+        if byline:
+            # Remove duplicate bylines
             elements = list(dict.fromkeys(elements))
         # If no elements are found then return None and log a warning.
         num_matches = len(elements)

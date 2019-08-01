@@ -70,7 +70,7 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
             article["title"] = extract_element(response, config["article"]["title"], postprocessing_fn=simplify_extracted_title)
         # Extract byline
         with suppress(KeyError):
-            article["byline"] = extract_element(response, config["article"]["byline"], postprocessing_fn=simplify_extracted_byline)
+            article["byline"] = extract_element(response, config["article"]["byline"], postprocessing_fn=simplify_extracted_byline, byline=True)
         # Extract publication_datetime
         with suppress(KeyError):
             datetime_string = extract_element(response, config["article"]["publication_datetime"])
