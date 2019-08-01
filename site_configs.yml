@@ -554,7 +554,7 @@ dailykos.com:
     byline:
       select_method: 'xpath'
       select_expression: '//div[contains(@class, "author-byline")]/span[@class="author-name"]//a/text()'
-      match_rule: 'single'
+      match_rule: 'first'
     publication_datetime:
       select_method: 'xpath'
       select_expression: '//span[@class="timestamp "]/@data-epoch-time'
@@ -563,8 +563,8 @@ dailykos.com:
       match_rule: 'first'
     content:
       select_method: 'xpath'
-      select_expression: '//div[@class="story-intro story-content"]'
-      match_rule: 'single'
+      select_expression: '//div[contains(@class, "story-content")]'
+      match_rule: 'group'
 
 dailywire.com:
   site_name: 'dailywire.com'
@@ -667,7 +667,7 @@ denverpost.com:
     url_must_contain: '/\d\d\d\d/\d\d/\d\d/'
     byline:
       select_method: 'xpath'
-      select_expression: '//div[@class="byline"]/a/text() | //span[@class="author"]/a/text()'
+      select_expression: '//div[@class="byline"]/a/text() | //span[contains(@class, "author")]//text()'
       match_rule: 'first'
     content:
       select_method: 'xpath'
@@ -677,7 +677,9 @@ denverpost.com:
         - '//div[contains(@class, "dfp-ad")]'
         - '//div[contains(@data-spmark, "title")]'
         - '//div[contains(@class, "comments-area")]'
+        - '//div[contains(@class, "share-wrapper")]'
         - '//div[@class="yarpp-related"]'
+        - '//div[@class="gss-container"]'
         - '//figure'
         - '//aside'
         - '//footer'
@@ -1336,8 +1338,8 @@ nationalreview.com:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//meta[@name="sailthru.author"]/@content'
-      match_rule: 'single'
+      select_expression: '//meta[@name="sailthru.author"]/@content | //a[@rel="author"]/text()'
+      match_rule: 'first'
     content:
       select_method: 'xpath'
       select_expression: '//div[@class="article-content"]'
