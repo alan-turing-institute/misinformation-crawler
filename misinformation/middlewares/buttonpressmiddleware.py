@@ -82,6 +82,7 @@ class ButtonPressMiddleware:
             PressableButton('//div[contains(@class, "button-load-more")]', "Click"),
             PressableButton('//div[contains(@class, "load-btn")]/a', "Return"),
             PressableButton('//div[contains(@class, "pb-loadmore")]', "Click"),
+            PressableButton('//li[@class="pager__item"]/a[text()="Show More"]', "Return"),
             PressableButton('//ul[contains(@class, "pager-load-more")]/li/a', "Return"),
         ]
 
