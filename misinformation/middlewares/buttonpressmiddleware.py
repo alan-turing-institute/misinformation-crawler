@@ -64,8 +64,8 @@ class ButtonPressMiddleware:
         self.timeout_cumulative = 1800  # 30 minute cumulative timeout
         self.form_buttons = [
             PressableButton('//button[@class="qc-cmp-button"]', "Return"),
-            PressableButton('//button[@id="accept"]', "Return"),
             PressableButton('//button[@data-click="close"]', "Return"),
+            PressableButton('//button[@id="accept"]', "Return"),
             PressableButton('//button[@name="agree"]', "Return"),
             PressableButton('//button[contains(@class, "gdpr-modal-close")]', "Return"),
             PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', "Return"),
@@ -73,8 +73,8 @@ class ButtonPressMiddleware:
         ]
         self.load_buttons = [
             PressableButton('//button[@class="btn-more"]', "Return"),
-            PressableButton('//button[@phx-track-id="load more"]', "Return"),
             PressableButton('//button[@class="options__load-more"]', "Return"),
+            PressableButton('//button[@phx-track-id="load more"]', "Return"),
             PressableButton('//button[contains(@class, "LoadMoreButton")]', "Return"),
             PressableButton('//button[contains(@class, "show-more")]', "Return"),
             PressableButton('//button[text()="Load More"]', "Return"),
