@@ -65,6 +65,7 @@ class ButtonPressMiddleware:
         self.form_buttons = [
             PressableButton('//button[@class="qc-cmp-button"]', "Return"),
             PressableButton('//button[@data-click="close"]', "Return"),
+            PressableButton('//button[@id="accept"]', "Return"),
             PressableButton('//button[@name="agree"]', "Return"),
             PressableButton('//button[contains(@class, "gdpr-modal-close")]', "Return"),
             PressableButton('//form[@class="gdpr-form"]/input[@class="btn"]', "Return"),
@@ -72,6 +73,7 @@ class ButtonPressMiddleware:
         ]
         self.load_buttons = [
             PressableButton('//button[@class="btn-more"]', "Return"),
+            PressableButton('//button[@class="options__load-more"]', "Return"),
             PressableButton('//button[@phx-track-id="load more"]', "Return"),
             PressableButton('//button[contains(@class, "LoadMoreButton")]', "Return"),
             PressableButton('//button[contains(@class, "show-more")]', "Return"),
@@ -208,10 +210,9 @@ class ButtonPressMiddleware:
         page_source = self.driver.page_source
 
         # Press all the load buttons so we get the max no. of articles
-        if self.contains_button(response, load=True):
-            for button in self.load_buttons:
-                if button.find_if_exists(self.driver):
-                    page_source = self.press_load_button_repeatedly(button, spider, request.url)
+        for button in self.load_buttons:
+            if button.find_if_exists(self.driver):
+                page_source = self.press_load_button_repeatedly(button, spider, request.url)
 
         html_str = page_source.encode(request.encoding)
 

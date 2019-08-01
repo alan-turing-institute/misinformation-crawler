@@ -1453,6 +1453,32 @@ nypost.com:
       remove_expressions:
         - '//div[contains(@class, "sharedaddy")]'
 
+npr.org:
+  site_name: 'npr.org'
+  start_url: 'https://www.npr.org/sections/politics/'
+  crawl_strategy:
+    method: 'index_page'
+    index_page:
+      url_must_contain: 'section/politics/$'
+      article_links: '//h2[@class="title"]/a'
+  article:
+    byline:
+      select_method: 'xpath'
+      select_expression: '//p[contains(@class, "byline__name")]//text()'
+      match_rule: 'comma_join'
+    publication_datetime:
+      select_method: 'xpath'
+      select_expression: '//div[@class="dateblock"]/time/@datetime'
+      match_rule: 'single'
+    content:
+      select_method: 'xpath'
+      select_expression: '//div[@id="storytext"]'
+      match_rule: 'single'
+      remove_expressions:
+        - '//div[contains(@class, "image")]'
+        - '//div[@class="bucketblock"]'
+        - '//aside'
+
 nytimes.com:
   site_name: 'nytimes.com'
   start_url: 'https://www.nytimes.com/section/politics'
