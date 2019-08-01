@@ -18,7 +18,6 @@ def main():
     site_configs = yaml.load(spider_config, Loader=yaml.FullLoader)
 
     for site_name in site_configs:
-        print(site_name)
         subprocess.call(['python', 'crawl_site.py',
                          '-n', str(args.max_articles),
                          '-s', site_name,

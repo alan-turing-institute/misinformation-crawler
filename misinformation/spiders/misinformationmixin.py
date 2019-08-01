@@ -30,6 +30,7 @@ class MisinformationMixin():
 
         # Set up list of override URLs to process before starting the crawl
         self.article_overrides = config.get("article_override_list", [])
+        self.logger.info("Loaded %s article overrides", len(self.article_overrides))
 
         # Parse domain from start URL(s) and then restrict crawl to follow only
         # links in this domain plus additional (optional) user-specifed domains
@@ -117,7 +118,7 @@ class MisinformationMixin():
         else:
             resolved_url = response.url
         resolved_url = canonicalize_url(resolved_url, keep_blank_values=False)
-        self.logger.info("Searching for a URL match at: {}".format(resolved_url))
+        self.logger.info("Searching for a URL match at: %s", resolved_url)
 
         # Always reject the front page of the domain since this will change
         # over time We need this for henrymakow.com as there is no sane URL
@@ -129,11 +130,11 @@ class MisinformationMixin():
         if not self.is_article(resolved_url):
             return None
 
-        # If we get here then we've found an article
+        # If we get here then we've found a candidate article
         self.n_articles += 1
-        self.logger.info("  found an article at: %s", resolved_url)
+        self.logger.info("  found a candidate article at: %s", resolved_url)
         article_percentage = float(100 * self.n_articles / self.n_pages) if self.n_pages > 0 else 0
-        self.logger.info("  in this crawl session %s articles have been extracted from %s pages: (%s)",
+        self.logger.info("  in this crawl session %s candidate articles have been extracted from %s pages: (%s)",
                          self.n_articles,
                          self.n_pages,
                          "{:.2f}%".format(article_percentage),
@@ -159,4 +160,4 @@ class MisinformationMixin():
 
     def closed(self, reason):
         """Log reason for closure."""
-        self.logger.info("Spider closed: {} ({})".format(self.config["site_name"], reason))
+        self.logger.info("Spider closed: %s (%s)", self.config["site_name"], reason)
