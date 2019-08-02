@@ -103,7 +103,7 @@ def simplify_extracted_byline(bylines):
     anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
     remove_from_start = ["by ", "By ", "and "]
     remove_from_end = [","]
-    no_author_here = ["and", "By", ",", "By:"]
+    no_author_here = ["and", "By", ","]
     remove_after = ["/", "(", "|"]
     def simplify_single_byline(byline):
         # Remove these from start of the byline string if present
