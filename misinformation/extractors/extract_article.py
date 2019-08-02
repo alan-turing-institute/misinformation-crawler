@@ -101,12 +101,11 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
 def simplify_extracted_byline(bylines):
     """Simplify all bylines in list by removing attribution words, rejecting bylines without authors and removing
     anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
-    remove_from_start = ["by ", "By ", "and "]
-    remove_from_end = [","]
-    no_author_here = ["and", "By", ","]
-    remove_after = ["/", "(", "|"]
-
     def simplify_single_byline(byline):
+        remove_from_start = ["by ", "By ", "and "]
+        remove_from_end = [","]
+        no_author_here = ["and", "By", ","]
+        remove_after = ["/", "(", "|"]
         # Remove these from start of the byline string if present
         for start_string in remove_from_start:
             if byline.startswith(start_string):
@@ -126,6 +125,7 @@ def simplify_extracted_byline(bylines):
         if byline in no_author_here:
             return None
         return byline
+
     # Simplify each byline in the list and create a new list, removing all None
     bylines = list(filter(None, map(simplify_single_byline, bylines)))
     # Remove duplicated authors
@@ -134,10 +134,10 @@ def simplify_extracted_byline(bylines):
 
 def simplify_extracted_title(titles):
     """Simplify titles by removing anything after a vertical bar (usually a site name)"""
-    remove_after = ["|"]  # Add to this list if needed
-
     def simplify_single_title(title):
+        remove_after = ["|"]  # Add to this list if needed
         for remove_string in remove_after:
             title = title.split(remove_string)[0]
         return title.strip()
+
     return list(map(simplify_single_title, titles))
