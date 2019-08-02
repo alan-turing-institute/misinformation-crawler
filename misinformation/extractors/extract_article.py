@@ -99,14 +99,13 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
 
 
 def simplify_extracted_byline(bylines):
-    """Simplify bylines by removing attribution words, rejecting bylines without authors and removing
+    """Simplify all bylines in list by removing attribution words, rejecting bylines without authors and removing
     anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
-    simplified_bylines = []
     remove_from_start = ["by ", "By ", "and "]
     remove_from_end = [","]
-    no_author_here = ["and", "By", ","]
+    no_author_here = ["and", "By", ",", "By:"]
     remove_after = ["/", "(", "|"]
-    for byline in bylines:
+    def simplify_single_byline(byline):
         # Remove these from start of the byline string if present
         for start_string in remove_from_start:
             if byline.startswith(start_string):
@@ -123,19 +122,19 @@ def simplify_extracted_byline(bylines):
         # Remove leading and trailing whitespace
         byline = byline.strip()
         # Ignore any byline string that does not contain an author
-        if byline not in no_author_here:
-            simplified_bylines.append(byline)
+        if byline and byline not in no_author_here:
+            return byline
+    # Simplify each byline in the list and create a new list, removing all None
+    bylines = [byline for byline in map(simplify_single_byline, bylines) if byline]
     # Remove duplicated authors
-    simplified_bylines = list(dict.fromkeys(simplified_bylines))
-    return simplified_bylines
+    return list(dict.fromkeys(bylines))
 
 
 def simplify_extracted_title(titles):
     """Simplify titles by removing anything after a vertical bar (usually a site name)"""
     remove_after = ["|"]  # Add to this list if needed
-    simplified_titles = []
-    for title in titles:
+    def simplify_single_title(title):
         for remove_string in remove_after:
             title = title.split(remove_string)[0]
-        simplified_titles.append(title.strip())
-    return simplified_titles
+        return title.strip()
+    return list(map(simplify_single_title, titles))
