@@ -57,7 +57,7 @@ def extract_element(response, extract_spec, postprocessing_fn=None):
         elements = [item.strip() for item in elements]
         # Additional processing for each element, if required
         if postprocessing_fn:
-            elements = [elem for elem in map(postprocessing_fn, elements) if elem]
+            elements = postprocessing_fn(elements)
         # If no elements are found then return None and log a warning.
         num_matches = len(elements)
         if num_matches == 0:

@@ -1,0 +1,998 @@
+
+<!DOCTYPE html>
+
+<html lang="en-US" class="no-js">
+<head>
+	<meta charset=""><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(3),u=e(4),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],t),e}finally{f.emit("fn-end",[c.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){if(!o)return!1;if(e!==o)return!1;if(!n)return!0;if(!i)return!1;for(var t=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var u=navigator.userAgent,f=u.match(a);f&&u.indexOf("Chrome")===-1&&u.indexOf("Chromium")===-1&&(o="Safari",i=f[1])}n.exports={agent:o,version:i,match:r}},{}],3:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],4:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],5:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=v(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||o(t)}function w(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:l,addEventListener:l,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(3),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!E++){var e=x.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+x.offset],null,"api");var t=l.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===l.readyState&&i()}function i(){f("mark",["domContent",a()+x.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-x.offset}var u=(new Date).getTime(),f=e("handle"),c=e(3),s=e("ee"),p=e(2),d=window,l=d.document,m="addEventListener",v="attachEvent",g=d.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:g,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1123.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=n.exports={offset:u,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),l[m]?(l[m]("DOMContentLoaded",i,!1),d[m]("load",r,!1)):(l[v]("onreadystatechange",o),d[v]("onload",r)),f("mark",["firstbyte",u],null,"api");var E=0,O=e(5)},{}]},{},["loader"]);</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Security-Policy" content="default-src https://* 'unsafe-inline' 'unsafe-eval' data:; upgrade-insecure-requests;">
+			<script>
+			// Google Tag Manager
+			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl+'&amp;gtm_auth=1rT9WxKtoVrlrpfysHCQ-Q&amp;gtm_preview=env-2&amp;gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-55MKBQW');
+		</script>
+		<style>.async-hide { opacity: 0 !important} </style>
+		<script>
+		(function(a,s,y,n,c,h,i,d,e){
+			// we don't need this, we need to specifically mark optimize spots
+			s.className+=' '+y;
+			// okay yeah we need this tho
+			h.start=1*new Date;
+			h.end=i=function(){
+				// okay instead of screwing w/ the document classname we need to remove the class from all elements w/ the class
+				s.className=s.className.replace(RegExp(' ?'+y),'');
+				// you may have noticed this but it means that if this runs before those elements are ready they stay hidden
+			};
+			(a[n]=a[n]||[]).hide=h;
+			setTimeout(function(){i(); h.end=null},c);
+			h.timeout=c;
+		})(
+			window, //a
+			document.documentElement, //s
+			'async-hide', //y
+			'dataLayer', //n
+			3000, //c
+			{'GTM-55MKBQW':true} //h
+		);</script>
+
+	<style>
+@font-face{font-family:'MallorySubset';src:url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAADvcABIAAAAArMQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABCQVNFAAABlAAAAD4AAABQizmURUZGVE0AAAHUAAAAHAAAABx81UEZR0RFRgAAAfAAAAAcAAAAHgAnAGpHUE9TAAACDAAAHEwAAHfw8yWGg0dTVUIAAB5YAAADOgAADWqpXxt3T1MvMgAAIZQAAABYAAAAYGakw0JjbWFwAAAh7AAAAK8AAAFaMKeTpGN2dCAAACKcAAAABAAAAAQAIQJ5Z2FzcAAAIqAAAAAIAAAACP//AANnbHlmAAAiqAAAE8kAABsI9Oiu6mhlYWQAADZ0AAAANgAAADYL6s8/aGhlYQAANqwAAAAgAAAAJAi/A+pobXR4AAA2zAAAAUUAAAGQ4UwPmGxvY2EAADgUAAAAygAAAMpOGUcObWF4cAAAOOAAAAAfAAAAIACrAH5uYW1lAAA5AAAAAhUAAAT2XZOsPXBvc3QAADsYAAAAugAAAQiT5aRbd2ViZgAAO9QAAAAGAAAABuqwWeR42mNgZGBg4ABiFgY+BqbMlNT8ovzcPAYmFzefEAa+nMSSPAYVBjYGEGBkYAKq5GFg/J/FANKFVRQAqZ0JmAAAAAAAAQAAAADUUbVqAAAAANJ48IEAAAAA1gqbLXjaY2BkYGDgAWIxIGZiYATCZCBmAfMYAAffAJJ42t1daWxc13W+s3I4XIYSKYmUqCVWFSl24niJE9t1khpekNapf7hu0KZ1jRYpEKCFkaZukT9FixYFXKAL0CVIWzRNvNW2bDmxJVmWbcmUZcmitdCmFoqixE0USXEbkqPhcDgzp9859743b1bOkBQl+T28N2+975579nPPvaNcSqmg+pb6jnI/+PC3H1e1f/qHTz+l1iovrisixfeblff+7z60STU/cP/jvH+M948/9gj29jOuP/njHz6lAnwkm1e58etWQfc25XJdlvIa1b3qQfUH6vvqh+oZ9Yrao1pVj4q6NrludT3u+q7rB66/dP27a4drp2uv631Xq6sH76+lqFpHSeVXq2hSrcZZI1/Fto4uq/W45la30lH1EHXg6FG1QT1BYeXDk3NqDZ5uwu86GsaTSdSuAVdWYdN351QjjZgvDEpZHrmzDkfr8etVFShzFY3iyiiuRFGuvjIjNdFXp+2rEVyNm7LG0aoVdAZf7MOdcdyZNV/ciTqF8dV9qpmGpFT+ahLvTeMsoirxXkqtQol8lWFopH68E8U7g/LNZoqhhR9VDfhyEOU3yDPncX9IbcY1F1ohhDoFcb4KR/oeYAJEG9F+m/GmX9WpJrWSJlQ97mzEtS1oz/vwBr+9Ffv7VS32dSjPjX0QzwRxXIe79Xhzo7oJNbhZPSFYvhv7r8vzjfhuAEd1+MZqtQbnTcDWOlDKerxzs7pNfUXdpb6Kpx/B+7+tnlTuv/gKU8ef7376afV36s9AURcA0XHqowS2SWx9NIbjSaxRGsJ+SK2gOayjFKcZSqCdWlGHBnqH9tDPaRzPxihFBymMY15nsUVwbUZKmKID9ApdwVMfYX9FuYGVELZlXgDJODA9jqNx1DSCdlPAil/2vLjk3hCv/AtMVht4ooCZSwgD/iggi5gia0BJAewVTeBOAmuE98KLfmw+tRJ4qVRVwptXF7qj2AZBWQFsinGHi1XYAqiFUj5QOMuDIGMe1BtCPfeDstbTh8DhC+AigYdaAIesKIffqBTpUinYfZ75jg5i7wNuL5pWAE0zB6DM5Vo8Wef+jDMNLVPrNDhRt00i/Rakp0fWSqy4RknBW9I8lX7uDLZPsBk6Rdv2LguVjgBDXpHeXpGHXqmTB63tAV91gdODXGtQXYDa6aS88xGOWvAsw1uHZxSOeQ0yjQO6OPiZubGDDoAeKugS9gE6QyeolS7RmHzLg6NB9RlZDL8eANQfGtpWoOF3obOW4+uTjCOzBUt+6zS9g58G3qBv6kQ2+UGlWkL5WVMBk310HGXWW2XjHJiVAlZrG+K6xcnZG4qCYsCB7OU3zlt6hYVh3WXqWoF9k1gMi1tC12VLpAClJQWviF4pt4QBGoHV5LwyfN3iffqGotKIps1MCECh08BZwpxftqQSdCJT7bj6bC/+z3bdxS5jjR0AhrVuqITnwXZnLbS4wbqxILQ+yVMuqMYnto77GlHupN4K3o/CUyp8d0Zsmhmm58LPXIf8qjWExsm2JSz486XbGQvznRw05HXQEEuVuG1366tz8Lydlkilg7b1cbXWAeIjDjrkl7QLrFNleViwSKvhaYzI8dgy44qh66AB1vNyodGuEy8bZL95kd/odJxw3OPqQ2W4SjweHFMvdPMkcBFz8GVKfj10ni4s1k+nc8srVcBhfsFcVCCqFqsqCCkXEmlXw74RnhqTZ4eBv/WLtkWalxXC8/M8YPgQPMgW62k5PkbvOkr4ND+ts7/k/AZNUY9tK/gta8PJ/8tp54ikiORcH9c6hKaW9HNBdb0t11+N5qtvkMJSa59wHFPjKGu//D4SR1skauEFlwbFf6+HNuA4DUc1PJSkTo5rGOqvFanUwBFjpnA6ZUvTEJ3Bk+1aD11F+BppBx0ARAcgIw9IBGYUspIjpuexdaEePaZOh+H31tIOOX6JfsbPGrv9//Qxy2CtY7Q3Cb57QctN2p0tPbU3ukw818GSkXWv1r8FnxuV6NghOW5b5EcbMs42X1X4+vJeHZMYb6yA5caSaCzLnvY7JCTHzgfQcll4oiNooRP6msRxjtOFq06jhWVpFLWM5srStE+5hIvvs+RaOn3t68+/gOWd0v4ccDxRHjSW9bSMcfx57NRc79Bwi/YhvrSEH7vnmlOp8cIh+6NpbZ+Nn0zcAVc6Fpl5/ZLtoVhXRq6VpMlnwZh6hPJI+xtd0lSKRKiUKH2Yz2gWv6VybkyooFbjkLUMWsoj71eDL0euA44Ma7/d+I7jql6iwS7sk0b/ebCvtbWii1I0xFY7w1Ok3CvLG3UqQ09q3+KC1tWFeVLs2phl8ZlrPdSNNeaQreFrhjnu/cun8Yc1N1oR4htYLw8zFeWPbEtMYEHSij7AtsfB329YvjP7o/A9ZsC3/UtvB4i3NJep9zjOBiijjjiN2+B2Tu6XGNUXu0B8Mt7TPvgrb9mRtXp6NW3B40shQDgF+h/FURzbBNoghpos2gcppI0yMZXud4K+KE9XMIS1AmEX2q3dvl4HK3zAAaHX8mCW3hbLS4kEaRkVeamhdZt6lKWfRQZx5lcj7+FhjtF7tlxaTW/qqI8puUEyAC6Kl5aQVqy022jBUQV84YuQcCaGz5ZI1v0E7DPW8T54QyzfN+ONL6g76GKpvidTI0eupKd7vVonOVRKfU62NTY1+NVWbCF1h4nCbYAffkyOmjQfqdW4u03ot5Rl8X1H5fbhSr4J941zBo8tafZLtkmtRR1O/+yGWzz5bKV81u91s5SDQ8vuKQTh6qsNIeT/pOmtmNBfxZWEyXny27pswMSSqgBdiLmjpKXa9DdWS59Ar0TgAqbMRjpt2aWUxDrrsMGDkDfb7L6GqbSOFD0WXwKoxySGdmV+LVKWxm/Ftt/Bh7utrBWHxh+8Gjg00ko5LWzoikvwg7M1/gjqEC1D409maPx3YJXudGj8l428dGr8LsCoNX68XKu5YC2SSln+g93eLhUAZbjwFb/kKrplZWqag8xev2iJt77A9W2Gy1cuucb3Zkm1CskyrZDzgGQfaggn8fQWWCOLhTAfBCvYzjEQLllfDXVLX2HMWCvM70n7XspIiQaLwyVX9ri6CTKgxIiwRPZX4bdd9hOcjSgtGhJJ02VxutCGVyy5Ydv2P+ig4IVp4QKWm1jiHC+9Al8+nmW1XSkv4mC3Up0cHUW5LSaXA/XF8blMuxQyXHq87GeWyLeA/NV5QDPZslJ0hs9Iu4hpzZoy2tJj3q8SSXMJuBoQDcS9rquAJye1e9MxoRswRlzMalN5rbYlzEoCdsJqE8cTZJtTm9CSW2Eps14PqQ1iC6+iy+LX1GF/t9q6aB//vgL20TdMe9yyBFZXPcsz7s2DVzqs2w5acNRQaoJSPPoA1Bsx2npYvJo+OiT9jR+X2HqdGht0RPb9eL9NsBQSffhJmkpBv9PCmyO2zfF6Os6atmJwPQqJVbLVQf1S67DONoS+DWvdD/hSxnKznhwXTT9KXZJ1X6r3dMmKQcn+IuTIWYnABYUeTqVzHI0UD1n2GWRDazreB22VjjbHy7XbdE+ZxGUuCfbmJG8rka1XTHTNU64kEDntl1JPiuXmtfnwuBWxgy5KGuoxNgwopsHOiBxNWzYcHwNOL5b89Q6J8Q0rt1BpmMeGiGbn0QQzGlojSyVHATg4LVTaXTqNyPiETtn34v02qa1FpWEHDqMZOIxSiwOHcUc0JQYclhW7EV7TGj839yLhoP/hhclx0W1+0YcddhaAxmGX3YOeFJ3P/f3O3rdxRwlLtVh9FBGH55Z/4ezLSAatRxxvOnQcj4QyteXxHLUZFhnrhN/SdrjDdnPWx1uQt8qzHP12iT4HpAU1Ozi/WurE762FVK41b62wbTAPWr4SFt8mqX2T+IgXIaMumLLXqCZQ7ajtWUVh/4akhTymbTZICwcdkb2A+JZ6qRGfofoGi0OHdeRJjl+kpyF7O+18qjHjpR+kfZBQ7WkegLbrvoZ1jrIcpCHgbpKm5Sxq28DBRfUceiGxfNe+n5xO0j4eiweZylr0DGztg1bOEOR36yJaH/wETgyUVIuYaKM5Ewcu1VpgSaN7MDi7Oy45RkkczYhWTsJ7JjwTNFTHvLZSaK7D5vwgZOmIsxZFYirRvH57qe0cQ2uGzThkt7HfBiEBu40tWsBaQX0rWBaIZ9Vgxq4FZOxaL+6eow4aQd0uQd6wDOUe1veAxdd0JAa2UZB28lg9o7FitjTNt+RG4tagvKHSYuE64zldkmCB+YVzvwr2Y8JObTe8FLdsV8e9aerE+xdRQi/nqUJOoPXoI0D9rozlY8nhxfl5R3xrpclOHjfeI+dJz1lZkKJPnVxbj/KYvxPXmA/P0FuArQY6wi3j3Vpg01h06gKX5lhfdmbfXGZkz2RSTTo1NyD0lGjThPUIPXBFUEY1z8H6Y/rcUFSWxeAryHgbsaP6xYqfAv6SggseQ6q9wn4Z/cyypjptReDJiM5tVN8zOJsWO7RWwyT+jqFC6a+dM9TGfX56FDJHXy8Dt755M7QqxM71Sbs14/k+HB0CLXlMTmZ2i3wsWKjjsfFMIyi/geuFmgVRzygo8z34WH76BXivWW2hAdR0HXz7enoTLfiK6PUDtAvnOyQPMCh2fUyiOSzttDVeq7YxNPgN6T5LyXIE3eqImKrCO0OSb5icL+JIe+G9+aBFJ7EdB2f4WNNoGzSPDNtlfv+Jvg/LmfvfUGv8fiLrOLgvqdaBS4JqC576L/qBjPLeLi3QkNbokBQ+0Eg6dn6z1LPBEdFIf7MtN/Md0PEcBglb754sAmEXvLSglRWK36BtvRWRVPQy/djIuDWQHpZt7BcpvgI2lUs1onV30T9ylMZEup0Q8iwIGxwW2abC8h/tFs+1SyXK63H4jYeLejjVmX0NJUC4myEUyNYC8/GM3hbWDGIzgj6eYRvSRB9XOCDk32YHhE1FIBzLM25KQ+i47sgQyMF3lo1do/RohLyWt519/1P6B0NNDbQ766Ea+XIdntpOfy02d5slXxzxX29GvUM6smp9FXL3hbR3UjCuXFmSLN1Ob0CavkHt9DrWI+DHdlD5GDAzRMcLvPMU/Qv9FR3m0QWQZy9A8x2GDdaK83axGFieeiAvn6MfQScMAeMnwSmMtw2OMY1BRxtC/4nlXWX0wn76W/D1x5DJh2gPVp7DgiMtLTj/FJw5hH0EVvc0nQXv96djHuVbuEK1Xlgpw3JWR68CZ2slCtAv0eNZaLYEYOvhEZl4roteonfA+9sLa2NQwN48V4/Bah0oYpe0yT6Sc/3CItV2pfj6LhM9qTQjgmeA94ThdDdanqNzCePLMwWEi2dVFBgHQEKRPOZ9OT0/j0iqlM6+5zl0TC7spNUnJ/1xs1jnAOGsiaVMcQ7mvB531pcA4aTwbTT7ieLZnouLFxtrqcLYJ5KvAZ7pkUwRn/FcM6I3sIj6ecxFsbhx/ow26PZzInvjFoTL4gFaPd9amldBUnrtuTxSRp66nT6A4DRlYkuFIEwWwGJcqdIk5NJCyP6D2AQptHEzbLSPIXNfBj5JpNBxcGGUc8R4Rh7bcq4q0v6VBWg3ZOjGk5fy/LkcrGdIWHxfsWWzCJexTJl1Uj8kjDuL1q6IJZUqF4c8v5Gpt2cZceiXL/qNxEkYD3BQZLTHQOixceMR73JIcvAmhYvdtufJXsYZw9lTgKY3dxyjRFD96sYeET+vP77sy1rttZk5QSLqc9D3ce0F6lH3Dn4LOKKuxfpRG7Iiv2nPvZg2KTXqu5CWTdjxohnju0TS/nlBvedZKA6XOTaxUjTUOROFXQv7uBbebxzeY7epSQV4qot9Zlwbkt6v+XpPqvNBb8ewPTwuIFPqWjIzW5Pm2nELWOrFHp6RvqcEvJy36UOBOgiJkjT+ghvHoyJNpkDP70v20+tFMPW65UlnXD1IJ6TfuzI/9q3IXM5127KgJ5fMprlobJqKz4BNU2vop8LEn6LA3waGMLsVHOez0JjhorzkLxCtrjf+ZcNyi1MLQrGm4Xdm4JDjyRW52Cg64ttfQO7VOzzo5YItwnId+PBJ9tcA5E2dugne54f0rIHQTyfsx32G1uLwE4v1uhTK66o2Y72Sha22q2SXJm3JVZmhBzxm73eegw976Qo4MV7Epgnns2nwlkga2Hv+hWucspdmicUkjGxYL/msW4DVgJ2zuVL7h5D11XhuChAOghOLZormm3dC9MyklBeyIazOtnWuwhhwn+l98Qhn+TgTRWe+OeKagUzKBpQp9oHL9vE1hNUyun/5ljXCa13SCzsFPcb90/tpL/3c5EisoLegQziPIywZqZoi52S20sI61p2XH+yszLzj9qoLW64L954gMRl3A9rrpbN0GRiKw8I5Q8eA3RodseVZI7kPVGMT985BFrVmjlzLiYEW1pLBJR4rXg68ZiY6QNCVntUxX8xpoSOar4FdertIzwD0BMf5bqGT6g71TTrM+a0SSzY+nZmhVlPQalUFXG4sEjO/nXs18iz3mha7Y5m1PUsAkez4fQ+WdyV9QC/Rv5oRikFwZVTmUeiD9TqSxqEzPz5HH7rz6judj3wettNAwfpczOdPLiZmKtZJEhpcsuzoEGpXyXN70rO6/xDStY37B2WNWRTL9kwRWeovGvXqTs/rlOsZZ8Jux4UWM5utRyK158zsVX7ANwv5GYXm6zQxjYQcd6IdUpBEUZkFOm7No1x6nMayt9OeUnbESeea51xf5CwGov2S1MF0gN9fwEOsBl1up/+GtGEchmgPcNgl6xVrJpF5vroyLxb9Mjc452t4C89Om0mPNg4XM7dWjVjXMyJPEjKbcEyPZQJ8fmORBUy2iVviG3PpyFwx2s9DLX7DpRV2VN+f8Vu+ZdpMr0iMflAkw6RYLGdxfkZ65QfEammA/AzSGF+VN/bSXuj8lJ4D3KIt7lkXqCdphI7SSdDtQe7FEO8/LNkllfRTnD0vccbtMib4OavPT0aXTtEn1J5vNhkzC7fJxTH9/HG8M2Hs9J4SZGX2OGCe+XAc+5lsfSg23Kxko0wz7kzbB82oGrfcTwkXpmREQzQdT5W+uD7Te5ZSVc5Yj2UB2rZJwzwRH7+UseDoOCQLzydPRv92W5pd+sBDZi6wmDOKnxGV5iUmc17zmlJm7nNcsUdwyOzXqQKyKFSqfCgx28QafWUtbtNCc4KNcXPXJzk//YDWJz15p+iozqHC1T6DPZ+ey137CNIT0CW9vz5Dz53QMidlDnhtz192jEaw5OhgIes/jz+QKC2fF+0d0aP/UKsZPWob1DSNFp920C33Sui5TTw2L6TlpdueY3+Wy8KasPveOCPenY78m8wRypI2PodPnOUd53KLsez8ut9gIVFk0OME1ki2xEtLSXgSUzaVZme9T0BqTPGYgaxelEFHprr2wEZzv1yeHivVZsnw7wK6L41zo3LkQNJg7zxorcOS7qBBj1kDgmF+e1IwPyhjKKvSc02I96/hDuELl3N8o4kSY8u1JWqPLTw3N/hhRvK3BjgTjkeVMASGCtep1dQCjXEOkvwQZNdNaOWNagMgDkEuausjJP+P0ccZiNAVozzDBzzFHpmHtwK8FwaMp9n/1/gWm2fQcJJFcfXA+WDaVrf5sUk00YjUL2zaU/Yod063UEbcL1t2NdFr4q86vDXxEU6IBTNk2vpT6EP4TfQJ2rIZFmkLYKxAnZLy7iz3mcqIEJ5PmHVPO972QsZUSI+HjJaQuSB269nrsN/J+V70sp79Tc8EgPoeMfl0Ndn6TEvrTDsH5U7l5c+Hc3RcWpZqHza/LK00snTAyNIOyFKfQ5b6MmRpwpalJ0WWRiTW6pSlFXhPy1K3kRYBgSWfLHUvUpY6IczRFkLpPrv/IAQIPZwBJO1pScc+ZbJvNT8LhBMawozIOdstZL5YIV5noTyoJR27ngFhRQ6EyoFDmT3CgpCOOPShNVI4B0LRhxUmKhEQCvSIFqqw+ycsaIIFJUcBHJa0fC3DPo+IvZIQaThnS7it8H2bwNmDoCC/ugNyaEx9CbVbhZp6JHdrBTTTNM4ajVcVk4yomNgmK/k/ZtQGlL1W/qOk0/I4VR0N2OOeosYPihnpks5sbXKMVpl02KVJXE0Zmys6r13qNs/oPO+oaLQIazyTBc29FV7s52zZx/emJFNdlxA0/3Mi/3XC2bGAGG9ji9kUrOfJNHMpapgy4v7eDKstNA/VBgvow+w8nNeAie2QaRPY9mN7mfahVi2w8k/RceyPiQZrBbXtpI8gNTy0A99upp/RT+jv6S34IeeAiR/j9y1Zj+Kpc3ijC/qmFx7Kc/TPkCeX6VXeG+zpsWx9WXI9KJ6Mjt214zv7HLXc4cwR01mWnE8HHXTFWBjjVu4lj4zMkaWjhfkzrfNta6Zbl4MW+DhHd2VYWmL5dOm8bTu2EV1IHK2ckQd53z8EKT4gUYhOsY4H0P68Hsd2St2m7+C4B5r1HvoA39sKnPxSy1DZDktfRbeJuvVw3jPeGKIL9LYe1QNNd15icNXQpLXQQH48E1a/IuPva7Kiz8yr60uo9/l5/PaAZLi+qBrpNdoFPO+CruIsx8Og0rPQexehuXrpBLjvosyG+x7oj+2SN6UX40X6N/oRoGVa7KX/xO8HsraBsrvpEt6/AAi74PM+g3fDoHHdflPaphHpkTnSga2huOm74jZpccCyhw6kZ1DX+cagy06JYU5Km3bQ++bZg1nt0ALptxdQzWC7IBmiJ8H/PeJbXMD+HFp7FHUeQc3Pw18NwgrxAMID9Ab9L2yXfpawaJ1+HPPaK89OslWGfT/q9hKuRekYt4QN4ZzEljMloBvvxQyEg5k92qjVpxLL1BCeNX0jvcKBMZF7fXaObltOnwRbVcM0Jtmp3RxjAc6k98hwjxc6sEUi9R3Srnr8qPzbA56PA8dxiVV047oX1ugQvtorI+97Tf7UaYlinOaMWhNlZHtrAHfS40Ugl/mrmX5IOn6I+oxYkVLLOkW5CXOlu3CsnZ5Vm8BTO1DGDvDKL7G+izoeAbWdRcu1USta4AIdBHSv4U4brPBXIPObQKU/ob+hNwE3r/+D7U1ZD4BSTwHbHcDnALbn6T9AFWGdIyw9bxaVjpjMh3Tf6JA9bpz1plOW7qK3hd81bO8aCE9acwSjdc/YEZ/WLH+xTusVUGlKZF9CKGkONbwkM7YlBF9tehS3Hgck9BIW/ESN1PSLBxwVn5TjM/rtDu1L4M2wvE9aV5i3RrMktUdne+SLxUnfpMrM90b5o5aPvnyzShfoXU3X6kVo32dNvrpoY6c8uTEXjlVqaSg/jfBbNzlsl1UFcr9uxGX+ub6uZjunyuqHntD9P5ALfcV6O4UHU3r8VWbGTXp+hGVY+B9efx+8Um1m3GCf5BvqIfz+BraH1QPYHpEZ0zfCyqgDja0FpfEI7a9jVaavcL5YSX5f776MWMrn1VbFcyh9Qd2sblW3qC/KXMy3Yv0y7t2l7lB3yn+Ofk3dre5R96pfxfsu1PYJ9ZvqQbucB8UX4ZqthR5cizp/T31LPaZ+Vz2q/kj9HqD6jvodVW9nQP66+ra6Hb93mnP9e5dd3lfN9k31a2iVu9X95tu65yVNnQEeUYva6JZ4QPbWeFOv/GdiFdq4hkepoRVXmPfdMvZUz6bGmQu1WP3yn6s8cnUjrm1GS6xGG9yGsztRi5tQiyfVl/8fUzdEinjaxVdNaBNBFP5ms0k22RrTNNSwxLAULaGUUiQUKaW2tS1Fa5ASihSpxkgRSUvRIiI9iHj0IOKxJ5GeevAgnjyJeBLpwYOHnD2KB/Fa38xOs7ObbE1sUw+ZN51573v/b7ZgAOIo4RW06dn5EhLV8sYabOh0jr09QRk0hJCFPrk0YyN7cbLE1wW+lhYu0+rj1Cvl6gasSmV1HfbKvXIFA/dXK+uYExzdtIYkL3CC8yOMCKIwECNbTHTRaQInBU8SKfTjHMZJehNP8QwvsYXX2MFbvMdHfMZX1PCd5DnqF/xilrNnw6zIqmKvsU22JXan2I42ru2GFkM1fVHfDY+HdyKJyHrkUzQbXYm+if4wBo1l47nxzqgZv2NJIcNiEUktSQuSliR9JOm2pN8cGpfy8aKkLyStSfrTsc7sMvNip5sFc9PcNj+QJxp6Ka7cf4g4MEzLVaN1BsvC34O5zlLUHK40MgqX81M5GHEwirmLomppfuvKppRbL66TQY20Z2XGr6BYt8C5T9Cv13cboirIU9bHMIurWMJtrOEhnlD2GfrqdvQIXWmcllo7s3M0Obb2Bdr1PyyKU2cMY5TyUcQ13EIVD/CY7uxjiZAaFzvAluOzIoYzGMJ5TGEei7iJu9igm1wHI6H6n2uqv9OaDarHQYxgApdogi/jDp1nj9xj1c9sE52d0RalmhpAQcz9BVynU+uIPFP9sRr0HKWGCNWFOy0YTcHDeKDanfFhHx41TLnd72BnHreLqdrX68H7VySd8uN0Fb9p1SLVjrSC0Z50iGLMK52/bgdrVvWl6nKtSPDX2/a83j0BuEnJG8zlf6N7PPIJGUHvDc8Tx2ZNkd2di5Hx+aG+8ZaYtt5blyMlviBtykUzHpePZyxHEeynrgzidLl5nXHMPEV8+EB+V4b3joM/RP0z8lcpV5JPi31dBaqosZZkXXk+PV29ozRzplpGcFH4W6PaMEEdNtcWjovF322vPbM014ttozH5JZip16C/ShprTQ+spLSos0ZrE7IbVY15ier0d1z879BNdXyB4jKJG/QSlwlRk3r4d2m84e9m1uUCOsHps6TsBb//+3dW/ZxRnsT6B8VElQwAAHjaY2Bh8mbaw8DKwMLUxRTBwMDgDaEZ4xiMGI0YGJgYORiZWRmZmFkUGBjYGZCAW5CXP2MDA6/qH+YD/wUYTjAfYPigwMA4GSTH+B9oJgODAgMPACwhDgR42mNgYGBmgGAZBkYGEAgB8hjBfBYGCyDNxcDBwASEDAy8DHWqf/7/B6viZVAAsxn/f/v/5FY6VC8UMLIxwAUYmaDmoyhgYGBhZWPn4OTi5uHl4xcQFBIWERUTl5CUkpaRlZNXUFRSVlFVU9fQ1NLW0dXTNzA0MjYxNTO3sLSytrG1s3dwdHJ2cXVz9/D08vbx9fMPCAwKDgkNC4+IjIqOiY2LT0hMYhhoAACoSR/3AAAhAnkAAAAB//8AAnjadVkJXBRnlq/3FU3THA19FE03NN1N0d00Rzfd1ZeAiIAKqIC3AoKCQTyIongrmsRjdIK3C4EYg/fETBLcHJPESXR2jBMTnYyubq5NMomTTJLdyU5izJixq/dVFY1kduendXT5fV/93/ve/73/KylCWSgKskkfRVNyyjkIlKvorDyK+m/PYLTsw6KzNMFbapAWHsuEx2fl0XCv6CwIzzmVRWXnVKwFFH++dIn0hVotZDZFEcobvkN9Tc5RMiqBojQMzdI+dYbN6/cka78MlgW3TPL7J/nIuQp+G2yoCBX4hd/CvEx4FP6O8wQsFGg42ooHKMY/Pci/P/7MIDwB6fw7auFEUcJ4Q5gn/eQ1HG/C8XIuQLMBVo6HjxMPTi4eDCsckJ5xjKVb2GNsC9u0mV2+l21mj+Mxa03Gwh1wav9+ftaBAwe2795+QLpQQFnCq0g27aRyKUqGyzrBBYF04Dx+r83uBJ/XPwY4eTroGNYJbEY0o03WpQOjjYayhMXK3KlsCqnc4uWCgeoNjY88GLc4LmNMGnGvdedw3prNczfCrt3R6brD4HRZy+0a07wps5fJlq+NTk48ZMrKTDdbmYzGabMfxFcjjm/pteQyFUepqDTKRuWjtdpoNsOGEDhPMs2irxSQEa1NRmw+r40SHwsj/OJvxKaF7rba6tbW2pqFa5ZQ4XeX8mH+S0uWI8OSlQXa1pra1oW1Na5y4YEDwnUrV8zBI3QSVkMVvwvYwubCArenMPS351d2PL9yXmG+p6iwGfeApszhH8hVEZuOGoO4JDcUo3dstIgH3WZXgowVLxLmgOg8hIi+EvxXDAGOUYJwC3UZWdqUfLft31zW1KApvcCYbSeG55JYi39J4dyOKdNNaZ3105dOncbkGTS5GQfya1h9WS2pz87QedjUUUZTFt+UkafTm0pYg+vflWZTbnbr1DHzba6JmTVt8yqDzXl6byoTdNGlLVZ98QQhjkCMO70Yd1QqcHTm+Gefl2IN/600vAxOkO/QPkqNhsmdkOQP6KL/o3mp7WRPz0nbUjj66W+bc5rfA+V7eBHX0+Cc1dIcIVQwZpKi5Xb/H1uWSHOWvH7rt/Nz5r/H/897eBEwyBBDHHxHzouxH0clUhpcyM7JdQGdCxIhYAK5C3RyO1DlR8rTH/W8VCd/yfPe4w/n+NW5D5Pkp55KXtUTn5wc33OmpWFQqRxsEHA4qEbiInMFHMCwDOtDUvg4hrgubL1wYSsc7rpwoev8edEH4f8K11JXqSNUDEXp7MUwGjhttDbLm3qg7DnrhOb55sVbJV/5qOtQD3WCrwI+C+MD2/UdO/B5GnL+XeqswNzkIa4PVAcC1YHYgHAR3/G3cBe8SW4Jc3UscItXQNOKh+lWkcv54W/JdowjBaXF30lD0W2Wi/EkUo5sP71124nTELN9bE1tKR4Q5s9fuTxw5OqujQ+0btp4uUvAl4WnJeQtKhqvKlYl91lhSf9p8JA3QgXwfsuxQRxjxxfmkkuUnqIcYNeIwYockbNouBSViWCFu3ww9vs8U74tf0EBSfSum7BgTf64LjCOA42v0JTpHFN+LOhfVj+qZdIeIvkmO/w9keG6iMEq8jOSL3B9u+/+a3yR12DEE9nuRYXz/Boyqs2dX9S4tnN6viO32U/8S4pa15aOHV/161kdenM/OBy5mXkBo9MZsKZbHVl7Wcu8Kf4Z6bp69F0i2rOEXMA7Id9yKo242RY7cKoLz9xbup8/JYOyXwIN2fzNVbt320k8XyrgDYRvExPGffp9vBG4Ak67xsJY5CJWYurZEHggJ7Fofl7BhIpSttaZYIA+/oNYVV7Kqm2fLt7KMHuMBkwLfmWiHHbueChK1inl6Dzc10p8h5bKiLxlKHEi4cW1Zdrk4VcqgVT2r1m/t6B2wQsnoxQKJkc3r4vfNKatfNyYJJshPu7bB/d3rxq3fXn3TVlCvEy2YX5hRTkXKKSjDE5pD9D3ZDy+D/dfASxY7BYynj93DDT8ZS3RkcFQDfH+DCPQibZPJr/DrGUR8vswsn/ITWQ4q0ZHItHnJZN71m04OKbQ7f15x/JdXndh8acNgYK83FH+5rKxPm/JK7MfbJ9TMFuvn+ad2d4+0ztNr58NTZ6pfr8j67ugIzcQyHUIvrHhqRRjXkuxiAArDPolkiMlBFYphUZCB36FbqFlsqTM5AVdfWvX7x3Fv1A2VmPVJsaXeH2l3d03o+QxUVEb25Yf6l5Vvu1qQRFNm/INhRXjxL1gkaMfEwVyFCMmUpHJ0PW0yFbpL0wWr/yKCHdJ+BvMD5+SGOSnWpzrEyYxWjqSK86IE98SMwZOx6wXsNtCb/8kd3ioqcRIlgh7Y2WsPisjI0aega/5tz/cdav2Tzu2IUY39TqxQ2hIAzAWnwwPYudj4Q4eoY6OKx0dwlqFuJZNWgtkvjzwyYgN1/Lyb8PX4L+1Y9sju24JNlvDd+Bt8gZlFiJDc595ShDqFCvu9rB/5RGnWLlFxY3LuIn55mjF1PQUZ0mu0WZxtxR8KEgVP3x2yGFtrAlW2vVp6lhGnZ6jN7lMOiOjS3V5eO2wnrGHJ9DXyJdYF/GnTAqvCADc5fv1UHyoC3C0iIobQQfpZwCro1RNx4AoNeD6pT/NmDT54pKzH/SuGlUZ46vNLa5yZee0j0aNkZ1fRZOM9Kr2N062vFQxoeadV6bsHlfZfdTG6oMZecr0pIoHXv79822XqqunXznR/WJeltM2s7JgWU62U5Wk568p1XKDsf/B/pdrKytfmf+Lc4ZU1pACxzOsybqXomUPoF0qLPypqLsIFYveR4nG2i1yTOhg+3ApbPtlAX++6BRwZ0AFitDne/eKCq0GHTIHealExpklvllUlgjNgGUkq+mhK0vm7FnD3wN62SYuv7iE/3zWFHeBf3uTv7i44M2GdnKueVb+ZL1uOhSfdNlt2fzXz7qycvIwLnKQ193I69SIxwXP3hdogjN16FfofuzNa4+Xdrppblmgbt3autGdAcIEV8S/daTvHYf9aY9vXV3TOo+HnLFnitwR8H+M+GME68FrywEVriVnVdJ2koLNHXPq2x/6Syj065sfQGPzMr6xgyfnXj725Hkx9oX52Tg/Tqg5KosOU6vwhyj5sXAujf8d0HwICsm5nQc39EfGG3G8QqzdWMkscgsDn3xzFK4a+b/Crq38j+TcoyfFtXPCd8hrGONGoeaNSCA6ZqTZWP3Ja5V7Jx2//J/Pla8uKFsxauH29a2WAuNh2MxfzLL95sljbxnSnsw0r29qWR0bu6pzGPeHEm4LgkAgguznyIcD/ItHj0LVAOj5L8g5hJQojp+G59uSluJw7O2BAfyBz3XhH+AI3iahbsAdxlXuV8g+l29g7ULHBLOeziz+WdADl/mUhavV6sNg0EUw3BBjBzEAK2LggGMUQG5c5n/UHj3KgOwi/ypUgZX/AMH8GVJofpB/bGhurNiLCH5H7CSWH3dUkHuhG+La4Tv0C/jv8RgvrKAYOJSAeCExSv6bvk+uX/vj4VgSFwrjqnPgVKicREm5rCYcIl9I+4PzNDgPaI58sZBfSo48Do1whIa3+QDO6oA9QvzkoIbXivqGoagosyhuMHDgflWxkWL+/PWbUHyD3zlr9ZrZs9atV77T33f9D3390LmpYW5XV33D5uFYnCLGoqASI9TRaaNzhFDBjQduXFnRuPLPerdUHP3ztkMk8G6RNz/4wPKtH5FzG6S6nBNeIuJJoTJFpkgNjXmIjxGa0GIekhCSFVNWBve9IgDcsDjFy+pcBjpPy6Wvny2hPTR2UsKbe/qvXe1deTZLnxwXRx6KiYFvGzaL2CO4nxJxJ4/AjdmDZSI8kkPBpEpfSTEUnf999tHbXT+vLCUFbwScub7QGzzyaUVb2SIhzLHvuE2SkOdYQzWRkh3heaQP+6kCu/PgzK3LRi3IJflLnfZc16T2ObtWFi13pZDCrd5cjwcyspurGlfoDX1mmzloN2W3TGruzDD/ElwFmWajICuFXpm8iPjlEU4io178cQCJuC90g+TsE8ZUIK63pDgX8o8Q58mReIedj50emNE344nT8U8LpOua2dQ0G7bwDx1+Wowpdfh7WiFpF4wpIRDht538b85efudMHLnEm+ETKfbSwveiFpKLUszSwjihbWFpONj7yTN7Pkv6+ODpL3pPR5HzvA6+5RPgq1AJbMJ5qKzJVxEu2+WsAjgsOkC+ev25p1+FGJ5//dSJV/nwN9/AfKj/7DP+KZyDvCHnxD0T9bSEanCA//7V48efBzP/CZjgMH8b4nFsCo49I3HCKkf5afFZdEDOeEOn5WjlMbJAzm/u7lYSS7cy9DGOn4X9wD7sB9CfMiwGOoFED/M3ICfx2WexL5gRKpfs1eO4L6W+QYOabhc0dfAD5Na9PrF3EPzRBTOldTS4jvBNIgdy+Bu4jDBqhpCBxJiBGhIkvxc1g2C/hiPB3Vs2//xP1VDz0UewRehRQuG5ZH34JeFdcuxvaLLpWF2dYBuZARm0kkL6a3Ss3XdlRsVvaOXLLxGxzv9AYlBXKQQdFxjKttjzyn0jOl5RUQ+V/0Gz0TDW0dwEs/Z76vPKph4/RXvdWbOdtC67wdvesVdnYJh6edYvNJOz7BPHTJ9Guz0WM9mpT+lcJvCoLHyXTCd3MMaMkS8BaI0qoBJXh2H5wKB+nX50vaXU1pTQmznJ1biRf3/s1HHBVE+axgEJ6/oTEhjyThb/lpXdw9+rLSmqTFR9IZeLvsoI34ZbJI4yCHv5k5oiH+KYYCXcUttn5XXue2xt/jQr7ZhsLayqGOWoz/zVgRT9wbWdPQZDDw6e2FnFpiHuDKxTQcQdL+CO+EnSM6xv5Dt8gRfGB1J9JoM7tXAiPHLQVps/d/Oetsxyc09o9EQ184fEhGr+YkWOfV/76sN6/d0sKadZsP/SkQTcX6P4JULOOUEzDF7KLxYpuYElryj6XVnwNYdzinvjoQOfPEKAPxJfW+xscMOTY7y+Yv7e5mT1/vUd/QfWRqckcEG9XvQL9krwDPleiPVIDuAk1Niii7YYAY4+/i9Tp7bWmTxpKjrVwVizIbyaXwM7V3sa2hSx60lCrCPTLWHOCI9Gn0SjT7Ixskb6RHM/e40e2RYgZTGXvFDuNwZMBmfK6NpWfzOXQpfM846rttW6mjY+sT5jvGN+fC/EBMrU2kuKmKrQ35NTdtIZqeNLzJmWR1pX7olXMnxl1x60pwxB+HBPNJLHVMNhxOAtJueKNLe5t9cxxVsztycPtien8mfI1Sz+X73OxfX8K2DP80h2BPD8DQmLXy8otfD1CaW0UBaXVvt81b5TPT0k7KnyeKpCHISxn7gSLhHHK4QuXCONR/voYV0gpe2Ddq+32ufN7GmpV5kSdLFMfFaWtJDV5g5TfOz8tii6naazHUO2TERbRJ0gFpWAigtwjFxDJr5wXNfbm/zk07+7ee2aYMDot8lt/kcpLwifgT7CeZJmCXyEWK9mSevRK5ED1vu+YSSpPsJDAtGSjSB5q9iQl9Z70F7r9tdoHNN91Q292XZDnhF6s2G7NoU/Cd9pGjinzxPIj3hPmxIVFT/syMh+xI3cD+b/7MdBx4wR+4GLNvvdw9sh8OBbUoU8EL7J3VfBGP2aEeUcfOv6n1iDR1xlcFRlVSBYpexf0XG4b0XHE5BYVFM7uqh2iphrylC3KyTOWkemFqlltjPDCKGkcOL4QJo33eAGbs9Ca7mpV2BuY9fq6mJkreZ6YsIhga5fkOc0NcjdofgvIxyRD+Uy1U/zQABGEoJwPbZJzsaNmNHKbE38biGRGTWOlJJpBEKl92zs3nYhpWn5u0Ii+1wur5X8Cb/A9VX/6E8TdlKwzVHr7j3oq3LEKOMUChUsMlqw/nyn2TaxkJDDBKT4wLwCH5BY4bsR/D/Cwn5ff8gjghtsC6vXtQSa3Vq6YJXPbM8tX1C9qjm/zkHnzc8yY0IoMFSVVMxJNe4kWTk6NZOiNlQWVsxKTt4CRguj0oi6NxXfe5bsE3LNUA4eDUK6CTAcww6pejirM5ZlzphTXX1ocNBuS3EZH9+qUrc0XVvdbt2/+qI9S5Ms2lCIuTEPmacRuDHkZFGcCIugns874Jjur5nbm+tI85h7GoR4gnH8+06PLhWm4/x41DVzcH70sOaApgf+cmLLjoF4EsdfhEIckxT+kW4Tc9lPdIkdirqeOdJ8MvHIor5fbVoXTWT8r6GKfxHKQn/nBWy4N6QC147oEo1d0CVyUvFUZ+eJ154/s2jRibMnT0L03d7eu8L4hHAJKZNs0d3fiYD4Rmyh96XkMEaiczAOn+rG8a6VA1esHedjFLtIfJzNAV/xr8PY0L2mBmlvBU2UAOFhzcKKmiWB5V0yUHwOV2T8D2vWKGHD6gR+W0Rr/BW1RlD8P4FI+45R4AKfdCOFQyHoRv6XgFw6Sw09/DVxf32bkklS2NwzZ7ptiiRG2Va/P7EzNy8mUR3HBYNcnDoxxpmTN2NyKePKtaTHGdIUSf4kRZohLt2S62JKJ88wm/E2O1dt59Rqzq7OzcZRJoto06PhLurukF7CgL/b/g9aaQi/VWgY7CNjODDic0gOBEZ+KjEBM/TNBLv1hxbVHRDRKtVxnmDQE6dWItrOxAN1i0Sr8mfOzBetSvinQP+JZSJGO/U5ccPNocqgG2pHxJi1DwmpYnhdHSjIyVCoTOZKd7Fj5A+4mZKZmmQvzlwzLcWKN2PwRlxXOPHAC37BHtYC2FAIB0X9LyJxY/0AAAAAAQAAAAEAQWDzG5BfDzz1AB8D6AAAAADSePCBAAAAANYKmy3/zf89BGcDLgAAAAgAAgAAAAAAAHjaY2BkYGA+8F+A4QRL0/+z/z+zpDMARVBACgC2YQeweNotUL8vg1EUPfe+EgmNH5W0qmn6VX/RVGjQyDcQHXTQfMLQ2m0EUzvURJgMVoM/gcEgpsZkkFiRMHWTSDrUIILPKV5y3rnvnnvf/SGbsMAjRV5Pf5AwprQTMb1EUFdgmRNY+oyIxBGTKywQPvVTL2MULfdVjjGNFkLScN+ZMyE3SGkRSc1iTA/Rq0vI6TYyWqJ/F+O0E6IYEXWb/CNLTBK2NBE3H0iaDPp1H47WkTbd5DIxA8d08Z2GIwWsygv8+kh/Bo7HQ62tzyGtW/98Ss1GRB/Yvw8FE8SAZw8h/cSgXqNDbxGQM5SkgSFyiDUiWnW/5A0BnWfvFeTVi6jWiFlYcoHwr72DvCSQk4R7x7na9qI5Zyz9usE91cgVRKVO7Zt59ximZus6ekwVfbrG2Zbh1RT78HJnBzhqM+snGY8f8idHjwAAAAAAACoAKgAqACoAKgBGAF4AjgDSASABggGQAaoBxAHuAgQCGAIkAjYCRAJoAnoCpgLiAv4DMANoA3wDvgP2BBQENgRIBFwEcASuBRoFNAVoBZQFtAXMBeIGEAYoBjQGUgZwBoAGnAa0BtoG/Ac2B1wHlgeoB8YH2gf2CBAIJgg+CFIIYgh2CIgIlAiiCNoJDAk2CWYJmAnACgAKJAo8CmYKggqOCsgK6gsQC0ALcAuSC84L9AwUDCYMQgxaDIAMmAzqDPgNSg12DYQAAHjaY2BkYGBIYfBlYGUAASYgZmQAiTkw6IEEABWjASoAeNqdUz1PG0EUHN+SAPlwg4QiqiuiiEjxYRtikKkIiosIRISdREqVs32AydmG8wXEf0ApKfgVVFSIGpJfkC5lRMkvyOy75xO2iATRas+zb+fNm327BjCBKxhkRsYBlDkTnMEzrhLsIIt1xQYevigewTS+K36APZwqfogXmVeKR3GW6eeOYdrJKh7Hc6ek+DGKzmfFT4gPFT/FkXOuOIuKqSm+wKQ5VnyJvDlR/ANj5rfin3hk/iT4l8GUuabXZbyEiyLyKOA1UQURApk5vEMXHaIe4zUcYIfYxQrHMlbhI+ToknvA6BuiEE32JMAmvhH73CmwM3nRXqTyOhXXiAZzc2nuvzTdIdWP4rCHlvhzB6q8R5WR/I3IFlkxGsLdS9keFjgW0abiV+pZzgajIVXr7IfHbngoYQ7z5FmtQXd9b7khb8NnaEn3fM6YEZ8ZgdSMWNUla+MePbc6HemHVbDqddmNxIGtFKtOUyrb3jQkEpOfrLfpNBJuk98Gd5Iu9njau/qoca/OPF92b8/aonLMrDJmOPZleDxtn7udMj25m/Z/ZFS5sq7uwp2Rm7Xd6MjL6bBjLjPsPdm+7nAkDJ9nC0X3rXb7AzMC4a3c0LCMJapE4qIt0Zj17n+O27x94qou/qxq/9Wu6otfk5uz0ZJ8Z1mtyN8yX20h/T/Py8sO6KUrd25zK6liFbt8Cy3uWFfhX6kSyBQAAAB42m3NtU5DAQBA0VOhxd3dXV4Lxb2luLtDQgIkhLAw8PXoyl3OeIX99hmT9F8PhMKhSCgqIipHTFyuPPkKFCpSrESpMuUqVKpSrUatOvUaNGrSrEWrNu06dOrSrUevPv0GDBoybEQg8X0fNSZl3IRJU6bNmDVn3oJFS5alZazIWrVm3YZNW7bt2LVn34FDR46dOHXm3IVLV67duHXnPpQTe3z5eHtK/JGMv78+B0GQ+TGZyqa/ADkHHV8AAAABWeTqrwAA)format('woff');unicode-range:U+0021-U+007E}body,caption,input,textarea,select,option,legend,fieldset{font-family:Georgia,"Times New Roman","Bitstream Vera Serif",serif;font-size:16px;line-height:1.5}.fonts-stage-1 h1,.fonts-stage-1 h2,.fonts-stage-1 h3,.fonts-stage-1 h4,.fonts-stage-1 h5{font-family:MallorySubset,sans-serif;font-weight:bold;font-style:normal}
+</style>
+<script>
+!function(){if(sessionStorage.criticalFoftDataUriFontsLoaded)document.documentElement.className+=" fonts-stage-1 fonts-stage-2";else{!function(){function e(e,t){document.addEventListener?e.addEventListener("scroll",t,!1):e.attachEvent("scroll",t)}function t(e){document.body?e():document.addEventListener?document.addEventListener("DOMContentLoaded",function t(){document.removeEventListener("DOMContentLoaded",t),e()}):document.attachEvent("onreadystatechange",function t(){"interactive"!=document.readyState&&"complete"!=document.readyState||(document.detachEvent("onreadystatechange",t),e())})}function n(e){this.a=document.createElement("div"),this.a.setAttribute("aria-hidden","true"),this.a.appendChild(document.createTextNode(e)),this.b=document.createElement("span"),this.c=document.createElement("span"),this.h=document.createElement("span"),this.f=document.createElement("span"),this.g=-1,this.b.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;",this.c.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;",this.f.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;",this.h.style.cssText="display:inline-block;width:200%;height:200%;font-size:16px;max-width:none;",this.b.appendChild(this.h),this.c.appendChild(this.f),this.a.appendChild(this.b),this.a.appendChild(this.c)}function o(e,t){e.a.style.cssText="max-width:none;min-width:20px;min-height:20px;display:inline-block;overflow:hidden;position:absolute;width:auto;margin:0;padding:0;top:-999px;left:-999px;white-space:nowrap;font:"+t+";"}function i(e){var t=e.a.offsetWidth,n=t+100;return e.f.style.width=n+"px",e.c.scrollLeft=n,e.b.scrollLeft=e.b.scrollWidth+100,e.g!==t&&(e.g=t,!0)}function a(t,n){function o(){var e=a;i(e)&&null!==e.a.parentNode&&n(e.g)}var a=t;e(t.b,o),e(t.c,o),i(t)}function s(e,t){var n=t||{};this.family=e,this.style=n.style||"normal",this.weight=n.weight||"normal",this.stretch=n.stretch||"normal"}function d(){if(null===r){var e=document.createElement("div");try{e.style.font="condensed 100px sans-serif"}catch(e){}r=""!==e.style.font}return r}function l(e,t){return[e.style,e.weight,d()?e.stretch:"","100px",t].join(" ")}var c=null,r=null,h=null;s.prototype.load=function(e,i){var s=this,d=e||"BESbswy",r=i||3e3,f=(new Date).getTime();return new Promise(function(e,i){if(null===h&&(h=!!window.FontFace),h){var u=new Promise(function(e,t){function n(){(new Date).getTime()-f>=r?t():document.fonts.load(l(s,s.family),d).then(function(t){1<=t.length?e():setTimeout(n,25)},function(){t()})}n()}),m=new Promise(function(e,t){setTimeout(t,r)});Promise.race([m,u]).then(function(){e(s)},function(){i(s)})}else t(function(){function t(){var t;(t=-1!=w&&-1!=v||-1!=w&&-1!=y||-1!=v&&-1!=y)&&((t=w!=v&&w!=y&&v!=y)||(null===c&&(t=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent),c=!!t&&(536>parseInt(t[1],10)||536===parseInt(t[1],10)&&11>=parseInt(t[2],10))),t=c&&(w==g&&v==g&&y==g||w==b&&v==b&&y==b||w==x&&v==x&&y==x)),t=!t),t&&(null!==E.parentNode&&E.parentNode.removeChild(E),clearTimeout(F),e(s))}function h(){if((new Date).getTime()-f>=r)null!==E.parentNode&&E.parentNode.removeChild(E),i(s);else{var e=document.hidden;!0!==e&&void 0!==e||(w=u.a.offsetWidth,v=m.a.offsetWidth,y=p.a.offsetWidth,t()),F=setTimeout(h,50)}}var u=new n(d),m=new n(d),p=new n(d),w=-1,v=-1,y=-1,g=-1,b=-1,x=-1,E=document.createElement("div"),F=0;E.dir="ltr",o(u,l(s,"sans-serif")),o(m,l(s,"serif")),o(p,l(s,"monospace")),E.appendChild(u.a),E.appendChild(m.a),E.appendChild(p.a),document.body.appendChild(E),g=u.a.offsetWidth,b=m.a.offsetWidth,x=p.a.offsetWidth,h(),a(u,function(e){w=e,t()}),o(u,l(s,'"'+s.family+'",sans-serif')),a(m,function(e){v=e,t()}),o(m,l(s,'"'+s.family+'",serif')),a(p,function(e){y=e,t()}),o(p,l(s,'"'+s.family+'",monospace'))})})},"undefined"!=typeof module?module.exports=s:(window.FontFaceObserver=s,window.FontFaceObserver.prototype.load=s.prototype.load)}();var e=new FontFaceObserver("MallorySubset");Promise.all([e.load()]).then(function(){document.documentElement.className+=" fonts-stage-1";var e=new FontFaceObserver("Mallory"),t=new FontFaceObserver("Calluna");Promise.all([e.load(),t.load()]).then(function(){document.documentElement.className+=" fonts-stage-2",sessionStorage.criticalFoftDataUriFontsLoaded=!0})})}}();
+</script>
+<title>The Courts Won’t End Gerrymandering. Eric Holder Has a Plan to Fix It Without Them. &#8211; Mother Jones</title>
+<!-- Jetpack Site Verification Tags -->
+<meta name="google-site-verification" content="Vszdhhc4evgm_TsXnyu3OflD21DCmCMnElpbSe18Jmg" />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Mother Jones &raquo; Feed" href="https://www.motherjones.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Mother Jones &raquo; Comments Feed" href="https://www.motherjones.com/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.motherjones.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.2"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0' href='https://www.motherjones.com/_static/??-eJyVzt0OgjAMBeAXckyC6JXxUcgYVQrdT9ZOwts7lVsTuTtNzndSvUSF3lIegLVl1gOy6J6CnRVhn0xaNctKUDn0VSkcdBE2eAEvWkZwxblQQpqC3zZ2AzOMwBj8HhOekMis/5IYWJSAi2SknIYZ5Dt0z0TdgoOMnUmC9sfrLqtI+YGe9QQSjZ0/esvv+s1d6/ZcX5pje2pe9n2CGA==' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.motherjones.com/wp-includes/js/jquery/jquery.js?m=1561135307g'></script>
+<link rel='https://api.w.org/' href='https://www.motherjones.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.motherjones.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.motherjones.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 5.2.2" />
+<link rel="canonical" href="https://www.motherjones.com/politics/2019/07/the-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them/" />
+<link rel='shortlink' href='https://www.motherjones.com/?p=754427' />
+<link rel="alternate" type="application/json+oembed" href="https://www.motherjones.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.motherjones.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F&#038;format=xml" />
+			<meta property="fb:pages" content="7642602143" />
+			<style type='text/css'>img#wpstats{display:none}</style><meta property="og:url" content="https://www.motherjones.com/politics/2019/07/the-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The courts won&#039;t end gerrymandering. Eric Holder has a plan to fix it without them." />
+<meta property="og:description" content="While Democrats are fixated on 2020, Holder is fighting for fairer maps in 2021 and beyond." />
+<meta property="og:image" content="https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?w=1200&amp;h=630&amp;crop=1" />
+<meta property="article:published" content="2019-07-01T06:00:24-04:00" />
+<meta property="article:modified" content="2019-07-01T17:04:11-04:00" />
+<meta property="article:section" content="Politics" />
+<meta property="article:tag" content="2016 Elections" />
+<meta property="article:tag" content="2018 Elections" />
+<meta property="article:tag" content="2020 Elections" />
+<meta property="article:tag" content="Bernie Sanders" />
+<meta property="article:tag" content="Civil Liberties" />
+<meta property="article:tag" content="Congress" />
+<meta property="article:tag" content="Corporations" />
+<meta property="article:tag" content="Dark Money" />
+<meta property="article:tag" content="Elections" />
+<meta property="article:tag" content="Inequality" />
+<meta property="article:tag" content="Money in Politics" />
+<meta property="article:tag" content="Scott Walker" />
+<meta property="article:tag" content="Stacey Abrams" />
+<meta property="article:tag" content="Supreme Court" />
+<meta property="article:tag" content="Voting Rights" />
+<meta property="og:site_name" content="Mother Jones" />
+<meta property="fb:admins" content="13301307,670317733,1198876232,38509772,106892,2907757,306289,602422192,4101301,513450539" />
+<meta property="fb:pages" content="7642602143" />
+<meta property="fb:pages" content="1072916546168933" />
+<meta property="fb:pages" content="416261761736915" />
+<meta property="fb:pages" content="149244498452823" />
+<meta property="fb:pages" content="111917028836008" />
+<meta property="twitter:url" content="https://www.motherjones.com/politics/2019/07/the-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them/" />
+<meta property="twitter:site" content="@Motherjones" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta name="twitter:dnt" content="on" />			<style type="text/css">
+				/* If html does not have either class, do not show lazy loaded images. */
+				html:not( .jetpack-lazy-images-js-enabled ):not( .js ) .jetpack-lazy-image {
+					display: none;
+				}
+			</style>
+			<script>
+				document.documentElement.classList.add(
+					'jetpack-lazy-images-js-enabled'
+				);
+			</script>
+		<link rel="icon" href="https://www.motherjones.com/wp-content/uploads/2017/09/cropped-favicon-512x512.png?w=32" sizes="32x32" />
+<link rel="icon" href="https://www.motherjones.com/wp-content/uploads/2017/09/cropped-favicon-512x512.png?w=192" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://www.motherjones.com/wp-content/uploads/2017/09/cropped-favicon-512x512.png?w=180" />
+<meta name="msapplication-TileImage" content="https://www.motherjones.com/wp-content/uploads/2017/09/cropped-favicon-512x512.png?w=270" />
+</head>
+
+<body class="post-template-default single single-post postid-754427 single-format-standard mj_content_type-full_width_article">
+<!-- Google Tag Manager (noscript) -->
+			<noscript>
+				<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55MKBQW&#038;gtm_auth=1rT9WxKtoVrlrpfysHCQ-Q&#038;gtm_preview=env-2&#038;gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden">
+				</iframe>
+			</noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<a href="#main" class="visuallyhidden">Skip to main content</a>
+<nav id="navbar" role="navigation">
+	<ul>
+		<li class="logo">
+			<a href="/" aria-label="Home" data-ga-label="Home" data-ga-category="Navbar|Floating">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 813.67 165.61"><path d="M53.72 97.86h-.39l-8.05-86.64H0v152.49h28.78v-85.9l-1.67-36.19 2.05 14.73 14.39 107.36h19.18L77.12 56.35l2.05-14.73-1.66 36.19v-.04 85.94h28.77V11.22H62.54l-8.82 86.64M391.4 87.12c0-33.06-1.23-58.67-34-58.67S321 61.67 321 91.17c0 37.54 5.56 74.1 39.71 74.1 19.34 0 30.18-17.68 30.18-17.68v-31.07s-8.4 21.23-24.62 21.23c-11.32 0-17.65-10.58-17.65-27.83h42c.01-3.49.78-13.92.78-22.8zm-42.79-3.22c0-13.9 1.92-24.9 9.6-24.9 8.25 0 10.17 12.31 10.17 24.94zM148.49 28.44c-38.75 0-38.75 27.18-38.75 65.11 0 43.53 3.93 71.72 38.75 71.72s38.75-26 38.75-75c.01-35.87.01-61.83-38.75-61.83zm0 104.47c-9.21 0-10-5-10-36.06 0-29.34.77-36.06 10-36.06s10 7.08 10 36.06c-.02 27.23-.79 36.07-10 36.07zM442.34 28.44c-9.37 0-13.73 8.49-16 17.24l-2.56 19.49V30h-29v133.7h31.08V92.19c0-26 7.86-30.34 15.94-30.34 11.79 0 14.55 14.16 14.55 14.16V35.77s-5.48-7.33-14.01-7.33zm-145.72 0c-10.55 0-17.44 7.48-19.7 18.65l-2.17 12.5V11.22h-31.08v152.49h31.08V74.29c0-5.13.44-13.88 6.33-13.88s5.37 7.57 5.37 14.67v88.63h31.08V50.92c0-11.48-4.8-22.48-20.91-22.48zm261.29.34c-38.75 0-38.75 27.18-38.75 65.11 0 43.53 3.93 71.72 38.75 71.72s38.75-26 38.75-75c0-35.87 0-61.83-38.75-61.83zm0 104.47c-9.21 0-10-5-10-36.06 0-29.34.77-36.06 10-36.06s10 7.08 10 36.06c-.03 27.22-.8 36.06-10 36.06zm95.16-104.81c-10.55 0-17.44 7.48-19.7 18.65l-2.18 12.5V30h-31.07v133.7h31.08V74.29c0-5.13.44-13.88 6.33-13.88s5.37 7.59 5.37 14.67v88.63H674V50.92c0-11.48-4.82-22.48-20.93-22.48zm-196.65 91.04v35.95s5.38 9.57 24.19 9.57c28.22 0 35.09-23.13 35.09-48.79v-105h-28.78v92.09c0 26-7.86 30.34-15.94 30.34-11.8-.01-14.56-14.16-14.56-14.16zm294.37-2.96c2.8 10.71 8.62 21.34 21.82 21.34 8.73 0 12.83-3 13.24-11.5.89-18.69-34.34-27.06-34.34-59.75 0-28.46 13.87-38.16 33.77-38.16 11.63 0 23.26 7.85 26.62 15.53V76c-3.36-9.36-10.27-20.08-19.8-20.08-7.55 0-11.17 3.6-11.51 10.72-.92 19.3 33.09 26.18 33.09 56.64 0 25.71-9 42-34.34 42-20.13 0-28.54-17.68-28.54-17.68zm-2.95-29.4c0-33.06-1.23-58.67-34-58.67s-36.45 33.23-36.45 62.73c0 37.54 5.56 74.1 39.71 74.1 19.34 0 30.18-17.68 30.18-17.68v-31.08s-8.4 21.23-24.62 21.23c-11.32 0-17.65-10.58-17.65-27.83h42c.07-3.49.83-13.92.83-22.8zm-42.78-3.22c0-13.9 1.94-24.9 9.6-24.9 8.25 0 10.17 12.31 10.17 24.94z"/><path class="cls-1" d="M221.79 0l-37 33.52s5.88 14.91 5.88 40.66v65.18c0 18.45 10.74 25.93 25.9 25.93 10.43 0 17.28-2.83 23.6-8.49v-27.63c-2.51 4.56-5.31 7-9.72 7-4.67 0-8.69-3.38-8.69-10.79V58.2h18.44V30h-18.41z"/></svg>
+			</a>
+		</li>
+		<div class="social-container navbar">
+			<ul>
+				<li class="facebook"><a class="social" href="http://facebook.com/sharer.php?u=https%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F" target="_blank" data-ga-label="FacebookShare" data-ga-category="Navbar|Floating" aria-label="Share on Facebook"><i class="icon-facebook"></i><span class="share-text">Share on Facebook</span></a></li>
+				<li class="twitter"><a class="social" target="_blank" aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=The%20courts%20won%27t%20end%20gerrymandering.%20Eric%20Holder%20has%20a%20plan%20to%20fix%20it%20without%20them.&url=https%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F&amp;via=MotherJones" data-ga-label="TwitterShare" data-ga-category="Navbar|Floating"><i class="icon-twitter"></i><span class="share-text">Share on Twitter</span></a></li><li class="email"><a href="mailto:?subject=The%20Courts%20Won%E2%80%99t%20End%20Gerrymandering.%20Eric%20Holder%20Has%20a%20Plan%20to%20Fix%20It%20Without%20Them.&body=On%20a%20frigid%20March%20morning%2C%20Eric%20Holder%20strode%20into%20a%20brick%20union%20hall%20on%20the%20west%20side%20of%20Milwaukee%2C%20across%20from%20a%20credit%20union%20and%20an%20auto%20body%20shop.%20The%20Merrill%20Park%20neighborhood%20was%20once%20the%20center%20of%20the%20city%E2%80%99s%20Irish%20political%20machine%2C%20filled%20with%20stately%20Victorian%20houses%E2%80%94including%20the%20childhood%20home%20of%20Spencer%20Tracy%E2%80%94but%20it%20%5B%E2%80%A6%5Dhttps%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F" aria-label="Share via Email" target="_blank" data-ga-label="Email" data-ga-category="Navbar|Floating"><i class="icon-mail"></i><span class="share-text">Email</span></a></li><li class="print"><a href="#" title="Print this article" rel="nofollow" data-ga-category="Navbar|Floating" data-ga-label="Print" onclick="window.print(); return false;"><i class="icon-print"></i><span class="share-text">Print</span></a></li><li class="comment"><a href="#comment-container" aria-label="Comment" data-ga-label="Comment" data-ga-category="Navbar|Floating" onclick="mj_display_comments();"><i class="icon-comment"></i><span class="share-text">Comments</span></a></li></ul></div>		<li class="menu-button">
+ 			<a
+				data-ga-label="MenuExpand"
+				data-ga-category="Navbar|Floating"
+				tabindex="0"
+				 onclick="expandMenu();"			>
+				<svg id="nav-menu-svg" width="36px" height="36px" enable-background="new 0 0 125 125" version="1.1" viewBox="0 0 125 125" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+					<path d="m0 100.87"/>
+					<rect y="0" width="125" height="20"/>
+					<rect y="40" width="125" height="20"/>
+					<rect y="80" width="125" height="20"/>
+				</svg>
+				<svg id="nav-close-svg" width="34px" height="34px" x="0px" y="0px" version="1.1" viewBox="0 0 19.8 19.8" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+					<polygon points="19.8,2.4 17.4,0 9.9,7.5 2.4,0 0,2.4 7.5,9.9 0,17.4 2.4,19.8 9.9,12.3 17.4,19.8 19.8,17.4 12.3,9.9 "/>
+				</svg>
+			</a>
+		</li>
+		<li class="donate-link article-page desktop">
+			<a href="https://secure.actblue.com/donate/motherjones/?refcode=7HEGP002&amount=50.00&recurring=0"
+				title="Donate"
+				target="_blank"
+				data-ga-label="Donate"
+				data-ga-category="Navbar|Floating"
+			>Donate</a>
+		</li>
+		<li class="donate-link article-page mobile" style="display:none;">
+			<a href="https://secure.actblue.com/donate/motherjones/?refcode=7HEGP007&amount=50.00&recurring=0"
+				title="Donate"
+				target="_blank"
+				data-ga-label="Donate"
+				data-ga-category="Navbar|Floating"
+			>Donate</a>
+		</li>
+		<li class="subscribe-link article-page hidden-xxs">
+			<a href="https://store.motherjones.com/pages/magazine-subscriptions"
+				title="Subscribe"
+				target="_blank"
+				data-ga-label="Subscribe"
+				data-ga-category="Navbar|Floating"
+			>Subscribe</a>
+		</li>
+	</ul>
+	<div id="combined-nav">
+		<div id="mj_floatingnav_select" class="menu-top-nav-container"><ul class="mj_topnav_options"><li>
+<form
+	role="search"
+	method="get"
+	class="search-form"
+	action="https://www.motherjones.com/"
+	data-ga-label="Search"
+	data-ga-category="Search"
+>
+	<label>
+		<input type="search" class="search-field" placeholder="Search&hellip;" value="" name="s" title="Search for:" />
+	</label>
+	<input type="submit" class="search-submit" value="Submit"></input>
+	<button type="submit" aria-label="Search"><i class="icon-search"></i></button>
+</form>
+</li><li id="menu-item-762694" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762694"><a href="https://www.motherjones.com/politics/2019/06/bernie-sanders-climate-plans-2020-green-new-deal/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/bernie-sanders-climate-plans-2020-green-new-deal/" data-ga-label="NavPosition_1|bernie-sanders">Bernie Sanders</a></li>
+<li id="menu-item-762695" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762695"><a href="https://www.motherjones.com/politics/2019/06/the-supreme-courts-gerrymandering-ruling-is-a-doomsday-scenario-for-voting-rights/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/the-supreme-courts-gerrymandering-ruling-is-a-doomsday-scenario-for-voting-rights/" data-ga-label="NavPosition_2|supreme-court">Supreme Court</a></li>
+<li id="menu-item-762693" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762693"><a href="https://www.motherjones.com/politics/2019/06/cbp-migrant-children-clint/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/cbp-migrant-children-clint/" data-ga-label="NavPosition_3|children-at-the-border">Children at the Border</a></li>
+<li id="menu-item-762696" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762696"><a href="https://www.motherjones.com/politics/2019/06/we-just-got-a-ton-of-clarity-on-where-the-democratic-candidates-stand-on-medicare-for-all/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/we-just-got-a-ton-of-clarity-on-where-the-democratic-candidates-stand-on-medicare-for-all/" data-ga-label="NavPosition_4|medicare-for-all">Medicare for All</a></li>
+</ul></div>		<div id="mj_menu_select" class="menu-floating-navbar-container"><ul id="mj_menu_options"><li id="menu-item-405555" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-405555"><a href="https://www.motherjones.com/./politics/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/./politics/" data-ga-label="NavPosition_1">Politics</a></li>
+<li id="menu-item-405556" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405556"><a href="https://www.motherjones.com/./environment/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/./environment/" data-ga-label="NavPosition_2">Environment</a></li>
+<li id="menu-item-405558" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405558"><a href="https://www.motherjones.com/./crime-justice/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/./crime-justice/" data-ga-label="NavPosition_3">Crime and Justice</a></li>
+<li id="menu-item-405559" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405559"><a href="https://www.motherjones.com/./food/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/./food/" data-ga-label="NavPosition_4">Food</a></li>
+<li id="menu-item-405557" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405557"><a href="https://www.motherjones.com/./media/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/./media/" data-ga-label="NavPosition_5">Media</a></li>
+<li id="menu-item-405563" class="menu-item menu-item-type-taxonomy menu-item-object-post_tag menu-item-405563"><a href="https://www.motherjones.com/topics/investigations/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/topics/investigations/" data-ga-label="NavPosition_6">Investigations</a></li>
+<li id="menu-item-405562" class="menu-item menu-item-type-taxonomy menu-item-object-post_tag menu-item-405562"><a href="https://www.motherjones.com/topics/photoessays/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/topics/photoessays/" data-ga-label="NavPosition_7">Photos</a></li>
+<li id="menu-item-615549" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-615549"><a href="/magazine" data-ga-category="Navbar|Floating" data-ga-action="/magazine" data-ga-label="NavPosition_8">Magazine</a></li>
+<li id="menu-item-405598" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-405598"><a href="https://www.motherjones.com/podcasts/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/podcasts/" data-ga-label="NavPosition_9">Podcasts</a></li>
+<li id="menu-item-579708" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-579708"><a href="https://www.motherjones.com/newsletters/" data-ga-category="Navbar|Floating" data-ga-action="https://www.motherjones.com/newsletters/" data-ga-label="NavPosition_10">Newsletters</a></li>
+</ul></div>	</div>
+</nav>
+<!-- end following navbar -->
+<div id="overlay-ad-bg" class="hidden"><div class="overlay-ad-wrapper"><p class="overlay-ad-aux"><span class="ad-label">Advertisement</span><span class="close">Close X</span></p><div class='dfw-unit' data-adunit='Overlay' id='Overlay' data-size-mapping='mapping1'></div></div></div><div id="TopROS970x250" class="ad-unit col-12"><div class='dfw-unit' data-adunit='ROS_ATF_970x250' id='ROS_ATF_970x250' data-size-mapping='mapping2'></div></div><nav id="topnav" role="navigation">
+	<div class="grid">
+		<div id="topic-menu" class="grid col-8">
+			<div id="mj_topnav_select" class="menu-top-nav-container"><ul class="mj_topnav_options"><li>
+<form
+	role="search"
+	method="get"
+	class="search-form"
+	action="https://www.motherjones.com/"
+	data-ga-label="Search"
+	data-ga-category="Search"
+>
+	<label>
+		<input type="search" class="search-field" placeholder="Search&hellip;" value="" name="s" title="Search for:" />
+	</label>
+	<input type="submit" class="search-submit" value="Submit"></input>
+	<button type="submit" aria-label="Search"><i class="icon-search"></i></button>
+</form>
+</li><li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762694"><a href="https://www.motherjones.com/politics/2019/06/bernie-sanders-climate-plans-2020-green-new-deal/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/bernie-sanders-climate-plans-2020-green-new-deal/" data-ga-label="NavPosition_1|bernie-sanders">Bernie Sanders</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762695"><a href="https://www.motherjones.com/politics/2019/06/the-supreme-courts-gerrymandering-ruling-is-a-doomsday-scenario-for-voting-rights/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/the-supreme-courts-gerrymandering-ruling-is-a-doomsday-scenario-for-voting-rights/" data-ga-label="NavPosition_2|supreme-court">Supreme Court</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762693"><a href="https://www.motherjones.com/politics/2019/06/cbp-migrant-children-clint/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/cbp-migrant-children-clint/" data-ga-label="NavPosition_3|children-at-the-border">Children at the Border</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-762696"><a href="https://www.motherjones.com/politics/2019/06/we-just-got-a-ton-of-clarity-on-where-the-democratic-candidates-stand-on-medicare-for-all/" data-ga-category="Topnav" data-ga-action="https://www.motherjones.com/politics/2019/06/we-just-got-a-ton-of-clarity-on-where-the-democratic-candidates-stand-on-medicare-for-all/" data-ga-label="NavPosition_4|medicare-for-all">Medicare for All</a></li>
+</ul></div>		</div>
+		<div class="subscribe-link col-4">
+			<a
+				href="https://store.motherjones.com/pages/magazine-subscriptions"
+				title="Subscribe"
+				data-ga-label="Subscribe|Text"
+				data-ga-category="Masthead">
+
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						 viewbox="0 0 120 93" style="enable-background:new 0 0 120 93; max-width:1.5rem;" xml:space="preserve">
+					<path d="M113.97,12.88V0.37h-4.01c-1.58,0-35.61,0.3-50.15,23.55C45.26,0.67,11.23,0.37,9.65,0.37H5.64v12.52
+						c-3.72-0.32-6.02-0.37-6.02-0.37v80.24H59.8h60.18V12.51C119.98,12.51,117.68,12.56,113.97,12.88z M105.94,8.63v5.18
+						c-11.46,1.65-27.54,5.35-38.83,13.68C76.98,12.86,97.3,9.42,105.94,8.63z M13.66,8.62C22.3,9.4,42.63,12.8,52.5,27.5
+						c-11.29-8.34-27.37-12.04-38.84-13.69V8.62z"/>
+				</svg>
+				<span>Subscribe to our magazine</span>
+			</a>
+		</div>
+	</div>
+</nav>
+<!-- end following navbar -->
+<div id="page" class="grid">
+	<header id="masthead" class="site-header col-12">
+		<section class="banner grid" role="banner">
+			<div class="logo col-4">
+				<a href="/" title="Return to Mother Jones Homepage"
+					data-ga-label="Home"
+					data-ga-category="Masthead"
+				>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 813.67 165.61"><path d="M53.72 97.86h-.39l-8.05-86.64H0v152.49h28.78v-85.9l-1.67-36.19 2.05 14.73 14.39 107.36h19.18L77.12 56.35l2.05-14.73-1.66 36.19v-.04 85.94h28.77V11.22H62.54l-8.82 86.64M391.4 87.12c0-33.06-1.23-58.67-34-58.67S321 61.67 321 91.17c0 37.54 5.56 74.1 39.71 74.1 19.34 0 30.18-17.68 30.18-17.68v-31.07s-8.4 21.23-24.62 21.23c-11.32 0-17.65-10.58-17.65-27.83h42c.01-3.49.78-13.92.78-22.8zm-42.79-3.22c0-13.9 1.92-24.9 9.6-24.9 8.25 0 10.17 12.31 10.17 24.94zM148.49 28.44c-38.75 0-38.75 27.18-38.75 65.11 0 43.53 3.93 71.72 38.75 71.72s38.75-26 38.75-75c.01-35.87.01-61.83-38.75-61.83zm0 104.47c-9.21 0-10-5-10-36.06 0-29.34.77-36.06 10-36.06s10 7.08 10 36.06c-.02 27.23-.79 36.07-10 36.07zM442.34 28.44c-9.37 0-13.73 8.49-16 17.24l-2.56 19.49V30h-29v133.7h31.08V92.19c0-26 7.86-30.34 15.94-30.34 11.79 0 14.55 14.16 14.55 14.16V35.77s-5.48-7.33-14.01-7.33zm-145.72 0c-10.55 0-17.44 7.48-19.7 18.65l-2.17 12.5V11.22h-31.08v152.49h31.08V74.29c0-5.13.44-13.88 6.33-13.88s5.37 7.57 5.37 14.67v88.63h31.08V50.92c0-11.48-4.8-22.48-20.91-22.48zm261.29.34c-38.75 0-38.75 27.18-38.75 65.11 0 43.53 3.93 71.72 38.75 71.72s38.75-26 38.75-75c0-35.87 0-61.83-38.75-61.83zm0 104.47c-9.21 0-10-5-10-36.06 0-29.34.77-36.06 10-36.06s10 7.08 10 36.06c-.03 27.22-.8 36.06-10 36.06zm95.16-104.81c-10.55 0-17.44 7.48-19.7 18.65l-2.18 12.5V30h-31.07v133.7h31.08V74.29c0-5.13.44-13.88 6.33-13.88s5.37 7.59 5.37 14.67v88.63H674V50.92c0-11.48-4.82-22.48-20.93-22.48zm-196.65 91.04v35.95s5.38 9.57 24.19 9.57c28.22 0 35.09-23.13 35.09-48.79v-105h-28.78v92.09c0 26-7.86 30.34-15.94 30.34-11.8-.01-14.56-14.16-14.56-14.16zm294.37-2.96c2.8 10.71 8.62 21.34 21.82 21.34 8.73 0 12.83-3 13.24-11.5.89-18.69-34.34-27.06-34.34-59.75 0-28.46 13.87-38.16 33.77-38.16 11.63 0 23.26 7.85 26.62 15.53V76c-3.36-9.36-10.27-20.08-19.8-20.08-7.55 0-11.17 3.6-11.51 10.72-.92 19.3 33.09 26.18 33.09 56.64 0 25.71-9 42-34.34 42-20.13 0-28.54-17.68-28.54-17.68zm-2.95-29.4c0-33.06-1.23-58.67-34-58.67s-36.45 33.23-36.45 62.73c0 37.54 5.56 74.1 39.71 74.1 19.34 0 30.18-17.68 30.18-17.68v-31.08s-8.4 21.23-24.62 21.23c-11.32 0-17.65-10.58-17.65-27.83h42c.07-3.49.83-13.92.83-22.8zm-42.78-3.22c0-13.9 1.94-24.9 9.6-24.9 8.25 0 10.17 12.31 10.17 24.94z"/><path class="cls-1" d="M221.79 0l-37 33.52s5.88 14.91 5.88 40.66v65.18c0 18.45 10.74 25.93 25.9 25.93 10.43 0 17.28-2.83 23.6-8.49v-27.63c-2.51 4.56-5.31 7-9.72 7-4.67 0-8.69-3.38-8.69-10.79V58.2h18.44V30h-18.41z"/></svg>
+				</a>
+			</div>
+			<div class="subscribe-donate col-8">
+				<a
+					href="https://secure.actblue.com/donate/motherjones?refcode=7HEGP001&amount=50.00&recurring=0"
+					title="Donate"
+					data-ga-label="Donate"
+					data-ga-category="Masthead"
+				>
+					<button class="donate">
+						Donate
+					</button>
+				</a>
+				<div id="mj-nonprofit-tagline">Smart, Fearless Journalism</div>
+			</div>
+		</section>
+		<nav id="static-navbar" role="navigation">
+	<a name="navigation" id="navigation"></a>
+	<ul class="menu">
+		<li id="menu-item-405545" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-405545"><a href="https://www.motherjones.com/./politics/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/./politics/" data-ga-label="NavPosition_1">Politics</a></li>
+<li id="menu-item-405546" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405546"><a href="https://www.motherjones.com/./environment/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/./environment/" data-ga-label="NavPosition_2">Environment</a></li>
+<li id="menu-item-405549" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405549"><a href="https://www.motherjones.com/./crime-justice/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/./crime-justice/" data-ga-label="NavPosition_3">Crime and Justice</a></li>
+<li id="menu-item-405547" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405547"><a href="https://www.motherjones.com/./food/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/./food/" data-ga-label="NavPosition_4">Food</a></li>
+<li id="menu-item-405548" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-405548"><a href="https://www.motherjones.com/./media/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/./media/" data-ga-label="NavPosition_5">Media</a></li>
+<li id="menu-item-405551" class="menu-item menu-item-type-taxonomy menu-item-object-post_tag menu-item-405551"><a href="https://www.motherjones.com/topics/investigations/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/topics/investigations/" data-ga-label="NavPosition_6">Investigations</a></li>
+<li id="menu-item-405550" class="menu-item menu-item-type-taxonomy menu-item-object-post_tag menu-item-405550"><a href="https://www.motherjones.com/topics/photoessays/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/topics/photoessays/" data-ga-label="NavPosition_7">Photos</a></li>
+<li id="menu-item-405552" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-405552"><a href="/magazine" data-ga-category="Masthead" data-ga-action="/magazine" data-ga-label="NavPosition_8">Magazine</a></li>
+<li id="menu-item-745391" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-745391"><a href="https://www.motherjones.com/podcasts/" data-ga-category="Masthead" data-ga-action="https://www.motherjones.com/podcasts/" data-ga-label="NavPosition_9">Podcasts</a></li>
+		<li role="search" id="search-li" tabindex="0">
+			<i class="icon-search"></i>
+
+<form
+	role="search"
+	method="get"
+	class="search-form"
+	action="https://www.motherjones.com/"
+	data-ga-label="Search"
+	data-ga-category="Search"
+>
+	<label>
+		<input type="search" class="search-field" placeholder="Search&hellip;" value="" name="s" title="Search for:" />
+	</label>
+	<input type="submit" class="search-submit" value="Submit"></input>
+	<button type="submit" aria-label="Search"><i class="icon-search"></i></button>
+</form>
+		</li>
+	</ul>
+</nav>
+<div id="ticker" class="col-12"></div>	</header><!-- .site-header -->
+
+<script>var mj_pub_date=1561960824;</script><header class="entry-header media-header"><div class="mj-top-flag"><ul class="post-categories">
+	<li><a href="https://www.motherjones.com/./politics/" rel="category tag">Politics</a></li></ul></div><div id="overlay-data"><h1 class="entry-title">The Courts Won’t End Gerrymandering. Eric Holder Has a Plan to Fix It Without Them.</h1><h3 class="dek">While Democrats are fixated on 2020, Holder is fighting for fairer maps in 2021 and beyond.</h3><p class="byline-dateline">
+	<span class="byline"><a href="https://www.motherjones.com/author/ari-berman/" title="Posts by Ari Berman">Ari Berman</a></span><span class="dateline"><a href="https://www.motherjones.com/mag/2019/07/toc/">July/August 2019 Issue</a></span></p>
+	</div>
+	<div id="header-image">
+		<img width="2000" height="1124" src="https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?w=2000&amp;h=1124&amp;crop=1" class="attachment-full_width_giant size-full_width_giant jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?w=2000&amp;h=1124&amp;crop=1&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />	</div>
+<meta itemprop="description" content="On a frigid March morning, Eric Holder strode into a brick union hall on the west side of Milwaukee, across from a credit union and an auto body shop. The Merrill Park neighborhood was once the center of the city’s Irish political machine, filled with stately Victorian houses—including the childhood home of Spencer Tracy—but it [&hellip;]" />
+<meta itemprop="datePublished" content="2019-07-01T06:00:24-04:00" />
+<meta itemprop="dateModified" content="2019-07-01T17:04:11-04:00" />
+<meta itemprop="image" content="https://www.motherjones.com/wp-content/uploads/2019/06/20190628_holder_web_2000.jpg?w=208&amp;h=117&amp;crop=1" /></header>
+
+<main id="main" class="site-main" role="main">	<section class="main-col col-12">
+		<article class="full-width entry-content">
+			<style>.mj-two-up figure:first-of-type { padding-right: .5rem; } .mj-two-up figure:last-of-type { padding-left: .5rem; }</style><div class="social-container top hidden-md hidden-sm hidden-xs hidden-xxs">
+			<ul>
+				<li class="facebook"><a class="social" href="http://facebook.com/sharer.php?u=https%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F" target="_blank" data-ga-label="FacebookShare" data-ga-category="TopOfArticle" aria-label="Share on Facebook"><i class="icon-facebook"></i><span class="share-text">Share on Facebook</span></a></li>
+				<li class="twitter"><a class="social" target="_blank" aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=The%20courts%20won%27t%20end%20gerrymandering.%20Eric%20Holder%20has%20a%20plan%20to%20fix%20it%20without%20them.&url=https%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F&amp;via=MotherJones" data-ga-label="TwitterShare" data-ga-category="TopOfArticle"><i class="icon-twitter"></i><span class="share-text">Share on Twitter</span></a></li><li class="email"><a href="mailto:?subject=The%20Courts%20Won%E2%80%99t%20End%20Gerrymandering.%20Eric%20Holder%20Has%20a%20Plan%20to%20Fix%20It%20Without%20Them.&body=On%20a%20frigid%20March%20morning%2C%20Eric%20Holder%20strode%20into%20a%20brick%20union%20hall%20on%20the%20west%20side%20of%20Milwaukee%2C%20across%20from%20a%20credit%20union%20and%20an%20auto%20body%20shop.%20The%20Merrill%20Park%20neighborhood%20was%20once%20the%20center%20of%20the%20city%E2%80%99s%20Irish%20political%20machine%2C%20filled%20with%20stately%20Victorian%20houses%E2%80%94including%20the%20childhood%20home%20of%20Spencer%20Tracy%E2%80%94but%20it%20%5B%E2%80%A6%5Dhttps%3A%2F%2Fwww.motherjones.com%2Fpolitics%2F2019%2F07%2Fthe-courts-wont-end-gerrymandering-eric-holder-has-a-plan-to-fix-it-without-them%2F" aria-label="Share via Email" target="_blank" data-ga-label="Email" data-ga-category="TopOfArticle"><i class="icon-mail"></i><span class="share-text">Email</span></a></li><li class="print"><a href="#" title="Print this article" rel="nofollow" data-ga-category="TopOfArticle" data-ga-label="Print" onclick="window.print(); return false;"><i class="icon-print"></i><span class="share-text">Print</span></a></li><li class="comment"><a href="#comment-container" aria-label="Comment" data-ga-label="Comment" data-ga-category="TopOfArticle" onclick="mj_display_comments();"><i class="icon-comment"></i><span class="share-text">Comments</span></a></li></ul></div>
+			<div id="fullwidth-body">
+				<p class="p1"><span class="s1"><span class="section-lead"><b>On a frigid March</b></span> morning, Eric Holder strode into a brick union hall on the west side of Milwaukee, across from a credit union and an auto body shop. The <a href="http://web.archive.org/web/20190120134304/http://neighborhoodsinmilwaukee.org/Merrill%20Park.pdf">Merrill Park</a> neighborhood was once the <a href="https://web.archive.org/web/20190204183217/https://emke.uwm.edu/entry/merrill-park/">center</a> of the city’s Irish political machine, filled with stately Victorian houses—including the childhood home of <a href="http://www.neighborhoodsinmilwaukee.org/Merrill%20Park.pdf">Spencer Tracy</a>—but it was now mostly African American and economically depressed.</span></p>
+<p class="p1"><span class="s1">Holder had dressed down from his usual suit and tie: He wore a black fleece jacket, white button-down, and dark blue jeans. He was warmly greeted by Angela Lang, the 29-year-old executive director of <a href="https://www.blocbybloc.org/staff">Black Leaders Organ­izing for Communities</a> (BLOC), a local group that works to increase voter turnout in Milwaukee’s black neighborhoods from an office in the union hall’s basement, which was filled with campaign flyers and maps. It was the 68-year-old former attorney general’s <a href="https://www.wpr.org/former-us-attorney-general-eric-holder-campaigns-evers-barnes-milwaukee">third visit</a> to Milwaukee in a year, and Lang addressed him as “our No. 1 cousin.”</span></p>
+<p class="p1"><span class="s1">The reason for Holder’s visits was Wisconsin’s <a href="https://www.motherjones.com/politics/2017/10/voter-suppression-wisconsin-election-2016/">assault</a> on voting rights. The Wisconsin GOP had <a href="https://web.archive.org/web/20190429043402/https://www.nytimes.com/2017/09/25/us/wisconsin-voters.html">passed</a> a voter ID law, designed to depress Democratic participation, that took effect before the 2016 election. As a result, turnout in Milwaukee’s black neighborhoods dropped by more than 20 percent.</span></p>
+<div class="mj-video"><span class="mj-related-tag">Video</span></p>
+<div class="mj-related-inner">
+<h3>Eric Holder&#039;s Bold Plan to Fix America</h3>
+<div><iframe src="https://www.youtube.com/embed/tKTLePycBDE?rel=0&#038;disablekb=1&#038;showinfo=0&#038;modestbranding=0&#038;html5=1&#038;iv_load_policy=3&#038;autoplay=0&#038;end=0&#038;loop=0&#038;playsinline=0&#038;start=0&#038;nocookie=false&#038;enablejsapi=1&#038;origin=https%3A%2F%2Fwww.motherjones.com&#038;widgetid=1" width="630" height="354" frameborder="0" allowfullscreen="allowfullscreen"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start">﻿</span></iframe></div>
+</div>
+</div>
+<p class="p1"><span class="s1">Not long after the election, Holder launched <a href="https://democraticredistricting.com/">the Nation­al Democratic Redistricting Committee</a> (NDRC), a political action committee that aims to <a href="http://web.archive.org/web/20181106191641/https://www.politico.com/story/2017/01/eric-holder-democrats-redistricting-233546">unrig</a> the system that has <a href="https://www.motherjones.com/politics/2019/06/gop-paid-millions-to-gerrymandering-expert-behind-census-citizenship-question/">entrenched</a> Republican control of the country’s most important swing states. He’d received the backing of top Democrats, <a href="http://web.archive.org/web/20190516214450/https://www.theatlantic.com/politics/archive/2018/12/obamas-political-group-shifts-focus-gerrymandering/578770/">including</a> former President Barack Obama, who in December 2018 <a href="http://web.archive.org/web/20190516214450/https://www.theatlantic.com/politics/archive/2018/12/obamas-political-group-shifts-focus-gerrymandering/578770/">folded</a> his own political operation, <a href="https://medium.com/allontheline/what-ofa-has-accomplished-and-the-fight-ahead-2c3190060f8c">Organizing for Action</a>, into Holder’s to give the fight against gerrymandering more clout. Now, while other top Democrats are focused on the White House, Holder has set his sights on neighborhoods like Merrill Park and on races like the one he was there to talk about, a <a href="https://www.motherjones.com/politics/2019/04/a-little-noticed-judicial-election-could-determine-wisconsins-political-course-for-a-decade/">state Supreme Court contest</a> that had received virtually no attention outside Wisconsin.</span></p>
+<p class="p1"><span class="s1">“This state is in some ways ground zero for gerrymandering,” Holder told two dozen BLOC canvassers who would knock on doors that afternoon for the progressive judge running in the race. “Last year they called it a blue wave, and yet you didn’t flip one congressional seat here in Wisconsin. That’s not because you didn’t work hard or people didn’t vote. It was because of gerrymandering.” Republicans had so effectively <a href="https://www.brennancenter.org/blog/5-things-know-about-wisconsin-partisan-gerrymandering-case">gerrymandered</a> the state that even when Democrats won 53 percent of the statewide vote in 2018, they took only 36 percent of the seats in the state legislature.</span></p>
+<p class="p1"><span class="s1">Holder views gerrymandering, which manipulates district lines to benefit one party, as part of a broader struggle for voting rights, since it effectively diminishes the value of certain communities’ votes. “There is a direct connection between gerrymandering and voter suppression, not only here in Wisconsin but in places around the country,” Holder told me before his speech at the union hall. “It is not a coincidence that you see the greatest amount of voter suppression in those states where you see the greatest amount of gerrymandering.”</span></p>
+<figure id="attachment_760772"  class="inline-image alignnone" style="max-width: 1300px;"><img class="size-extra_large wp-image-760772" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg?w=1300" alt="" width="1300" height="866" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg?resize=321,214 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg?resize=531,354 531w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg?resize=1300,866 1300w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg?resize=990,660 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_D-990.jpg?resize=642,428 642w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /><figcaption class="wp-caption-text">
+<p><span class="media-caption">Holder visits volunteers phone-banking for Wisconsin Supreme Court candidate Lisa Neubauer in Madison in March.</span></p>
+<p><span class="media-credit">Alyssa Schukar</span></figcaption></figure>
+<p class="p1"><span class="s1">For decades, Democrats successfully fought these twin efforts at disenfranchisement in the courts. As Obama’s attorney general, Holder led that charge, filing lawsuits against states like <a href="http://web.archive.org/web/20190522233155/https://www.npr.org/sections/thetwo-way/2017/05/15/528457693/supreme-court-declines-republican-bid-to-revive-north-carolina-voter-id-law">North Carolina</a> and <a href="http://web.archive.org/web/20180701151529/https://www.politico.com/blogs/under-the-radar/2018/04/27/texas-voter-id-law-ruling-overturned-appeal-558857">Texas</a> that challenged Republican-­backed laws curbing the right to vote. But this tactic was handed an enormous defeat in 2013, when the Supreme Court <a href="http://web.archive.org/web/20190528053420/https://www.brennancenter.org/legal-work/shelby-county-v-holder">gutted</a> the Voting Rights Act of 1965 in <a href="http://web.archive.org/web/20190527221445/https://www.oyez.org/cases/2012/12-96"><i>Shelby County v. Holder</i></a>, ruling that states with a long history of discrimination no longer <a href="http://web.archive.org/web/20190514065811/https://www.justice.gov/opa/speech/attorney-general-eric-holder-delivers-remarks-supreme-court-decision-shelby-county-v">needed</a> federal approval to change voting laws. Last week, the court <a href="https://www.motherjones.com/politics/2019/06/the-supreme-courts-gerrymandering-ruling-is-a-doomsday-scenario-for-voting-rights/">struck another blow</a>, declaring that federal courts couldn&#8217;t block partisan gerrymandering. Voting rights advocates face not only a hostile Trump administration but a <a href="http://web.archive.org/web/20190516132152/https://www.reuters.com/article/us-usa-court-trump-judges/trump-chips-away-at-liberal-u-s-appeals-court-majorities-idUSKCN1M025I">growing</a> number of federal benches controlled by conservatives. As the GOP’s war on voting has intensified, the traditional ways of protecting ballot access are no longer reliable.</span></p>
+<aside class="p1 pullquote-left"><span class="s1">“There is a direct connection between gerrymandering and voter suppression, not only here in Wisconsin but in places around the country,” Holder said.</span></aside>
+<p class="p1"><span class="s1">So Holder is pursuing a new strategy, trying to elect down-ballot candidates who can deliver fairer maps and voting laws. The NDRC <a href="http://web.archive.org/web/20190415195241/https://www.wpr.org/eric-holders-group-spending-350k-help-supreme-court-candidate-lisa-neubauer">invested</a> $350,000 in the Wisconsin Supreme Court race, hoping that a <a href="https://www.apnews.com/d6bd4fb1d65b4f94aa78c6c57d96623b">liberal majority</a> on the seven-­member court might strike down any egregious gerrymanders in the next round of redistricting in 2021. “I don’t think that 10 years or so ago, you would have a former attorney general campaigning for a state Supreme Court justice,” Holder told me. “This is a recognition on the part of the Democratic Party, on the part of progressives, that we need to focus on state and local elections to a much greater degree than we have in the past.”</span></p>
+<p class="p1"><span class="s1">But if Democrats are belatedly recognizing this need, few besides Holder are acting on it. He is playing a long game in a party driven by instant gratification and consumed by the mess in the White House. While the party’s presidential contenders are attracting big crowds, donors, and volunteers determined to defeat President Donald Trump in 2020, Holder is focused on 2021.</span></p>
+<div class="mj-two-up">
+<figure id="attachment_761238"  class="inline-image alignnone" style="max-width: 990px;"><img class="size-extra_large wp-image-761238" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_r-1300.jpg?w=1300" alt="" width="1300" height="881" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_r-1300.jpg 1300w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_r-1300.jpg?resize=321,218 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_r-1300.jpg?resize=522,354 522w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_r-1300.jpg?resize=990,671 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_r-1300.jpg?resize=642,435 642w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /><figcaption class="wp-caption-text">
+<p><span class="media-caption">Eric Holder speaks to a Black Leaders Organizing Communities canvass meeting in Milwaukee on March 7. </span></p>
+<p>&nbsp;<span class="media-credit">Alyssa Schukar</span></figcaption></figure>
+<figure id="attachment_760781"  class="inline-image alignnone" style="max-width: 990px;"><img class="size-full wp-image-760781" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_C-990-1.jpg" alt="" width="990" height="671" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_C-990-1.jpg 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_C-990-1.jpg?resize=321,218 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_C-990-1.jpg?resize=522,354 522w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_C-990-1.jpg?resize=642,435 642w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /><figcaption class="wp-caption-text">
+<p><span class="media-caption">Tayaveon Seals, 23, canvasses voters in North Milwaukee on behalf of the Black Leaders Organizing Communities organization. Earlier that day, Eric Holder spoke to the group, also known as BLOC.</span></p>
+<p><span class="media-credit">Alyssa Schukar</span></figcaption></figure>
+</div>
+<p class="p1"><span class="s1">The Constitution requires states to redraw their political districts every 10 years. In 2011, after <a href="http://web.archive.org/web/20190419171756/https://www.politifact.com/punditfact/statements/2018/jun/15/fareed-zakaria/yes-democratic-party-nearly-its-weakest-point-cent/">routing</a> Democrats in midterm elections the previous fall, Republicans took control of critical swing states including Wisconsin, <a href="https://www.motherjones.com/politics/2017/10/the-supreme-court-could-finally-end-partisan-gerrymandering/">drawing</a> electoral maps that cemented their power. Now history is at risk of repeating itself. If Democrats don’t start devoting more attention and resources to state races, Holder warned the BLOC canvassers, 2021 could end up like 2011. The battle for control of state governments will determine the arc of American politics for the next decade, but it is already overshadowed by the <a href="https://www.nytimes.com/interactive/2019/us/politics/2020-presidential-candidates.html">20-some Democrats running for president</a>. Holder is fighting not just a well-funded Republican opposition but also his own party’s narrow focus on the presidency.</span></p>
+<p class="p1"><span class="s1">“I understand people are going to be legitimately focused on the presidential race, as we should be,” Holder said. “But it’s going to be my job to make sure we don’t lose sight of those other races that are going to be extremely important.”</span></p>
+<p class="p1"><span class="s1"><span class="section-lead"><b>Until recently,</b></span> Holder’s strategy was a radical concept within the Democratic Party. Before the NDRC, there was no single group formulating a centralized strategy for gaining control of the redistricting process, as Republicans had done so successfully in 2010. That’s where Holder came in. Never before had a Democrat of his stature devoted so much attention to such a wonky issue.</span></p>
+<p class="p1"><span class="s1">“I famously said I’ve got to make redistricting sexy,” Holder recalled with a laugh as we sat in his Washington, DC, office at the law firm <a href="https://www.cov.com/en/professionals/h/eric-holder">Covington &amp; Burling</a>, located in the glitzy new <a href="http://citycenterdc.com/">CityCenterDC</a> complex. His corner office has views of the Washington Monument and busts of John F. Kennedy and Lyndon Johnson on the shelves. “My hope was—and I know President Obama’s hope was—that my being directly involved would give this effort a degree of attention that it might not otherwise have,” he said.</span></p>
+<p class="p1"><span class="s1">Democrats didn’t have a redistricting strategy because, for many years, they didn’t need one. They <a href="http://www.ncsl.org/research/about-state-legislatures/partisan-composition.aspx">controlled</a> a majority of state legislatures for most of the post–World War II era, drawing electoral maps in twice as many states as Re­publicans in the 1980s and 1990s. Democrats were sitting pretty heading into the 2010 elections after winning big in 2006 and 2008, <a href="http://www.ncsl.org/research/about-state-legislatures/partisan-composition.aspx">controlling</a> more than 60 percent of state legislative chambers.</span></p>
+<aside class="p1 pullquote-left"><span class="s1">Never before has a Democrat of Holder&#8217;s stature devoted so much attention to such a wonky issue.</span></aside>
+<p class="p1"><span class="s1">Then the GOP launched an aggressive bid to reclaim power at the state level, creating <a href="http://web.archive.org/web/20190527031245/http://www.redistrictingmajorityproject.com/">the Redistricting Majority Project (REDMAP)</a> to target state legislative races and put Republicans in charge of <a href="http://web.archive.org/save/https://www.npr.org/sections/money/2018/06/01/616216560/episode-845-redmap">redistricting</a> efforts after the 2010 census. The effort was overseen by former Repub­lican National Committee Chair <a href="http://web.archive.org/web/20190529222849/https://www.nytimes.com/2018/06/05/business/dealbook/ed-gillespie-sard-verbinnen.html">Ed Gillespie</a> and <a href="http://web.archive.org/web/20190529222947/https://books.google.com/books?id=FiuZCgAAQBAJ&amp;q=rove&amp;hl=de#v=snippet&amp;q=rove&amp;f=false">advised</a> by strategists like Karl Rove. “He who controls redistricting can control Congress,” Rove <a href="http://web.archive.org/web/20190426011435/https://www.wsj.com/articles/SB10001424052748703862704575099670689398044">wrote</a> in the <i>Wall Street Journal</i> at the time.</span></p>
+<p class="p1"><span class="s1">Massively aided by the Supreme Court’s 2010 <a href="https://www.scotusblog.com/case-files/cases/citizens-united-v-federal-election-commission/"><i>Citizens United</i></a> decision that allowed unlimited corporate political spending, REDMAP raised $30 million, <a href="https://web.archive.org/web/20190526195839/https://www.salon.com/2018/02/06/how-the-republicans-rigged-congress-and-poisoned-our-politics/">including</a> from oil, tobacco, and health insurance companies, three times as much as its Democratic counterpart. Republicans <a href="http://web.archive.org/web/20181120105617/http://nymag.com/intelligencer/2016/04/gops-house-seats-are-safe-heres-why.html">hoped</a> to flip 25 to 30 House seats occupied by Democrats. They ended up <a href="http://web.archive.org/web/20190208232102/https://ballotpedia.org/State_legislative_elections_results,_2010">winning</a> 63, plus 20 new legislative chambers, giving them control of nearly every important swing state and the power to draw four times as many state legislative and House districts as Democrats. Nearly a decade later, Republi­cans still <a href="http://www.ncsl.org/research/about-state-legislatures/partisan-composition.aspx">control</a> every legislative chamber in heavily gerry­mandered states like Michigan, North Carolina, Ohio, Pennsylvania, and Wisconsin.</span></p>
+<figure id="attachment_761234"  class="inline-image alignnone" style="max-width: 642px;"><img class="size-fullwidth_portrait wp-image-761234" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_G-990.jpg?w=642" alt="" width="642" height="921" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_G-990.jpg 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_G-990.jpg?resize=321,460 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_G-990.jpg?resize=247,354 247w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_G-990.jpg?resize=642,921 642w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 984px) 61vw, (max-width: 1362px) 45vw, 600px" /><figcaption class="wp-caption-text">
+<p><span class="media-caption">Tasha Gjesdahl of the University of Wisconsin-Madison chapter of NextGen America listens as Holder speaks to a packed room of young people near campus.</span></p>
+<p><span class="media-credit">Alyssa Schukar</span></figcaption></figure>
+<p class="p1"><span class="s1">Democrats had no comparable strategy. And when the party controlled the White House and Congress after Obama’s 2008 victory, it paid little attention to the states. By the end of Obama’s second term, Democrats had lost <a href="http://web.archive.org/web/2/www.washingtonpost.com/news/the-fix/wp/2015/01/14/republicans-have-gained-more-than-900-state-legislative-seats-since-2010/?utm_term=.9a3999a30d80">nearly</a> 1,000 state legislative seats. “This has been one of the big failures of our party,” said former Virginia Gov. <a href="https://twitter.com/terrymcauliffe?lang=en">Terry McAuliffe</a>, who led the Democratic National Committee from 2001 to 2005. “We have not paid attention to the importance of redistricting—haven’t put the time in historically.”</span></p>
+<p class="p1"><span class="s1">“One of the great deficiencies of the Obama operation during the eight years he was president,” said Obama’s former chief strategist, <a href="https://twitter.com/davidaxelrod?lang=en">David Axelrod</a>, “was that not enough attention was paid to legislative races.” The president, consumed by the financial crisis and the Obamacare fight, didn’t sustain a political operation that could combat the tea party wave and the GOP’s surgical targeting of state races. Now, Axelrod said, this deficiency is something Obama, a former state senator, “feels acutely, feels some responsibility for, and wants to help remedy.”</span></p>
+<p class="p1"><span class="s1">McAuliffe and House Democratic leader Nancy Pelosi <a href="http://web.archive.org/web/20190517214554/https://www.politico.com/story/2016/10/obama-holder-redistricting-gerrymandering-229868">convened</a> discussions during the 2016 Democratic Nation­al Convention about creating a group focused solely on redistricting. The initiative took on new urgency after Hillary Clinton lost the presidential race even as she won the popular vote, re­inforcing the imperative that Democrats regain power at the state level. After the election, McAuliffe, Pelosi, and Senate Democratic leader Chuck Schumer <a href="http://web.archive.org/web/20190429065903/https://www.nytimes.com/2017/01/11/us/eric-holder-to-lead-democrats-attack-on-republican-gerrymandering.html">visited</a> the White House to get Obama’s blessing. “It was the president who said, ‘I’ll bring Eric in,’” McAuliffe recalled. Obama decided to make redistricting reform a central focus of his post-­presidency and tapped Holder as his top lieutenant. Obama has hosted fundraisers for the effort, endorsed candidates in races the NDRC has targeted, and used his email list and social media profile to draw attention to the fight against gerrymandering. “In America, politicians shouldn’t pick their voters,” Obama <a href="http://web.archive.org/web/20190529234147/https://www.huffpost.com/entry/obama-redistricting-gerrymander-video-ndrc_n_5b46127de4b0c523e26511fa?guccounter=1&amp;guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&amp;guce_referrer_sig=AQAAAEQabZ_jxiHeUzAgOSVXNMfSU1gYOfe0tL9Egx-Fo0yic60ZmFy407e_1xINdusPBrnI0i2YNvdsUqtPleCoQpe-N7BB01MIR8Hyr2Fsc8f7M2tQkBOcnxATRsn5fWaZZfHbOLwsS4j19B-lvj0Wg5hRV8OFzYzNCO8iklj7P1_v">said</a> in a 2018 video promoting Holder’s group. “Voters are supposed to pick their politicians.”</span></p>
+<div class="mj-related"><span class="mj-related-tag">Related</span></p>
+<div class="mj-related-inner"><a href="https://www.motherjones.com/politics/2017/10/voter-suppression-wisconsin-election-2016/" class="img"><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?w=990" class="attachment-large size-large wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2017/10/426_20171018_cover2_2000x1124.jpg?w=990&amp;is-pending-load=1" /></a><a href="https://www.motherjones.com/politics/2017/10/voter-suppression-wisconsin-election-2016/"></p>
+<h3>Rigged: How Voter Suppression Threw Wisconsin to Trump</h3>
+<p></a></div>
+</div>
+<p class="p1"><span class="s1">For Holder, the cause was personal. “The right to vote,” he said when he launched the NDRC in 2017, was “a right that has been a part of my consciousness as long as I can remember.” As a <a href="http://web.archive.org/web/20190428143957/https://www.nytimes.com/2008/12/01/nyregion/01holder.html">12-year-old</a> in 1963, Holder sat in his basement in East Elmhurst, Queens, and watched on a black-and-white television as <a href="https://www.naacpldf.org/about-us/scholarship-recipients/vivian-malone-jones/">Vivian Malone</a> became one of the first black students to integrate the University of Alabama. Twenty-six years later, he would marry her younger sister, <a href="http://web.archive.org/web/20190529223937/https://www.essence.com/news/sharon-malone-the-first-lady-of-justice/">Sharon</a>, an obstetrician. Vivian went on to lead a group that registered black voters in the South and worked in the Justice Department’s Civil Rights Division. She <a href="http://web.archive.org/web/20181230095210/https://www.nytimes.com/2005/10/14/us/vivian-malone-jones-63-dies-first-black-graduate-of-university-of.html">died</a> in 2005, before Holder became the first black attorney general. “Her not being able to see her brother-in-law become attorney general of the United States is one of those really unfortunate things,” Holder told me in Wisconsin, his eyes welling up. “Even thinking about it now, I can get a little emotional.”</span></p>
+<p>&nbsp;</p>
+<hr>
+<section class="inline-element chart like-p">
+<h3>More votes, fewer seats</h3>
+<h4>In some Republican controlled states, gerrymandering has made it all but impossible for Democrats to retake assemblies, even when they win a majority of the statewide vote.</h4>
+<figure id="attachment_757788"  class="inline-image alignnone" style="max-width: 642px;"><img class="size-image_for_stories wp-image-757788" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-1.png?w=642" alt="" width="642" height="658" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-1.png 642w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-1.png?resize=321,329 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-1.png?resize=345,354 345w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-1.png?resize=32,32 32w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-1.png?resize=50,50 50w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 984px) 61vw, (max-width: 1362px) 45vw, 600px" /><figcaption class="wp-caption-text"></figcaption></figure>
+</section>
+<hr>
+<p>&nbsp;</p>
+<p class="p1"><span class="s1"><span class="section-lead"><b>Challenging the</b></span> GOP’s redistricting edge required a multipronged approach: Holder’s group has filed or assisted a dozen lawsuits against gerrymandered maps, supported local candidates whose races had implications for redistricting, and backed state ballot measures to establish independent redistricting commissions. “He’s a uniting force between the different pieces of the Democratic ecosystem to get onto a shared strategy to rebuild Democratic power in the states,” said <a href="https://www.dlcc.org/jessica-post">Jessica Post</a>, executive director of the Democratic Legislative Campaign Committee and an NDRC board member. “Having a central electoral coordinating hub is really important.”</span></p>
+<p class="p1"><span class="s1">The Democrats’ gains in 2018 were impressive. Holder’s group raised $35 million—comparable to what REDMAP raised in 2010—helping Democrats <a href="http://web.archive.org/web/20181108103925/https://www.washingtonpost.com/politics/democrats-gain-hundreds-of-legislative-seats-and-secure-majority-of-state-attorneys-general/2018/11/07/cef1ebd6-e2aa-11e8-ab2c-b31dcd53ca6b_story.html?tid=pm_politics_pop">flip</a> about 300 state legislative seats, six legis­lative chambers, and seven governorships. In four states, including Wiscon­sin, Republicans lost sole control of state government, and with it their ability to single-handedly draw new districts. The NDRC <a href="https://web.archive.org/web/20190503054223/https://democraticredistricting.com/ndrc-announces-2019-2020-redistricting-targets/">targeted</a> 230 state seats held by Republicans, focusing on suburban areas that were changing demographically; Democrats <a href="https://web.archive.org/web/20190503054223/https://democraticredistricting.com/ndrc-announces-2019-2020-redistricting-targets/">won</a> 60 percent of them. Holder stumped for candidates in 24 states. “We gave financial support to races that otherwise might not have gotten financial support,” he said. “I campaigned in races that would not have gotten that kind of high-level attention.”</span></p>
+<p>&nbsp;</p>
+<section class="inline-element chart like-p">
+<h3>Party control of state legislatures</h3>
+<figure id="attachment_757789"  class="inline-image aligncenter" style="max-width: 642px;"><img class="size-image_for_stories wp-image-757789" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png?w=990" alt="" width="990" height="713" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png 2675w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png?resize=321,231 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png?resize=491,354 491w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png?resize=1300,936 1300w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png?resize=990,713 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_Holder_Charts642-2.png?resize=642,462 642w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /><figcaption class="wp-caption-text"></figcaption></figure>
+</section>
+<hr>
+<p>&nbsp;</p>
+<p class="p1"><span class="s1">Though he hoped to elect more Demo­crats, Holder’s overriding goal was to make the redistricting process less skewed, putting him in conflict with some Democrats who wanted to maximize partisan gain. When New Jersey Democrats <a href="http://web.archive.org/web/20190524022357/https://www.nytimes.com/2018/12/13/nyregion/redistricting-new-jersey-democrats-republicans.html">proposed</a> giving legislative leaders more power over the drawing of district lines last year, Holder quickly denounced the plan. “I’m here for a fair process, not to gerrymander for Democrats,” he told me.</span></p>
+<p class="p1"><span class="s1">Holder, who has never run for elected office, is an unlikely public face for a major political campaign. He’s charismatic by the standards of a career lawyer, but no one would mistake him for Obama on the stump, though they do share a love of dad jokes. Still, Holder’s devotion to technocratic details can be an advantage when it comes to the nuances of redistricting. Holder said he viewed the fight against gerrymandering as a “<a href="http://web.archive.org/web/20190327134837/https://fivethirtyeight.com/features/the-fight-over-partisan-gerrymandering-is-moving-beyond-the-supreme-court/">jigsaw puzzle</a>” and delighted in figuring out which pieces went where.</span></p>
+<p class="p1"><span class="s1">His efforts in Wisconsin <a href="http://web.archive.org/web/20180920121304/https://madison.com/wsj/news/local/courts/rebecca-dallet-wins--year-term-on-wisconsin-supreme-court/article_1e5524f8-e10f-50f5-bb69-b0837c2307db.html">began</a> in March 2018, when the NDRC spent half a million dollars to elect <a href="https://madison.com/wsj/news/local/courts/rebecca-dallet-wins--year-term-on-wisconsin-supreme-court/article_1e5524f8-e10f-50f5-bb69-b0837c2307db.html">Rebecca Dallet</a> to the state Supreme Court, a huge amount for a state judicial race. Her victory brought Democrats one seat closer to ending the conservative majority on the court, which can rule on state voting laws. To increase African American turnout, Holder’s group funded BLOC, which knocked on <a href="https://web.archive.org/web/20190529225014/https://mkemidterms.mediamilwaukee.com/engaging-milwaukees-black-voters-block-by-bloc/?fbclid=IwAR2VBsAXia5Zm0nzlGLZEaLTE6WGcDrmKj5gjXScor67E9GWK6K4-GICVHs">35,000 doors</a> in Milwaukee in the spring of 2018 and helped achieve higher turnout in Dallet’s race in neighborhoods like Merrill Park than in a 2015 Supreme Court race.</span></p>
+<p class="p1"><span class="s1">Holder returned to Milwaukee last fall to campaign for Democratic gubernatorial candidate <a href="https://www.motherjones.com/politics/2018/10/tony-evers-profile-scott-walker-wisconsin-education-teachers/">Tony Evers</a>, for whom BLOC knocked on more than 173,000 doors in black neighborhoods that statewide political candidates usually bypassed. Evers <a href="https://www.washingtonpost.com/politics/how-the-democrats-finally-defeated-wisconsin-gov-scott-walker/2018/11/07/3377ed17-9cbe-4537-8b2a-acd0c37a8d35_story.html?noredirect=on">defeated</a> Gov. Scott Walker by just 30,000 votes, giving Democrats veto power over the state’s redistricting maps in 2021.</span></p>
+<p class="p1"><span class="s1">Holder also continued the efforts he’d begun as attorney general by taking Republi­cans to court for infringing on voting rights. When Walker refused to hold special elections for vacant state legislative seats in February 2018, Holder’s group sued and won. After the 2018 election, when Republicans cut back on early voting, Holder’s group sued and won again.</span></p>
+<p class="p1"><span class="s1">Walker <a href="http://web.archive.org/web/20181207202832/https://twitter.com/ScottWalker/status/979365203061149698">criticized</a> Holder’s work in Wisconsin on Twitter several months before the election; after losing, Walker became finance chair of a new group, <a href="https://www.thenrrt.org/">the National Republican Redistricting Trust</a>, focused on combating the NDRC. “My role is to counter Eric Holder’s efforts,” Walker <a href="http://web.archive.org/web/20190326112817/https:/twitter.com/ScottWalker/status/1108827414564605959">tweeted</a>. “He, with [t]he help of former President Obama, have raised some $200 million that they are using in court and on the campaign trail. Their goal is to secure Nancy Pelosi’s control as Speaker for a decade or more.” Walker dramatically overstated the amount raised by Holder’s group, but it was telling that the former Wisconsin governor—whose party Holder had been desperately trying to catch up with—now thought Holder was ahead of him.</span></p>
+<p class="p1"><span class="s1">The question now is whether Holder’s group can lock in and expand the gains made in 2018. Over the next year, the NDRC plans to almost triple its staff to 30, and the absorption of Obama’s vaunted Organizing for Action list will give Holder’s group access to hundreds of thousands of new volunteers to work on state races. “The single most impor­tant thing that could be done at the grassroots level over the next few years is to make sure the rules of the road are fair,” Obama <a href="http://web.archive.org/web/20190516214450/https://www.theatlantic.com/politics/archive/2018/12/obamas-political-group-shifts-focus-gerrymandering/578770/">said</a> on a call with these volunteers in December 2018.</span></p>
+<figure id="attachment_763109"  class="inline-image alignnone" style="max-width: 990px;"><img class="size-image_for_stories wp-image-763109" src="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_B-1300.jpg?w=990" alt="" width="990" height="660" srcset="https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_B-1300.jpg 1300w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_B-1300.jpg?resize=321,214 321w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_B-1300.jpg?resize=531,354 531w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_B-1300.jpg?resize=990,660 990w, https://www.motherjones.com/wp-content/uploads/2019/06/20180610_HOLDER_B-1300.jpg?resize=642,428 642w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /><figcaption class="wp-caption-text">
+<p><span class="media-caption">Eric Holder speaks to Black Leaders Organizing for Communities in Milwaukee.</span></p>
+<p><span class="media-credit">Alyssa Schukar</span></figcaption></figure>
+<p class="p1"><span class="s1">Democrats are within six seats of flipping state legislative chambers in Pennsyl­vania, North Carolina, Minne­sota, Arizona, and Michigan. “We’re much closer across the country than people think,” said the DLCC’s Post. But the GOP still <a href="http://www.ncsl.org/research/about-state-legislatures/partisan-composition.aspx">controls</a> 62 of 99 state legislative chambers nationwide and holds the governor’s mansion and both legislative bodies in 22 states, compared to 14 for Democrats. The bulk of the NDRC’s efforts will focus on five Republican-controlled gerrymandered states: Florida, Georgia, Ohio, Texas, and North Carolina. Gaining seats there will mean targeting districts in conservative exurbs where Democrats came up short in 2018. Mark Gersh, a Democratic redistricting expert working with Holder’s group, said the team is “trying to figure out whether Trump’s plummeting popularity and behavior might enable us to go beyond the parts we know we can win, because there’s not enough of them. We won all the low-hanging fruit last time.”</span></p>
+<p class="p1"><span class="s1"><span class="section-lead"><b>There’s momentum,</b></span> though. The once-wonky issue of voting rights has become a rallying cry for Democrats. In 2018, voters in five states <a href="http://web.archive.org/web/20181116032247/https://www.vox.com/polyarchy/2018/11/7/18072204/2018-midterms-political-reform-winner">approved</a> ballot initiatives that curbed gerrymandering. When Democrats took control of the House, their first piece of <a href="https://web.archive.org/web/20190511131153/https://www.motherjones.com/politics/2019/03/house-passes-the-most-significant-democracy-reform-bill-in-a-generation/">legislation</a> was a sweeping reform bill that called for independent redistricting commissions to draw all House districts. (The proposal died in the Senate after Republican leader Mitch McConnell refused to hold a vote on it.) Schumer <a href="http://web.archive.org/web/20190331122322/http://nymag.com/intelligencer/2019/03/andrew-gillums-next-campaign-registering-voters-in-florida.html">said</a> in March that the fight for voting rights should be one of the Democrats’ top three issues, alongside climate change and income inequality.</span></p>
+<p class="p1"><span class="s1">Voting rights are “part of a basket of issues that are motivating to people who feel like the character of our democracy is being threatened and that democracy itself is being manipulated,” said Axelrod. But Democrats are still in jeopardy of ignoring the state and local races that will determine the country’s voting maps. “Our concern is there’s wall-to-wall coverage of Trump scandals, wall-to-wall coverage of crowd size and presidential announcements, and our job is to continue to make sure people know that the next decade of democracy is on the line in 2020,” said Post.</span></p>
+<p class="p1"><span class="s1">Democratic strategists working on down-ballot races say the presidential campaign is siphoning away resources. “It’s harder to recruit people [to run], it’s harder to get attention to these races, it’s harder to raise money for them,” said Amanda Litman, executive director of <a href="https://runforsomething.net/">Run for Something</a>, which recruits progressive candidates for local offices. “Quite a few of the donors we work really closely with have been hesitant to reengage, either because they’re tapped out from 2018 or they’re waiting for the presidential race to shake out.”</span></p>
+<aside class="p1 pullquote-left"><span class="s1">Democratic strategists working on down-ballot races say the presidential campaign is siphoning away resources.</span></aside>
+<p class="p1"><span class="s1">Litman’s group is coordinating with the NDRC to recruit state legislative candidates to run in every district in the 12 states Holder is targeting in 2020, but she said reaching Run for Something’s $3 million fundraising goal this year “is like pulling teeth.” That’s small change for presidential candidates like <a href="http://web.archive.org/web/20190515134501/https://abcnews.go.com/Politics/bernie-sanders-raises-million-day-presidential-campaign/story?id=61181905">Bernie Sanders</a> and <a href="http://web.archive.org/web/20190516005415/https://www.vanityfair.com/news/2019/04/joe-biden-first-day-fundraising-haul?verso=true">Joe Biden</a>, who each raised about twice that sum on the first day of their campaigns, but it could make the difference in flipping multiple state legislative chambers, Litman said.</span></p>
+<p class="p1"><span class="s1">More money might have <a href="https://www.motherjones.com/politics/2019/04/a-little-noticed-judicial-election-could-determine-wisconsins-political-course-for-a-decade/">changed</a> the outcome of the Wisconsin Supreme Court race. Lisa Neubauer, the progressive judge backed by Holder, was favored to win. But in the final week of the race, the Republican State Leadership Committee, the same group that bankrolled the GOP’s takeover of the state legislature in 2010, <a href="http://web.archive.org/web/20190406164528/https://www.jsonline.com/get-access/?return=https%3A%2F%2Fwww.jsonline.com%2Fstory%2Fnews%2Fpolitics%2F2019%2F03%2F14%2Flisa-neubauer-says-she-doesnt-want-eric-holders-help-court-race%2F3160817002%2F">launched</a> a $1.3 million ad campaign for Neubauer’s opponent, Brian Hagedorn, an ultraconservative judge and former chief counsel to Walker. Meanwhile, Republicans made Holder a talking point—a <a href="http://web.archive.org/web/20190529231205/https://twitter.com/brendan_fischer/status/1113406328473624576">Facebook ad</a> from Hagedorn admonished, “We can’t let Eric Holder reshape Wisconsin’s Supreme Court”—and Neubauer called on Holder and other outside funders to stay out of the race. Turnout surged in conservative, rural parts of the state, and Hagedorn <a href="http://web.archive.org/web/20190529231007/https://rslc.gop/news/2019/04/10/its-official-judge-brian-hagedorn-wins-election-to-wisconsin-supreme-court/">won</a> by about 6,000 votes, cementing a right-wing majority on the court through at least 2023.</span></p>
+<p class="p1"><span class="s1">The day after the election, Holder spoke at the annual convention of Al Sharpton’s <a href="https://nationalactionnetwork.net/">National Action Network</a>. A dozen Democratic presidential candidates were there, and none had campaigned for Neubauer. “It seems I’m the only one here who isn’t running for president in 2020,” Holder <a href="http://web.archive.org/web/20190529232901/https://www.youtube.com/watch?v=lQt1sxQijfA&amp;app=desktop">joked</a><i>. </i>He’d flirted with his own long-shot presidential bid but decided against it, in part to remain focused on redistricting. He said “we should have won” the Supreme Court race and worried that the presidential contenders weren’t talking enough about the down-ballot contests that Democrats need to win to reverse the GOP’s redistricting edge.</span></p>
+<p class="p1"><span class="s1">Holder was dismayed that he’d been the only prominent Democrat to campaign for Neubauer. “I’m still a little bit wound up about this one,” he told me two weeks after the election. “This should be a wake-up call for us. I felt a little lonely out there in Wisconsin.”</span></p>
+			</div>
+
+			<footer class="entry-footer">
+				<a href="/topics/dark-money"  data-ga-label="TopicBanner|DarkMoney" data-ga-category="EndOfArticle"><img class="topic-banner" src="https://www.motherjones.com/wp-content/themes/motherjones/img/topic-banners/dark-money-642-60.png" alt="More MotherJones reporting on Dark Money" /></a>
+		<div class="newsletter-signup grid grid-bleed">
+			<div class="col-12">
+									<h3>
+						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 164 110" style="enable-background:new 0 0 164 110; max-width:1.8rem;" xml:space="preserve">
+							<path d="M0,0.48v109.22h163.84V0.48H0z M81.92,64.62l-68.27-41.6l5.69-9.33l62.59,38.14l62.59-38.14l5.69,9.33L81.92,64.62z"></path>
+						</svg>
+						Looking for news you can trust?
+					</h3>
+					<p>Subscribe to our free newsletters.</p>
+							</div>
+			<div class="col-12">
+				<form
+					action="https://api.maropost.com/accounts/585/forms/3289/subscribe/177d8ba3b7fe7d39e28dcba73123eeffbd01878b"
+					method="post"
+					data-ga-label="NewsletterSignup"
+					data-ga-category="EndOfArticle"
+					id="TopOfArticleNewsletterSignup" 					onsubmit="return mj_check_email(this, event);"
+				>
+					<input include_blank="true" start_year="1950" type="hidden" name="custom_fields[outreach_affiliate_code]" value="EndOfArticle" />
+					<input include_blank="true" start_year="1950" type="hidden" name="custom_fields[signup_url]" value="" />
+					<input type="hidden" value="" name="email_const_mp" />
+					<label for="cons_email_ns" class="visuallyhidden">Email</label>
+					<input include_blank="true" start_year="1950" name="contact_fields[email]" id="cons_email_ns" placeholder="Email" type="text" />
+					<input id="newsletter-signup" type="submit" name="commit" value="Sign Up" />
+				</form>
+			</div>
+		</div>
+
+		<section id="mj-article-bottom-membership-widget-3" class="widget mj-article-bottom-membership-widget"><h3>THANK YOU.</h3><p>We recently wrapped up the crowdfunding campaign for our ambitious <em>Mother Jones</em> Corruption Project, and it was a smashing success. About 10,364 readers pitched in with donations averaging $45, and together they contributed about $467,374 toward our $500,000 goal.</p>
+
+<p>That's amazing. We still have donations from letters we sent in the mail coming back to us, so we're on pace to hit—if not exceed—that goal. Thank you so much. We'll keep you posted here as the project ramps up, and you can join the hundreds of readers who have <a href="/media/2019/04/mother-jones-corruption-project/#alert_us" data-ga-category="ArticleBottomMembershipWidget" data-ga-label="ReadMore">alerted us to corruption to dig into</a>.</p>			<a
+				target="_blank"
+				href="https://secure.actblue.com/donate/motherjones?refcode=7H94PBA6&amp;amount=50.00&amp;recurring=0"
+				data-ga-label="Donate"
+				data-ga-category="ArticleBottomMembershipWidget"
+			>
+				<button class="btn-primary">Donate Now</button>
+			</a>
+		</section>			</footer><!-- .entry-footer -->
+		</article><!-- #post-## -->
+	</section>
+
+	<section class="section col-xs-12" id="eoa-related">
+		<h2 class="section-heading">Related</h2>
+		<ul class="post-list grid">
+
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/politics/2019/04/federal-court-strikes-down-republican-gerrymanders-in-michigan/"
+			title="Federal Court Strikes Down Republican Gerrymanders in Michigan"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RelatedArticle-1|thumbnail"
+			data-ga-action="https://www.motherjones.com/politics/2019/04/federal-court-strikes-down-republican-gerrymanders-in-michigan/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/04/AP042519mi-1.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/politics/2019/04/federal-court-strikes-down-republican-gerrymanders-in-michigan/"
+		title="Federal Court Strikes Down Republican Gerrymanders in Michigan"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RelatedArticle-1|headline"
+		data-ga-action="https://www.motherjones.com/politics/2019/04/federal-court-strikes-down-republican-gerrymanders-in-michigan/"
+	><h3 class="hed">Federal Court Strikes Down Republican Gerrymanders in Michigan</h3><p class="byline"><a href="https://www.motherjones.com/author/ari-berman/" title="Posts by Ari Berman">Ari Berman</a></p></a></div></li>
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/media/2019/04/mother-jones-corruption-project/"
+			title="Corruption Isn’t Just Another Scandal. It’s the Rot Beneath All of Them."
+			data-ga-category="EndOfArticle"
+			data-ga-label="RelatedArticle-2|thumbnail"
+			data-ga-action="https://www.motherjones.com/media/2019/04/mother-jones-corruption-project/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/04/20190423_flag-corruption_2000_b.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/media/2019/04/mother-jones-corruption-project/"
+		title="Corruption Isn’t Just Another Scandal. It’s the Rot Beneath All of Them."
+		data-ga-category="EndOfArticle"
+		data-ga-label="RelatedArticle-2|headline"
+		data-ga-action="https://www.motherjones.com/media/2019/04/mother-jones-corruption-project/"
+	><h3 class="hed">Corruption Isn’t Just Another Scandal. It’s the Rot Beneath All of Them.</h3><p class="byline"><a href="https://www.motherjones.com/author/monika-bauerlein/" title="Posts by Monika Bauerlein">Monika Bauerlein</a> and <a href="https://www.motherjones.com/author/clara-jeffery/" title="Posts by Clara Jeffery">Clara Jeffery</a></p></a></div></li>
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/politics/2019/04/corruption-gerrymandering-and-voter-suppression-how-north-carolinas-gop-made-a-great-big-mess/"
+			title="Corruption, Gerrymandering, and Voter Suppression: How North Carolina&#8217;s GOP Made a Great Big Mess"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RelatedArticle-3|thumbnail"
+			data-ga-action="https://www.motherjones.com/politics/2019/04/corruption-gerrymandering-and-voter-suppression-how-north-carolinas-gop-made-a-great-big-mess/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg 3600w, https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/04/Hayes.NC_.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/politics/2019/04/corruption-gerrymandering-and-voter-suppression-how-north-carolinas-gop-made-a-great-big-mess/"
+		title="Corruption, Gerrymandering, and Voter Suppression: How North Carolina&#8217;s GOP Made a Great Big Mess"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RelatedArticle-3|headline"
+		data-ga-action="https://www.motherjones.com/politics/2019/04/corruption-gerrymandering-and-voter-suppression-how-north-carolinas-gop-made-a-great-big-mess/"
+	><h3 class="hed">Corruption, Gerrymandering, and Voter Suppression: How North Carolina&#8217;s GOP Made a Great Big Mess</h3><p class="byline"><a href="https://www.motherjones.com/author/jacob-rosenberg/" title="Posts by Jacob Rosenberg">Jacob Rosenberg</a></p></a></div></li>
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/politics/2019/01/new-york-passes-huge-voting-rights-expansion/"
+			title="The Law That Just Passed In New York Is A Huge Win For Voting Rights"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RelatedArticle-4|thumbnail"
+			data-ga-action="https://www.motherjones.com/politics/2019/01/new-york-passes-huge-voting-rights-expansion/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/01/AP01142019ny.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/politics/2019/01/new-york-passes-huge-voting-rights-expansion/"
+		title="The Law That Just Passed In New York Is A Huge Win For Voting Rights"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RelatedArticle-4|headline"
+		data-ga-action="https://www.motherjones.com/politics/2019/01/new-york-passes-huge-voting-rights-expansion/"
+	><h3 class="hed">The Law That Just Passed In New York Is A Huge Win For Voting Rights</h3><p class="byline"><a href="https://www.motherjones.com/author/ari-berman/" title="Posts by Ari Berman">Ari Berman</a></p></a></div></li>		</ul>
+	</section>
+
+	<section class="ad"><div class="incontent-ad-container"></div></section>
+
+	<section class="section col-xs-12" id="eoa-recommend">
+		<h2 class="section-heading">We Recommend</h2>
+		<ul class="post-list grid">
+
+<li class="grid col-sm-6 col-xxs-12">
+	<div class="col-5 order-1"><a
+			href="https://www.motherjones.com/politics/2019/07/kavanaughs-first-term-a-reliable-conservative-vote-with-a-few-surprises/"
+			title="Kavanaugh&#8217;s First Term: a Reliable Conservative Vote (With a Few Surprises)"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecommendedArticle-1|thumbnail"
+			data-ga-action="https://www.motherjones.com/politics/2019/07/kavanaughs-first-term-a-reliable-conservative-vote-with-a-few-surprises/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/brett-kavanaugh-070319.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 order-2"><a
+		href="https://www.motherjones.com/politics/2019/07/kavanaughs-first-term-a-reliable-conservative-vote-with-a-few-surprises/"
+		title="Kavanaugh&#8217;s First Term: a Reliable Conservative Vote (With a Few Surprises)"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecommendedArticle-1|headline"
+		data-ga-action="https://www.motherjones.com/politics/2019/07/kavanaughs-first-term-a-reliable-conservative-vote-with-a-few-surprises/"
+	><h3 class="hed">Kavanaugh&#8217;s First Term: a Reliable Conservative Vote (With a Few Surprises)</h3><p class="byline"><a href="https://www.motherjones.com/author/stephanie-mencimer/" title="Posts by Stephanie Mencimer">Stephanie Mencimer</a></p></a></div></li>
+<li class="grid col-sm-6 col-xxs-12">
+	<div class="col-5 order-1"><a
+			href="https://www.motherjones.com/politics/2019/07/how-decriminalizing-sex-work-became-a-2020-campaign-issue/"
+			title="How Decriminalizing Sex Work Became a 2020 Campaign Issue"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecommendedArticle-2|thumbnail"
+			data-ga-action="https://www.motherjones.com/politics/2019/07/how-decriminalizing-sex-work-became-a-2020-campaign-issue/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/20190225_zaa_p133_096.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 order-2"><a
+		href="https://www.motherjones.com/politics/2019/07/how-decriminalizing-sex-work-became-a-2020-campaign-issue/"
+		title="How Decriminalizing Sex Work Became a 2020 Campaign Issue"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecommendedArticle-2|headline"
+		data-ga-action="https://www.motherjones.com/politics/2019/07/how-decriminalizing-sex-work-became-a-2020-campaign-issue/"
+	><h3 class="hed">How Decriminalizing Sex Work Became a 2020 Campaign Issue</h3><p class="byline"><a href="https://www.motherjones.com/author/matt-cohen/" title="Posts by Matt Cohen">Matt Cohen</a></p></a></div></li>
+<li class="grid col-sm-6 col-xxs-12">
+	<div class="col-5 order-1"><a
+			href="https://www.motherjones.com/environment/2019/07/alaska-is-baking/"
+			title="Alaska Is Baking"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecommendedArticle-3|thumbnail"
+			data-ga-action="https://www.motherjones.com/environment/2019/07/alaska-is-baking/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?resize=1300,730 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?resize=642,360 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/20190614-alaska-wasilla-lake.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 order-2"><a
+		href="https://www.motherjones.com/environment/2019/07/alaska-is-baking/"
+		title="Alaska Is Baking"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecommendedArticle-3|headline"
+		data-ga-action="https://www.motherjones.com/environment/2019/07/alaska-is-baking/"
+	><h3 class="hed">Alaska Is Baking</h3><p class="byline"><a href="https://www.motherjones.com/author/susie-cagle/" title="Posts by Susie Cagle">Susie Cagle</a></p></a></div></li>
+<li class="grid col-sm-6 col-xxs-12">
+	<div class="col-5 order-1"><a
+			href="https://www.motherjones.com/politics/2019/07/when-did-the-united-states-start-calling-itself-america-anyway/"
+			title="No One Called the United States &#8220;America&#8221; Until It Became an Empire"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecommendedArticle-4|thumbnail"
+			data-ga-action="https://www.motherjones.com/politics/2019/07/when-did-the-united-states-start-calling-itself-america-anyway/"
+		><img width="836" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?w=836" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg 5100w, https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?resize=321,214 321w, https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?resize=531,354 531w, https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?resize=1300,866 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?resize=990,660 990w, https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?resize=642,428 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 984px) 61vw, (max-width: 1362px) 45vw, 600px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/GettyImages-646437456.jpg?w=836&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 order-2"><a
+		href="https://www.motherjones.com/politics/2019/07/when-did-the-united-states-start-calling-itself-america-anyway/"
+		title="No One Called the United States &#8220;America&#8221; Until It Became an Empire"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecommendedArticle-4|headline"
+		data-ga-action="https://www.motherjones.com/politics/2019/07/when-did-the-united-states-start-calling-itself-america-anyway/"
+	><h3 class="hed">No One Called the United States &#8220;America&#8221; Until It Became an Empire</h3><p class="byline"><a href="https://www.motherjones.com/author/daniel-immerwahr/" title="Posts by Daniel Immerwahr">Daniel Immerwahr</a></p></a></div></li>		</ul>
+	</section>
+
+	<section class="ad"><div class="incontent-ad-container"></div></section>
+
+	<section class="section col-xs-12" id="eoa-recent">
+		<h2 class="section-heading">Recent</h2>
+		<ul class="post-list grid">
+
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/environment/2019/07/stop-building-a-space-ship-to-mars-and-just-plant-some-damn-trees/"
+			title="Stop Building a Spaceship to Mars and Just Plant Some Damn Trees"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecentArticle-1|thumbnail"
+			data-ga-action="https://www.motherjones.com/environment/2019/07/stop-building-a-space-ship-to-mars-and-just-plant-some-damn-trees/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/Trees-7-4-19.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/environment/2019/07/stop-building-a-space-ship-to-mars-and-just-plant-some-damn-trees/"
+		title="Stop Building a Spaceship to Mars and Just Plant Some Damn Trees"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecentArticle-1|headline"
+		data-ga-action="https://www.motherjones.com/environment/2019/07/stop-building-a-space-ship-to-mars-and-just-plant-some-damn-trees/"
+	><h3 class="hed">Stop Building a Spaceship to Mars and Just Plant Some Damn Trees</h3><p class="byline"><a href="https://www.motherjones.com/author/jackie-flynn-mogensen/" title="Posts by Jackie Flynn Mogensen">Jackie Flynn Mogensen</a></p></a></div></li>
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/environment/2019/07/how-plastics-are-clogging-the-ocean-even-before-you-toss-that-bottle-away/"
+			title="How Plastics Are Clogging the Ocean, Even Before You Toss that Bottle Away"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecentArticle-2|thumbnail"
+			data-ga-action="https://www.motherjones.com/environment/2019/07/how-plastics-are-clogging-the-ocean-even-before-you-toss-that-bottle-away/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?resize=1300,730 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?resize=642,360 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/20090304-nurdles-on-the-beach-hand.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/environment/2019/07/how-plastics-are-clogging-the-ocean-even-before-you-toss-that-bottle-away/"
+		title="How Plastics Are Clogging the Ocean, Even Before You Toss that Bottle Away"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecentArticle-2|headline"
+		data-ga-action="https://www.motherjones.com/environment/2019/07/how-plastics-are-clogging-the-ocean-even-before-you-toss-that-bottle-away/"
+	><h3 class="hed">How Plastics Are Clogging the Ocean, Even Before You Toss that Bottle Away</h3><p class="byline"><a href="https://www.motherjones.com/author/julissa-trevino/" title="Posts by Julissa Treviño">Julissa Treviño</a></p></a></div></li>
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/media/2019/07/puerto-rico-resistance-flag-black-and-white-flag-san-juan-la-puerta-colonial/"
+			title="How a Change of Color for the Puerto Rican Flag Became a Symbol of Resistance"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecentArticle-3|thumbnail"
+			data-ga-action="https://www.motherjones.com/media/2019/07/puerto-rico-resistance-flag-black-and-white-flag-san-juan-la-puerta-colonial/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="Participants hold signs with the Puerto Rico&#039;s flag painted in black and white as symbol of resistance and civil disobedience during the NYC&#039;s 60th annual Puerto Rico Day parade on June 11, 2017 in New York City." data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?resize=1300,731 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?resize=642,361 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/PR_Resistance.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/media/2019/07/puerto-rico-resistance-flag-black-and-white-flag-san-juan-la-puerta-colonial/"
+		title="How a Change of Color for the Puerto Rican Flag Became a Symbol of Resistance"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecentArticle-3|headline"
+		data-ga-action="https://www.motherjones.com/media/2019/07/puerto-rico-resistance-flag-black-and-white-flag-san-juan-la-puerta-colonial/"
+	><h3 class="hed">How a Change of Color for the Puerto Rican Flag Became a Symbol of Resistance</h3><p class="byline"><a href="https://www.motherjones.com/author/justin-agrelo/" title="Posts by Justin Agrelo">Justin Agrelo</a></p></a></div></li>
+<li class="grid col-sm-3 col-xxs-12">
+	<div class="col-5 col-sm-12 col-xs-5 col-xxs-5 order-1"><a
+			href="https://www.motherjones.com/environment/2019/07/this-company-thinks-it-can-lure-gen-z-kids-away-from-beef-burgers-for-good/"
+			title="This Company Thinks It Can Lure Gen Z Kids Away From Beef Burgers for Good"
+			data-ga-category="EndOfArticle"
+			data-ga-label="RecentArticle-4|thumbnail"
+			data-ga-action="https://www.motherjones.com/environment/2019/07/this-company-thinks-it-can-lure-gen-z-kids-away-from-beef-burgers-for-good/"
+		><img width="990" height="557" src="https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?w=990" class="article-image wp-post-image jetpack-lazy-image" alt="" data-lazy-srcset="https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg 2000w, https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?resize=208,117 208w, https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?resize=321,180 321w, https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?resize=630,354 630w, https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?resize=990,556 990w, https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?resize=1300,730 1300w, https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?resize=642,360 642w" data-lazy-sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/07/20181014-impossible-burger.jpg?w=990&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /></a></div><div class="col-7 col-sm-12 col-xs-7 col-xxs-7 order-2"><a
+		href="https://www.motherjones.com/environment/2019/07/this-company-thinks-it-can-lure-gen-z-kids-away-from-beef-burgers-for-good/"
+		title="This Company Thinks It Can Lure Gen Z Kids Away From Beef Burgers for Good"
+		data-ga-category="EndOfArticle"
+		data-ga-label="RecentArticle-4|headline"
+		data-ga-action="https://www.motherjones.com/environment/2019/07/this-company-thinks-it-can-lure-gen-z-kids-away-from-beef-burgers-for-good/"
+	><h3 class="hed">This Company Thinks It Can Lure Gen Z Kids Away From Beef Burgers for Good</h3><p class="byline"><a href="https://www.motherjones.com/author/nathanael-johnson/" title="Posts by Nathanael Johnson">Nathanael Johnson</a></p></a></div></li>		</ul>
+	</section>
+
+	<div id="promos-container">
+		<section id="mj-incontent-ad-widget-4" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-house-promo-widget-2" class="widget mj-house-promo-widget"><div class="grid">
+	<div class="col-2 col-lg-2 col-md-12 col-sm-10 col-xs-12 col-xxs-12"></div>
+	<div class="incontent-promo-sm col-lg-6 col-md-12 col-sm-10 col-xs-12 col-xxs-12">
+		<div class="promo-all">
+			<h3>
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					 viewbox="0 0 164 110" style="enable-background:new 0 0 164 110;" xml:space="preserve">
+					<path d="M0,0.48v109.22h163.84V0.48H0z M81.92,64.62l-68.27-41.6l5.69-9.33l62.59,38.14l62.59-38.14l5.69,9.33L81.92,64.62z"/>
+				</svg>
+				Sign up for our newsletters
+			</h3>
+			<p><em>Subscribe and we'll send </em> Mother Jones <em>straight to your inbox.</em></p>
+			<div>
+				<form action="https://api.maropost.com/accounts/585/forms/3289/subscribe/177d8ba3b7fe7d39e28dcba73123eeffbd01878b" method="post" data-ga-label="Position_1|NewsletterSubscribe" data-ga-category="InContentPromos" id="HousePromoNewsletterSignup" onsubmit="return mj_check_email(this, event);" data-gtm-vis-recent-on-screen-8851012_28="23034" data-gtm-vis-first-on-screen-8851012_28="23034" data-gtm-vis-total-visible-time-8851012_28="100" data-gtm-vis-has-fired-8851012_28="1">
+					<input include_blank="true" start_year="1950" type="hidden" name="custom_fields[outreach_affiliate_code]" id="custom_fields_outreach_affiliate_code" value="InContent">
+					<input include_blank="true" start_year="1950" type="hidden" name="custom_fields[signup_url]" id="signup_url" value="">
+					<input type="hidden" value="" id="email_field" name="email_const_mp">
+					<label for="cons_email" class="visuallyhidden">Email</label>
+					<input include_blank="true" start_year="1950" name="contact_fields[email]" id="cons_email" placeholder="Email" type="text">
+					<input id="newsletter-signup" type="submit" name="commit" value="Sign Up">
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-4"></div>
+</div></section><section id="mj-incontent-ad-widget-11" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-house-promo-widget-3" class="widget mj-house-promo-widget"><div class="grid">
+	<div class="col-2 col-lg-2 col-md-12 col-sm-10 col-xs-12 col-xxs-12"></div>
+	<div class="incontent-promo-sm col-lg-6 col-md-12 col-sm-10 col-xs-12 col-xxs-12">
+		<div class="promo-all">
+			<h3>
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						 viewbox="0 0 120 93" style="enable-background:new 0 0 120 93;max-width:1.8rem;" xml:space="preserve">
+					<path d="M113.97,12.88V0.37h-4.01c-1.58,0-35.61,0.3-50.15,23.55C45.26,0.67,11.23,0.37,9.65,0.37H5.64v12.52
+						c-3.72-0.32-6.02-0.37-6.02-0.37v80.24H59.8h60.18V12.51C119.98,12.51,117.68,12.56,113.97,12.88z M105.94,8.63v5.18
+						c-11.46,1.65-27.54,5.35-38.83,13.68C76.98,12.86,97.3,9.42,105.94,8.63z M13.66,8.62C22.3,9.4,42.63,12.8,52.5,27.5
+						c-11.29-8.34-27.37-12.04-38.84-13.69V8.62z"/>
+				</svg>
+				Get our award-winning magazine
+			</h3>
+			<p><em>Save big on a full year of investigations, ideas, and insights.</em></p>
+			<a class="btn" href="https://store.motherjones.com/pages/magazine-subscriptions" title="Subscribe" data-ga-label="Position_2|MagazineSubscribe" data-ga-category="InContentPromos">Subscribe</a>
+		</div>
+	</div>
+	<div class="col-4"></div>
+</div></section><section id="mj-incontent-ad-widget-10" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-house-promo-widget-4" class="widget mj-house-promo-widget"><div class="grid">
+	<div class="col-2 col-lg-2 col-md-12 col-sm-10 col-xs-12 col-xxs-12"></div>
+	<div class="incontent-promo-sm col-lg-6 col-md-12 col-sm-10 col-xs-12 col-xxs-12">
+		<div class="promo-all">
+			<h3>
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						 viewbox="0 0 115 92" style="enable-background:new 0 0 115 92;" xml:space="preserve">
+					<g>
+						<path d="M57.49,26.04c2.43-8.41,6.13-14.79,11.12-19.14c4.98-4.35,11.03-6.52,18.15-6.52c8.41,0,15.17,2.83,20.29,8.5
+							c5.11,5.66,7.67,13.16,7.67,22.48c0,8.17-4.07,14.75-7.62,19.72c-3.56,4.97-19.5,15.13-19.5,15.13
+							c-16.56,7.7-26.6,16.3-30.11,25.81c-3.6-9.56-13.62-18.16-30.05-25.81C26.84,65.9,11.32,56.06,7.79,51.14
+							C4.25,46.21,0.2,39.62,0.2,31.35c0-9.32,2.57-16.81,7.71-22.48s11.89-8.5,20.26-8.5c7.15,0,13.21,2.18,18.18,6.52
+							C51.3,11.25,55.02,17.63,57.49,26.04z"/>
+					</g>
+				</svg>
+				Support our journalism
+			</h3>
+			<p><em>Help </em>Mother Jones<em>' reporters dig deep with a tax-deductible donation.</em></p>
+			<a class="btn" href="https://secure.actblue.com/donate/motherjones/?refcode=7HEGPBA1&amount=50.00&recurring=0" data-ga-label="Position_3|Donate" data-ga-category="InContentPromos">Donate</a><!-- needs new list_source -->
+		</div>
+	</div>
+	<div class="col-4"></div>
+</div></section><section id="mj-incontent-ad-widget-9" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-incontent-ad-widget-8" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-incontent-ad-widget-7" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-incontent-ad-widget-6" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-incontent-ad-widget-5" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-incontent-ad-widget-3" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section><section id="mj-incontent-ad-widget-2" class="widget mj-incontent-ad-widget"><div class="incontent-ad-container"></div></section>	</div>
+<section class="ad"><div class='dfw-unit' data-adunit='ROS_BTF_970x250_3' id='ROS_BTF_970x250_3' data-size-mapping='mapping3'></div><div class='dfw-unit' data-adunit='ROS_BTF_300x250_3' id='ROS_BTF_300x250_3' data-size-mapping='mapping4'></div></section><section id="mj-comments-container" class="section col-xs-12"><div id="comment-container">
+	<p id="new-comment-warning" class="col-lg-8 col-md-10 col-sm-10 col-xs-12 col-xxs-12">
+		<strong>Share your feedback:</strong>
+		We’re planning to launch a new version of the comments section.
+		<a data-ga-label="CommentsFeedback" data-ga-category="EndOfArticle"
+			href="https://www.motherjones.com/media/2019/07/were-making-some-changes-let-us-know-what-you-think/"
+		>Help us test it</a>.
+	</p>
+			<div id="disqus_thread" class="hide col-lg-8 col-md-10 col-sm-10 col-xs-12 col-xxs-12"></div>
+		<div id="comment-noscript"
+		 onclick="mj_display_comments(); jQuery(this).addClass(&quot;hidden&quot;); return false;"	>
+					<a href="http://motherjones.com.disqus.com/?url=https%3A%2F%2Fwww.motherjones.com%2Fnode%2F754427"
+				id="disqus-display-comments"
+				data-ga-label="CommentsExpand"
+				data-ga-category="EndOfArticle"
+			>
+				  <i class="icon-plus"></i>view comments
+	  </a>
+	</div>
+</div>
+</section>
+		</main>
+	</div><!-- #page -->
+
+	<div id="site-footer-promos" class="grid">
+		<section id="custom_html-11" class="widget_text widget widget_custom_html"><h2 class="widget-title">Mag Promo</h2><div class="textwidget custom-html-widget"><div id="footer-promo-mag" class="grid">
+	<div class="col-sm-4 col-xs-12">
+		<h3>Independent. In print. In your mailbox.</h3>
+		<p>Inexpensive, too! Subscribe today and get a full year of Mother Jones for just $12.</p>
+		<a href="https://store.motherjones.com/pages/magazine-subscriptions" title="Subscribe" data-ga-label="MagazineSubscribe" data-ga-category="FooterSubscribe"><button class="btn-primary">Subscribe</button></a>
+	</div>
+	<div class="col-sm-8 col-xs-12 grid">
+		<div class="mag-promo col-xs-4 col-xxs-12">
+			<a href="/magazine" data-ga-category="FooterSubscribe" data-ga-label="MagCover_1|image">
+				<img border="0" src="https://www.motherjones.com/wp-content/uploads/2019/03/mojocover_mj19_2400x3150.jpg.jpg?w=575" alt="Mother Jones Magazine Cover : May + June 2019" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/03/mojocover_mj19_2400x3150.jpg.jpg?w=575&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class=" jetpack-lazy-image"><noscript><img border="0" src="https://www.motherjones.com/wp-content/uploads/2019/03/mojocover_mj19_2400x3150.jpg.jpg?w=575" alt="Mother Jones Magazine Cover : May + June 2019"></noscript>
+			</a>
+			<a href="/magazine" data-ga-category="FooterSubscribe" data-ga-label="MagCover_1|text">June 2019</a>
+		</div>
+		<div class="mag-promo col-xs-4 col-xxs-12">
+			<a href="/mag/2019/03/toc" data-ga-category="FooterSubscribe" data-ga-label="MagCover_2|image">
+				<img border="0" src="https://www.motherjones.com/wp-content/uploads/2019/01/mojocover_ma19_2400x3150.jpg?w=575" alt="Mother Jones Magazine Cover : March + April 2019" data-lazy-src="https://www.motherjones.com/wp-content/uploads/2019/01/mojocover_ma19_2400x3150.jpg?w=575&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class=" jetpack-lazy-image"><noscript><img border="0" src="https://www.motherjones.com/wp-content/uploads/2019/01/mojocover_ma19_2400x3150.jpg?w=575" alt="Mother Jones Magazine Cover : March + April 2019"></noscript>
+			</a>
+			<a href="/magazine" data-ga-category="FooterSubscribe" data-ga-label="MagCover_2|text">April 2019</a>
+		</div>
+		<div class="mag-promo col-xs-4 hidden-xxs">
+			<a href="/mag/2019/01/toc" data-ga-category="FooterSubscribe" data-ga-label="MagCover_3|image">
+				<img src="https://motherjones.com/wp-content/uploads/2018/11/mojocover_jf19_2400x3150.jpg?w=575" alt="Mother Jones Magazine Cover : January + February 2019" border="none" data-lazy-src="https://motherjones.com/wp-content/uploads/2018/11/mojocover_jf19_2400x3150.jpg?w=575&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class=" jetpack-lazy-image"><noscript><img src="https://motherjones.com/wp-content/uploads/2018/11/mojocover_jf19_2400x3150.jpg?w=575" alt="Mother Jones Magazine Cover : January + February 2019" border="none"></noscript>
+			</a>
+			<a href="/mag/2019/01/toc/" data-ga-category="FooterSubscribe" data-ga-label="MagCover_3|text">February 2019</a>
+		</div>
+	</div>
+</div></div></section><section id="custom_html-10" class="widget_text widget widget_custom_html"><h2 class="widget-title">Podcast Promo</h2><div class="textwidget custom-html-widget"><div id="footer-promo-podcast" class="grid">
+	<div class="col-4">
+		<a href="https://itunes.apple.com/us/podcast/the-mother-jones-podcast/id1386408605?mt=2" data-ga-category="FooterSubscribe" data-ga-label="PodcastSubscribe|archive">
+			<img class="podcast-img jetpack-lazy-image" src="/wp-content/themes/motherjones/img/the-mother-jones-podcast-logo-615-615.png?w=200" alt="podcast" scale="0" data-lazy-src="/wp-content/themes/motherjones/img/the-mother-jones-podcast-logo-615-615.png?w=200&amp;is-pending-load=1" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><noscript><img class="podcast-img" src="/wp-content/themes/motherjones/img/the-mother-jones-podcast-logo-615-615.png?w=200" alt="podcast" scale="0"></noscript>
+		</a>
+	</div>
+	<div class="col-8">
+		<h3>Smart. Fearless. Audio.</h3>
+		<p>It's us but for your ears. Listen on Apple Podcasts.</p>
+		<a href="https://itunes.apple.com/us/podcast/the-mother-jones-podcast/id1386408605?mt=2" data-ga-category="FooterSubscribe" data-ga-label="PodcastSubscribe">Subscribe &raquo;</a>
+	</div>
+</div></div></section>
+		<section class="widget newsletter-signup grid">
+			<div class="ns-inner col-md-12 col-sm-10 col-xs-12 col-xxs-12">
+				<div>
+					<div class="col-12">
+						<h3>Looking for news you can trust?</h3>
+						<p>Subscribe to our free newsletters.</p>
+					</div>
+					<div class="col-12">
+						<form
+							action="https://api.maropost.com/accounts/585/forms/3289/subscribe/177d8ba3b7fe7d39e28dcba73123eeffbd01878b"
+							method="post"
+							data-ga-label="NewsletterSubscribe"
+							data-ga-category="FooterSubscribe"
+							id="BottomPromoNewsletterSignup" 							onsubmit="return mj_check_email(this, event);"
+						>
+							<input include_blank="true" start_year="1950" type="hidden" name="custom_fields[outreach_affiliate_code]" value="Bottom_Promo" />
+							<input include_blank="true" start_year="1950" type="hidden" name="custom_fields[signup_url]" value="" />
+							<input type="hidden" value="" name="email_const_mp" />
+							<label for="cons_email_nsp" class="visuallyhidden">Email</label>
+							<input include_blank="true" start_year="1950" id="cons_email_nsp" name="contact_fields[email]" placeholder="Email" type="text" />
+							<input type="submit" name="commit" id="submit" value="Sign Up" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+			</div>
+
+	<footer id="site-footer">
+		<div class="container grid">
+			<section class="logo col-md-3 col-sm-12">
+				<a href="/" aria-label="Home" class="footer-logo">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 813.67 165.61"><path d="M53.72 97.86h-.39l-8.05-86.64H0v152.49h28.78v-85.9l-1.67-36.19 2.05 14.73 14.39 107.36h19.18L77.12 56.35l2.05-14.73-1.66 36.19v-.04 85.94h28.77V11.22H62.54l-8.82 86.64M391.4 87.12c0-33.06-1.23-58.67-34-58.67S321 61.67 321 91.17c0 37.54 5.56 74.1 39.71 74.1 19.34 0 30.18-17.68 30.18-17.68v-31.07s-8.4 21.23-24.62 21.23c-11.32 0-17.65-10.58-17.65-27.83h42c.01-3.49.78-13.92.78-22.8zm-42.79-3.22c0-13.9 1.92-24.9 9.6-24.9 8.25 0 10.17 12.31 10.17 24.94zM148.49 28.44c-38.75 0-38.75 27.18-38.75 65.11 0 43.53 3.93 71.72 38.75 71.72s38.75-26 38.75-75c.01-35.87.01-61.83-38.75-61.83zm0 104.47c-9.21 0-10-5-10-36.06 0-29.34.77-36.06 10-36.06s10 7.08 10 36.06c-.02 27.23-.79 36.07-10 36.07zM442.34 28.44c-9.37 0-13.73 8.49-16 17.24l-2.56 19.49V30h-29v133.7h31.08V92.19c0-26 7.86-30.34 15.94-30.34 11.79 0 14.55 14.16 14.55 14.16V35.77s-5.48-7.33-14.01-7.33zm-145.72 0c-10.55 0-17.44 7.48-19.7 18.65l-2.17 12.5V11.22h-31.08v152.49h31.08V74.29c0-5.13.44-13.88 6.33-13.88s5.37 7.57 5.37 14.67v88.63h31.08V50.92c0-11.48-4.8-22.48-20.91-22.48zm261.29.34c-38.75 0-38.75 27.18-38.75 65.11 0 43.53 3.93 71.72 38.75 71.72s38.75-26 38.75-75c0-35.87 0-61.83-38.75-61.83zm0 104.47c-9.21 0-10-5-10-36.06 0-29.34.77-36.06 10-36.06s10 7.08 10 36.06c-.03 27.22-.8 36.06-10 36.06zm95.16-104.81c-10.55 0-17.44 7.48-19.7 18.65l-2.18 12.5V30h-31.07v133.7h31.08V74.29c0-5.13.44-13.88 6.33-13.88s5.37 7.59 5.37 14.67v88.63H674V50.92c0-11.48-4.82-22.48-20.93-22.48zm-196.65 91.04v35.95s5.38 9.57 24.19 9.57c28.22 0 35.09-23.13 35.09-48.79v-105h-28.78v92.09c0 26-7.86 30.34-15.94 30.34-11.8-.01-14.56-14.16-14.56-14.16zm294.37-2.96c2.8 10.71 8.62 21.34 21.82 21.34 8.73 0 12.83-3 13.24-11.5.89-18.69-34.34-27.06-34.34-59.75 0-28.46 13.87-38.16 33.77-38.16 11.63 0 23.26 7.85 26.62 15.53V76c-3.36-9.36-10.27-20.08-19.8-20.08-7.55 0-11.17 3.6-11.51 10.72-.92 19.3 33.09 26.18 33.09 56.64 0 25.71-9 42-34.34 42-20.13 0-28.54-17.68-28.54-17.68zm-2.95-29.4c0-33.06-1.23-58.67-34-58.67s-36.45 33.23-36.45 62.73c0 37.54 5.56 74.1 39.71 74.1 19.34 0 30.18-17.68 30.18-17.68v-31.08s-8.4 21.23-24.62 21.23c-11.32 0-17.65-10.58-17.65-27.83h42c.07-3.49.83-13.92.83-22.8zm-42.78-3.22c0-13.9 1.94-24.9 9.6-24.9 8.25 0 10.17 12.31 10.17 24.94z"/><path class="cls-1" d="M221.79 0l-37 33.52s5.88 14.91 5.88 40.66v65.18c0 18.45 10.74 25.93 25.9 25.93 10.43 0 17.28-2.83 23.6-8.49v-27.63c-2.51 4.56-5.31 7-9.72 7-4.67 0-8.69-3.38-8.69-10.79V58.2h18.44V30h-18.41z"/></svg>
+				</a>
+				<ul class="footer-social">
+					<li class="fb">
+						<a href="https://www.facebook.com/motherjones"
+							aria-label="Mother Jones on Facebook"
+							data-ga-category="SiteFooter"
+							data-ga-label="Facebook"
+						>
+							<i class="icon-facebook"></i>
+						</a>
+					</li>
+					<li class="tweet">
+						<a href="https://twitter.com/motherjones"
+							aria-label="Mother Jones on Twitter"
+							data-ga-category="SiteFooter"
+							data-ga-label="Twitter"
+						>
+							<i class="icon-twitter"></i>
+						</a>
+					</li>
+					<li class="instagram">
+						<a href="https://www.instagram.com/motherjonesmag/"
+							aria-label="Mother Jones on Instagram"
+							data-ga-category="SiteFooter"
+							data-ga-label="Instagram"
+						>
+							<i class="icon-instagram"></i>
+						</a>
+					</li>
+					<li class="rss">
+						<a href="http://feeds.feedburner.com/motherjones/feed"
+							aria-label="MotherJones.com RSS feed"
+							data-ga-category="SiteFooter"
+							data-ga-label="RSS"
+						>
+							<i class="icon-rss"></i>
+						</a>
+					</li>
+					<li class="newsletter">
+						<a href="/newsletters"
+							aria-label="Newsletters"
+							data-ga-category="SiteFooter"
+							data-ga-label="Newsletter"
+						>
+							<i class="icon-mail"></i>
+						</a>
+					</li>
+				</ul>
+			</section>
+			<section class="menu col-md-9 col-sm-12 col-xs-12 grid">
+				<ul class="col-sm-4 col-xs-12"><li id="menu-item-612461" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612461"><a href="https://www.motherjones.com/about/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/about/" data-ga-label="Section_1_NavPosition_1">About</a></li>
+<li id="menu-item-612462" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612462"><a href="https://www.motherjones.com/about/staff/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/about/staff/" data-ga-label="Section_1_NavPosition_2">Our Staff</a></li>
+<li id="menu-item-612481" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612481"><a href="https://www.motherjones.com/about/financials/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/about/financials/" data-ga-label="Section_1_NavPosition_3">Financials</a></li>
+<li id="menu-item-612465" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612465"><a href="https://www.motherjones.com/jobs/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/jobs/" data-ga-label="Section_1_NavPosition_4">Jobs</a></li>
+<li id="menu-item-621474" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-621474"><a href="https://www.motherjones.com/events/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/events/" data-ga-label="Section_1_NavPosition_5">Events</a></li>
+<li id="menu-item-612464" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612464"><a href="https://www.motherjones.com/contact/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/contact/" data-ga-label="Section_1_NavPosition_6">Contact Us</a></li>
+</ul><ul class="col-sm-4 col-xs-12"><li id="menu-item-612467" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612467"><a href="https://www.motherjones.com/support/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/support/" data-ga-label="Section_2_NavPosition_1">Support</a></li>
+<li id="menu-item-612468" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612468"><a href="https://www.motherjones.com/support/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/support/" data-ga-label="Section_2_NavPosition_2">Ways to Give</a></li>
+<li id="menu-item-612470" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612470"><a href="https://www.motherjones.com/advertising/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/advertising/" data-ga-label="Section_2_NavPosition_3">Advertise With Us</a></li>
+<li id="menu-item-612471" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-612471"><a href="http://store.motherjones.com/?utm_source=motherjones&#038;utm_medium=footer&#038;utm_content=orangefooterlink&#038;utm_campaign=evergreen" data-ga-category="SiteFooter" data-ga-action="http://store.motherjones.com/?utm_source=motherjones&amp;utm_medium=footer&amp;utm_content=orangefooterlink&amp;utm_campaign=evergreen" data-ga-label="Section_2_NavPosition_4">Store</a></li>
+</ul><ul class="col-sm-4 col-xs-12"><li id="menu-item-612473" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-612473"><a href="https://store.motherjones.com/pages/magazine-subscriptions" data-ga-category="SiteFooter" data-ga-action="https://store.motherjones.com/pages/magazine-subscriptions" data-ga-label="Section_3_NavPosition_1">Subscribe</a></li>
+<li id="menu-item-612474" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-612474"><a href="https://store.motherjones.com/pages/magazine-subscriptions" data-ga-category="SiteFooter" data-ga-action="https://store.motherjones.com/pages/magazine-subscriptions" data-ga-label="Section_3_NavPosition_2">Magazine Subscriptions</a></li>
+<li id="menu-item-651049" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-651049"><a href="https://store.motherjones.com/pages/magazine-subscriptions" data-ga-category="SiteFooter" data-ga-action="https://store.motherjones.com/pages/magazine-subscriptions" data-ga-label="Section_3_NavPosition_3">Give a Gift Subscription</a></li>
+<li id="menu-item-612476" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612476"><a href="https://www.motherjones.com/newsletters/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/newsletters/" data-ga-label="Section_3_NavPosition_4">Email Newsletters</a></li>
+<li id="menu-item-612477" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612477"><a href="https://www.motherjones.com/podcasts/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/podcasts/" data-ga-label="Section_3_NavPosition_5">Podcasts</a></li>
+<li id="menu-item-612478" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-612478"><a href="https://www.motherjones.com/customer-service/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/customer-service/" data-ga-label="Section_3_NavPosition_6">Customer Service</a></li>
+</ul>			</section>
+			<section class="bottom col-12">
+				<p class="copyright" role="contentinfo">
+				Copyright &copy; 2019 Mother Jones and the Foundation for National Progress. All Rights Reserved.<ul id="menu-copyright" class="menu"><li id="menu-item-405542" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-405542"><a href="https://www.motherjones.com/about/terms/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/about/terms/" data-ga-label="Section_Copyright_NavPosition_1">Terms of Service</a></li>
+<li id="menu-item-405543" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-405543"><a href="https://www.motherjones.com/about/privacy-policy/" data-ga-category="SiteFooter" data-ga-action="https://www.motherjones.com/about/privacy-policy/" data-ga-label="Section_Copyright_NavPosition_2">Privacy Policy</a></li>
+</ul>				</p>
+				<a href="https://wpvip.com/?utm_source=vip_powered_wpcom&#038;utm_medium=web&#038;utm_campaign=VIP%20Footer%20Credit&#038;utm_term=www.motherjones.com" rel="generator nofollow" class="powered-by-wpcom"><img src="https://www.motherjones.com/wp-content/mu-plugins/vip-helpers/images/vip-powered-light-small.png" width="187" height="26" alt="Powered by WordPress.com VIP" /></a>			</section>
+		</div>
+	</footer>
+
+	<section id="mj-adblock-widget-2" class="widget mj-adblock-widget hide">		<section id="adblock-message" class="hide">
+			<div class="text-and-buttons-container grid">
+				<h2>We Noticed You Have An Ad Blocker On.</h2>				<div class="text-container col-md-8 col-sm-12">
+					<p class="long-text">
+										<strong>ONE QUICK THING:</strong>
+
+Did you see that <em>Mother Jones</em> is launching a new Corruption Project? <a href="https://www.motherjones.com/media/2019/04/mother-jones-corruption-project/?list_source=7H94PD01&amp;term=XX.1.50.00.DON.D.0.19646" data-ga-category="AdblockBottomAdhesion" data-ga-label="ReadMore">Check it out</a>, and if our plan makes sense to you, we hope you'll help us raise $500,000 and go all in.								</p>
+					<p class="short-text">
+										<strong>ONE QUICK THING:</strong>
+
+Did you see that <em>Mother Jones</em> is launching a new Corruption Project? <a href="https://www.motherjones.com/media/2019/04/mother-jones-corruption-project/?list_source=7H94PD01&amp;term=XX.1.50.00.DON.D.0.19646" data-ga-category="AdblockBottomAdhesion" data-ga-label="ReadMore">Check it out</a>, and if our plan makes sense to you, we hope you'll help us raise $500,000 and go all in.								</p>
+				</div>
+				<div class="buttons-container col-md-4 col-sm-12 col-xs-12">
+					<a href="https://secure.actblue.com/donate/motherjones?refcode=7H94PD01&#038;amount=50.00&#038;recurring=0" target="_blank"
+						data-ga-label="Donate"
+						data-ga-category="AdblockBottomAdhesion"
+					>
+						<button class="donate btn-primary">Donate</button>
+					</a>
+					<a data-ga-label="Close"
+					   data-ga-category="AdblockBottomAdhesion"
+					>
+						<button class="close">Not Now</button>
+					</a>
+				</div>
+			</div>
+		</section>
+
+		</section><script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201927'></script>
+<script type='text/javascript' src='https://www.motherjones.com/wp-content/themes/motherjones/js/ads.min.js?ver=0.4.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var mj_prebid_config = [{"code":"ROS_ATF_970x250","labelAny":["desktop"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"225159"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":false,"refresh":true}];
+var mj_prebid_config = [{"code":"ROS_ATF_970x250","labelAny":["desktop"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"225159"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":false,"refresh":true},{"code":"ROS_BTF_970x250_3","labelAny":["desktop"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"225164"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true}];
+var mj_prebid_config = [{"code":"ROS_ATF_970x250","labelAny":["desktop"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"225159"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":false,"refresh":true},{"code":"ROS_BTF_970x250_3","labelAny":["desktop"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"225164"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"ROS_BTF_300x250_3","labelAny":["tablet","phone"],"bids":[{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_488935751508280"}},{"bidder":"criteo","params":{"networkId":7074}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true}];
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var mj_ad_config = [{"ads":[{"code":"Incontent_970x250_1","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304254"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":null,"refresh":false},{"code":"Incontent_970x250_2","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304255"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_3","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304256"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_4","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304257"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_5","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304258"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_6","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304259"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_7","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304260"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_8","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304261"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_9","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304262"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_970x250_10","labelAny":["desktop"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[970,250],"siteId":"304263"}}],"mediaTypes":{"banner":{"sizes":[[970,250],[1,1]]},"video":{"context":"outstream","playerSize":[970,250]}},"lazy_load":true,"refresh":true}],"is_fullwidth":true},{"ads":[{"code":"Incontent_300x250_1","labelAny":["tablet","phone"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304264"}},{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130024955518"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_2","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304265"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130171622170"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_3","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304266"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130214955499"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_4","labelAny":["tablet","phone"],"bids":[{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304267"}},{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130274955493"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_5","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304268"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130384955482"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_6","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304269"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130788288775"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_7","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304270"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130861622101"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_8","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304271"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621130958288758"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_9","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304272"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621131071622080"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true},{"code":"Incontent_300x250_10","labelAny":["tablet","phone"],"bids":[{"bidder":"teads","params":{"placementId":102601,"pageId":94756}},{"bidder":"criteo","params":{"networkId":7074}},{"bidder":"ix","params":{"size":[300,250],"siteId":"304273"}},{"bidder":"audienceNetwork","params":{"placementId":"221718354896689_621131148288739"}}],"mediaTypes":{"banner":{"sizes":[[300,250],[300,250],[1,1]]},"video":{"context":"outstream","playerSize":[300,250]}},"lazy_load":true,"refresh":true}]}];
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var campaign_start_time = {"value":"1556064060000"};
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var mj_adhesion_config = {"is_single":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var mj_comment_config = {"disqus_url":"http:\/\/www.motherjones.com\/node\/754427","disqus_identifier":"\/node\/754427"};
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var dfw = {"network_code":"49189977","mappings":{"InContent":[{"browser":[0,1],"ad_sizes":[[300,250]]},{"browser":[768,1],"ad_sizes":[[300,250]]},{"browser":[992,1],"ad_sizes":[[970,250]]},{"browser":[1060,1],"ad_sizes":[[970,250],[1060,520]]}]},"targeting":{"Page":["single","fullwidth"],"Category":["politics"],"Tag":["2016-elections","2018-elections","2020-elections","bernie-sanders","civil-liberties","congress","corporations","dark-money","elections","inequality","money-in-politics","scott-walker","stacey-abrams","supreme-court","voting-rights"],"env":["www"]}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.motherjones.com/_static/??-eJydkd1uwjAMRl9oaUCMcTXtUaY0cRuH2MnyQ9U9PWGAxAUS7e78Sef4k2w5RaEDF+AiiwWCLCm0IbnAbXZZxgQ9mo6QO5ff5Et+CKFAWs6TE2srkO9AUwOFlgysaiSgHlK22FgL+rhKVsZCxsDLpXCC5NW8XGB1EhlU0na5k5FH//QMVEX0dURuHJSo9FF+I2vZV/RGevU7CyQ1Xtc8xMddjffVXJEWL/d7+rF7kRkmqXKG8me4nwpp7swQ/+FMN+eLPrf7j+1ht9m/79wZbfIFYw=='></script>
+			<script type="text/javascript">
+				var dfw_load = function() {
+					jQuery('.dfw-unit:not(.dfw-lazy-load)').dfp({
+						dfpID: 49189977,
+						collapseEmptyDivs: false,
+						setTargeting: {"Page":["single","fullwidth"],"Category":["politics"],"Tag":["2016-elections","2018-elections","2020-elections","bernie-sanders","civil-liberties","congress","corporations","dark-money","elections","inequality","money-in-politics","scott-walker","stacey-abrams","supreme-court","voting-rights"],"env":["www"]},
+						sizeMapping: {"InContent":[{"browser":[0,1],"ad_sizes":[[300,250]]},{"browser":[768,1],"ad_sizes":[[300,250]]},{"browser":[992,1],"ad_sizes":[[970,250]]},{"browser":[1060,1],"ad_sizes":[[970,250],[1060,520]]}]}					});
+				};
+			</script>
+					<script type="text/javascript">
+				var dfw_load = function() {
+					jQuery('.dfw-unit:not(.dfw-lazy-load)').dfp({
+						dfpID: 49189977,
+						collapseEmptyDivs: false,
+						setTargeting: {"Page":["single","fullwidth"],"Category":["politics"],"Tag":["2016-elections","2018-elections","2020-elections","bernie-sanders","civil-liberties","congress","corporations","dark-money","elections","inequality","money-in-politics","scott-walker","stacey-abrams","supreme-court","voting-rights"],"env":["www"]},
+						sizeMapping: {"mapping1":[{"browser":[0,1],"ad_sizes":[[300,250]]},{"browser":[768,1],"ad_sizes":[[300,250],[640,480],[400,520]]},{"browser":[992,1],"ad_sizes":[[640,480],[780,400],[400,520]]}],"mapping2":[{"browser":[0,1],"ad_sizes":[]},{"browser":[768,1],"ad_sizes":[]},{"browser":[992,1],"ad_sizes":[[970,250]]}],"mapping3":[{"browser":[0,1],"ad_sizes":[]},{"browser":[768,1],"ad_sizes":[]},{"browser":[992,1],"ad_sizes":[[970,250]]}],"mapping4":[{"browser":[0,1],"ad_sizes":[[300,250]]},{"browser":[768,1],"ad_sizes":[[300,250]]},{"browser":[992,1],"ad_sizes":[]}],"InContent":[{"browser":[0,1],"ad_sizes":[[300,250]]},{"browser":[768,1],"ad_sizes":[[300,250]]},{"browser":[992,1],"ad_sizes":[[970,250]]},{"browser":[1060,1],"ad_sizes":[[970,250],[1060,520]]}]}					});
+				};
+			</script>
+		<script type='text/javascript' src='https://stats.wp.com/e-201927.js' async='async' defer='defer'></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:7.4',blog:'130213978',post:'754427',tz:'-4',srv:'www.motherjones.com'} ]);
+	_stq.push([ 'clickTrackerInit', '130213978', '754427' ]);
+</script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"949ceaf672","applicationID":"42428067","transactionName":"MQZWYhAFXhdYAUBfWwhMdVUWDV8KFhFdWFMKBhlQFwhcO04LUEJcOQJGQgsHXAE=","queueTime":0,"applicationTime":215,"atts":"HUFBFFgfTUgbAxYMTxse","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
