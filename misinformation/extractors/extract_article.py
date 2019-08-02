@@ -127,7 +127,7 @@ def simplify_extracted_byline(bylines):
             return None
         return byline
     # Simplify each byline in the list and create a new list, removing all None
-    bylines = [byline for byline in map(simplify_single_byline, bylines) if byline]
+    bylines = list(filter(None, map(simplify_single_byline, bylines)))
     # Remove duplicated authors
     return list(dict.fromkeys(bylines))
 
