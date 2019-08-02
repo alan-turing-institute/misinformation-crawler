@@ -105,6 +105,7 @@ def simplify_extracted_byline(bylines):
     remove_from_end = [","]
     no_author_here = ["and", "By", ","]
     remove_after = ["/", "(", "|"]
+
     def simplify_single_byline(byline):
         # Remove these from start of the byline string if present
         for start_string in remove_from_start:
@@ -122,8 +123,9 @@ def simplify_extracted_byline(bylines):
         # Remove leading and trailing whitespace
         byline = byline.strip()
         # Ignore any byline string that does not contain an author
-        if byline and byline not in no_author_here:
-            return byline
+        if byline in no_author_here:
+            return None
+        return byline
     # Simplify each byline in the list and create a new list, removing all None
     bylines = [byline for byline in map(simplify_single_byline, bylines) if byline]
     # Remove duplicated authors
@@ -133,6 +135,7 @@ def simplify_extracted_byline(bylines):
 def simplify_extracted_title(titles):
     """Simplify titles by removing anything after a vertical bar (usually a site name)"""
     remove_after = ["|"]  # Add to this list if needed
+
     def simplify_single_title(title):
         for remove_string in remove_after:
             title = title.split(remove_string)[0]
