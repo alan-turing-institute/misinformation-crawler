@@ -393,7 +393,10 @@ christianpost.com:
 
 clickhole.com:
   site_name: 'clickhole.com'
-  start_url: 'https://www.clickhole.com/c/news'
+  start_url:
+    - 'https://www.clickhole.com/c/news'
+    - 'https://patriothole.clickhole.com/'
+    - 'https://resistancehole.clickhole.com/'
   crawl_strategy:
     method: 'index_page'
     index_page:
@@ -2408,12 +2411,15 @@ washingtontimes.com:
 
 weeklyworldnews.com:
   site_name: 'weeklyworldnews.com'
-  start_url: 'http://weeklyworldnews.com/category/politics/'
+  start_url:
+    - 'http://weeklyworldnews.com/category/politics/'
+    - 'http://weeklyworldnews.com/tag/politics/'
+    - 'http://weeklyworldnews.com/'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/category/politics/page/'
-      article_links: '//h1/a[@rel="bookmark"]'
+      url_must_contain: '/page/'
+      article_links: '//article[contains(@class, "politics")]//h1/a[@rel="bookmark"]'
   article:
     byline:
       select_method: 'xpath'
