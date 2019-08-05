@@ -1697,7 +1697,7 @@ realnewsrightnow.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/page/'
-      article_links: '//article[contains(@class, "category-politics")]//node()[@itemprop="headline"]/a'
+      article_links: '//article[contains(@class, "category-politics") or contains(@class, "category-world-news") or contains(@class, "category-u-s-news")]//node()[@itemprop="headline"]/a'
   article:
     byline:
       select_method: 'xpath'
