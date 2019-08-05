@@ -498,7 +498,7 @@ conservativepapers.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/page/\d/'
+      url_must_contain: '/page/\d'
   article:
     url_must_contain: '/news/\d\d\d\d/\d\d/\d\d/'
     byline:
