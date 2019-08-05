@@ -393,7 +393,10 @@ christianpost.com:
 
 clickhole.com:
   site_name: 'clickhole.com'
-  start_url: 'https://www.clickhole.com/c/news'
+  start_url:
+    - 'https://www.clickhole.com/c/news'
+    - 'https://patriothole.clickhole.com/'
+    - 'https://resistancehole.clickhole.com/'
   crawl_strategy:
     method: 'index_page'
     index_page:
