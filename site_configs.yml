@@ -1697,7 +1697,7 @@ realnewsrightnow.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/page/'
-      article_links: '//article[contains(@class, "category-politics")]//node()[@itemprop="headline"]/a'
+      article_links: '//article[contains(@class, "category-politics") or contains(@class, "category-world-news") or contains(@class, "category-u-s-news")]//node()[@itemprop="headline"]/a'
   article:
     byline:
       select_method: 'xpath'
@@ -2411,12 +2411,15 @@ washingtontimes.com:
 
 weeklyworldnews.com:
   site_name: 'weeklyworldnews.com'
-  start_url: 'http://weeklyworldnews.com/category/politics/'
+  start_url:
+    - 'http://weeklyworldnews.com/category/politics/'
+    - 'http://weeklyworldnews.com/tag/politics/'
+    - 'http://weeklyworldnews.com/'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/category/politics/page/'
-      article_links: '//h1/a[@rel="bookmark"]'
+      url_must_contain: '/page/'
+      article_links: '//article[contains(@class, "politics")]//h1/a[@rel="bookmark"]'
   article:
     byline:
       select_method: 'xpath'
