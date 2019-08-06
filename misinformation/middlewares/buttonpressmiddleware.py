@@ -218,7 +218,12 @@ class ButtonPressMiddleware:
 
         # Add any cookies that we may have collected to the spider so that they
         # can be used for future requests
-        spider.update_cookies(self.driver.get_cookies())
+        try:
+            cookies = self.driver.get_cookies()
+            if cookies:
+                spider.update_cookies(cookies)
+        except WebDriverException:
+            pass
         return HtmlResponse(body=html_str, url=request.url, encoding=request.encoding, request=request)
 
     def spider_closed(self):
