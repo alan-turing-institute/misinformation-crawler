@@ -181,12 +181,13 @@ alternet.org:
 
 apnews.com:
   site_name: 'apnews.com'
-  start_url: 'https://apnews.com/apf-usnews'
+  start_url: 'https://apnews.com/sitemap/sitemap_index.xml'
   crawl_strategy:
-    method: 'index_page'
-    index_page:
-      article_links: '//a[@class="headline"]'
+    method: 'sitemap'
+    site_map:
+      url_must_contain: 'sitemap'
   article:
+    url_must_contain: 'apnews.com/[a-z0-9]{32}'
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="byline"]/text()'
