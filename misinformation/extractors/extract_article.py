@@ -98,35 +98,46 @@ def extract_article(response, config, db_entry=None, content_digests=False, node
     return article
 
 
-def simplify_extracted_byline(byline):
-    """Simplify bylines by removing attribution words, rejecting bylines without authors and removing
+def simplify_extracted_byline(bylines):
+    """Simplify all bylines in list by removing attribution words, rejecting bylines without authors and removing
     anything bracketed at the end of the byline or after a forward slash or vertical bar (usually a site name)"""
-    attributions = ["by ", "By "]
-    no_author_here = ["and", "By", ","]
-    remove_after = ["/", "(", "|"]
-    # Remove start of the byline string if it is an attribution
-    for attribution in attributions:
-        if byline.startswith(attribution):
-            byline = byline.replace(attribution, "")
-    # Remove any part of the byline string following a termination marker
-    for remove_string in remove_after:
-        byline = byline.split(remove_string)[0]
-    # Replace any whitespace with a single space
-    byline = re.sub(r"\s+", ' ', byline)
-    # Remove leading and trailing whitespace
-    byline = byline.strip()
-    # Ignore any byline string that does not contain an author
-    if byline in no_author_here:
-        return None
-    return byline
+    def simplify_single_byline(byline):
+        remove_from_start = ["by ", "By ", "and "]
+        remove_from_end = [","]
+        no_author_here = ["and", "By", ","]
+        remove_after = ["/", "(", "|"]
+        # Remove these from start of the byline string if present
+        for start_string in remove_from_start:
+            if byline.startswith(start_string):
+                byline = byline.replace(start_string, "")
+        # Remove these from end of byline string if present
+        for end_string in remove_from_end:
+            if byline.endswith(end_string):
+                byline = byline.replace(end_string, "")
+        # Remove any part of the byline string following a termination marker
+        for remove_string in remove_after:
+            byline = byline.split(remove_string)[0]
+        # Replace any whitespace with a single space
+        byline = re.sub(r"\s+", ' ', byline)
+        # Remove leading and trailing whitespace
+        byline = byline.strip()
+        # Ignore any byline string that does not contain an author
+        if byline in no_author_here:
+            return None
+        return byline
+
+    # Simplify each byline in the list and create a new list, removing all None
+    bylines = list(filter(None, map(simplify_single_byline, bylines)))
+    # Remove duplicated authors
+    return list(dict.fromkeys(bylines))
 
 
-def simplify_extracted_title(title):
+def simplify_extracted_title(titles):
     """Simplify titles by removing anything after a vertical bar (usually a site name)"""
-    remove_after = ["|"]  # Add to this list if needed
+    def simplify_single_title(title):
+        remove_after = ["|"]  # Add to this list if needed
+        for remove_string in remove_after:
+            title = title.split(remove_string)[0]
+        return title.strip()
 
-    for remove_string in remove_after:
-        title = title.split(remove_string)[0]
-    title = title.strip()
-
-    return title
+    return list(map(simplify_single_title, titles))

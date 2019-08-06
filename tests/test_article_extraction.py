@@ -818,11 +818,13 @@ def test_extract_datetime_abcnews_variants(datetime_string, format_string, expec
     assert extract_datetime_string(datetime_string, format_string) == expected_iso_string
 
 
-@pytest.mark.parametrize("byline, expected", [("by Toby", "Toby"), ("By Byram", "Byram"), ("Toby and Byram", "Toby and Byram"), ("and", None), ("By", None), ("Toby Man / AP News", "Toby Man"), ("Ben Man (BBC)", "Ben Man")])
-def test_simplify_extracted_byline(byline, expected):
-    assert simplify_extracted_byline(byline) == expected
+def test_simplify_extracted_byline():
+    bylines = ["by Toby", "By Byram", "Toby and Byram", "and", "By", "Toby Man / AP News", "Ben Man (BBC)"]
+    expected_bylines = ["Toby", "Byram", "Toby and Byram", "Toby Man", "Ben Man"]
+    assert simplify_extracted_byline(bylines) == expected_bylines
 
 
-@pytest.mark.parametrize("title, expected", [("Title | News site", "Title"), ("Title", "Title")])
-def test_simplify_extracted_title(title, expected):
-    assert simplify_extracted_title(title) == expected
+def test_simplify_extracted_title():
+    titles = ["Title | News site", "Title"]
+    expected_titles = ["Title", "Title"]
+    assert simplify_extracted_title(titles) == expected_titles

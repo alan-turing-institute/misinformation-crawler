@@ -181,12 +181,13 @@ alternet.org:
 
 apnews.com:
   site_name: 'apnews.com'
-  start_url: 'https://apnews.com/apf-usnews'
+  start_url: 'https://apnews.com/sitemap/sitemap_index.xml'
   crawl_strategy:
-    method: 'index_page'
-    index_page:
-      article_links: '//a[@class="headline"]'
+    method: 'sitemap'
+    site_map:
+      url_must_contain: 'sitemap'
   article:
+    url_must_contain: 'apnews.com/[a-z0-9]{32}'
     byline:
       select_method: 'xpath'
       select_expression: '//span[@class="byline"]/text()'
@@ -393,7 +394,10 @@ christianpost.com:
 
 clickhole.com:
   site_name: 'clickhole.com'
-  start_url: 'https://www.clickhole.com/c/news'
+  start_url:
+    - 'https://www.clickhole.com/c/news'
+    - 'https://patriothole.clickhole.com/'
+    - 'https://resistancehole.clickhole.com/'
   crawl_strategy:
     method: 'index_page'
     index_page:
@@ -495,7 +499,7 @@ conservativepapers.com:
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/page/\d/'
+      url_must_contain: '/page/\d'
   article:
     url_must_contain: '/news/\d\d\d\d/\d\d/\d\d/'
     byline:
@@ -1293,15 +1297,21 @@ motherjones.com:
   article:
     byline:
       select_method: 'xpath'
-      select_expression: '//span[@class="byline"]/a/text()'
+      select_expression: '//span[@class="byline"]/a/text() | //h3[@class="byline"]/span/a/text()'
       match_rule: 'comma_join'
     content:
       select_method: 'xpath'
-      select_expression: '//article[@class="entry-content"]'
-      match_rule: 'single'
+      select_expression: '//article[@class="entry-content"] | //div[@id="fullwidth-body"]'
+      match_rule: 'first'
       remove_expressions:
         - '//div[contains(@class, "is-image")]'
         - '//div[contains(@class, "newsletter-signup")]'
+        - '//div[contains(@class, "mj-video")]'
+        - '//div[contains(@class, "mj-related")]'
+        - '//div[contains(@class, "promo-all")]'
+        - '//aside'
+        - '//figure'
+        - '//section[contains(@class, "inline-element")]'
 
 multichannel.com:
   site_name: 'multichannel.com'
@@ -1688,7 +1698,7 @@ realnewsrightnow.com:
     method: 'index_page'
     index_page:
       url_must_contain: '/page/'
-      article_links: '//article[contains(@class, "category-politics")]//node()[@itemprop="headline"]/a'
+      article_links: '//article[contains(@class, "category-politics") or contains(@class, "category-world-news") or contains(@class, "category-u-s-news")]//node()[@itemprop="headline"]/a'
   article:
     byline:
       select_method: 'xpath'
@@ -2402,12 +2412,15 @@ washingtontimes.com:
 
 weeklyworldnews.com:
   site_name: 'weeklyworldnews.com'
-  start_url: 'http://weeklyworldnews.com/category/politics/'
+  start_url:
+    - 'http://weeklyworldnews.com/category/politics/'
+    - 'http://weeklyworldnews.com/tag/politics/'
+    - 'http://weeklyworldnews.com/'
   crawl_strategy:
     method: 'index_page'
     index_page:
-      url_must_contain: '/category/politics/page/'
-      article_links: '//h1/a[@rel="bookmark"]'
+      url_must_contain: '/page/'
+      article_links: '//article[contains(@class, "politics")]//h1/a[@rel="bookmark"]'
   article:
     byline:
       select_method: 'xpath'
