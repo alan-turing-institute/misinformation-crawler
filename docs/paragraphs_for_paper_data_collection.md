@@ -10,6 +10,8 @@ The config file also specified which crawl strategy should be performed for each
 2.	The "Sitemap" strategy worked by treating all the links on a website’s sitemap as article pages.
 3.	The "Scattergun" strategy worked by crawling all the links on a site. We used this strategy as a last resort for sites that lacked viable index pages or a sitemap.
 
+Of 107 sites in the dataset, 89 were sampled using the "Index page" strategy, 4 with "Sitemap" and 14 with "Scattergun".
+
 Each of these strategies could be modified further for a particular site by placing constraints on the urls of pages to be considered articles appropriate for the dataset.
 
 Over the duration of the project, in addition to adding new sites to the config, the crawler code was refined many times and sometimes new features had to be added in light of a site that couldn’t be crawled by the current version of the code.
