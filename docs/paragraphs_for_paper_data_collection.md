@@ -6,7 +6,7 @@ To create the dataset, we utilised the Python package "scrapy" to crawl a list o
 For some of the metadata (titles and dates), we identified that there were common HTML elements being used across many sites and included the matching Xpath codes as defaults, which could be overwritten by the config Xpaths upon inclusion. This saved time when adding additional sites.
 
 The config file also specified which crawl strategy should be performed for each site, of which there were three kinds that we developed.
-1.	The "Index page" strategy worked by iterating through index pages (those we identified by matching a particular url pattern) of a website and treating all links matching a given Xpath code as being article pages.
+1.	The "Index page" strategy worked by iterating through the index pages of a site. These were pages with a list of article links, which usually included a link to the subsequent index page at the bottom (e.g. a "Next" button). We identified these index pages by matching a particular url pattern (e.g. `site.com/politics/page/X` where X is an increasing integer)
 2.	The "Sitemap" strategy worked by treating all the links on a website’s sitemap as article pages.
 3.	The "Scattergun" strategy worked by crawling all the links on a site. We used this strategy as a last resort for sites that lacked viable index pages or a sitemap.
 
@@ -21,7 +21,7 @@ Challenges
 
 One of the challenges we faced as we began to populate the database with articles extracted by the crawler was the "sliding window" effect created by the passing of time. Since the sites we crawled are active news sites, many of which publish daily, the complement of articles extracted each time the crawler is run is always different.
 
-Some of the sites that we originally intended to crawl have since been taken offline and others still proved to be un-crawlable, due to the site authors implementing an anti-scraping measure, or because the sites were subscription only.
+Some of the sites that we originally intended to crawl have since been taken offline and others still proved to be un-crawlable, due to the site authors implementing an anti-scraping measure, or because the crawler encountered a paywall.
 
 How to run code on GitHub
 ----
