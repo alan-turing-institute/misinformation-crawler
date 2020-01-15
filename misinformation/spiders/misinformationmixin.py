@@ -156,7 +156,8 @@ class MisinformationMixin():
                 self.logger.debug("Processing article override: %s", url)
                 yield Request(url, callback=self.parse_response)
         yield from yield_overrides()
-        yield from super().start_requests()
+        if self.config["start_url"]:
+            yield from super().start_requests()
 
     def closed(self, reason):
         """Log reason for closure."""
