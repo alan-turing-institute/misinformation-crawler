@@ -53,14 +53,12 @@ def main():
     for site_name in article_override_lists:
         site_configs[site_name]["article_override_list"] = article_override_lists[site_name]
 
-
     # Crawl a single site
     # -------------------
     if args.site:
         # Create a dynamic spider class and register it with the crawler
         spider_class = dynamic_spider_class(site_configs[args.site], args.max_articles)
         process.crawl(spider_class, config=site_configs[args.site])
-
 
     # Crawl all sites
     # ---------------
@@ -69,7 +67,6 @@ def main():
             # Create a dynamic spider class and register it with the crawler
             spider_class = dynamic_spider_class(site_configs[site_name], args.max_articles)
             process.crawl(spider_class, config=site_configs[site_name])
-
 
     # Crawl all URLs from a CSV file
     # ------------------------------
