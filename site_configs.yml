@@ -703,7 +703,7 @@ disclose.tv:
       match_rule: 'single'
     publication_datetime:
       select_method: 'xpath'
-      select_expression: '//span[@class="article-element__meta-item"]'
+      select_expression: '//span[@class="article-element__meta-item"]/text()'
       match_rule: 'single'
       datetime_formats:
         - 'MMM DD YYYY'

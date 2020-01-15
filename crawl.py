@@ -21,7 +21,7 @@ def main():
     crawl_type.add_argument("--list", "-l", help="CSV file of URLs to crawl with an 'article_url' column and a 'site name' column.")
     # General options
     parser.add_argument("--max_articles", "-n", type=int, default=0, help="Maximum number of articles to process from each site.")
-    parser.add_argument("--exporter", "-e", default="blob", choices=["file", "blob"], help="Article export method.")
+    parser.add_argument("--exporter", "-e", default="file", choices=["file", "blob"], help="Article export method.")
     parser.add_argument("--no-digest", action="store_true", help="Disable content digests.")
     parser.add_argument("--no-index", action="store_true", help="Disable node indexes.")
     args = parser.parse_args()

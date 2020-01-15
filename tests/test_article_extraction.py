@@ -19,10 +19,6 @@ SITE_NAMES = sorted(SITE_CONFIGS.keys())
 
 
 # ================= HELPER FUNCTIONS =================
-def config_for_site(site_name):
-    return SITE_CONFIGS[site_name]
-
-
 def response_from_html_file(html_filepath):
     with open(html_filepath) as f:
         html = f.read()
@@ -694,7 +690,7 @@ def test_extract_datetime_works_with_multiple_dates():
         publication_datetime:
             select_method: 'xpath'
             select_expression: '//div[@class="subarticle"]/p/text()'
-            match_rule: 'group'
+            match_rule: 'comma_join'
             datetime_formats:
               - 'MMMM D YYYY'
         content:
@@ -709,7 +705,7 @@ def test_extract_datetime_works_with_multiple_dates():
         'article_url': 'http://example.com',
         'title': None,
         'byline': None,
-        'publication_datetime': "2018-10-22T00:00:00",
+        'publication_datetime': "2006-05-15T00:00:00",
         'content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
         'plain_content': '<div><p>October 22, 2018</p><p>Article text here.</p><p>May 15, 2006</p></div>',
         'plain_text': [{"text": "October 22, 2018"}, {"text": "Article text here."}, {"text": "May 15, 2006"}],
