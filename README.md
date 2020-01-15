@@ -23,17 +23,19 @@ The options are to either (i) upgrade to the latest version of OSX or (ii) insta
 1. Install Homebrew is you have not already: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 2. Add the Microsoft Tap: `brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release`
 3. Update Homebrew: `brew update`
-4. Install the Microsoft SQL ODBC driver: `brew install --no-sandbox msodbcsql17 mssql-tools`
+4. Install the Microsoft SQL ODBC driver: `brew install openssl msodbcsql17 mssql-tools`
 
 
 ## Installation
 - Check out the code from `github`
-- Ensure that [`ReadabiliPy`](https://github.com/alan-turing-institute/ReadabiliPy) is installed by running:
-    ```git submodule update --init --recursive```
-- (Optional) Install the `node.js` dependencies for `ReadabiliPy` by entering the `ReadabiliPy` directory and typing `npm install`
-- Install the dependencies for this package by running:
+- Install the Python dependencies for this package by running:
   - As a user of this project `pip install -r requirements.txt`
   - As a developer of this project `pip install -r requirements-dev.txt`
+- Ensure that [`ReadabiliPy`](https://github.com/alan-turing-institute/ReadabiliPy) is installed by running:
+    ```git submodule update --init --recursive```
+  - Install the Python dependencies for `ReadabiliPy` by typing `pip install -r ReadabiliPy/requirements.txt`
+  - (Optional) Install the `node.js` dependencies for `ReadabiliPy` by entering the `ReadabiliPy` directory and typing `npm install`
+
 
 
 ## Testing
