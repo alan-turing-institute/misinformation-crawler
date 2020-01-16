@@ -13,6 +13,8 @@ secrets/*
 # pycharm project files
 .idea/
 
+# VS code project files
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

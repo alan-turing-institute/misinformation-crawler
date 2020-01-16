@@ -23,42 +23,40 @@ The options are to either (i) upgrade to the latest version of OSX or (ii) insta
 1. Install Homebrew is you have not already: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 2. Add the Microsoft Tap: `brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release`
 3. Update Homebrew: `brew update`
-4. Install the Microsoft SQL ODBC driver: `brew install --no-sandbox msodbcsql17 mssql-tools`
+4. Install the Microsoft SQL ODBC driver: `brew install openssl msodbcsql17 mssql-tools`
 
 
 ## Installation
 - Check out the code from `github`
-- Ensure that [`ReadabiliPy`](https://github.com/alan-turing-institute/ReadabiliPy) is installed by running:
-    ```git submodule update --init --recursive```
-- (Optional) Install the `node.js` dependencies for `ReadabiliPy` by entering the `ReadabiliPy` directory and typing `npm install`
-- Install the dependencies for this package by running:
+- Install the Python dependencies for this package by running:
   - As a user of this project `pip install -r requirements.txt`
   - As a developer of this project `pip install -r requirements-dev.txt`
+- Ensure that [`ReadabiliPy`](https://github.com/alan-turing-institute/ReadabiliPy) is installed by running:
+    ```git submodule update --init --recursive```
+  - Install the Python dependencies for `ReadabiliPy` by typing `pip install -r ReadabiliPy/requirements.txt`
+  - (Optional) Install the `node.js` dependencies for `ReadabiliPy` by entering the `ReadabiliPy` directory and typing `npm install`
+
+
+## Usage
+Site configurations for 107 sites are included in `misinformation/site_configs.yml`
+Crawled articles are saved one file per site in `articles/`
+The actual number of articles returned may be slightly higher due to number of parallel requests scrapy has open at any time.
+
+### Crawling all sites
+Usage: `python crawl.py --all -n <max articles per site>` (limit is optional and all articles will be crawled if left off)
+
+### Crawling a single site
+Usage: `python crawl.py --site <site name> -n <max articles per site>` (limit is optional and all articles will be crawled if left off)
+
+### Crawling a list of URLs
+Usage: `python crawl.py --list <path to file>` (the file must be in CSV format with an `article_url` column and a `site name` column)
 
 
 ## Testing
 To run tests, run `python -m pytest` from the repository root.
 
 
-## Usage
-Site configurations for 47 sites are included in `misinformation/site_configs.yml`
-
-Usage: `python crawl_all.py -n=<max_articles_per_site>` (limit is optional and all articles will be crawled if left off)
-
-Crawled articles are saved one file per site in `articles/`
-
-The actual number of articles returned may be up to 16 higher due to number of parallel requests scrapy has open at any time.
-
-
-## Developing
-To update to the latest version of [ReadabiliPy](https://github.com/martintoreilly/ReadabiliPy/blob/features/14-plain-content-structure/README.md).
-- Navigate to the `ReadabiliPy` folder with `cd ReadabiliPy`
-- Ensure you are on the `master` branch with `git checkout master`
-- Pull the latest version with `git pull`
-- Install the dependencies with `pip install -r requirements.txt`
-
-
-## Running the crawler with the Azure database backend
+## Running the crawler with the Azure backend
 In order to run the crawler you will need to create a file at `secrets/db_config.yaml` inside the top-level `misinformation-crawler` directory. This should look like the following:
 
 ```
@@ -73,5 +71,12 @@ where the password is obtained from the Azure keyvault for the database, using
 
 ```az keyvault secret show --vault-name misinformation-user --name database-crawler-user```
 
-The crawler can then be run using `python crawl_all.py -e database`.
+The crawler can then be run using `python crawl.py --all -e blob`.
 
+
+## Developing
+To update to the latest version of [ReadabiliPy](https://github.com/martintoreilly/ReadabiliPy/blob/features/14-plain-content-structure/README.md).
+- Navigate to the `ReadabiliPy` folder with `cd ReadabiliPy`
+- Ensure you are on the `master` branch with `git checkout master`
+- Pull the latest version with `git pull`
+- Install the dependencies with `pip install -r requirements.txt`
